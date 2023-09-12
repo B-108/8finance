@@ -1,5 +1,6 @@
 package com.fin.billage.config;
 
+import com.fin.billage.util.JwtAuthenticationFilter;
 import com.fin.billage.util.JwtAuthenticationProvider;
 import com.fin.billage.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtUtil jwtUtil;
-    private final JwtAuthenticationProvider jwtAuthenticationProvider;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -36,12 +36,11 @@ public class SecurityConfig {
                 .formLogin().disable()
                 .httpBasic().disable()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
+//                .antMatchers("/**").permitAll()
 //                .antMatchers("/user/login", "/user/signup").permitAll()
-//                .antMatchers("/**").authenticated()
 //                .antMatchers("/user/signup").permitAll()
+                .antMatchers("/**").authenticated()
                 .and()
-                .authenticationProvider(jwtAuthenticationProvider)
                 .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }

@@ -32,6 +32,11 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         // 그냥 값만 가져오면 Entity
         // 수정한 값을 변경하먄 DTO
 
+        System.out.println(authentication);
+        System.out.println(authentication.toString());
+        System.out.println("이거 내용 좀 보자 " + authentication.getName());
+
+
         User findUser = userRepository.findByUserCellNo(authentication.getName())
                 .orElseThrow(()-> new RuntimeException("이미 있음"));
 

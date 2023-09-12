@@ -1,6 +1,5 @@
-package com.fin.billage.config;
+package com.fin.billage.util;
 
-import com.fin.billage.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +25,11 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterchain) throws IOException, ServletException {
+
+        System.out.println("여기는 온건가");
+        System.out.println("============");
+        System.out.println("============");
+        System.out.println("============");
 
         // aceess token 꺼내기
         String accessToken = jwtUtil.resolveToken((HttpServletRequest) servletRequest);
