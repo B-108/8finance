@@ -50,7 +50,7 @@ public class AccountService {
     public List<AccountResponseDto> searchMyAccount() {
         Long user_pk = 1111L;
         User user = userRepository.findById(user_pk).orElse(null);
-        List<Account> accounts = accountRepository.findAllByUserId(user);
+        List<Account> accounts = accountRepository.findAllByUser(user).orElseThrow();
         List<AccountResponseDto> dtos = new ArrayList<>();
 
         for (Account account : accounts) {
@@ -73,7 +73,7 @@ public class AccountService {
         User user = userRepository.findById(user_pk).orElse(null);
 
         // 기존 주계좌 찾아서 false로 바꿔주기
-        Account mainAccount = accountRepository.findByUserAndAccountMainYnIsTrue(user);
+        Account mainAccount = accountRepository.findByUserAndAccountMainYnIsTrue(user).orElseThrow();
 
         if (mainAccount != null) {
             mainAccount.updateAccountMainYn(false);
@@ -81,7 +81,7 @@ public class AccountService {
         }
 
         // 주계좌로 설정
-        Account account = accountRepository.findByUserAndAccountId(user, account_id);
+        Account account = accountRepository.findByUserAndAccountId(user, account_id).orElseThrow();
         if (account != null) {
             account.updateAccountMainYn(true);
             accountRepository.save(account);
@@ -94,7 +94,7 @@ public class AccountService {
     public Account deleteMyAccount(Long account_id) {
         Long user_pk = 1111L;
         User user = userRepository.findById(user_pk).orElse(null);
-        Account account = accountRepository.findByUserAndAccountId(user, account_id);
+        Account account = accountRepository.findByUserAndAccountId(user, account_id).orElseThrow();
 
         account.deleteAccount();
         accountRepository.save(account);
