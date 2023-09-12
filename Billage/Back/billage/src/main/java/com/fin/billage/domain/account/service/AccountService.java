@@ -24,7 +24,7 @@ public class AccountService {
     // 내 계좌 등록
     public Account addMyAccount(AccountRequestDto dto) {
         Long user_pk = 1111L;
-        User user = userRepository.findById(user_pk);
+        User user = userRepository.findById(user_pk).orElse(null);
 
         boolean mainYn = false;
 //         가지고 있는 계좌가 null(0개) 일 때 첫 번째 등록 계좌를 주계좌로
@@ -49,7 +49,7 @@ public class AccountService {
     // 내 계좌 리스트 조회
     public List<AccountResponseDto> searchMyAccount() {
         Long user_pk = 1111L;
-        User user = userRepository.findById(user_pk);
+        User user = userRepository.findById(user_pk).orElse(null);
         List<Account> accounts = accountRepository.findAllByUserId(user);
         List<AccountResponseDto> dtos = new ArrayList<>();
 
