@@ -1,5 +1,6 @@
 package com.fin.billage.domain.user.api;
 
+import com.fin.billage.domain.user.dto.UserLoginRequestDto;
 import com.fin.billage.domain.user.dto.UserSignUpRequestDto;
 import com.fin.billage.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserSignUpRequestDto userSignUpRequestDto) {
-        return null;
+    public ResponseEntity<?> login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
+        return new ResponseEntity<>(userService.login(userLoginRequestDto), HttpStatus.OK);
     }
 }

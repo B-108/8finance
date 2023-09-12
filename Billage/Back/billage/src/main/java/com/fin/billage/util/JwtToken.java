@@ -3,7 +3,6 @@ package com.fin.billage.util;
 import lombok.*;
 
 @Getter
-@Setter
 public class JwtToken {
     private String grantType;
     private String accessToken;
