@@ -1,6 +1,7 @@
 package com.fin.billage.domain.account.entity;
 
 import com.fin.billage.domain.user.entity.User;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 @Table(name = "account")
 @NoArgsConstructor // 기본생성자
+@AllArgsConstructor
 public class Account {
 
     @Id

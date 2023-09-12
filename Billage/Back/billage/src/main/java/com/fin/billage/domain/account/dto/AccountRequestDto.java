@@ -3,7 +3,6 @@ package com.fin.billage.domain.account.dto;
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 @Getter
