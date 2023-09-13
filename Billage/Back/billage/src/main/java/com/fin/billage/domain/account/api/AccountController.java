@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/account")
 @RequiredArgsConstructor
+@RequestMapping("/account")
 public class AccountController {
 
     private final AccountService accountService;

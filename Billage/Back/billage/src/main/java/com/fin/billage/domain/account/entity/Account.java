@@ -44,13 +44,13 @@ public class Account {
     @Column(name = "account_main_yn", columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean accountMainYn;
 
-    @Column(name = "account_regist_date", nullable = false)
+    @Column(name = "account_regist_date", nullable = false, columnDefinition = "DATETIME")
     private LocalDateTime accountRegistDate;
 
-    @Column(name = "account_delete_date")
+    @Column(name = "account_delete_date", columnDefinition = "DATETIME")
     private LocalDateTime accountDeleteDate;
 
-    @Column(name = "account_modify_date")
+    @Column(name = "account_modify_date", columnDefinition = "DATETIME")
     private LocalDateTime accountModifyDate;
 
     public void updateAccountMainYn(Boolean yn) {
