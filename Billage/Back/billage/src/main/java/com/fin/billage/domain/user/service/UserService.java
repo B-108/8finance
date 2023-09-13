@@ -38,7 +38,9 @@ public class UserService {
                         .userSimplePass(encryptPassword)
                         .build());
 
-        return new UserSignUpResponseDto(userSignUpRequestDto.getUserName());
+        return UserSignUpResponseDto.builder()
+                .userName(userSignUpRequestDto.getUserName())
+                .build();
     }
 
     public UserLoginResponseDto login(UserLoginRequestDto userLoginRequestDto) {
@@ -50,8 +52,13 @@ public class UserService {
         JwtToken token = jwtUtil.createToken(authentication);
 
         // DB에 있는 User 정보에서 userName 가져오기
-//        User findUser = userRepository.findByUserEmail(userLoginRequest.getUserEmail())
-//                .orElseThrow(()-> new CustomException(ErrorCode.USER_NOT_FOUND));
-        return null;
+        User findUser = userRepository.findByUserCellNo(userLoginRequestDto.getUserCellNo())
+                .orElseThrow(()-> new RuntimeException("없어"));
+
+
+        return UserLoginResponseDto.builder()
+                .jwtToken(token)
+                .userName(findUser.getUserName())
+                .build();
     }
 }

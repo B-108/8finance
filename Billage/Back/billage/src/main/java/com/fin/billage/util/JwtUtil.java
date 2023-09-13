@@ -28,6 +28,9 @@ public class JwtUtil {
     private final long accessExpired;
     private final long refreshExpired;
 
+    @Value("${8fin.authentication.scope}")
+    private String scope;
+
     // 서버 측 secret key
     public JwtUtil(@Value("${jwt.secret}") String secretKey,
                    @Value("${jwt.access-expired-seconds}") long accessExpired,
@@ -50,7 +53,7 @@ public class JwtUtil {
                 .claim("auth", authorities) // 권한 넣기
                 .claim("type", "ACCESS")
                 .claim("userPk", authentication.getCredentials()) // pk 값 넣기
-                .claim("userEmail", authentication.getName()) // email 값 넣기
+                .claim("userCellNo", authentication.getName()) // 핸드폰 번호 값 넣기
                 .setExpiration(new Date(System.currentTimeMillis() + accessExpired)) // 만료기간 30분 설정
                 .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
@@ -88,7 +91,7 @@ public class JwtUtil {
     public Authentication getAuthentication(String accessToken) {
         Claims claims = parseClaims(accessToken);
 
-        if (claims.get("auth") == null) {
+        if (!claims.get("auth").equals(scope)) {
             throw new RuntimeException("권한 정보가 없는 토큰");
         }
 
@@ -128,7 +131,7 @@ public class JwtUtil {
                 .getBody();
     }
 
-    public JwtToken refreshToken(String refreshToken, String userEmail) {
+    public JwtToken refreshToken(String refreshToken, String userCellNo) {
         Claims token = parseClaims(refreshToken);
 
         String newToken = Jwts.builder()
@@ -136,7 +139,7 @@ public class JwtUtil {
                 .claim("auth", token) // 권한 넣기
                 .claim("type", "ACCESS")
                 .claim("userPk", token.get("userPk")) // pk 값 넣기
-                .claim("userEmail", userEmail)
+                .claim("userCellNo", userCellNo)
                 .setExpiration(new Date(System.currentTimeMillis() + accessExpired)) // 만료기간 30분 설정
                 .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
