@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,6 +25,7 @@ public class UserService {
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
     private final JwtUtil jwtUtil;
 
+    @Transactional
     public UserSignUpResponseDto signup(UserSignUpRequestDto userSignUpRequestDto) {
         // 폰 번호 & 이름 중복 검증 => 이미 가입한 이용자입니다.
         if (userRepository.existsByUserCellNoAndUserName(userSignUpRequestDto.getUserCellNo(), userSignUpRequestDto.getUserName())) {
@@ -43,6 +45,7 @@ public class UserService {
                 .build();
     }
 
+    @Transactional
     public UserLoginResponseDto login(UserLoginRequestDto userLoginRequestDto) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(userLoginRequestDto.getUserCellNo(), userLoginRequestDto.getUserSimplePass());
@@ -62,6 +65,7 @@ public class UserService {
                 .build();
     }
 
+    @Transactional
     public UserLogoutResponseDto logout(HttpServletRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -77,4 +81,18 @@ public class UserService {
                 .message("비정상적인 요청입니다.")
                 .build();
     }
+
+    @Transactional
+    public UserDeleteResponseDto deleteUser(HttpServletRequest request) {
+        try {
+            userRepository.deleteById(jwtUtil.extractUserPkFromToken(request));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return UserDeleteResponseDto.builder()
+                .message("다음에 다시 만나자")
+                .build();
+    }
+
 }
