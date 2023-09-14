@@ -1,9 +1,6 @@
 package com.fin.billage.domain.user.service;
 
-import com.fin.billage.domain.user.dto.UserLoginRequestDto;
-import com.fin.billage.domain.user.dto.UserLoginResponseDto;
-import com.fin.billage.domain.user.dto.UserSignUpRequestDto;
-import com.fin.billage.domain.user.dto.UserSignUpResponseDto;
+import com.fin.billage.domain.user.dto.*;
 import com.fin.billage.domain.user.entity.User;
 import com.fin.billage.domain.user.repository.UserRepository;
 import com.fin.billage.util.JwtAuthenticationProvider;
@@ -12,8 +9,11 @@ import com.fin.billage.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Service
 @RequiredArgsConstructor
@@ -59,6 +59,22 @@ public class UserService {
         return UserLoginResponseDto.builder()
                 .jwtToken(token)
                 .userName(findUser.getUserName())
+                .build();
+    }
+
+    public UserLogoutResponseDto logout(HttpServletRequest request) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        User findUserByAuthentication = userRepository.findByUserCellNo(authentication.getName())
+                        .orElseThrow(() -> new RuntimeException("없어"));
+
+        if (findUserByAuthentication.getUserPk() == jwtUtil.extractUserPkFromToken(request))
+            return UserLogoutResponseDto.builder()
+                    .message("로그아웃에 성공했습니다")
+                    .build();
+
+        return UserLogoutResponseDto.builder()
+                .message("비정상적인 요청입니다.")
                 .build();
     }
 }
