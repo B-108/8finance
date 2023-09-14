@@ -30,4 +30,10 @@ public class UserController {
     public ResponseEntity<?> logout(HttpServletRequest request) {
         return new ResponseEntity<>(userService.logout(request), HttpStatus.OK);
     }
+
+    @PatchMapping("/delete")
+    public ResponseEntity<?> deleteUser(HttpServletRequest request) {
+        return new ResponseEntity<>(userService.deleteUser(request), HttpStatus.OK);
+    }
+
 }
