@@ -6,9 +6,11 @@ import com.fin.billage.domain.account.entity.Account;
 import com.fin.billage.domain.account.repository.AccountRepository;
 import com.fin.billage.domain.user.entity.User;
 import com.fin.billage.domain.user.repository.UserRepository;
+import com.fin.billage.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +22,11 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
+    private final JwtUtil jwtUtil;
 
     // 내 계좌 등록
-    public Account addMyAccount(AccountRequestDto dto) {
-        Long user_pk = 1111L;
+    public Account addMyAccount(AccountRequestDto dto, HttpServletRequest request) {
+        Long user_pk = jwtUtil.extractUserPkFromToken(request);
         User user = userRepository.findById(user_pk).orElse(null);
 
         boolean mainYn = false;
@@ -47,8 +50,8 @@ public class AccountService {
     }
 
     // 내 계좌 리스트 조회
-    public List<AccountResponseDto> searchMyAccount() {
-        Long user_pk = 1111L;
+    public List<AccountResponseDto> searchMyAccount(HttpServletRequest request) {
+        Long user_pk = jwtUtil.extractUserPkFromToken(request);
         User user = userRepository.findById(user_pk).orElse(null);
         List<Account> accounts = accountRepository.findAllByUser(user).orElseThrow();
         List<AccountResponseDto> dtos = new ArrayList<>();
@@ -68,8 +71,8 @@ public class AccountService {
     }
 
     // 주 계좌 등록
-    public Account addMyMainAccount(Long account_id) {
-        Long user_pk = 1111L;
+    public Account addMyMainAccount(Long account_id, HttpServletRequest request) {
+        Long user_pk = jwtUtil.extractUserPkFromToken(request);
         User user = userRepository.findById(user_pk).orElse(null);
 
         // 기존 주계좌 찾아서 false로 바꿔주기
@@ -91,8 +94,8 @@ public class AccountService {
     }
 
     // 등록된 계좌 삭제처리
-    public Account deleteMyAccount(Long account_id) {
-        Long user_pk = 1111L;
+    public Account deleteMyAccount(Long account_id, HttpServletRequest request) {
+        Long user_pk = jwtUtil.extractUserPkFromToken(request);
         User user = userRepository.findById(user_pk).orElse(null);
         Account account = accountRepository.findByUserAndAccountId(user, account_id).orElseThrow();
 
