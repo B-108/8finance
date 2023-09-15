@@ -1,6 +1,7 @@
 package com.fin.billage.domain.user.api;
 
 import com.fin.billage.domain.user.dto.UserLoginRequestDto;
+import com.fin.billage.domain.user.dto.UserSetPasswordRequestDto;
 import com.fin.billage.domain.user.dto.UserSignUpRequestDto;
 import com.fin.billage.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,12 @@ public class UserController {
     @PatchMapping("/delete")
     public ResponseEntity<?> deleteUser(HttpServletRequest request) {
         return new ResponseEntity<>(userService.deleteUser(request), HttpStatus.OK);
+    }
+
+    @PatchMapping("/setpassword")
+    public ResponseEntity<?> modifyUser(HttpServletRequest request, @RequestBody UserSetPasswordRequestDto userSetPasswordRequestDto) {
+        System.out.println(userSetPasswordRequestDto.getUserSimplePass());
+        return new ResponseEntity<>(userService.setPassword(request, userSetPasswordRequestDto), HttpStatus.OK);
     }
 
 }

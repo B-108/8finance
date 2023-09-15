@@ -71,4 +71,8 @@ public class User {
         this.userAgreeYn = userAgreeYn;
         this.userAgreeDate = userAgreeDate;
     }
+
+    public void setPassword(String newPassword) {
+        this.userSimplePass = newPassword;
+    }
 }

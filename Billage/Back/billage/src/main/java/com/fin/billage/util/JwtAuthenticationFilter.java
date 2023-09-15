@@ -25,12 +25,6 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterchain) throws IOException, ServletException {
-
-        System.out.println("여기는 온건가");
-        System.out.println("============");
-        System.out.println("============");
-        System.out.println("============");
-
         // aceess token 꺼내기
         String accessToken = jwtUtil.resolveToken((HttpServletRequest) servletRequest);
 
