@@ -34,7 +34,7 @@ public class UserService {
 
         String encryptPassword = bCryptPasswordEncoder.encode(userSignUpRequestDto.getUserSimplePass());
 
-        User signUpUser = userRepository.save(User.builder()
+        userRepository.save(User.builder()
                         .userCellNo(userSignUpRequestDto.getUserCellNo())
                         .userName(userSignUpRequestDto.getUserName())
                         .userSimplePass(encryptPassword)
@@ -95,4 +95,16 @@ public class UserService {
                 .build();
     }
 
+    public UserSetPasswordResponseDto setPassword(HttpServletRequest request, UserSetPasswordRequestDto userSetPasswordRequestDto) {
+        User findUser = userRepository.findById(jwtUtil.extractUserPkFromToken(request))
+                .orElseThrow(() -> new RuntimeException("이런 사용자는 없어"));
+
+        findUser.setPassword(bCryptPasswordEncoder.encode(userSetPasswordRequestDto.getUserSimplePass()));
+
+        userRepository.save(findUser);
+
+        return UserSetPasswordResponseDto.builder()
+                .message("다시 로그인하시오")
+                .build();
+    }
 }
