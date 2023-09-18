@@ -2,9 +2,9 @@ package com.fin.billage.domain.user.dto;
 
 import com.fin.billage.util.JwtToken;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Getter
+@NoArgsConstructor
 public class UserLoginResponseDto {
     private JwtToken jwtToken;
     private String userName;
