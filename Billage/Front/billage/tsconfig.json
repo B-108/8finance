@@ -21,7 +21,13 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "/src/*": ["src/*"]
+      "@/*": ["*"],
+      "@src/*": ["src/*"],
+      "@pages/*": ["src/pages/*"],
+      "@components/*": ["src/components/*"],
+      "@assets/*": ["src/assets/*"],
+      "@themes/*": ["src/themes/*"],
+      "@public/*": ["public/*"],
     },
     },
   // "include": ["src/**/*", "types/**/*.d.ts", "types/**/*.d.tsx"],
