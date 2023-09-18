@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 // 이미지 컴포넌트의 속성 정의
 interface ImageProps {
+    children?: React.ReactNode;
     src: string;
     alt: string;
     width?: string;
@@ -11,6 +12,9 @@ interface ImageProps {
     // 추가적인 스타일링 옵션을 원하는 경우 여기에 추가
     rounded?: boolean;
     bordered?: boolean;
+
+    // opacity:0.8; /* 80% 불투명도 */
+    opacity?: boolean;
 }
 
 // 스타일드 컴포넌트로 이미지 스타일링
@@ -35,7 +39,7 @@ const StyledImage = styled.img<ImageProps>`
 
 // 이미지 컴포넌트 정의
 const Image = (props: ImageProps) => {
-    return <StyledImage {...props}></StyledImage>;
+    return <StyledImage {...props}>{props.children}</StyledImage>;
 };
 
 export default Image;
