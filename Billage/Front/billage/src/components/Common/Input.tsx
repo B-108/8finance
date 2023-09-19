@@ -1,12 +1,17 @@
-import React from 'react'
+import React, {ChangeEvent} from 'react'
 
 import styled, {css} from "styled-components"
+import theme from '/src/themes';
+// import color from '/src/themes/color';
 
 interface InputProps {
     children?: React.ReactNode;
     // styles?: string;
     onClick?: () => void;
 
+    value? : string  | number | Date;
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+    
     disabled?: boolean;    
     type?: 'phone' | 'number' | 'money' | 'name' | 'day' | 'interest';
 
@@ -71,9 +76,9 @@ const StyledInput = styled.input<InputProps>`
     ${(props) =>
         props.$maincolor &&
         css`
-            background-color: #93C90F;
-            border: 1px solid #93C90F;
-            color: #FFFFFF;
+            /* background-color: #93C90F; */
+            border: 3px solid ${theme.color.green};
+            color: #000000;
             &:not(:disabled):hover {
                 opacity: 0.8;
             }
@@ -83,9 +88,9 @@ const StyledInput = styled.input<InputProps>`
     ${(props) =>
         props.$black &&
         css`
-            background-color: #000000;
-            border: 1px solid #000000;
-            color: #FFFFFF;
+            /* background-color: #000000; */
+            border: 3px solid ${theme.color.black};
+            color: #000000;
             &:not(:disabled):hover {
                 opacity: 0.8;
             }
@@ -96,9 +101,9 @@ const StyledInput = styled.input<InputProps>`
     ${(props) =>
         props.$grey &&
         css`
-            background-color: #C8C8C8;
-            border: 1px solid #C8C8C8;
-            color: #FFFFFF;
+            /* background-color: #C8C8C8; */
+            border: 3px solid ${theme.color.gray[55]};
+            color: #000000;
             &:not(:disabled):hover {
                 opacity: 0.8;
             }
@@ -108,7 +113,40 @@ const StyledInput = styled.input<InputProps>`
 `
 
 const Input = (props:InputProps) => {
-    return <StyledInput {...props}> {props.children} </StyledInput>
+    return <StyledInput {...props}></StyledInput>
 }
 
 export default Input
+
+export const InputHeader = styled.div`
+  width: fit-content;
+  font-size: ${theme.fontSize.XS};
+  color: #757575;
+  padding: 8px;
+  height: 12px;
+  background-color: #ffffff;
+  position: absolute;
+  top: 2px;
+  left: 10%;
+`;
+
+export const InputBody = styled.input`
+  border: ${theme.color.green};
+  border-style: solid;
+  width: 80%;
+  height: 40px;
+  padding: 0px;
+  padding-left: 5%;
+  border-width: 1px;
+  border-radius: ${theme.radius.DF};
+  margin-top: 20px;
+`;
+
+export const InputDiv = styled.div`
+  position: relative;
+  width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+`;
