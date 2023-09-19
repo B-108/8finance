@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Springboot build') {
+            steps {
+                dir('Billage/Back/billage'){
+                    sh '''
+                    pwd
+                    echo 'springboot build'
+                    chmod +x gradlew
+                    ./gradlew clean build
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Dockerimage build') {
+            steps {
+                dir('Billage/Back/billage'){
+                    sh '''
+                    echo 'Dockerimage build'
+                    docker build -t docker-springboot-billage:0.0.1 .
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                dir('Billage/Back/billage'){
+                    sh '''
+                    echo 'Deploy'
+
+                    docker stop springboot
+                    docker rm springboot
+
+                    docker run -d -p 8080:8080 --name springboot docker-springboot-billage:0.0.1
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+    }
+}
