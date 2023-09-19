@@ -1,9 +1,9 @@
 package com.fin.billage.domain.user.dto;
 
 import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
-@NoArgsConstructor
+@Getter
 public class UserDeleteResponseDto {
     private String message;
 
