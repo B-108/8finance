@@ -4,7 +4,6 @@ function Home() {
     return (
         <>
             <div>여기가 HOME</div>
-            <Image src={logo} class={}></Image>
         </>
     );
 }

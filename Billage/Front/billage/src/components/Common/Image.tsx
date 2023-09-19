@@ -4,17 +4,33 @@ import styled, { css } from 'styled-components';
 // 이미지 컴포넌트의 속성 정의
 interface ImageProps {
     children?: React.ReactNode;
+    onClick?: () => void;
+
+    type?:
+        | 'logo'
+        | 'password'
+        | 'alramBell'
+        | 'alram'
+        | 'alramList'
+        | 'carousel'
+        | 'transaction'
+        | 'transactionList'
+        | 'progressbar'
+        | 'account'
+        | 'bank'
+        | 'feature';
+
     src: string;
     alt: string;
     width?: string;
     height?: string;
 
     // 추가적인 스타일링 옵션을 원하는 경우 여기에 추가
-    rounded?: boolean;
-    bordered?: boolean;
+    $rounded?: boolean;
+    $bordered?: boolean;
 
     // opacity:0.8; /* 80% 불투명도 */
-    opacity?: boolean;
+    $opacity?: boolean;
 }
 
 // 스타일드 컴포넌트로 이미지 스타일링
@@ -24,14 +40,17 @@ const StyledImage = styled.img<ImageProps>`
     height: auto;
 
     // 추가적인 스타일링 옵션에 따른 스타일 적용
+
+    // 모서리 둥글게
     ${(props) =>
-        props.rounded &&
+        props.$rounded &&
         css`
             border-radius: 50%;
         `}
 
+    // 테두리 두껍게
     ${(props) =>
-        props.bordered &&
+        props.$bordered &&
         css`
             border: 2px solid #ccc;
         `}
