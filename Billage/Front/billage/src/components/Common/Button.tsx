@@ -41,7 +41,6 @@ const StyledButton = styled.button<ButtonProps>`
             width: 90%;
             height: 48px;
             margin-left: 5%;
-
         `
     }
 
