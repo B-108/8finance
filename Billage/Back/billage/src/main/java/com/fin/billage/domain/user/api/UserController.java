@@ -39,8 +39,11 @@ public class UserController {
 
     @PatchMapping("/setpassword")
     public ResponseEntity<?> modifyUser(HttpServletRequest request, @RequestBody UserSetPasswordRequestDto userSetPasswordRequestDto) {
-        System.out.println(userSetPasswordRequestDto.getUserSimplePass());
         return new ResponseEntity<>(userService.setPassword(request, userSetPasswordRequestDto), HttpStatus.OK);
     }
 
+    @GetMapping("/refresh")
+    public ResponseEntity<?> refreshToken(HttpServletRequest request) {
+        return new ResponseEntity<>(userService.refreshToken(request), HttpStatus.OK);
+    }
 }

@@ -25,14 +25,16 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterchain) throws IOException, ServletException {
-        // aceess token 꺼내기
-        String accessToken = jwtUtil.resolveToken((HttpServletRequest) servletRequest);
+        String token = jwtUtil.resolveToken((HttpServletRequest) servletRequest);
 
         // 토큰 유효성 검사
-        if (accessToken != null && jwtUtil.validateToken(accessToken)) {
+        if (token != null && jwtUtil.validateToken(token)) {
+
+            System.out.println(((HttpServletRequest) servletRequest).getRequestURI());
 
             if (!((HttpServletRequest) servletRequest).getRequestURI().equals("/user/refresh")) {
-                Authentication authentication = jwtUtil.getAuthentication(accessToken);
+                System.out.println("악!");
+                Authentication authentication = jwtUtil.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

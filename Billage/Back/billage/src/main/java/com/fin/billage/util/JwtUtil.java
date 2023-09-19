@@ -131,7 +131,7 @@ public class JwtUtil {
                 .getBody();
     }
 
-    public JwtToken refreshToken(String refreshToken, String userCellNo) {
+    public JwtToken refreshAccessToken(String refreshToken) {
         Claims token = parseClaims(refreshToken);
 
         String newToken = Jwts.builder()
@@ -139,7 +139,7 @@ public class JwtUtil {
                 .claim("auth", token) // 권한 넣기
                 .claim("type", "ACCESS")
                 .claim("userPk", token.get("userPk")) // pk 값 넣기
-                .claim("userCellNo", userCellNo)
+                .claim("userCellNo", token.get("userCellNo"))
                 .setExpiration(new Date(System.currentTimeMillis() + accessExpired)) // 만료기간 30분 설정
                 .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
