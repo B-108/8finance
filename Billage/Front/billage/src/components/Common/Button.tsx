@@ -2,6 +2,7 @@
 import React from 'react'
 
 import styled, {css} from "styled-components"
+import theme from '/src/themes';
 
 interface ButtonProps {
     children?: React.ReactNode;
@@ -24,34 +25,35 @@ interface ButtonProps {
     // 색상 지정
     $Green ?:boolean
     $Grey ?:boolean
-    
-
 }
 
 const StyledButton = styled.button<ButtonProps>`
     width: auto;
     border : none;
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-    border-radius: 0.75rem;
-
-    // disabled가 아닐때(활성화), hover
-    &:not(:disabled):hover {
-
-    }
-
-    // 비활성화
-    &:disabled {
-
-    }
+    color: white;
+    font-size: 16px;
+    border-radius: 20px;
 
     // 꽉 찬 버튼
     ${(props) =>
-        props.$fullWidth && 
+        props.$bigButton && 
         css`
-            width:100%;
+            width: 90%;
+            height: 48px;
+            margin-left: 5%;
         `
     }
+
+    // 초록색 
+    ${(props) =>
+        props.$Green && 
+        css`
+            background-color:  ${theme.color.green};
+        `
+    }
+
+
+
     // 절반만 차지
     ${(props) =>
         props.$halfWidth && 
@@ -210,3 +212,16 @@ const Button = (props:ButtonProps) => {
 }
 
 export default Button
+
+
+
+
+    // // disabled가 아닐때(활성화), hover
+    // &:not(:disabled):hover {
+
+    // }
+
+    // // 비활성화
+    // &:disabled {
+
+    // }
