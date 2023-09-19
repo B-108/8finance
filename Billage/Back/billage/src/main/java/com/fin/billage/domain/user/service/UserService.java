@@ -107,4 +107,15 @@ public class UserService {
                 .message("다시 로그인하시오")
                 .build();
     }
+
+    public UserRefreshTokenResponseDto refreshToken(HttpServletRequest request) {
+
+        System.out.println("악");
+
+        String refreshToken = jwtUtil.resolveToken(request);
+
+        return UserRefreshTokenResponseDto.builder()
+                .accessToken(jwtUtil.refreshAccessToken(refreshToken))
+                .build();
+    }
 }
