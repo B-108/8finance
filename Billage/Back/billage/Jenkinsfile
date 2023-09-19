@@ -10,6 +10,7 @@ pipeline {
                     echo 'springboot build'
                     chmod +x gradlew
                     ./gradlew clean build
+                    cp /jenkins/backend-config/billage/application.yml .
                     '''
                 }
             }
