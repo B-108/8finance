@@ -1,6 +1,8 @@
 import { InputDiv, InputTitle } from './IOU.style';
 import Input from '/src/components/Common/Input';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 function IOU() {
     const [friendInfo, setFriendInfo] = useState<string>('');
@@ -12,9 +14,12 @@ function IOU() {
     const handleAccountInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setAccountInfo(event.target.value);
     };
+    const [endDate, setEndDate] = useState(new Date());
+    const [transferDate, setTransferDate] = useState(new Date());
 
     return (
         <>
+            <DatePicker selected={endDate} onChange={(date) => setEndDate(date)} />
             <InputDiv>
                 <InputTitle>지인선택</InputTitle>
                 <Input value={friendInfo} $active $size="90%,40px" onChange={handleFriendInfoChange}></Input>
@@ -25,7 +30,7 @@ function IOU() {
             </InputDiv>
             <InputDiv>
                 <InputTitle>돈 갚을 날짜</InputTitle>
-                <Input value={friendInfo} $active $size="90%,40px" onChange={handleFriendInfoChange}></Input>
+                <DatePicker selected={endDate} onChange={(date) => setEndDate(date)} />
             </InputDiv>
             <InputDiv>
                 <InputTitle>자동이체</InputTitle>
