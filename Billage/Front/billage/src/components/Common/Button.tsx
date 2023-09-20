@@ -2,6 +2,7 @@
 import React from 'react'
 
 import styled, {css} from "styled-components"
+import theme from '/src/themes';
 
 interface ButtonProps {
     children?: React.ReactNode;
@@ -11,198 +12,96 @@ interface ButtonProps {
     disabled?: boolean;    
     // type?: 'submit' | 'button' | 'reset';
 
-    // 버튼 사이즈 
-    $bigButton ?: boolean
-    $middleButton ?: boolean
-    $smallButton ?: boolean
+    $width ?: string
+    $height ?: string
 
-    // 스페셜 버튼
+    // 버튼 종류
+    $basicGreenBtn ?: boolean
+    $basicGrayBtn ?: boolean
+    $smallGreenBtn ?: boolean
+    $smallGrayBtn ?: boolean
+
     $listButton ?: boolean
     $IOUButton ?: boolean
     $moneyButton ?: boolean
 
     // 색상 지정
     $Green ?:boolean
-    $Grey ?:boolean
-    
-
+    $Gray ?:boolean
 }
 
 const StyledButton = styled.button<ButtonProps>`
     width: auto;
+    height: auto;
     border : none;
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-    border-radius: 0.75rem;
+    color: white;
+    font-size: ${theme.fontSize.DF_16};
+    border-radius: ${theme.fontSize.DF_16};
 
-    // disabled가 아닐때(활성화), hover
-    &:not(:disabled):hover {
+    width: ${(props) => props.$width};
+    height: ${(props) => props.$height};
 
-    }
+    // greanGradient 사용 예시
+    // border-image: ${theme.color.mix.border};
+    // border-image-slice: 1;
 
-    // 비활성화
-    &:disabled {
-
-    }
-
-    // 꽉 찬 버튼
+    // 초록색 큰/중간 사이즈 버튼
     ${(props) =>
-        props.$fullWidth && 
+        props.$basicGreenBtn && 
         css`
-            width:100%;
-        `
-    }
-    // 절반만 차지
-    ${(props) =>
-        props.$halfWidth && 
-        css`
-            padding: 1.5rem;
-            width:45%;
+            font-size: ${theme.fontSize.M_20};
+            border-radius: ${theme.radius.L_20};
+            background-color: ${theme.color.green[0]};;
         `
     }
 
-    // 폰트 굵게
+    // 회색 큰/중간 사이즈 버튼
     ${(props) =>
-    props.$isBold &&
-    css`
-        font-weight: bold;
-    `}
-
-    //icon 전용(X, 종, 각종 아이콘)
-    ${(props) => 
-        props.$icon &&
+        props.$basicGrayBtn && 
         css`
-        padding: 0.5rem;
-        margin: 0.5rem;
-        border: none;
-        background-color: transparent;
+            font-size: ${theme.fontSize.M_20};
+            border-radius: ${theme.radius.L_20};
+            background-color: ${theme.color.gray[40]};;
         `
     }
 
-    // kakao
+    // 초록색 작은 사이즈 버튼 (모달용/전송용)
     ${(props) =>
-        props.$kakao &&
+        props.$smallGreenBtn && 
         css`
-            background-color: #fee500;
-            height: 3rem;
-            border: 1px solid #fee500;
-            border-radius: 0.5rem;
-            color: #191919;
-            &:not(:disabled):hover {
-                background: #ffec3e;
-                color: #191919;
-            }
-        `}
-
-    // 음성 기록
-    ${(props) =>
-        props.$nightVoice &&
-        css`
-            background-color: rgb(190, 169, 215, 0.5);
-            border: 1px solid rgb(190, 169, 215, 0.5);
-            border-radius: 1rem;
-            height: 3rem;
-            &:not(:disabled):hover {
-                background-color: rgba(190, 169, 215, 0.8);
-            }
+            font-size: ${theme.fontSize.DF_16};
+            border-radius: ${theme.radius.M_15};
+            background-color: ${theme.color.green[0]};;
         `
     }
 
-    // 색상 지정
-    // 투명한 버튼(배경색과 동일하게)
+    // 회색 작은 사이즈 버튼 (모달용)
     ${(props) =>
-        props.$transparent &&
+        props.$smallGrayBtn && 
         css`
-            background-color: transparent;
-            border: 1px solid #000000;
+            font-size: ${theme.fontSize.DF_16};
+            border-radius: ${theme.radius.M_15};
+            background-color: ${theme.color.gray[40]};;
         `
     }
 
-    // 짙은 보라색버튼
-    ${(props) =>
-        props.$nightPurple &&
-        css`
-            background-color: #6659A5;
-            border: 1px solid #6659A5;
-            color: #FFFFFF;
-            &:not(:disabled):hover {
-                opacity: 0.8;
-            }
-        `   
-    }
-    // 연한 보라색버튼
-    ${(props) =>
-        props.$nightPalePurple &&
-        css`
-            background-color: #BEA9D7;
-            border: 1px solid #BEA9D7;
-            color: #FFFFFF;
-            &:not(:disabled):hover {
-                opacity: 0.8;
-            }
-        `   
-    }
+    
 
-    // 짙은 하늘색
+    // 초록색 
     ${(props) =>
-        props.$dayBlue &&
+        props.$Green && 
         css`
-            background-color: #75A8C7;
-            border: 1px solid #75A8C7;
-            color: #000000;
-            &:not(:disabled):hover {
-                opacity: 0.8;
-            }
-        `   
-    }
-    // 타임캡슐 yellow
-    ${(props) =>
-        props.$dayYellow &&
-        css`
-            background-color: #FFE177;
-            border: 1px solid #FFE177;
-            color: #000000;
-            &:not(:disabled):hover {
-                opacity: 0.8;
-            }
-        `   
-    }
-    // 초기 프로필사진 업로드
-    ${(props) =>
-        props.$sunsetPurple &&
-        css`
-            background-color: #C3BED1;
-            border: 1px solid #C3BED1;
-            color: #000000;
-            &:not(:disabled):hover {
-                opacity: 0.8;
-            }
-        `   
-    }
-    // 초기 다음 버튼 
-    ${(props) =>
-        props.$sunsetPink &&
-        css`
-            background-color: #F1E3E6;
-            border: 1px solid #F1E3E6;
-            color: #000000;
-            &:not(:disabled):hover {
-                opacity: 0.8;
-            }
-        `   
-    }
-
-    //팔로우
-    ${(props) => 
-        props.$follow &&
-        css`
-            font-size: 1rem;
-            padding: 0.1rem 1.5rem;
-            /* font-weight: 400; */
-            border-radius: 1.5rem;
+            background-color:  ${theme.color.green[0]};
         `
     }
 
+    // 회색 
+    ${(props) =>
+        props.$Gray && 
+        css`
+            background-color:  ${theme.color.gray[70]};
+        `
+    }
 `
 
 const Button = (props:ButtonProps) => {
@@ -210,3 +109,16 @@ const Button = (props:ButtonProps) => {
 }
 
 export default Button
+
+
+
+
+    // // disabled가 아닐때(활성화), hover
+    // &:not(:disabled):hover {
+
+    // }
+
+    // // 비활성화
+    // &:disabled {
+
+    // }
