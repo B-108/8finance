@@ -7,6 +7,8 @@ import NotFound from "src/pages/NotFound";
 import Root from "src/App";
 import IOU from "src/pages/IOU/IOU";
 import FindPW from "src/pages/FindPassword/FindPassword";
+import ChangePW from "src/pages/ChangePassword/ChangePassword";
+
 const router = createBrowserRouter([
     {
         path: "/",
@@ -35,6 +37,11 @@ const router = createBrowserRouter([
             {
                 path: "/findpassword",
                 element: <FindPW />,
+                errorElement: <ErrorComponent />,
+            },
+            {
+                path: "/changepassword",
+                element: <ChangePW />,
                 errorElement: <ErrorComponent />,
             },
         ],
