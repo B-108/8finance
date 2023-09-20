@@ -35,8 +35,8 @@
 //
 //    // 차용증 수락, 거절 ( + 수락 시 이체까지 시켜야함)
 //   @PatchMapping
-//    public ResponseEntity<Contract> respondToContract(@RequestBody ContractRespondDto dto) {
-//       Contract contract = contractService.respondToContract(dto);
+////    public ResponseEntity<Contract> respondToContract(@RequestBody ContractRespondDto dto) {
+////       Contract contract = contractService.respondToContract(dto);
 //       return new ResponseEntity<>(contract, HttpStatus.OK);
 //   }
 //}

@@ -21,8 +21,8 @@ public class ContractResponseDto {
     // 돈을 빌리는 사람이 돈을 받을 계좌(은행)
     private String contractDebtorAcNum;
 
-    // 돈 갚을 날짜 (거래상태가 진행중으로 바뀔 때 업데이트)
-    private Date contractStartDate;
+    // 돈 빌린 날짜 (거래상태가 진행중으로 바뀔 때 업데이트)
+    private LocalDate contractStartDate;
 
     // 돈 갚을 날짜
     private LocalDate contractMaturityDate;
