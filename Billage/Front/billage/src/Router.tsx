@@ -1,14 +1,14 @@
-import { createBrowserRouter } from "react-router-dom";
-import Home from "/src/pages/Home";
-import Login from "src/pages/Login/Login";
-import SignUp from "src/pages/SignUp/SignUp";
-import ErrorComponent from "src/pages/ErrorComponent";
-import NotFound from "src/pages/NotFound";
-import Root from "src/App";
-import IOU from "src/pages/IOU/IOU";
+import { createBrowserRouter } from 'react-router-dom';
+import Home from '/src/pages/Home';
+import Login from 'src/pages/Login/Login';
+import SignUp from 'src/pages/SignUp/SignUp';
+import ErrorComponent from 'src/pages/ErrorComponent';
+import NotFound from 'src/pages/NotFound';
+import Root from 'src/App';
+import IOU from 'src/pages/IOU/IOU';
 import TransactionList from '/src/pages/TransactionList/TransactionList';
-import FindPW from "src/pages/FindPassword/FindPassword";
-import ChangePW from "src/pages/ChangePassword/ChangePassword";
+import FindPW from 'src/pages/FindPassword/FindPassword';
+import ChangePW from 'src/pages/ChangePassword/ChangePassword';
 
 const router = createBrowserRouter([
     {
@@ -41,12 +41,12 @@ const router = createBrowserRouter([
                 errorElement: <ErrorComponent />,
             },
             {
-                path: "/findpassword",
+                path: '/findpassword',
                 element: <FindPW />,
                 errorElement: <ErrorComponent />,
             },
             {
-                path: "/changepassword",
+                path: '/changepassword',
                 element: <ChangePW />,
                 errorElement: <ErrorComponent />,
             },
