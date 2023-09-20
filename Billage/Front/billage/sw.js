@@ -13,7 +13,7 @@ self.addEventListener("install", e => {
   // fetch event
   self.addEventListener("fetch", e => {
     // console.log("[Service Worker] fetched resource " + e.request.url);
-    console.log(e)
+    // console.log(e)
     });
   
   self.addEventListener("notificationclick", function (event) {
