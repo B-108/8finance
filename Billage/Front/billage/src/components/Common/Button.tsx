@@ -85,8 +85,6 @@ const StyledButton = styled.button<ButtonProps>`
         `
     }
 
-    
-
     // 초록색 
     ${(props) =>
         props.$Green && 
