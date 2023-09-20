@@ -11,7 +11,6 @@ pipeline {
                     cp /var/jenkins_home/backend-config/billage/application.yml /var/jenkins_home/workspace/billage_back/Billage/Back/billage/src/main/resources/
                     chmod +x gradlew
                     ./gradlew clean build
-                    gradle build -x test
                     '''
                 }
             }
