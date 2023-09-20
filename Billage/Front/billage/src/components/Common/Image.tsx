@@ -42,7 +42,6 @@ interface ImageProps {
 // 스타일드 컴포넌트로 이미지 스타일링
 const StyledImage = styled.img<ImageProps>`
     // 기본값
-    border: 1px solid #ccc;
     max-width: auto;
     height: auto;
 
