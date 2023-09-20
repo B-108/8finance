@@ -10,15 +10,21 @@ interface ImageProps {
         | 'logo'
         | 'password'
         | 'alramBell'
-        | 'alram'
-        | 'alramList'
-        | 'carousel'
+        | 'receiveMoney'
+        | 'Document'
+        | 'DocumentList'
+        | 'alramClock'
+        | 'AccountEnroll'
         | 'transaction'
         | 'transactionList'
-        | 'progressbar'
+        | 'flyingMoney'
         | 'account'
-        | 'bank'
-        | 'feature';
+        | 'wallet'
+        | 'creditCard'
+        | 'receiveMoney'
+        | 'transaction'
+        | 'NH'
+        | 'KB';
 
     src: string;
     alt: string;
@@ -27,7 +33,7 @@ interface ImageProps {
 
     // 추가적인 스타일링 옵션을 원하는 경우 여기에 추가
     $rounded?: boolean;
-    $bordered?: boolean;
+    $src?: boolean;
 
     // opacity:0.8; /* 80% 불투명도 */
     $opacity?: boolean;
@@ -35,8 +41,9 @@ interface ImageProps {
 
 // 스타일드 컴포넌트로 이미지 스타일링
 const StyledImage = styled.img<ImageProps>`
+    // 기본값
     border: 1px solid #ccc;
-    max-width: 100%;
+    max-width: auto;
     height: auto;
 
     // 추가적인 스타일링 옵션에 따른 스타일 적용
@@ -47,13 +54,6 @@ const StyledImage = styled.img<ImageProps>`
         css`
             border-radius: 50%;
         `}
-
-    // 테두리 두껍게
-    ${(props) =>
-        props.$bordered &&
-        css`
-            border: 2px solid #ccc;
-        `}
 `;
 
 // 이미지 컴포넌트 정의
@@ -62,23 +62,3 @@ const Image = (props: ImageProps) => {
 };
 
 export default Image;
-
-// const App: React.FC = () => {
-//     return (
-//         <div>
-//             <h1>이미지 컴포넌트 재사용 예제</h1>
-
-//             {/* 이미지 컴포넌트 재사용 */}
-//             <ImageComponent
-//                 src="example.jpg"
-//                 alt="예시 이미지"
-//                 width="300px"
-//                 height="200px"
-//                 rounded // 원형 이미지로 스타일링
-//                 bordered // 테두리 추가
-//             />
-
-//             <ImageComponent src="another.jpg" alt="또 다른 이미지" width="200px" height="150px" />
-//         </div>
-//     );
-// };

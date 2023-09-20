@@ -7,22 +7,21 @@ interface InputProps {
     // styles?: string;
     onClick?: () => void;
 
-    disabled?: boolean;    
+    disabled?: boolean;
     type?: 'phone' | 'number' | 'money' | 'name' | 'day' | 'interest';
 
     // 별개 스타일링
     // 너비
-    $fullWidth ?: boolean
-
+    $fullWidth?: boolean;
 
     // 폰트 굵게
-    $isBold ?: boolean
+    $isBold?: boolean;
 
     // 색상 지정
-    $maincolor ?:boolean
-    $black ?:boolean
-    $grey ?: boolean
-    $transparent ?: boolean
+    $maincolor?: boolean;
+    $black?: boolean;
+    $grey?: boolean;
+    $transparent?: boolean;
 }
 
 const StyledInput = styled.input<InputProps>`
