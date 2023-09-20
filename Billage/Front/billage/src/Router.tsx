@@ -5,6 +5,7 @@ import SignUp from "src/pages/SignUp/SignUp";
 import ErrorComponent from "src/pages/ErrorComponent";
 import NotFound from "src/pages/NotFound";
 import Root from "src/App";
+import IOU from "src/pages/IOU/IOU";
 
 const router = createBrowserRouter([
     {
@@ -24,6 +25,11 @@ const router = createBrowserRouter([
             {
                 path: "/signup",
                 element: <SignUp />,
+                errorElement: <ErrorComponent />,
+            },
+            {
+                path: "/iou",
+                element: <IOU />,
                 errorElement: <ErrorComponent />,
             },
         ],

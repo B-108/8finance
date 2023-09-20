@@ -24,9 +24,12 @@ const StyledInput = styled.input<InputProps>`
     width: auto;
     height: auto;
     border : 1px solid black;
+    padding-left : 15px;
     font-size: ${theme.fontSize.DF_16};
     border-radius: ${theme.radius.S_10};
-
+    line-height: ${(props) => props.$size?.split(',')[1]};
+    
+    // 사이즈 설정
     width: ${(props) => props.$size?.split(',')[0]};
     height: ${(props) => props.$size?.split(',')[1]};
 
