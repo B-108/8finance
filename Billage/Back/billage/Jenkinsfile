@@ -8,9 +8,10 @@ pipeline {
                     sh '''
                     pwd
                     echo 'springboot build'
+                    cp /jenkins/backend-config/billage/application.yml var/jenkins_home/workspace/billage_back/Billage/Back/billage/src/main/resources/
                     chmod +x gradlew
                     ./gradlew clean build
-                    cp /jenkins/backend-config/billage/application.yml var/jenkins_home/workspace/billage_back/Billage/Back/billage/src/main/resources/
+                    gradle build -x test
                     '''
                 }
             }
