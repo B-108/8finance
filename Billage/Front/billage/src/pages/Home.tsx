@@ -5,7 +5,9 @@ function Home() {
     <>
       <div>여기가 HOME</div>
       <Button
-        $bigGreenBtn> 인증하기 </Button>
+        $basicGreenBtn
+        $width = {"30%"}
+        > 인증하기 </Button>
     </>
   );
 }

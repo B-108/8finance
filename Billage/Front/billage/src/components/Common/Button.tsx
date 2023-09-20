@@ -12,6 +12,9 @@ interface ButtonProps {
     disabled?: boolean;    
     // type?: 'submit' | 'button' | 'reset';
 
+    $width ?: string
+    $height ?: string
+
     // 버튼 종류
     $basicGreenBtn ?: boolean
     $basicGrayBtn ?: boolean
@@ -32,8 +35,11 @@ const StyledButton = styled.button<ButtonProps>`
     height: auto;
     border : none;
     color: white;
-    font-size: ${theme.fontSize.DF};
-    border-radius: ${theme.fontSize.DF}
+    font-size: ${theme.fontSize.DF_16};
+    border-radius: ${theme.fontSize.DF_16};
+
+    width: ${(props) => props.$width};
+    height: ${(props) => props.$height};
 
     // greanGradient 사용 예시
     // border-image: ${theme.color.mix.border};
@@ -43,8 +49,8 @@ const StyledButton = styled.button<ButtonProps>`
     ${(props) =>
         props.$basicGreenBtn && 
         css`
-            font-size: ${theme.fontSize.M};
-            border-radius: ${theme.radius.L};
+            font-size: ${theme.fontSize.M_20};
+            border-radius: ${theme.radius.L_20};
             background-color: ${theme.color.green[0]};;
         `
     }
@@ -53,8 +59,8 @@ const StyledButton = styled.button<ButtonProps>`
     ${(props) =>
         props.$basicGrayBtn && 
         css`
-            font-size: ${theme.fontSize.M};
-            border-radius: ${theme.radius.L};
+            font-size: ${theme.fontSize.M_20};
+            border-radius: ${theme.radius.L_20};
             background-color: ${theme.color.gray[40]};;
         `
     }
@@ -63,8 +69,8 @@ const StyledButton = styled.button<ButtonProps>`
     ${(props) =>
         props.$smallGreenBtn && 
         css`
-            font-size: ${theme.fontSize.DF};
-            border-radius: ${theme.radius.M};
+            font-size: ${theme.fontSize.DF_16};
+            border-radius: ${theme.radius.M_15};
             background-color: ${theme.color.green[0]};;
         `
     }
@@ -73,8 +79,8 @@ const StyledButton = styled.button<ButtonProps>`
     ${(props) =>
         props.$smallGrayBtn && 
         css`
-            font-size: ${theme.fontSize.DF};
-            border-radius: ${theme.radius.M};
+            font-size: ${theme.fontSize.DF_16};
+            border-radius: ${theme.radius.M_15};
             background-color: ${theme.color.gray[40]};;
         `
     }
