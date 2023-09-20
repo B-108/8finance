@@ -48,7 +48,6 @@ const router = createBrowserRouter([
             {
                 path: '/changepassword',
                 element: <ChangePW />,
-                errorElement: <ErrorComponent />,
             },
         ],
         errorElement: <NotFound />,
