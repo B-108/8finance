@@ -1,10 +1,11 @@
 import Button from '../components/Common/Button';
+import CenteredContainer from '../components/Common/CenterAlign';
 import Image from '../components/Common/Image';
 import Header from '../components/Header/Header';
 
 function Home() {
     return (
-        <div>
+        <CenteredContainer>
             <Header/>
             <Image 
                 type="KB" 
@@ -24,7 +25,7 @@ function Home() {
             <Button
                 $Green
                 $size="200px,50px">안녕하세요</Button>
-        </div>
+        </CenteredContainer>
     );
 }
 

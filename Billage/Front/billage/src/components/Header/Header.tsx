@@ -9,6 +9,7 @@ function Header () {
       <Image 
         src={alramBell} 
         alt="alramBell"
+        width="7%"
         ></Image>
     </Container>
   )
