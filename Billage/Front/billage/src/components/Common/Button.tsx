@@ -6,14 +6,12 @@ import theme from '/src/themes';
 
 interface ButtonProps {
     children?: React.ReactNode;
-    // styles?: string;
     onClick?: () => void;
 
     disabled?: boolean;    
-    // type?: 'submit' | 'button' | 'reset';
 
-    $width ?: string
-    $height ?: string
+    // 사이즈 설정
+    $size ?: string
 
     // 버튼 종류
     $basicGreenBtn ?: boolean
@@ -37,9 +35,9 @@ const StyledButton = styled.button<ButtonProps>`
     color: white;
     font-size: ${theme.fontSize.DF_16};
     border-radius: ${theme.fontSize.DF_16};
-
-    width: ${(props) => props.$width};
-    height: ${(props) => props.$height};
+    padding: 0%;
+    width: ${(props) => props.$size?.split(',')[0]};
+    height: ${(props) => props.$size?.split(',')[1]};
 
     // greanGradient 사용 예시
     // border-image: ${theme.color.mix.border};
