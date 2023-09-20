@@ -13,9 +13,10 @@ interface ButtonProps {
     // type?: 'submit' | 'button' | 'reset';
 
     // 버튼 종류
-    $bigGreenBtn ?: boolean
-    $bigGrayBtn ?: boolean
-    $smallButton ?: boolean
+    $basicGreenBtn ?: boolean
+    $basicGrayBtn ?: boolean
+    $smallGreenBtn ?: boolean
+    $smallGrayBtn ?: boolean
 
     $listButton ?: boolean
     $IOUButton ?: boolean
@@ -50,7 +51,7 @@ const StyledButton = styled.button<ButtonProps>`
 
     // 회색 큰/중간 사이즈 버튼
     ${(props) =>
-        props.$modalGrayBtn && 
+        props.$basicGrayBtn && 
         css`
             font-size: ${theme.fontSize.M};
             border-radius: ${theme.radius.L};
@@ -58,9 +59,9 @@ const StyledButton = styled.button<ButtonProps>`
         `
     }
 
-    // 초록색 작은 사이즈 버튼 (모달용/승인용)
+    // 초록색 작은 사이즈 버튼 (모달용/전송용)
     ${(props) =>
-        props.$modalGreenBtn && 
+        props.$smallGreenBtn && 
         css`
             font-size: ${theme.fontSize.DF};
             border-radius: ${theme.radius.M};
@@ -70,7 +71,7 @@ const StyledButton = styled.button<ButtonProps>`
 
     // 회색 작은 사이즈 버튼 (모달용)
     ${(props) =>
-        props.$basicGrayBtn && 
+        props.$smallGrayBtn && 
         css`
             font-size: ${theme.fontSize.DF};
             border-radius: ${theme.radius.M};
