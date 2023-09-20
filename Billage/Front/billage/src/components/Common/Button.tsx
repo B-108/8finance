@@ -12,12 +12,12 @@ interface ButtonProps {
     disabled?: boolean;    
     // type?: 'submit' | 'button' | 'reset';
 
-    // 버튼 사이즈 
-    $bigButton ?: boolean
-    $middleButton ?: boolean
-    $smallButton ?: boolean
+    // 버튼 종류
+    $basicGreenBtn ?: boolean
+    $basicGrayBtn ?: boolean
+    $smallGreenBtn ?: boolean
+    $smallGrayBtn ?: boolean
 
-    // 스페셜 버튼
     $listButton ?: boolean
     $IOUButton ?: boolean
     $moneyButton ?: boolean
@@ -29,43 +29,57 @@ interface ButtonProps {
 
 const StyledButton = styled.button<ButtonProps>`
     width: auto;
+    height: auto;
     border : none;
     color: white;
-    font-size: 16px;
-    border-radius: 20px;
-
+    font-size: ${theme.fontSize.DF};
+    border-radius: ${theme.fontSize.DF}
 
     // greanGradient 사용 예시
-    /* border-image: ${theme.color.greenGradient};
-    border-image-slice: 1; */
+    // border-image: ${theme.color.mix.border};
+    // border-image-slice: 1;
 
-
-    // 큰 버튼
+    // 초록색 큰/중간 사이즈 버튼
     ${(props) =>
-        props.$bigButton && 
+        props.$basicGreenBtn && 
         css`
-            width: 90%;
-            height: 48px;
+            font-size: ${theme.fontSize.M};
+            border-radius: ${theme.radius.L};
+            background-color: ${theme.color.green[0]};;
         `
     }
 
-    // 중간 버튼
+    // 회색 큰/중간 사이즈 버튼
     ${(props) =>
-        props.$middleButton && 
+        props.$basicGrayBtn && 
         css`
-            width: 45%;
-            height: 48px;
+            font-size: ${theme.fontSize.M};
+            border-radius: ${theme.radius.L};
+            background-color: ${theme.color.gray[40]};;
         `
     }
+
+    // 초록색 작은 사이즈 버튼 (모달용/전송용)
+    ${(props) =>
+        props.$smallGreenBtn && 
+        css`
+            font-size: ${theme.fontSize.DF};
+            border-radius: ${theme.radius.M};
+            background-color: ${theme.color.green[0]};;
+        `
+    }
+
+    // 회색 작은 사이즈 버튼 (모달용)
+    ${(props) =>
+        props.$smallGrayBtn && 
+        css`
+            font-size: ${theme.fontSize.DF};
+            border-radius: ${theme.radius.M};
+            background-color: ${theme.color.gray[40]};;
+        `
+    }
+
     
-    // 작은 버튼
-    ${(props) =>
-        props.$smallButton && 
-        css`
-            width: 15%;
-            height: 36px;
-        `
-    }
 
     // 초록색 
     ${(props) =>

@@ -4,9 +4,8 @@ function Home() {
   return (
     <>
       <div>여기가 HOME</div>
-      <Button 
-        $bigButton
-        $Green> 인증하기 </Button>
+      <Button
+        $bigGreenBtn> 인증하기 </Button>
     </>
   );
 }
