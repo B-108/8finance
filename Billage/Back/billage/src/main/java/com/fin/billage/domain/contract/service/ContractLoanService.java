@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,11 +72,18 @@ public class ContractLoanService {
         return borrowList;
     }
 
+    // 거래 상세
     public ContractLoanDetailResponseDto detailLoan(Long contractId, HttpServletRequest request) {
 //        Long user_pk = jwtUtil.extractUserPkFromToken(request);
 //        User user = userRepository.findById(user_pk).orElse(null);
+        Contract contract = contractRepository.findByContractId(contractId);
 
-        ContractLoanDetailResponseDto contractLoanDetailResponseDto = contractRepository.findByContractId(contractId);
+        ContractLoanDetailResponseDto contractLoanDetailResponseDto = ContractLoanDetailResponseDto.builder()
+                .contractAmt(contract.getContractAmt())
+                .contractStartDate(contract.getContractStartDate())
+                .contractMaturityDate(contract.getContractMaturityDate())
+                .contractInterestRate(contract.getContractInterestRate())
+                .build();
 
         return contractLoanDetailResponseDto;
     }

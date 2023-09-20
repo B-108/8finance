@@ -13,5 +13,5 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
 
     List<Contract> findAllByCreditorUser(User user);
 
-    ContractLoanDetailResponseDto findByContractId(Long contractId);
+    Contract findByContractId(Long contractId);
 }

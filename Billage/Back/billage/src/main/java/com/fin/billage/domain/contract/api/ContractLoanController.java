@@ -2,7 +2,9 @@ package com.fin.billage.domain.contract.api;
 
 import com.fin.billage.domain.contract.dto.ContractLoanDetailResponseDto;
 import com.fin.billage.domain.contract.dto.ContractLoanResponseDto;
+import com.fin.billage.domain.contract.dto.TransactionResponseDto;
 import com.fin.billage.domain.contract.service.ContractLoanService;
+import com.fin.billage.domain.contract.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import java.util.List;
 public class ContractLoanController {
 
     private final ContractLoanService contractLoanService;
+    private final TransactionService transactionService;
     // 내가 채권자면 빌려준 목록이고
     // 내가 채무자면 빌려준 목록
 
@@ -45,5 +48,13 @@ public class ContractLoanController {
             HttpServletRequest request) {
         ContractLoanDetailResponseDto contractLoanDetailResponseDto = contractLoanService.detailLoan(contractId, request);
         return new ResponseEntity<>(contractLoanDetailResponseDto, HttpStatus.OK);
+    }
+
+    // 거래 내역 조회
+    @GetMapping("/{contractId}/trInfo")
+    public ResponseEntity<List<TransactionResponseDto>> searchTrInfo (
+            @PathVariable Long contractId) {
+        List<TransactionResponseDto> transactionResponseDtoList = transactionService.searchTrInfo(contractId);
+        return new ResponseEntity<>(transactionResponseDtoList, HttpStatus.OK);
     }
 }
