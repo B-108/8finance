@@ -33,11 +33,13 @@ const StyledButton = styled.button<ButtonProps>`
     height: auto;
     border : none;
     color: white;
+    padding: 0%;
+    padding-left : 15px;
     font-size: ${theme.fontSize.DF_16};
     border-radius: ${theme.fontSize.DF_16};
-    padding: 0%;
     width: ${(props) => props.$size?.split(',')[0]};
     height: ${(props) => props.$size?.split(',')[1]};
+    line-height: ${(props) => props.$size?.split(',')[1]};
 
     // greanGradient 사용 예시
     // border-image: ${theme.color.mix.border};
