@@ -8,6 +8,7 @@ import Root from "src/App";
 import IOU from "src/pages/IOU/IOU";
 import TransactionList from '/src/pages/TransactionList/TransactionList';
 import FindPW from "src/pages/FindPassword/FindPassword";
+import ChangePW from "src/pages/ChangePassword/ChangePassword";
 
 const router = createBrowserRouter([
     {
@@ -42,6 +43,11 @@ const router = createBrowserRouter([
             {
                 path: "/findpassword",
                 element: <FindPW />,
+                errorElement: <ErrorComponent />,
+            },
+            {
+                path: "/changepassword",
+                element: <ChangePW />,
                 errorElement: <ErrorComponent />,
             },
         ],
