@@ -6,35 +6,41 @@ import ErrorComponent from "src/pages/ErrorComponent";
 import NotFound from "src/pages/NotFound";
 import Root from "src/App";
 import IOU from "src/pages/IOU/IOU";
+import TransactionList from '/src/pages/TransactionList/TransactionList';
 
 const router = createBrowserRouter([
     {
-        path: "/",
+        path: '/',
         element: <Root />,
         children: [
             {
-                path: "",
+                path: '',
                 element: <Home />,
                 errorElement: <ErrorComponent />,
             },
             {
-                path: "/login",
+                path: '/login',
                 element: <Login />,
                 errorElement: <ErrorComponent />,
             },
             {
-                path: "/signup",
+                path: '/signup',
                 element: <SignUp />,
                 errorElement: <ErrorComponent />,
             },
             {
-                path: "/iou",
+                path: '/iou',
                 element: <IOU />,
                 errorElement: <ErrorComponent />,
             },
+            {
+                path: '/transactionlist',
+                element: <TransactionList />,
+                errorElement: <ErrorComponent />,
+            },
         ],
-        errorElement: <NotFound />
-    }
-])
+        errorElement: <NotFound />,
+    },
+]);
 
 export default router;
