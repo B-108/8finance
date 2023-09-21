@@ -8,12 +8,11 @@ pipeline {
     stages {
         stage('Install Dependencies') {
             steps {
-                dir('front'){
+                dir('Billage/front/billage'){
                     sh '''
                     pwd
                     echo 'prepare'
                     echo 'npm install'
-                    cd /var/jenkins_home/workspace/billage_front/Billage/Front/billage
                     npm install
                     '''
                 }
@@ -30,10 +29,9 @@ pipeline {
 
         stage('Build') {
             steps {
-                dir('front') {
+                dir('Billage/front/billage') {
                     sh '''
                     echo 'npm run build'
-                    cd /var/jenkins_home/workspace/billage_front/Billage/Front/billage
                     npm run build
                     '''
                 }
@@ -42,7 +40,7 @@ pipeline {
 
         stage('Docker image build') {
             steps {
-                dir('front'){
+                dir('Billage/front/billage'){
                     sh '''
                     echo 'Docker image build'
                     docker build -t docker-react-billage .
@@ -61,7 +59,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                dir('front'){
+                dir('Billage/front/billage'){
                     sh '''
                     echo 'Deploy'                    
 
