@@ -4,8 +4,21 @@ import Input from "/src/components/Common/Input"
 import Text from "/src/components/Common/Text"
 import plus from "/src/assets/plus.svg"
 import Image from "/src/components/Common/Image"
+import { useEffect, useRef, useState } from "react"
 
 function PinRegister () {
+  const [pinNumber,setPinNumber] = useState<string>("")
+  const focusRef = useRef<HTMLInputElement | null>(null);
+
+  const handlePinNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPinNumber(pinNumber + event.target.value);
+    console.log(pinNumber)
+  };
+
+  useEffect(() => {
+    focusRef.current.focus();
+  }, []); 
+
   return (
     <CenteredContainer $center>
       <Text
@@ -13,18 +26,34 @@ function PinRegister () {
         >간편 비밀번호 등록</Text>
 
       <InputBox>
-        <Input $size="12px,26px" $simplepassword
+        <Input
+          ref={focusRef}
+          $size="20px,20px" 
+          $simplepassword
+          onChange={handlePinNumberChange}
           ></Input>
-        <Input $size="12px,26px" $simplepassword
+        <Input 
+          $size="20px,20px" 
+          $simplepassword
+          onChange={handlePinNumberChange}
           ></Input>
-        <Input $size="12px,26px" $simplepassword
+        <Input 
+          $size="20px,20px" 
+          $simplepassword
+          onChange={handlePinNumberChange}
           ></Input>
-        <Input $size="12px,26px" $simplepassword
+        <Input 
+          $size="20px,20px" 
+          $simplepassword
+          onChange={handlePinNumberChange}
           ></Input>
         <Image
           src={plus}
           alt="plus"></Image>
-        <Input $size="12px,26px" $simplepassword
+        <Input 
+          $size="20px,20px" 
+          $simplepassword
+          onChange={handlePinNumberChange}
           ></Input>
       </InputBox>
 
@@ -35,4 +64,5 @@ function PinRegister () {
   )
 }
 
-export default PinRegister
+export default PinRegister;
+

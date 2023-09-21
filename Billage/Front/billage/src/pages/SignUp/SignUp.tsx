@@ -13,6 +13,7 @@ function SignUp(){
     const [name, setName] = useState<string>('');
     const [phone, setPhone] = useState<string>('');
     const [certNum, setCertNum] = useState<number>();
+    
     const navigate = useNavigate()
     const handleLoginClick = () => {
         console.log('로그인');
