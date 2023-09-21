@@ -71,10 +71,6 @@ function SignUp(){
             </Button>
 
 
-
-
-
-
         <InputDiv style={{marginBottom : '4rem'}}>
             <InputHeader>인증 번호</InputHeader>
             <Input
