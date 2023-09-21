@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Install Dependencies') {
             steps {
-                dir('Billage/front/billage'){
+                dir('Billage/Front/billage'){
                     sh '''
                     pwd
                     echo 'prepare'
@@ -29,7 +29,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                dir('Billage/front/billage') {
+                dir('Billage/Front/billage') {
                     sh '''
                     echo 'npm run build'
                     npm run build
@@ -40,7 +40,7 @@ pipeline {
 
         stage('Docker image build') {
             steps {
-                dir('Billage/front/billage'){
+                dir('Billage/Front/billage'){
                     sh '''
                     echo 'Docker image build'
                     docker build -t docker-react-billage .
@@ -59,7 +59,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                dir('Billage/front/billage'){
+                dir('Billage/Front/billage'){
                     sh '''
                     echo 'Deploy'                    
 
