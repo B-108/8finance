@@ -75,10 +75,8 @@ public class User {
     public void setPassword(String newPassword) {
         this.userSimplePass = newPassword;
     }
-    public void updateAgreeYn(Boolean yn) {
-        if (yn == true) {
-            this.userAgreeYn = 'Y';
+    public void modifyAgreeYn(char yn) {
+            this.userAgreeYn = yn;
             this.userAgreeDate = LocalDateTime.now();
-        }
     }
 }

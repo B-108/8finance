@@ -25,7 +25,7 @@ public class TransferController {
     @PatchMapping("/mydata/agree/{agreeYn}")
     public ResponseEntity<User> updateAgreeYN(HttpServletRequest request, @PathVariable Boolean agreeYn) {
         // 현재 시간을 가져옵니다.
-        // 사용자 동의 상태를 업데이트하고 동의일시를 설정하는 서비스 메소드를 호출합니다.w
+        // 사용자 동의 상태를 업데이트하고 동의일시를 설정하는 서비스 메소드를 호출합니다.
         User updatedUser = transferService.updateAgreementStatusAndDate(request, agreeYn);
 
         if (updatedUser != null) {
