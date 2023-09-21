@@ -28,7 +28,6 @@ const StyledInput = styled.input<InputProps>`
     width: auto;
     height: auto;
     border : 1px solid black;
-    padding-left : 15px;
     font-size: ${theme.fontSize.DF_16};
     border-radius: ${theme.radius.S_10};
     line-height: ${(props) => props.$size?.split(',')[1]};
@@ -75,20 +74,33 @@ const Input = (props:InputProps) => {
 export default Input
 
 export const InputHeader = styled.div`
-  width: fit-content;
-  font-size: ${theme.fontSize.XS_12};
-  color: #757575;
-  margin-bottom: 45px;
-  background-color: ${theme.color.white};
-  position: absolute;
-  left: 10%;
+    width: fit-content;
+    font-size: ${theme.fontSize.XS_12};
+    color: #757575;
+    margin-bottom: 45px;
+    background-color: ${theme.color.white};
+    position: absolute;
+    left: 10%;
 `;
 
 export const InputDiv = styled.div`
     position: relative;
-    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
 `;
+
+export const InputAuthHeader = styled(InputHeader)`
+    margin-bottom: 47px;
+`
+
+export const ButtonBox = styled.div`
+    position: absolute;
+    display: flex;
+    justify-content: flex-end;
+    width: 90%;
+    
+    /* border: 1px solid red; */
+`
