@@ -13,6 +13,7 @@ pipeline {
                     pwd
                     echo 'prepare'
                     echo 'npm install'
+                    cd /var/jenkins_home/workspace/billage_front/Billage/Front/billage
                     npm install
                     '''
                 }
