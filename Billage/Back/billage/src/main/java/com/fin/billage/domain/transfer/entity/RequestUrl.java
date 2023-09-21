@@ -1,15 +1,15 @@
 package com.fin.billage.domain.transfer.entity;
 
-import com.fin.billage.domain.user.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
 
-@Getter
 @Entity
+@Getter
 @Builder
 @Table(name = "request_url")
-@NoArgsConstructor
+@NoArgsConstructor // 기본생성자
+@AllArgsConstructor
 public class RequestUrl {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
