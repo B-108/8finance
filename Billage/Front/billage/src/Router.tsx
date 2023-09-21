@@ -12,6 +12,7 @@ import ChangePW from 'src/pages/ChangePassword/ChangePassword';
 import Main from './pages/Main/Main';
 import PinRegister from './pages/Pin/PinRegister';
 import Notifications from 'src/pages/Notifications/Notifications';
+import Transfer from './pages/Transfer/Transfer';
 
 const router = createBrowserRouter([
     {
@@ -44,8 +45,8 @@ const router = createBrowserRouter([
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/iou',
-                element: <IOU />,
+                path: '/transfer',
+                element: <Transfer />,
                 errorElement: <ErrorComponent />,
             },
             {
@@ -66,6 +67,11 @@ const router = createBrowserRouter([
             {
                 path: '/notifications',
                 element: <Notifications />,
+                errorElement: <ErrorComponent />,
+            },
+            {
+                path: '/iou',
+                element: <IOU />,
                 errorElement: <ErrorComponent />,
             },
         ],
