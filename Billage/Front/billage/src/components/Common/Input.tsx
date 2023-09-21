@@ -18,9 +18,13 @@ interface InputProps {
 
     // 활성 상태
     $active ?: boolean;
+
+    // 간편 비밀번호
+    $simplepassword ?: boolean
 }
 
 const StyledInput = styled.input<InputProps>`
+    // 기본값
     width: auto;
     height: auto;
     border : 1px solid black;
@@ -43,6 +47,22 @@ const StyledInput = styled.input<InputProps>`
             
             &:focus {
                 outline: 1px solid ${theme.color.green[0]};
+            }
+        `
+    }
+
+    // 간편 비밀번호 입력
+    ${(props) =>
+        props.$simplepassword && 
+        css`
+            border : 1px solid ${theme.color.gray[100]}; 
+            background-color: ${theme.color.gray[100]};
+            font-size: ${theme.fontSize.DF_16};
+            border-radius: 100%;
+            
+            &:focus {
+                outline: 1px solid ${theme.color.green[0]};
+                background-color: ${theme.color.green[0]};
             }
         `
     }
