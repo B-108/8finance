@@ -10,12 +10,12 @@ export const Container = styled.div`
 `
 
 export const LeftSection = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 100%;
-  width: 50%;
-`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+`;
 
 export const Title = styled.h2<{ $noDisplay:boolean }>`
   width: 90%;

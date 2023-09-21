@@ -61,6 +61,7 @@ const StyledImage = styled.img<ImageProps>`
         `}
 `;
 
+
 // 이미지 컴포넌트 정의
 const Image = (props: ImageProps) => {
     return <StyledImage {...props}>{props.children}</StyledImage>;
