@@ -1,0 +1,80 @@
+pipeline {
+    agent any
+
+    tools{
+        nodejs 'nodejs'
+    }
+
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                dir('front'){
+                    sh '''
+                    pwd
+                    echo 'prepare'
+                    echo 'npm install'
+                    npm install
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                dir('front') {
+                    sh '''
+                    echo 'npm build'
+                    npm build
+                    '''
+                }
+            }
+        }
+
+        stage('Docker image build') {
+            steps {
+                dir('front'){
+                    sh '''
+                    echo 'Docker image build'
+                    docker build -t docker-react-billage .
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                dir('front'){
+                    sh '''
+                    echo 'Deploy'                    
+
+                    docker run -d -p 3000:80 --name billage-front docker-react:0.0.1
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+    }
+}
