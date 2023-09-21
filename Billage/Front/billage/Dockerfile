@@ -5,9 +5,9 @@ COPY ./package.json /app
 
 # COPY {대상 파일} {복사할 위치}
 
-RUN yarn install
+RUN npm install
 COPY . .
-RUN yarn build
+RUN npm run dev
 
 #### nginx 
 
