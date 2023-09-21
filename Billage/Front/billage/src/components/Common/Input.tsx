@@ -85,10 +85,10 @@ export const InputHeader = styled.div`
 `;
 
 export const InputDiv = styled.div`
-  position: relative;
-  width: 100%;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 `;
