@@ -39,7 +39,7 @@ public class TransferService {
         if(agreeYn == true){
             // 유저정보를 바탕으로 바꿔야함. update
             // user 엔티티의 updateAgreeYn을 통해 agreeYn에 ture를 넣어서 전달하면 userAgreeYn은 Y로 바뀐다.
-            user.updateAgreeYn(agreeYn);
+            user.modifyAgreeYn('Y');
             userRepository.save(user);
         }
 
