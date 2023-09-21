@@ -32,8 +32,8 @@ pipeline {
             steps {
                 dir('front') {
                     sh '''
-                    echo 'npm build'
-                    npm build
+                    echo 'npm run build'
+                    npm run build
                     '''
                 }
             }
