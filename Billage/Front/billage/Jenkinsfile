@@ -33,6 +33,7 @@ pipeline {
                 dir('front') {
                     sh '''
                     echo 'npm run build'
+                    cd /var/jenkins_home/workspace/billage_front/Billage/Front/billage
                     npm run build
                     '''
                 }
