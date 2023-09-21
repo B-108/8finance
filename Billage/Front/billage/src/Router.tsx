@@ -11,6 +11,7 @@ import FindPW from 'src/pages/FindPassword/FindPassword';
 import ChangePW from 'src/pages/ChangePassword/ChangePassword';
 import Main from './pages/Main/Main';
 import PinRegister from './pages/Pin/PinRegister';
+import Notifications from 'src/pages/Notifications/Notifications';
 
 const router = createBrowserRouter([
     {
@@ -60,6 +61,12 @@ const router = createBrowserRouter([
             {
                 path: '/changepassword',
                 element: <ChangePW />,
+                errorElement: <ErrorComponent />,
+            },
+            {
+                path: '/notifications',
+                element: <Notifications />,
+                errorElement: <ErrorComponent />,
             },
         ],
         errorElement: <NotFound />,
