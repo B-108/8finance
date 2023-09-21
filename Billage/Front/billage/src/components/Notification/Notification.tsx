@@ -16,7 +16,7 @@ function Notification() {
         <div>
             <div style={{ height: '100%', display: 'flex', justifyContent: 'space-around', marginTop: 'auto' }}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <Image src={receiveMoney} alt="home" width="35px" height="35px"></Image>
+                    <Image src={receiveMoney} alt="home" width="35px"></Image>
                 </div>
                 <div>
                     <div>~님이 ~원을 갚았습니다.</div>

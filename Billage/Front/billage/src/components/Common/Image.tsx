@@ -28,8 +28,7 @@ interface ImageProps {
 
     src: string;
     alt: string;
-    $width?: string;
-    $height?: string;
+    width?: string;
 
     // 추가적인 스타일링 옵션을 원하는 경우 여기에 추가
     $rounded?: boolean;
@@ -46,10 +45,7 @@ interface ImageProps {
 const StyledImage = styled.img<ImageProps>`
     // 기본값
     max-width: auto;
-    width: auto;
-    height: auto;
-    width: ${(props) => props.$width};
-    height: ${(props) => props.$height};
+    width: ${(props) => props.width};
     opacity: ${(props) => props.$opacity};
 
     // 사진 안보이게

@@ -14,7 +14,7 @@ export const LeftSection = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: 100%;
-  width: 30%;
+  width: 50%;
 `
 
 export const Title = styled.h2<{ $noDisplay:boolean }>`

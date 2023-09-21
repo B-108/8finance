@@ -5,7 +5,7 @@ import alramBell from "src/assets/alramBell.svg"
 import backIcon from "src/assets/backIcon.svg"
 
 interface HeaderProps {
-  headerTitle: string; // 숫자 타입으로 설정
+  headerTitle: string;
 }
 
 function Header ({headerTitle} : HeaderProps) {
