@@ -107,16 +107,3 @@ const Button = (props:ButtonProps) => {
 }
 
 export default Button
-
-
-
-
-    // // disabled가 아닐때(활성화), hover
-    // &:not(:disabled):hover {
-
-    // }
-
-    // // 비활성화
-    // &:disabled {
-
-    // }

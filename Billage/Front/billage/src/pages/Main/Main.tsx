@@ -1,11 +1,15 @@
+import CenteredContainer from "/src/components/Common/CenterAlign"
+import Header from "/src/components/Header/Header"
+
 // import Input from "/src/components/Common/Input"
-function MainPage(){
+function Main(){
     return(
-        <>
-        <h1>Main Page</h1>
-        {/* <Input></Input> */}
-        </>
+        <CenteredContainer>
+            <Header
+                headerTitle="Billage"
+                ></Header>
+        </CenteredContainer>
     )
 }
 
-export default MainPage
+export default Main
