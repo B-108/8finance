@@ -37,6 +37,9 @@ interface ImageProps {
 
     // opacity:0.8; /* 80% 불투명도 */
     $opacity?: boolean;
+
+    // 이미지 안보이게 하기
+    $noDisplay?: boolean;
 }
 
 // 스타일드 컴포넌트로 이미지 스타일링
@@ -45,13 +48,11 @@ const StyledImage = styled.img<ImageProps>`
     max-width: auto;
     height: auto;
 
-    // 추가적인 스타일링 옵션에 따른 스타일 적용
-
-    // 모서리 둥글게
+    // 사진 안보이게
     ${(props) =>
-        props.$rounded &&
+        props.$noDisplay &&
         css`
-            border-radius: 50%;
+            display: none;
         `}
 `;
 
