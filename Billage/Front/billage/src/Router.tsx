@@ -10,6 +10,7 @@ import TransactionList from '/src/pages/TransactionList/TransactionList';
 import FindPW from "src/pages/FindPassword/FindPassword";
 import ChangePW from "src/pages/ChangePassword/ChangePassword";
 import Main from "./pages/Main/Main";
+import PinRegister from "./pages/Pin/PinRegister";
 
 const router = createBrowserRouter([
     {
@@ -27,13 +28,18 @@ const router = createBrowserRouter([
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/main',
-                element: <Main />,
+                path: '/signup',
+                element: <SignUp />,
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/signup',
-                element: <SignUp />,
+                path: '/PinRegister',
+                element: <PinRegister/>,
+                errorElement: <ErrorComponent />,
+            },
+            {
+                path: '/main',
+                element: <Main />,
                 errorElement: <ErrorComponent />,
             },
             {
