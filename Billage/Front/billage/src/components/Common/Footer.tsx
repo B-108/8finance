@@ -41,26 +41,26 @@ const FooterContainer = styled.div`
 `;
 
 function Footer(){
-    return(
+    return (
         <>
             <FooterContainer>
-            <div style={{width: '100%', display : 'flex', justifyContent:'space-around', marginTop : 'auto'}}>
-                <div>
-                    <Image src={home} alt='home' width='35px' height='35px'></Image>
-                    <Text>홈</Text>
+                <div style={{ width: '100%', display: 'flex', justifyContent: 'space-around', marginTop: 'auto' }}>
+                    <div>
+                        <Image src={home} alt="home" width="35px"></Image>
+                        <Text>홈</Text>
+                    </div>
+                    <div>
+                        <Image src={account} alt="account" width="36px"></Image>
+                        <Text>계좌</Text>
+                    </div>
+                    <div>
+                        <Image src={hamburger} alt="hamburger" width="32px"></Image>
+                        <Text>설정</Text>
+                    </div>
                 </div>
-                <div>
-                    <Image src={account} alt='account' width='36px' height='35px' ></Image>
-                    <Text>계좌</Text>
-                </div>
-                <div>
-                    <Image src={hamburger} alt='hamburger' width='32px' height='32px'></Image>
-                    <Text>설정</Text>
-                </div>
-            </div>
             </FooterContainer>
         </>
-    )
+    );
 }
 
 export default Footer
