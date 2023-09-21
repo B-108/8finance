@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.http.HttpHeaders;
 import java.util.List;
 
 @Service
@@ -26,12 +27,18 @@ public class TransferService {
     private final RequestUrlRepository requestUrlRepository;
     private final JwtUtil jwtUtil;
 
+    // 사용자가 마이데이터에 동의하면 user 테이블에서 동의상태와 일시를 수정한다.
     @Transactional
     public User updateAgreementStatusAndDate(HttpServletRequest request, Boolean agreeYn) {
+        // 토큰에서 user_pk를 가져온다.
         Long user_pk = jwtUtil.extractUserPkFromToken(request);
+        // 가져온 user_pk를 통해 해당 pk값에 해당하는 user객체를 가져온다.
         User user = userRepository.findById(user_pk).orElse(null);
 
-        if(agreeYn == true){ // 유저정보를 바탕으로 바꿔야함. update
+        // 사용자가 동의를 누르고 저장한게 맞다면
+        if(agreeYn == true){
+            // 유저정보를 바탕으로 바꿔야함. update
+            // user 엔티티의 updateAgreeYn을 통해 agreeYn에 ture를 넣어서 전달하면 userAgreeYn은 Y로 바뀐다.
             user.updateAgreeYn(agreeYn);
             userRepository.save(user);
         }
@@ -46,6 +53,7 @@ public class TransferService {
         return requestUrls;
     }
 
+    // 이름과 전화번호를 통해 사용자를 특정한 후 마이데이터 동의 상태를 바꿔준다.
     public void updateBankUserAgreementStatus(String userUsername, String userCellNo, Boolean agreeYn) {
         // 다른 서비스의 업데이트 엔드포인트 URL을 설정
 
