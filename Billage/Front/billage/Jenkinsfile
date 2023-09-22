@@ -53,7 +53,7 @@ pipeline {
                     sh '''
                     echo 'Deploy'                    
 
-                    docker run -d -p 3000:80 --name billage-front docker-react:0.0.1
+                    docker run -d -p 5173:80 --name billage-front docker-react:0.0.1
                     '''
                 }
             }
