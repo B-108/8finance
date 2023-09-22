@@ -138,6 +138,8 @@ const SmallButtonsContainer = () => {
     );
 };
 
+
+//하단 작성 버튼
 const ButtonContainer = () => {
     return (
         <div

@@ -1,28 +1,21 @@
-import React, {ChangeEvent} from 'react'
-
-import styled, {css} from "styled-components"
+import React, { ChangeEvent, useState } from 'react';
+import styled, { css } from 'styled-components';
 import theme from '/src/themes';
 import Image from './Image';
 
 interface InputProps {
     children?: React.ReactNode;
     onClick?: () => void;
-
     value?: string | number | Date;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-
     disabled?: boolean;
     type?: 'phone' | 'number' | 'money' | 'name' | 'day' | 'interest' | 'amount' | 'totalAmount';
-
     // 사이즈 설정
     $size?: string;
-
     // 활성 상태
     $active?: boolean;
-
     // 간편 비밀번호
     $simplepassword?: boolean;
-
     // 사진
     $buttonImage?: string;
 }
@@ -67,7 +60,7 @@ const StyledInput = styled.input<InputProps>`
                 background-color: ${theme.color.green[0]};
             }
         `}
-    
+
     // 타입이 "interest"인 경우 "%" 기호 표시
     ${(props) =>
         props.type === 'interest' &&
@@ -118,22 +111,6 @@ export const ButtonBox = styled.div`
     display: flex;
     justify-content: flex-end;
     width: 90%;
-
-    /* border: 1px solid red; */
-`;
-
-//
-export const InputWithPercentage = styled(StyledInput)<{ $hasPercentage?: boolean }>`
-    position: relative;
-
-    &::after {
-        content: '%';
-        position: absolute;
-        top: 50%;
-        right: 10px; /* 원하는 위치로 조절 가능 */
-        transform: translateY(-50%);
-        display: ${(props) => (props.$hasPercentage ? 'block' : 'none')};
-    }
 `;
 
 // 오른쪽에 이미지 달린 인풋
@@ -142,7 +119,7 @@ export const ButtonInput = (props: InputProps) => {
         <InputDiv>
             <StyledInput {...props}></StyledInput>
             <ButtonBox>
-                {/* 이미지 버튼을 여기에 추가하세요 */}
+                {/* 이미지 버튼 추가해야 됨 */}
                 {props.$buttonImage && <Image src={props.$buttonImage} alt="Button Image" width="30px" />}
             </ButtonBox>
         </InputDiv>
