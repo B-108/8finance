@@ -19,6 +19,7 @@ interface TextProps {
     $pinText? : boolean;
     $mainText? : boolean;
     $description? : boolean;
+    $title? : boolean;
 
 }
 
@@ -52,6 +53,16 @@ const StyledText = styled.div<TextProps>`
         props.$description && 
         css`
           font-size: ${theme.fontSize.S_14};
+        `
+    }
+
+    // title : 각 요소의 제목
+    ${(props) =>
+        props.$title && 
+        css`
+          font-size: ${theme.fontSize.L_24};
+          font-weight: 800;
+          /* border: 1px solid ; */
         `
     }
 `
