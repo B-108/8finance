@@ -19,13 +19,12 @@ interface ButtonProps {
     $smallGreenBtn ?: boolean
     $smallGrayBtn ?: boolean
 
-    $listButton ?: boolean
-    $IOUButton ?: boolean
-    $moneyButton ?: boolean
-
     // 색상 지정
     $Green ?:boolean
     $Gray ?:boolean
+
+    // 위치 선정
+    $absolute ?: string
 }
 
 const StyledButton = styled.button<ButtonProps>`
@@ -34,12 +33,12 @@ const StyledButton = styled.button<ButtonProps>`
     border : none;
     color: white;
     padding: 0%;
-    padding-left : 15px;
+    text-align : center;
     font-size: ${theme.fontSize.DF_16};
-    border-radius: ${theme.fontSize.DF_16};
     width: ${(props) => props.$size?.split(',')[0]};
     height: ${(props) => props.$size?.split(',')[1]};
     line-height: ${(props) => props.$size?.split(',')[1]};
+    position: ${(props) => props.$absolute};
 
     // greanGradient 사용 예시
     // border-image: ${theme.color.mix.border};
@@ -70,7 +69,7 @@ const StyledButton = styled.button<ButtonProps>`
         props.$smallGreenBtn && 
         css`
             font-size: ${theme.fontSize.DF_16};
-            border-radius: ${theme.radius.M_15};
+            border-radius: ${theme.radius.DF_8};
             background-color: ${theme.color.green[0]};;
         `
     }
@@ -80,7 +79,7 @@ const StyledButton = styled.button<ButtonProps>`
         props.$smallGrayBtn && 
         css`
             font-size: ${theme.fontSize.DF_16};
-            border-radius: ${theme.radius.M_15};
+            border-radius: ${theme.radius.DF_8};
             background-color: ${theme.color.gray[40]};;
         `
     }

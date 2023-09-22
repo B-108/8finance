@@ -10,9 +10,10 @@ import TransactionList from '/src/pages/TransactionList/TransactionList';
 import FindPW from 'src/pages/FindPassword/FindPassword';
 import ChangePW from 'src/pages/ChangePassword/ChangePassword';
 import Main from './pages/Main/Main';
-import PinRegister from './pages/Pin/PinRegister';
 import Notifications from 'src/pages/Notifications/Notifications';
 import Transfer from './pages/Transfer/Transfer';
+import PinRegister from './pages/Pin/PinRegister/PinRegister';
+import PinCheck from './pages/Pin/PinCheck/PinCheck';
 
 const router = createBrowserRouter([
     {
@@ -37,6 +38,11 @@ const router = createBrowserRouter([
             {
                 path: '/PinRegister',
                 element: <PinRegister />,
+                errorElement: <ErrorComponent />,
+            },
+            {
+                path: '/PinCheck',
+                element: <PinCheck />,
                 errorElement: <ErrorComponent />,
             },
             {
