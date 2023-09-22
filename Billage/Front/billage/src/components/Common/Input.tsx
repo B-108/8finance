@@ -125,3 +125,18 @@ export const ButtonInput = (props: InputProps) => {
         </InputDiv>
     );
 };
+
+// Transfer, SendMoney에서 사용하는 인풋
+export const TranInputDiv = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 80px;
+`;
+
+export const TranInputTitle = styled.div`
+    font-size: ${theme.fontSize.DF_16};
+    margin: 0px;
+    font-weight: 800;
+`;

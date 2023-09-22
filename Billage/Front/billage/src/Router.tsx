@@ -14,6 +14,7 @@ import Notifications from 'src/pages/Notifications/Notifications';
 import PinRegister from './pages/Pin/PinRegister/PinRegister';
 import PinCheck from './pages/Pin/PinCheck/PinCheck';
 import Transfer from './pages/Transfer/Transfer';
+import SendMoney from './pages/SendMoney/SendMoney';
 
 const router = createBrowserRouter([
     {
@@ -78,6 +79,11 @@ const router = createBrowserRouter([
             {
                 path: '/iou',
                 element: <IOU />,
+                errorElement: <ErrorComponent />,
+            },
+            {
+                path: '/sendmoney',
+                element: <SendMoney />,
                 errorElement: <ErrorComponent />,
             },
         ],
