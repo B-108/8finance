@@ -6,25 +6,25 @@ interface ImageProps {
     children?: React.ReactNode;
     onClick?: () => void;
 
-    type?:
-        | 'logo'
-        | 'password'
-        | 'alramBell'
-        | 'receiveMoney'
-        | 'Document'
-        | 'DocumentList'
-        | 'alramClock'
-        | 'AccountEnroll'
-        | 'transaction'
-        | 'transactionList'
-        | 'flyingMoney'
-        | 'account'
-        | 'wallet'
-        | 'creditCard'
-        | 'receiveMoney'
-        | 'transaction'
-        | 'NH'
-        | 'KB';
+    // type?:
+    //     | 'logo'
+    //     | 'password'
+    //     | 'alramBell'
+    //     | 'receiveMoney'
+    //     | 'Document'
+    //     | 'DocumentList'
+    //     | 'alramClock'
+    //     | 'AccountEnroll'
+    //     | 'transaction'
+    //     | 'transactionList'
+    //     | 'flyingMoney'
+    //     | 'account'
+    //     | 'wallet'
+    //     | 'creditCard'
+    //     | 'receiveMoney'
+    //     | 'transaction'
+    //     | 'NH'
+    //     | 'KB';
 
     src: string;
     alt: string;
