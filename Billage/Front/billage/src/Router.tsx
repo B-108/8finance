@@ -13,6 +13,7 @@ import Main from './pages/Main/Main';
 import Notifications from 'src/pages/Notifications/Notifications';
 import PinRegister from './pages/Pin/PinRegister/PinRegister';
 import PinCheck from './pages/Pin/PinCheck/PinCheck';
+import Transfer from './pages/Transfer/Transfer';
 
 const router = createBrowserRouter([
     {
