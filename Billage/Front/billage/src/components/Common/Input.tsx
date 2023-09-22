@@ -2,76 +2,93 @@ import React, {ChangeEvent} from 'react'
 
 import styled, {css} from "styled-components"
 import theme from '/src/themes';
+import Image from './Image';
 
 interface InputProps {
     children?: React.ReactNode;
     onClick?: () => void;
 
-    value? : string  | number | Date;
+    value?: string | number | Date;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-    
-    disabled?: boolean;    
-    type?: 'phone' | 'number' | 'money' | 'name' | 'day' | 'interest';
+
+    disabled?: boolean;
+    type?: 'phone' | 'number' | 'money' | 'name' | 'day' | 'interest' | 'amount' | 'totalAmount';
 
     // 사이즈 설정
-    $size ?: string
+    $size?: string;
 
     // 활성 상태
-    $active ?: boolean;
+    $active?: boolean;
 
     // 간편 비밀번호
-    $simplepassword ?: boolean
+    $simplepassword?: boolean;
+
+    // 사진
+    $buttonImage?: string;
 }
 
 const StyledInput = styled.input<InputProps>`
     // 기본값
     width: auto;
     height: auto;
-    border : 1px solid black;
+    border: 1px solid black;
     font-size: ${theme.fontSize.DF_16};
     border-radius: ${theme.radius.S_10};
     line-height: ${(props) => props.$size?.split(',')[1]};
-    
+
     // 사이즈 설정
     width: ${(props) => props.$size?.split(',')[0]};
     height: ${(props) => props.$size?.split(',')[1]};
 
     // 회원 관련 입력
     ${(props) =>
-        props.$active && 
+        props.$active &&
         css`
-            border : 3px solid ${theme.color.gray[70]};
+            border: 3px solid ${theme.color.gray[70]};
             font-size: ${theme.fontSize.DF_16};
             border-radius: ${theme.radius.S_10};
-            
+
             &:focus {
                 outline: 1px solid ${theme.color.green[0]};
             }
-        `
-    }
+        `}
 
     // 간편 비밀번호 입력
     ${(props) =>
-        props.$simplepassword && 
+        props.$simplepassword &&
         css`
-            border : 1px solid ${theme.color.gray[100]}; 
+            border: 1px solid ${theme.color.gray[100]};
             background-color: ${theme.color.gray[100]};
             font-size: ${theme.fontSize.DF_16};
             border-radius: 100%;
-            
+
             &:focus {
                 outline: 1px solid ${theme.color.green[0]};
                 background-color: ${theme.color.green[0]};
             }
-        `
-    }
-`
+        `}
+    
+    // 타입이 "interest"인 경우 "%" 기호 표시
+    ${(props) =>
+        props.type === 'interest' &&
+        css`
+            position: relative;
 
-const Input = (props:InputProps) => {
-    return <StyledInput {...props}></StyledInput>
-}
+            &:after {
+                content: '%';
+                position: absolute;
+                right: 10px; // '%' 기호의 오른쪽 여백 조정
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        `}
+`;
 
-export default Input
+const Input = (props: InputProps) => {
+    return <StyledInput {...props}></StyledInput>;
+};
+
+export default Input;
 
 export const InputHeader = styled.div`
     width: fit-content;
@@ -94,13 +111,40 @@ export const InputDiv = styled.div`
 
 export const InputAuthHeader = styled(InputHeader)`
     margin-bottom: 47px;
-`
+`;
 
 export const ButtonBox = styled.div`
     position: absolute;
     display: flex;
     justify-content: flex-end;
     width: 90%;
-    
+
     /* border: 1px solid red; */
-`
+`;
+
+//
+export const InputWithPercentage = styled(StyledInput)<{ $hasPercentage?: boolean }>`
+    position: relative;
+
+    &::after {
+        content: '%';
+        position: absolute;
+        top: 50%;
+        right: 10px; /* 원하는 위치로 조절 가능 */
+        transform: translateY(-50%);
+        display: ${(props) => (props.$hasPercentage ? 'block' : 'none')};
+    }
+`;
+
+// 오른쪽에 이미지 달린 인풋
+export const ButtonInput = (props: InputProps) => {
+    return (
+        <InputDiv>
+            <StyledInput {...props}></StyledInput>
+            <ButtonBox>
+                {/* 이미지 버튼을 여기에 추가하세요 */}
+                {props.$buttonImage && <Image src={props.$buttonImage} alt="Button Image" width="30px" />}
+            </ButtonBox>
+        </InputDiv>
+    );
+};

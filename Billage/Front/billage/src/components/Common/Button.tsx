@@ -8,32 +8,33 @@ interface ButtonProps {
     children?: React.ReactNode;
     onClick?: () => void;
 
-    disabled?: boolean;    
+    disabled?: boolean;
 
     // 사이즈 설정
-    $size ?: string
+    $size?: string;
 
     // 버튼 종류
-    $basicGreenBtn ?: boolean
-    $basicGrayBtn ?: boolean
-    $smallGreenBtn ?: boolean
-    $smallGrayBtn ?: boolean
+    $basicGreenBtn?: boolean;
+    $basicGrayBtn?: boolean;
+    $smallGreenBtn?: boolean;
+    $smallGrayBtn?: boolean;
+    $smallBlackBtn?: boolean;
 
     // 색상 지정
-    $Green ?:boolean
-    $Gray ?:boolean
+    $Green?: boolean;
+    $Gray?: boolean;
 
     // 위치 선정
-    $absolute ?: string
+    $absolute?: string;
 }
 
 const StyledButton = styled.button<ButtonProps>`
     width: auto;
     height: auto;
-    border : none;
+    border: none;
     color: white;
     padding: 0%;
-    text-align : center;
+    text-align: center;
     font-size: ${theme.fontSize.DF_16};
     width: ${(props) => props.$size?.split(',')[0]};
     height: ${(props) => props.$size?.split(',')[1]};
@@ -46,60 +47,62 @@ const StyledButton = styled.button<ButtonProps>`
 
     // 초록색 큰/중간 사이즈 버튼
     ${(props) =>
-        props.$basicGreenBtn && 
+        props.$basicGreenBtn &&
         css`
             font-size: ${theme.fontSize.M_20};
             border-radius: ${theme.radius.L_20};
-            background-color: ${theme.color.green[0]};;
-        `
-    }
+            background-color: ${theme.color.green[0]};
+        `}
 
     // 회색 큰/중간 사이즈 버튼
     ${(props) =>
-        props.$basicGrayBtn && 
+        props.$basicGrayBtn &&
         css`
             font-size: ${theme.fontSize.M_20};
             border-radius: ${theme.radius.L_20};
-            background-color: ${theme.color.gray[40]};;
-        `
-    }
+            background-color: ${theme.color.gray[40]};
+        `}
 
     // 초록색 작은 사이즈 버튼 (모달용/전송용)
     ${(props) =>
-        props.$smallGreenBtn && 
+        props.$smallGreenBtn &&
         css`
             font-size: ${theme.fontSize.DF_16};
             border-radius: ${theme.radius.DF_8};
-            background-color: ${theme.color.green[0]};;
-        `
-    }
+            background-color: ${theme.color.green[0]};
+        `}
 
     // 회색 작은 사이즈 버튼 (모달용)
     ${(props) =>
-        props.$smallGrayBtn && 
+        props.$smallGrayBtn &&
         css`
             font-size: ${theme.fontSize.DF_16};
             border-radius: ${theme.radius.DF_8};
-            background-color: ${theme.color.gray[40]};;
-        `
-    }
+            background-color: ${theme.color.gray[40]};
+        `}
+    // 검은색 작은 사이즈 버튼 (빌릴금액)
+    ${(props) =>
+        props.$smallBlackBtn &&
+        css`
+            font-size: ${theme.fontSize.S_14};
+            border-radius: ${theme.radius.M_15};
+            background-color: ${theme.color.black};
+        `}
 
     // 초록색 
     ${(props) =>
-        props.$Green && 
+        props.$Green &&
         css`
-            background-color:  ${theme.color.green[0]};
-        `
-    }
+            background-color: ${theme.color.green[0]};
+        `}
 
     // 회색 
     ${(props) =>
-        props.$Gray && 
+        props.$Gray &&
         css`
-            background-color:  ${theme.color.gray[70]};
-        `
-    }
-`
+            background-color: ${theme.color.gray[70]};
+        `}
+`;
 
 const Button = (props:ButtonProps) => {
     return <StyledButton {...props}> {props.children} </StyledButton>
