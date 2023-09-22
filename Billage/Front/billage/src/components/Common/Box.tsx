@@ -44,8 +44,8 @@ const StyledBox = styled.div<BoxProps>`
     ${(props) =>
         props.$mainTransaction && 
         css`
-          border-radius: ${theme.radius.M_15};
-          background: ${theme.color.mix.background};
+            border-radius: ${theme.radius.M_15};
+            background: ${theme.color.mix.background};
         `
     }
 
@@ -53,7 +53,11 @@ const StyledBox = styled.div<BoxProps>`
     ${(props) =>
         props.$transaction && 
         css`
-
+            display: flex;
+            margin: 7% 0px 0px 0px;
+            padding: 3% 0% 3% 2%;
+            border-radius: ${theme.radius.DF_8};
+            box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);
         `
     }
 `
