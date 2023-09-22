@@ -27,16 +27,6 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                dir('Billage/Front/billage') {
-                    sh '''
-                    echo 'npm run dev'
-                    npm run dev
-                    '''
-                }
-            }
-        }
 
         stage('Docker image build') {
             steps {
