@@ -33,7 +33,7 @@ function SignUp(){
         console.log(phone)
     };
     const moveLogin = () => {
-        navigate(`/login`)
+        navigate(`/`)
     }
 
     return(
@@ -64,7 +64,7 @@ function SignUp(){
                 <ButtonBox>
                     <Button
                         $smallGreenBtn
-                        $size="15%,30px"
+                        $size="26%,30px"
                         onClick={handleLoginClick}
                         >전송
                     </Button>

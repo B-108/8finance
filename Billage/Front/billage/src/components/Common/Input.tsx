@@ -100,7 +100,7 @@ export const ButtonBox = styled.div`
     position: absolute;
     display: flex;
     justify-content: flex-end;
-    width: 90%;
-    
+    margin-left: 40%;
+    width: 50%;
     /* border: 1px solid red; */
 `
