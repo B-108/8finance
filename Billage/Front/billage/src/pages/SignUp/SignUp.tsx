@@ -33,13 +33,16 @@ function SignUp(){
         console.log(phone)
     };
     const moveLogin = () => {
-        navigate(`/login`)
+        navigate(`/`)
     }
 
     return(
         <CenteredContainer $center>
             <Image src={logo} alt="로고" width="120px"></Image>
-            <p style={{ fontSize: theme.fontSize.XL_28, fontWeight : 'bold' }}>Billage에 오신걸 환영합니다!</p>
+            
+            <Text
+                $mainText
+                $size="60%,">Billage에 오신걸 환영합니다!</Text>
 
             <InputDiv style={{marginBottom : '1rem'}}>
                 <InputHeader>이름</InputHeader>
@@ -64,7 +67,7 @@ function SignUp(){
                 <ButtonBox>
                     <Button
                         $smallGreenBtn
-                        $size="15%,30px"
+                        $size="26%,30px"
                         onClick={handleLoginClick}
                         >전송
                     </Button>
