@@ -2,7 +2,8 @@ import Header from "/src/components/Header/Header"
 import Text from "/src/components/Common/Text"
 import Button from "/src/components/Common/Button"
 import {useState} from 'react'
-
+import History from "../TransactionHistory/TransactionHistory"
+import CenteredContainer from "/src/components/Common/CenterAlign"
 function TransactionList() {
     const [toggle, setToggle] = useState(true)
 
@@ -16,9 +17,10 @@ function TransactionList() {
 
     return(
         <>
+        <CenteredContainer>
             <Header headerTitle="거래목록"/>
 
-            <div style={{display: 'flex', justifyContent:"space-evenly"}}>
+            <div style={{display: 'flex', width:'98%', justifyContent:"space-between"}}>
                 <Text $PinText>어떤 거래야?</Text>
 
                 <div style={{display:'flex', alignItems:'center', justifyItems:'center'}}>
@@ -36,41 +38,12 @@ function TransactionList() {
                         빌려준목록</Button>
                 </div>
             </div>
+            {[1,2,3,4].map((item) => (
+                <History toggle={toggle} key={item}/>
+            ))}
+            </CenteredContainer>
         </>
     )
 }
 
 export default TransactionList
-
-
-// import React, { useState, useEffect } from 'react';
-// import ProgressBar from './ProgressBar';
-
-// function TransactionList() {
-//     const [progress, setProgress] = useState(0);
-
-//     useEffect(() => {
-//         // 여기에서 진행 상태를 업데이트하는 로직을 추가합니다.
-//         // 예를 들어, setTimeout을 사용하여 시간이 지남에 따라 진행 상태를 업데이트할 수 있습니다.
-//         const interval = setInterval(() => {
-//             if (progress < 100) {
-//                 setProgress(progress + 10);
-//             } else {
-//                 clearInterval(interval);
-//             }
-//         }, 1000);
-
-//         return () => {
-//             clearInterval(interval);
-//         };
-//     }, [progress]);
-
-//     return (
-//         <div>
-//             <h1>Progress Bar Example</h1>
-//             <ProgressBar progress={progress} />
-//         </div>
-//     );
-// }
-
-// export default TransactionList;
