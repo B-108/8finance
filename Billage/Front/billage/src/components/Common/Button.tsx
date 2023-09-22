@@ -41,10 +41,6 @@ const StyledButton = styled.button<ButtonProps>`
     line-height: ${(props) => props.$size?.split(',')[1]};
     position: ${(props) => props.$absolute};
 
-    // greanGradient 사용 예시
-    // border-image: ${theme.color.mix.border};
-    // border-image-slice: 1;
-
     // 초록색 큰/중간 사이즈 버튼
     ${(props) =>
         props.$basicGreenBtn &&
