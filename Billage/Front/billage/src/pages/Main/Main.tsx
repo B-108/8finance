@@ -6,9 +6,11 @@ import Header from "/src/components/Header/Header"
 import alarmBell2 from "/src/assets/alarmBell2.svg"
 import { AlarmContent, AlarmDate, AlarmHeader } from "./Main.style"
 import Footer from "/src/components/Common/Footer"
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/react-splide/css';
 
-// import Input from "/src/components/Common/Input"
 function Main(){
+    
     return(
         <>
             <CenteredContainer>
@@ -38,12 +40,47 @@ function Main(){
                     $title
                     $size="98%,50px">나의거래</Text>
 
-                <Box
+                {/* <Box
                     $mainTransaction
                     $size="285px,270px">
 
-                </Box>
-            
+                </Box> */}
+
+                <div style={{width:"100%"}}>
+                    <Splide
+                        options={ {
+                            rewind: true,
+                            arrows : false,
+                            gap   : '4%',
+                            padding: '9%',
+                        } }
+                        aria-label="My Favorite Images">
+                        <SplideSlide>
+                            <Box
+                                $mainTransaction
+                                $size="280px,270px">
+                            </Box>
+                        </SplideSlide>
+                        <SplideSlide>
+                            <Box
+                                $mainTransaction
+                                $size="280px,270px">
+                            </Box>
+                        </SplideSlide>
+                        <SplideSlide>
+                            <Box
+                                $mainTransaction
+                                $size="280px,270px">
+                            </Box>
+                        </SplideSlide>
+                        <SplideSlide>
+                            <Box
+                                $mainTransaction
+                                $size="280px,270px">
+                            </Box>
+                        </SplideSlide>
+                    </Splide>
+                </div>
             </CenteredContainer>
             <Footer/>
         </>
