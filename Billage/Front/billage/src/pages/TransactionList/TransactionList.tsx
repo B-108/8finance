@@ -21,7 +21,7 @@ function TransactionList() {
             <Header headerTitle="거래목록"/>
 
             <div style={{display: 'flex', width:'98%', justifyContent:"space-between"}}>
-                <Text $PinText>어떤 거래야?</Text>
+                <Text $title>어떤 거래야?</Text>
 
                 <div style={{display:'flex', alignItems:'center', justifyItems:'center'}}>
                         <Button
