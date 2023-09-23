@@ -20,8 +20,7 @@ interface TextProps {
     $mainText? : boolean;
     $description? : boolean;
     $title? : boolean;
-    $smallestText? : boolean;
-    $smallText? : boolean;
+    $smallTitle? : boolean;
 
 }
 
@@ -68,21 +67,16 @@ const StyledText = styled.div<TextProps>`
         `
     }
 
-    // 가장 작은 Text
+    // 메인페이지 거래 관련 버튼 제목
     ${(props) =>
-        props.$smallestText && 
+        props.$smallTitle && 
         css`
-          font-size: ${theme.fontSize.XXS_10};
+          font-size: ${theme.fontSize.M_20};
+          font-weight: 800;
         `
     }
 
-    // 작은 Text
-    ${(props) =>
-        props.$smallText && 
-        css`
-          font-size: ${theme.fontSize.XS_12};
-        `
-    }
+    // 
 `
 
 const Text = (props:TextProps) => {

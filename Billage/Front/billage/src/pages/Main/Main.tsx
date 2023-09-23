@@ -4,10 +4,12 @@ import Image from "/src/components/Common/Image"
 import Text from "/src/components/Common/Text"
 import Header from "/src/components/Header/Header"
 import alarmBell2 from "/src/assets/alarmBell2.svg"
-import { AlarmContent, AlarmDate, AlarmHeader } from "./Main.style"
+import wallet from "/src/assets/wallet.svg"
+import Document from "/src/assets/DocumentList.svg"
 import Footer from "/src/components/Common/Footer"
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
+import { AlarmContent, AlarmDate, AlarmHeader, Content, ContentBox, TransactionBox } from "./Main.style"
 
 function Main(){
     
@@ -24,7 +26,7 @@ function Main(){
 
                 <Box
                     $alarmBox
-                    $size="93%,80px">
+                    $size="89%,80px">
                     <AlarmHeader>
                         <Image
                             src={alarmBell2}
@@ -81,6 +83,40 @@ function Main(){
                         </SplideSlide>
                     </Splide>
                 </div>
+                <TransactionBox>
+                    <Box
+                        $transaction
+                        $size="46%,60px">
+                        <ContentBox>
+                            <Text
+                                $smallTitle
+                                $size="90%,30px">거래하기</Text>
+                            <Content>
+                                가까운 지인에게 부담없이 빌리세요
+                            </Content>
+                        </ContentBox>
+                        <Image
+                            src={wallet}
+                            alt="wallet"
+                            width="40%"></Image>
+                    </Box>
+                    <Box
+                        $transaction
+                        $size="46%,60px">
+                        <ContentBox>
+                            <Text
+                                $smallTitle
+                                $size="90%,30px">거래목록</Text>
+                            <Content>
+                                지인간의 돈거래 까먹지 마세요!
+                            </Content>
+                        </ContentBox>    
+                        <Image
+                            src={Document}
+                            alt="Document"
+                            width="33%"></Image>
+                    </Box>
+                </TransactionBox>
             </CenteredContainer>
             <Footer/>
         </>
