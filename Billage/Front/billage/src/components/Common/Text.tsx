@@ -63,7 +63,6 @@ const StyledText = styled.div<TextProps>`
         css`
           font-size: ${theme.fontSize.L_24};
           font-weight: 800;
-          /* border: 1px solid ; */
         `
     }
 
@@ -75,8 +74,6 @@ const StyledText = styled.div<TextProps>`
           font-weight: 800;
         `
     }
-
-    // 
 `
 
 const Text = (props:TextProps) => {
