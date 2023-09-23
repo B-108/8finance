@@ -4,10 +4,6 @@
   "start_url": "/",
 
   "display": "standalone",
-  // browser(normal) : 해당 브라우저에서 기본 웹으로 실행
-  // standalone : 상단의 URL바를 제거하여 네이티브앱처럼 보임(가장 많이 사용함)
-  // fullscreen : 화면전체를 사용하여 native처럼 보임
-
   "background_color": "#f8f7da",
   "theme_color": "#ffffff",
   "description": "더 이상 지인간의 거래 그냥 하지마세요.",    
