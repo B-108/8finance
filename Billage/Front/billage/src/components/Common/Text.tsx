@@ -20,6 +20,7 @@ interface TextProps {
     $mainText? : boolean;
     $description? : boolean;
     $title? : boolean;
+    $smallTitle? : boolean;
 
 }
 
@@ -65,6 +66,17 @@ const StyledText = styled.div<TextProps>`
           /* border: 1px solid ; */
         `
     }
+
+    // 메인페이지 거래 관련 버튼 제목
+    ${(props) =>
+        props.$smallTitle && 
+        css`
+          font-size: ${theme.fontSize.M_20};
+          font-weight: 800;
+        `
+    }
+
+    // 
 `
 
 const Text = (props:TextProps) => {

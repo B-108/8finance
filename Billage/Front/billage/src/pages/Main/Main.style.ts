@@ -13,3 +13,23 @@ export const AlarmDate = styled.div`
 export const AlarmContent = styled.div`
   /* border: 1px solid blue; */
 `
+
+export const TransactionBox = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 98%;
+  height: 70px;
+  display: flex;
+
+`
+
+export const ContentBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+export const Content = styled.div`
+  width: 94%;
+  height: 30px;
+  font-size: 10px;
+`
