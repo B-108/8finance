@@ -37,10 +37,10 @@ interface HistoryProps {
                         </Text>
                         <Text $smallContent>
                             ￦500.000
-                        </Text>
+                        </Text> 
                     </div>
                     <div style={{borderRadius: '10px', backgroundColor : '#EAEAEA' }}>
-                        <Text $smallText>
+                        <Text $smallContent>
                             남은금액
                         </Text>
                         <Text>
