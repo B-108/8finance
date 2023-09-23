@@ -32,15 +32,15 @@ interface HistoryProps {
                 
                 <div id="right"style={{flex: '3.5', textAlign:'center'}}>
                     <div style={{marginBottom: '15%', marginTop:'3%'}}>
-                        <Text $smallestText>
+                        <Text $smallestContent>
                             {toggle ? '빌린금액' : '빌려준 금액'}
                         </Text>
-                        <Text $smallText>
+                        <Text $smallContent>
                             ￦500.000
-                        </Text>
+                        </Text> 
                     </div>
                     <div style={{borderRadius: '10px', backgroundColor : '#EAEAEA' }}>
-                        <Text $smallText>
+                        <Text $smallContent>
                             남은금액
                         </Text>
                         <Text>

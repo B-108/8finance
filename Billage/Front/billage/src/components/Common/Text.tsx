@@ -21,6 +21,8 @@ interface TextProps {
     $description? : boolean;
     $title? : boolean;
     $smallTitle? : boolean;
+    $smallContent? : boolean;
+    $smallestContent? : boolean;
 
 }
 
@@ -72,6 +74,22 @@ const StyledText = styled.div<TextProps>`
         props.$smallTitle && 
         css`
           font-size: ${theme.fontSize.M_20};
+          font-weight: 800;
+        `
+    }
+    // 작은 글씨 내용
+    ${(props) =>
+        props.$smallContent && 
+        css`
+          font-size: ${theme.fontSize.XS_12};
+          font-weight: 800;
+        `
+    }
+    // 가장 작은 글씨 내용
+    ${(props) =>
+        props.$smallestContent && 
+        css`
+          font-size: ${theme.fontSize.XXS_10};
           font-weight: 800;
         `
     }
