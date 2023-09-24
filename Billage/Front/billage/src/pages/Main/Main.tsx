@@ -48,7 +48,7 @@ function Main(){
           $title
           $size="98%,50px">나의거래</Text>
 
-        <div style={{width:"106%"}}>
+        <div style={{width:"100%"}}>
           <Splide
             options={ {
               focus  : 'center',
