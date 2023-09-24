@@ -15,6 +15,7 @@ import PinRegister from './pages/Pin/PinRegister/PinRegister';
 import PinCheck from './pages/Pin/PinCheck/PinCheck';
 import Transfer from './pages/Transfer/Transfer';
 import TADetail from './pages/TransactionDetail/TransactionDetail';
+import TransactionHistory from './pages/TransactionHistory/TransactionHistory';
 
 const router = createBrowserRouter([
     {
@@ -62,6 +63,16 @@ const router = createBrowserRouter([
                 errorElement: <ErrorComponent />,
             },
             {
+                path: '/transactiondetail',
+                element: <TADetail />,
+                errorElement: <ErrorComponent />,
+            },
+            {
+                path: '/transactionhistory',
+                element: <TransactionHistory />,
+                errorElement: <ErrorComponent />,
+            },
+            {
                 path: '/findpassword',
                 element: <FindPW />,
                 errorElement: <ErrorComponent />,
@@ -81,11 +92,7 @@ const router = createBrowserRouter([
                 element: <IOU />,
                 errorElement: <ErrorComponent />,
             },
-            {
-                path: '/transactiondetail',
-                element: <TADetail />,
-                errorElement: <ErrorComponent />,
-            },
+            
         ],
         errorElement: <NotFound />,
     },

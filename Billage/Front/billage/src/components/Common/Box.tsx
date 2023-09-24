@@ -16,6 +16,7 @@ interface BoxProps {
     $alarmBox? : boolean;
     $mainTransaction? : boolean;
     $transaction? : boolean;
+    $detailBox? : boolean;
 }
 
 const StyledBox = styled.div<BoxProps>`
@@ -58,6 +59,18 @@ const StyledBox = styled.div<BoxProps>`
             padding: 3% 0% 3% 2%;
             border-radius: ${theme.radius.DF_8};
             box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);
+        `
+    }
+
+    // 거래내역 상세 box
+    ${(props) =>
+        props.$detailBox && 
+        css`
+            display: flex;
+            margin: 15px 0px 5px 0px;
+            padding: 4% 4% 4% 4%;
+            border-radius: ${theme.radius.S_10};
+            box-shadow: 2px 2px 14px 0px rgba(0, 0, 0, 0.25);
         `
     }
 `

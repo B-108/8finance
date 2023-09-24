@@ -30,7 +30,7 @@ const StyledText = styled.div<TextProps>`
     font-size: ${theme.fontSize.DF_16};
     width: ${(props) => props.$size?.split(',')[0]};
     height: ${(props) => props.$size?.split(',')[1]};
-    
+    justify-content: space-around;
     // 간편 비밀번호 Title Text
     ${(props) =>
         props.$pinText && 
@@ -65,7 +65,6 @@ const StyledText = styled.div<TextProps>`
         css`
           font-size: ${theme.fontSize.L_24};
           font-weight: 800;
-          /* border: 1px solid ; */
         `
     }
 
