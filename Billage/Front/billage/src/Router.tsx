@@ -40,12 +40,17 @@ const router = createBrowserRouter([
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/PinRegister',
+                path: '/pinregister',
                 element: <PinRegister />,
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/PinCheck',
+                path: '/pincheck',
+                element: <PinCheck />,
+                errorElement: <ErrorComponent />,
+            },
+            {
+                path: '/incheck',
                 element: <PinCheck />,
                 errorElement: <ErrorComponent />,
             },

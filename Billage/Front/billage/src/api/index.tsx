@@ -1,7 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 
-
-const BASE_URL = 'http://j9b108.p.ssafy.io:8080';
+export const BASE_URL = 'http://j9b108.p.ssafy.io:8080';
 axios.defaults.withCredentials = true;
 
 export const publicApi: AxiosInstance = axios.create({
