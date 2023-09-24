@@ -1,17 +1,16 @@
-import Input, { ButtonInput, InputDiv, TranInputDiv, TranInputTitle } from '/src/components/Common/Input';
+import Input, { ButtonInput, InputDiv } from '/src/components/Common/Input';
 import React, { useState } from 'react';
 import CenteredContainer from '/src/components/Common/CenterAlign';
 import Header from '/src/components/Header/Header';
 import plus from '/src/assets/plus.svg';
 import Button from '/src/components/Common/Button';
+import { TranInputDiv, TranInputTitle } from './SendMoney.style';
 
 function SendMoney() {
     const [friendInfo, setFriendInfo] = useState<string>('');
     const [accountInfo, setAccountInfo] = useState<string>('');
-    const [amount, setAmount] = useState<string>('');
-    const [endDate, setEndDate] = useState(new Date());
-    const [transferDate, setTransferDate] = useState<string>('');
-    const [interest, setInterest] = useState<string>('');
+    const [myAccountInfo, setMyAccountInfo] = useState<string>('');
+    const [amount, setAmountInfo] = useState<string>('');
 
     const handleFriendInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFriendInfo(event.target.value);
@@ -19,35 +18,35 @@ function SendMoney() {
     const handleAccountInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setAccountInfo(event.target.value);
     };
+    const handleMyAccountInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setMyAccountInfo(event.target.value);
+    };
     const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAccountInfo(event.target.value);
-    };
-    const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAccountInfo(event.target.value);
-    };
-    const handleTransferDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAccountInfo(event.target.value);
-    };
-    const handleInterestChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAccountInfo(event.target.value);
+        setAmountInfo(event.target.value);
     };
 
     return (
         <CenteredContainer>
             <Header headerTitle="이체하기"></Header>
             <TranInputDiv>
-                <TranInputTitle>돈 받을 계좌</TranInputTitle>
-                <Input $active $size="98%,40px"></Input>
+                <TranInputTitle>돈 받을 사람</TranInputTitle>
+                <Input value={friendInfo} $active $size="98%,40px" onChange={handleFriendInfoChange}></Input>
             </TranInputDiv>
             <hr />
             <TranInputDiv>
                 <TranInputTitle>상대방 계좌</TranInputTitle>
-                <Input $active $size="98%,40px"></Input>
+                <Input value={accountInfo} $active $size="98%,40px" onChange={handleAccountInfoChange}></Input>
             </TranInputDiv>
             <hr />
             <TranInputDiv>
                 <TranInputTitle>내 계좌</TranInputTitle>
-                <Input $active $size="98%,40px"></Input>
+                <ButtonInput
+                    value={myAccountInfo}
+                    $active
+                    $size="98%,40px"
+                    onChange={handleMyAccountInfoChange}
+                    $buttonImage={plus} // 이미지 버튼 추가
+                />
             </TranInputDiv>
             <hr />
             <TranInputDiv>
@@ -59,14 +58,7 @@ function SendMoney() {
             <hr />
             <TranInputDiv>
                 <TranInputTitle>남은 금액</TranInputTitle>
-
-                <Input
-                    type="interest"
-                    value={interest}
-                    $active
-                    $size="98%,40px"
-                    onChange={handleInterestChange}
-                ></Input>
+                <Input $active $size="98%,40px"></Input>
             </TranInputDiv>
             <hr />
             <ButtonContainer></ButtonContainer>
@@ -95,7 +87,7 @@ const SmallButtonsContainer = () => {
     );
 };
 
-//하단 작성
+//하단 버튼
 const ButtonContainer = () => {
     return (
         <div
