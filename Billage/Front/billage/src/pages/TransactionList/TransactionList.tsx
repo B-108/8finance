@@ -2,8 +2,8 @@ import Header from "/src/components/Header/Header"
 import Text from "/src/components/Common/Text"
 import Button from "/src/components/Common/Button"
 import {useState} from 'react'
-import History from "../TransactionHistory/TransactionHistory"
 import CenteredContainer from "/src/components/Common/CenterAlign"
+import TransactionItem from "/src/components/TransactionLIst/TransactionItem/TransactionItem"
 function TransactionList() {
     const [toggle, setToggle] = useState(true)
 
@@ -39,7 +39,7 @@ function TransactionList() {
                 </div>
             </div>
             {[1,2,3,4].map((item) => (
-                <History toggle={toggle} key={item}/>
+                <TransactionItem toggle={toggle} key={item}/>
             ))}
             </CenteredContainer>
         </>
