@@ -64,7 +64,7 @@ const StyledButton = styled.button<ButtonProps>`
         props.$smallGreenBtn &&
         css`
             font-size: ${theme.fontSize.DF_16};
-            border-radius: ${theme.radius.DF_8};
+            border-radius: ${theme.radius.XS_5};
             background-color: ${theme.color.green[0]};
         `}
 

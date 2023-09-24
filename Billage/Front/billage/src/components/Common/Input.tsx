@@ -104,13 +104,15 @@ export const InputDiv = styled.div`
 
 export const InputAuthHeader = styled(InputHeader)`
     margin-bottom: 47px;
+    
 `;
 
 export const ButtonBox = styled.div`
     position: absolute;
     display: flex;
     justify-content: flex-end;
-    width: 90%;
+    margin-left: 35%;
+    width: 55%;
 `;
 
 // 오른쪽에 이미지 달린 인풋

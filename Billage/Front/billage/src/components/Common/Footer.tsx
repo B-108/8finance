@@ -32,34 +32,41 @@ const Text = (props:TextProps) => {
 }
 
 const FooterContainer = styled.div`
-  width: 100%;
   display: flex;
+  height: 65px;
+  /* height: 7vh; */
   justify-content: space-around;
   align-items: end; 
   margin-top: auto;
+  background-color: white;
   box-shadow: 0px -5px 5px rgba(0, 0, 0, 0.1); // 그림자 스타일 추가
+
+  @media only screen and (max-width: 5000px) {
+    width: 400px;
+  }
+  @media only screen and (max-width: 400px) {
+    width: 96%;
+  }
 `;
 
 function Footer(){
     return (
-        <>
-            <FooterContainer>
-                <div style={{ width: '100%', display: 'flex', justifyContent: 'space-around', marginTop: 'auto' }}>
-                    <div>
-                        <Image src={home} alt="home" width="35px"></Image>
-                        <Text>홈</Text>
-                    </div>
-                    <div>
-                        <Image src={account} alt="account" width="36px"></Image>
-                        <Text>계좌</Text>
-                    </div>
-                    <div>
-                        <Image src={hamburger} alt="hamburger" width="32px"></Image>
-                        <Text>설정</Text>
-                    </div>
-                </div>
-            </FooterContainer>
-        </>
+      <FooterContainer>
+          <div style={{ width: '100%', display: 'flex', justifyContent: 'space-around', marginTop: 'auto' }}>
+              <div>
+                  <Image src={home} alt="home" width="30px"></Image>
+                  <Text>홈</Text>
+              </div>
+              <div>
+                  <Image src={account} alt="account" width="30px"></Image>
+                  <Text>계좌</Text>
+              </div>
+              <div>
+                  <Image src={hamburger} alt="hamburger" width="32px"></Image>
+                  <Text>설정</Text>
+              </div>
+          </div>
+      </FooterContainer>
     );
 }
 
