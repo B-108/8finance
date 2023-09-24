@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import fontSize from '/src/themes/fontSize';
 import color from '/src/themes/color';
 import theme from '/src/themes';
@@ -39,10 +39,23 @@ export const AccountsContainer = styled.div`
     align-items: center;
 `;
 
-export const Accounts = styled.img`
+export const Accounts = styled.img<{ $isClicked: boolean }>`
     width: 98%;
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain; /* 이미지를 가로, 세로 비율 유지하며 컨테이너에 맞춥니다. */
-    margin-bottom: 10px; /* Account 간격 조절 */
+    object-fit: contain;
+    margin-bottom: 10px;
+    // border: 2px solid ${color.gray[100]}; // 초기 테두리 색상
+    border-radius: 20px; // 둥근 테두리
+
+    &:active,
+    &:focus {
+        border: 2px solid ${color.green[100]}; // 클릭 또는 포커스 시 테두리 색상 변경
+    }
+
+    ${(props) =>
+        props.$isClicked &&
+        css`
+            border: 2px solid ${color.green[100]}; // 계좌 클릭 시 테두리 색상 변경
+        `}
 `;
