@@ -62,6 +62,11 @@ const router = createBrowserRouter([
                 errorElement: <ErrorComponent />,
             },
             {
+              path: '/transactiondetail',
+              element: <TADetail />,
+              errorElement: <ErrorComponent />,
+            },
+            {
                 path: '/findpassword',
                 element: <FindPW />,
                 errorElement: <ErrorComponent />,
@@ -81,11 +86,7 @@ const router = createBrowserRouter([
                 element: <IOU />,
                 errorElement: <ErrorComponent />,
             },
-            {
-                path: '/transactiondetail',
-                element: <TADetail />,
-                errorElement: <ErrorComponent />,
-            },
+            
         ],
         errorElement: <NotFound />,
     },

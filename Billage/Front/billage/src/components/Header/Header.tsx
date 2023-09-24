@@ -32,7 +32,7 @@ function Header ({headerTitle} : HeaderProps) {
         <Image
           src={backIcon}
           alt="backIcon"
-          width="10%"
+          width="6%"
           $noDisplay = {noDisplayImg}
           onClick={handleGoBack}></Image>
 
@@ -44,7 +44,7 @@ function Header ({headerTitle} : HeaderProps) {
         
         src={alramBell} 
         alt="alramBell"
-        width="7%"
+        width="6%"
         onClick={moveNotifications}></Image>
     </Container>
   )
