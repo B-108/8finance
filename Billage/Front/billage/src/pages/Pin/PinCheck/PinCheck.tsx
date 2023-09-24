@@ -10,7 +10,7 @@ import Image from "/src/components/Common/Image"
 import Input from "/src/components/Common/Input"
 
 // 스타일 컴포넌트  
-
+import { InputBox } from "./PinCheck.style"
 
 // 리코일 
 import { useRecoilState } from "recoil"
@@ -24,8 +24,7 @@ import {
 import { SignUpProps } from "/src/type/auth"
 
 // API
-import { postSignUp } from "/src/api/signup"
-import { InputBox } from "./PinCheck.style"
+import { postSignUp } from "/src/api/auth"
 
 function PinCheck () {
   const [phone, setPhone] = useRecoilState<string>(PhoneState);

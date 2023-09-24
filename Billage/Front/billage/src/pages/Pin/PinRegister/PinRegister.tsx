@@ -24,7 +24,6 @@ import {
 import { SignUpProps } from "/src/type/auth"
 
 // API
-import { postSignUp } from "/src/api/signup"
 
 function PinRegister () {
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
