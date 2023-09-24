@@ -17,6 +17,7 @@ import Transfer from './pages/Transfer/Transfer';
 import TADetail from './pages/TransactionDetail/TransactionDetail';
 import TransactionHistory from './pages/TransactionHistory/TransactionHistory';
 import SendMoney from './pages/SendMoney/SendMoney';
+import MyAccounts from './pages/MyAccounts/MyAccounts';
 
 const router = createBrowserRouter([
     {
@@ -97,6 +98,11 @@ const router = createBrowserRouter([
             {
                 path: '/sendmoney',
                 element: <SendMoney />,
+                errorElement: <ErrorComponent />,
+            },
+            {
+                path: '/myAccounts',
+                element: <MyAccounts />,
                 errorElement: <ErrorComponent />,
             },
         ],
