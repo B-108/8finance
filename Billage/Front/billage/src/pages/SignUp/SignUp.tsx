@@ -32,6 +32,11 @@ function SignUp(){
   const [certNum, setCertNum] = useState<string>('');
   
   const MAX_LENGTH = 10;
+
+  // 라우터 
+  const navigate = useNavigate()
+  const moveLogin = () => {navigate(`/`)}
+  const movePinRegister = () => {navigate(`/pinregister`)}
     
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length > MAX_LENGTH) {
@@ -57,11 +62,6 @@ function SignUp(){
     console.log(certNum)
   };
   
-  // 라우터 
-  const navigate = useNavigate()
-  const moveLogin = () => {navigate(`/`)}
-  const movePinRegister = () => {navigate(`/pinregister`)}
-
   return(
     <CenteredContainer $center>
       <Image src={logo} alt="로고" width="120px"></Image>
