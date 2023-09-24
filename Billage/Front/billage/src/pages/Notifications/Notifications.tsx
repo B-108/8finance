@@ -13,14 +13,14 @@ function Notifications() {
     const [notificationInfo, setNotificationInfo] = useState<string>('');
 
     return (
-        <CenteredContainer>  
+        <CenteredContainer>
             <Header
-                headerTitle="알림"
-                ></Header>
-            <Notification></Notification>
-            <Notification></Notification>
-            <Notification></Notification>
-            <Notification></Notification>
+                headerTitle="알림
+            "
+            ></Header>
+            <div style={{ display: 'flex' }}>
+                <Notification></Notification>
+            </div>
         </CenteredContainer>
     );
 }
