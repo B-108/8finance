@@ -10,6 +10,7 @@ import ProgressBar from "/src/components/Common/ProgressBar"
 import { useState, useEffect } from 'react';
 import Box from "/src/components/Common/Box";
 import FlexDiv from "/src/components/Common/SpaceBetweenFlexBox"
+import { useNavigate } from "react-router-dom"
 
 
 
@@ -21,6 +22,9 @@ function TADetail(){
     const lentdetail = ['2023.08.20(일)', '2023.10.10(화)', 500000+'원', 10+'%', 500000*1.1+'원']
 
     const [progress, setProgress] = useState(0);
+    
+    const navigate = useNavigate()
+    const moveTransactionHistory = () => {navigate(`/transactionhistory`)}
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -83,7 +87,9 @@ function TADetail(){
             <hr />
 
             <Text $smallTitle>거래내역</Text>
-            <Box $transaction>총 4건의 거래내역이 있습니다.</Box>
+            <Box 
+              $transaction
+              onClick={moveTransactionHistory}>총 4건의 거래내역이 있습니다.</Box>
 
             {/* 삭제 ㄴㄴㄴㄴㄴㄴㄴ */}
             {/* <div style={{display: 'flex', width:'100%', justifyContent:"space-between"}}>
