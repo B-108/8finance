@@ -38,6 +38,14 @@ dependencies {
 
 	// httpcomponents (문자인증)
 	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13' // 최신 버전 사용 가능
+
+	// 외부 API 호출을 위한 WebFlux 모듈
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	// JSON 데이터를 Java 객체로 변환하거나 Java 객체를 JSON으로 직렬화하기 위해 사용
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.5'
+
+
 }
 
 tasks.named('test') {
