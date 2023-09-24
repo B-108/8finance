@@ -16,7 +16,7 @@ export const Container = styled.div<InputContainer>`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0px 1% 0px 1%;
+    padding: 0px 1% 0px 3%;
     background-color: white;
     justify-content: ${(props) => props.$center ? "center" : ""};
     height: 93vh; /* 화면 높이의 100% */

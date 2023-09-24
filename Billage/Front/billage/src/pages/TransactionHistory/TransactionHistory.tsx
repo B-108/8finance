@@ -1,55 +1,103 @@
-import { useState, useEffect } from 'react';
-import ProgressBar from '../../components/Common/ProgressBar';
-import Text from "/src/components/Common/Text";
-interface HistoryProps {
-    toggle: boolean;
-  }
+import { Content, Contentbox, DetailBox, TitleBox } from "./TransactionHistory.style"
+import Box from "/src/components/Common/Box"
+import CenteredContainer from "/src/components/Common/CenterAlign"
+import Text from "/src/components/Common/Text"
+import Header from "/src/components/Header/Header"
 
-  function History({ toggle }: HistoryProps) {
+function TransactionHistory () {
+  return (
+    <CenteredContainer>
+      <Header
+        headerTitle="거래내역"></Header>
 
-    const [progress, setProgress] = useState(0);
+      <TitleBox>
+        <Text
+          $title>전체 거래내역</Text>
+        <Text
+          $smallTitle>Total : 2</Text>
+      </TitleBox>
 
-    useEffect(() => {
-        const timer = setInterval(() => {
-          if (progress < 75) {
-            setProgress(progress + 25);
-          }
-        }, 1000);
-    
-        return () => clearInterval(timer);
-      }, [progress]);
- 
+      <Box
+        $detailBox
+        $size="92%,150px">
+        <DetailBox>
+          <Contentbox>
+            <Content></Content>
+            <Content
+              $SizeUp
+              $Green>정현우 ={">"} 이경원</Content>
+          </Contentbox>
+            
+          <Contentbox>
+            <Content>거래시간</Content>
+            <Content>2023.09.06 11:12:39</Content>
+          </Contentbox>  
 
-    return(
-            <div style={{margin: '3% 0%', display: 'flex', border: '3px solid #6E960D', borderRadius: 15 ,width: '90%'}}>
-                
-                <div id="left" style={{ flex: '8.5', display:'flex', flexDirection: 'column', marginLeft: '3%'}}>
-                    <div style={{marginBottom : '15%'}}>
-                        <Text>000님과의 거래에요!</Text>
-                    </div>
-                    <ProgressBar progress={progress} />
-                </div>
-                
-                <div id="right"style={{flex: '3.5', textAlign:'center'}}>
-                    <div style={{marginBottom: '15%', marginTop:'3%'}}>
-                        <Text $smallestText>
-                            {toggle ? '빌린금액' : '빌려준 금액'}
-                        </Text>
-                        <Text $smallText>
-                            ￦500.000
-                        </Text>
-                    </div>
-                    <div style={{borderRadius: '10px', backgroundColor : '#EAEAEA' }}>
-                        <Text $smallText>
-                            남은금액
-                        </Text>
-                        <Text>
-                            ￦260.000
-                        </Text>
-                    </div>
-                </div>
-            </div>
-    )
+          <Contentbox>
+            <Content>거래내용</Content>
+            <Content>금액 입금</Content>
+          </Contentbox>
+
+          <Contentbox>
+            <Content>이체금액</Content>
+            <Content
+              $Green>70,000원</Content>
+          </Contentbox>
+
+          <Contentbox>
+            <Content>입금계좌</Content>
+            <Content>(NH농협)215-4854-2551-21</Content>
+          </Contentbox>
+
+          <Contentbox>
+            <Content>출금계좌</Content>
+            <Content>(기업)506-065112-01-017</Content>
+          </Contentbox>
+        </DetailBox>
+      </Box>
+
+
+      <Box
+        $detailBox
+        $size="92%,150px">
+        <DetailBox>
+          <Contentbox>
+            <Content></Content>
+            <Content
+              $SizeUp
+              $Green>정현우 ={">"} 이경원</Content>
+          </Contentbox>
+            
+          <Contentbox>
+            <Content>거래시간</Content>
+            <Content>2023.09.06 11:12:39</Content>
+          </Contentbox>  
+
+          <Contentbox>
+            <Content>거래내용</Content>
+            <Content>금액 입금</Content>
+          </Contentbox>
+
+          <Contentbox>
+            <Content>이체금액</Content>
+            <Content
+              $Green>70,000원</Content>
+          </Contentbox>
+
+          <Contentbox>
+            <Content>입금계좌</Content>
+            <Content>(NH농협)215-4854-2551-21</Content>
+          </Contentbox>
+
+          <Contentbox>
+            <Content>출금계좌</Content>
+            <Content>(기업)506-065112-01-017</Content>
+          </Contentbox>
+        </DetailBox>
+      </Box>
+      
+
+    </CenteredContainer>
+  )
 }
-
-export default History
+export default TransactionHistory

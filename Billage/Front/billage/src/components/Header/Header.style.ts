@@ -8,7 +8,6 @@ export const Container = styled.div`
   width: 98%;
   height: 10%;
   margin: 2% 0px 0px 0px;
-  /* border: 1px solid red; */
 `
 
 export const LeftSection = styled.div`
@@ -17,7 +16,6 @@ export const LeftSection = styled.div`
     align-items: center;
     height: 100%;
     width: 50%;
-
 `;
 
 export const Title = styled.div<{ $noDisplay:boolean }>`

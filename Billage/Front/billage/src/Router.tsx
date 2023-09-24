@@ -14,7 +14,7 @@ import Notifications from 'src/pages/Notifications/Notifications';
 import PinRegister from './pages/Pin/PinRegister/PinRegister';
 import PinCheck from './pages/Pin/PinCheck/PinCheck';
 import Transfer from './pages/Transfer/Transfer';
-import TransactionDetail from './pages/TransactionDetail/TransactionDetail';
+import TransactionHistory from './pages/TransactionHistory/TransactionHistory';
 
 const router = createBrowserRouter([
     {
@@ -62,8 +62,8 @@ const router = createBrowserRouter([
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/transactiondetail',
-                element: <TransactionDetail />,
+                path: '/transactionhistory',
+                element: <TransactionHistory />,
                 errorElement: <ErrorComponent />,
             },
             {
