@@ -23,7 +23,7 @@ import { useRecoilState } from "recoil";
 function Login(){
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
   
-  const MAX_LENGTH = 10;
+  const MAX_LENGTH = 20;
 
   // 라우터
   const navigate = useNavigate()
