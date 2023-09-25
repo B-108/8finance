@@ -39,11 +39,11 @@ function TADetail(){
 
     return(
         <>
-        <div style={{margin: '0 2%'}}>
+        <div style={{margin:'0px 2%'}}>
             <Header headerTitle="거래상세내용"></Header>
             <Text $title>빌린 거래</Text>
 
-            <div style={{display : 'flex', margin: '3% 0'}}>
+            <div style={{display : 'flex', margin: '3% 0px'}}>
                 <Image src={handshake} alt="악수"></Image>
                 <Text $smallTitle>000님과의 거래!</Text>
             </div>
@@ -58,7 +58,9 @@ function TADetail(){
 
             {
             borrowlist.map((list, index) =>(
-                <FlexDiv margin="3% 0%">
+                <FlexDiv 
+                  key={index}
+                  $margin="3% 0%">
                     <div style={{display: 'flex'}}>
                         <Image src={image[index]} alt={list}></Image>
                         <Text>{list}</Text>
@@ -68,7 +70,7 @@ function TADetail(){
             )
             )}
             <hr />
-            <FlexDiv alignItems="center" textAlign="center" margin="5% 0">
+            <FlexDiv $alignItems="center" $textAlign="center" $margin="5% 0">
                 <div style={{flex : 8}}>
                     <ProgressBar progress={progress} />
                 </div>

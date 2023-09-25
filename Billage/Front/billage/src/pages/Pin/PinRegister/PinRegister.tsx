@@ -11,7 +11,8 @@ import Image from "/src/components/Common/Image"
 import Input from "/src/components/Common/Input"
 
 // 스타일 컴포넌트  
-import { InputBox } from "./PinRegister.style"
+import {
+  InputBox } from "./PinRegister.style"
 
 // 리코일 
 import { useRecoilState } from "recoil"

@@ -31,7 +31,7 @@ function SignUp(){
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
   const [certNum, setCertNum] = useState<string>('');
   
-  const MAX_LENGTH = 10;
+  const MAX_LENGTH = 20;
 
   // 라우터 
   const navigate = useNavigate()
@@ -77,7 +77,7 @@ function SignUp(){
           value={name}
           $size="93%,40px"
           $active
-          onChange={handleNameChange}와 
+          onChange={handleNameChange} 
         />
       </InputDiv>
 
