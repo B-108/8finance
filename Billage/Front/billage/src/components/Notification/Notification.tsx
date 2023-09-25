@@ -67,17 +67,15 @@ const DateText = styled.span<TextProps>`
 
 function Notification() {
     return (
-        <CenteredContainer>
-            <NotificationContainer>
-                <IconContainer>
-                    <Image src={receiveMoney} alt="home" width="35px" />
-                </IconContainer>
-                <TextContainer>
-                    <NotificationText>~님이 ~원을 갚았습니다.</NotificationText>
-                    <DateText>오늘</DateText>
-                </TextContainer>
-            </NotificationContainer>
-        </CenteredContainer>
+        <NotificationContainer>
+            <IconContainer>
+                <Image src={receiveMoney} alt="home" width="35px" />
+            </IconContainer>
+            <TextContainer>
+                <NotificationText>~님이 ~원을 갚았습니다.</NotificationText>
+                <DateText>오늘</DateText>
+            </TextContainer>
+        </NotificationContainer>
     );
 }
 
