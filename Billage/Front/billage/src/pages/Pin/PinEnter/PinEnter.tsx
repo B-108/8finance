@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 
 // 이미지
 import plus from "/src/assets/plus.svg"
@@ -15,57 +16,56 @@ import { InputBox } from "./PinEnter.style"
 // 리코일 
 import { useRecoilState } from "recoil"
 import { 
-  NameState, 
-  PhoneState, 
-  PinNumberCheckState, 
-  PinNumberState } from "/src/recoil/auth"
-
+  PhoneState,
+  PinEnterState } from "/src/recoil/auth"
+  
 // 타입스크립트
-import { SignUpProps } from "/src/type/auth"
+import { LoginProps } from "/src/type/auth"
 
 // API
-import { postSignUp } from "/src/api/auth"
+import { postLogin } from "/src/api/auth"
+
+
+// 로그인, 돈이체(빌려, 갚아), 계좌등록
 
 function PinEnter () {
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
-  const [name, setName] = useRecoilState<string>(NameState);
-  const [pinNumber,setPinNumber] = useRecoilState<string>(PinNumberState)
-  const [pinCheck,setPinCheck] = useRecoilState<string>(PinNumberCheckState)
-  
+  const [pinEnter,setPinEnter] = useRecoilState<string>(PinEnterState)
 
-  const handlePinCheckChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+   // 라우터 
+   const { routeAction } = useParams<{ routeAction?: string}>()
+  const navigate = useNavigate()
+  const moveMain = () => {navigate(`/Main`)}
+
+  const handlepinEnterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length > 1){
       event.target.value = event.target.value.slice(0,1)
       return 
     }
     if (event.target.value !== "") {
-      setPinCheck(pinCheck + event.target.value);
+      setPinEnter(pinEnter + event.target.value);
     }
     else {
-      setPinCheck(pinCheck.slice(0,pinCheck.length-1))
+      setPinEnter(pinEnter.slice(0,pinEnter.length-1))
     }
-    console.log(`Pin : ${pinCheck}`)
+    console.log(`Pin : ${pinEnter}`)
     
-    if (pinCheck.length >= 4 ) {
-      
-      if (pinNumber === pinCheck + event.target.value){
-        axiosSignUp(pinCheck+event.target.value)
-      }
-
-      else if (pinNumber !== pinCheck + event.target.value){
-        console.log("비밀번호 확인이 틀렸을 때")
+    if (pinEnter.length >= 4 ) {
+      console.log("비밀번호 5자리 입력 들어오면",pinEnter + event.target.value)
+      if (routeAction === "login") {
+        axiosLogin(pinEnter + event.target.value)
       }
     }
   };
 
-  const axiosSignUp = async (Pin : string):Promise<void> => {
-    const user: SignUpProps = {
+  const axiosLogin = async (Pin : string):Promise<void> => {
+    const info: LoginProps = {
       userCellNo: phone,
-      userName: name,
       userSimplePass: Pin,
     }
     try {
-      await postSignUp(user)
+      const response = await postLogin(info)
+      if (response) {moveMain()}
     }
     catch(error) {
       console.log(error)
@@ -76,32 +76,32 @@ function PinEnter () {
     <CenteredContainer $center>
       <Text
         $pinText
-        >간편 비밀번호 확인</Text>
+        >간편 비밀번호 입력</Text>
 
       <InputBox>
         <Input
           $size="20px,20px" 
           $simplepassword
-          value={pinCheck.length >= 1 ? pinCheck[0] : ""}
-          onChange={handlePinCheckChange}
+          value={pinEnter.length >= 1 ? pinEnter[0] : ""}
+          onChange={handlepinEnterChange}
           ></Input>
         <Input 
           $size="20px,20px" 
           $simplepassword
-          value={pinCheck.length >= 2 ? pinCheck[1] : ""}
-          onChange={handlePinCheckChange}
+          value={pinEnter.length >= 2 ? pinEnter[1] : ""}
+          onChange={handlepinEnterChange}
           ></Input>
         <Input 
           $size="20px,20px" 
           $simplepassword
-          value={pinCheck.length >= 3 ? pinCheck[2] : ""}
-          onChange={handlePinCheckChange}
+          value={pinEnter.length >= 3 ? pinEnter[2] : ""}
+          onChange={handlepinEnterChange}
           ></Input>
         <Input 
           $size="20px,20px" 
           $simplepassword
-          value={pinCheck.length >= 4 ? pinCheck[3] : ""}
-          onChange={handlePinCheckChange}
+          value={pinEnter.length >= 4 ? pinEnter[3] : ""}
+          onChange={handlepinEnterChange}
           ></Input>
         <Image
           src={plus}
@@ -109,8 +109,8 @@ function PinEnter () {
         <Input 
           $size="20px,20px" 
           $simplepassword
-          value={pinCheck.length >= 5 ? pinNumber[4] : ""}
-          onChange={handlePinCheckChange}
+          value={pinEnter.length >= 5 ? pinEnter[4] : ""}
+          onChange={handlepinEnterChange}
           ></Input>
       </InputBox>
 

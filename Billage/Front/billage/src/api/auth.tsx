@@ -1,15 +1,16 @@
 import { publicApi } from ".";
 
-
 // 타입스크립트
 import { 
   LoginProps, 
+  MessageCertProps, 
+  MessageProps, 
   SignUpProps } from "../type/auth";
 
 // 회원가입
-export const postSignUp = async (user: SignUpProps) => {
+export const postSignUp = async (info: SignUpProps) => {
   try{
-    const response = await publicApi.post("/user/signup", user);
+    const response = await publicApi.post("/user/signup", info);
     console.log(response.data);
     return response.data;
   }
@@ -19,22 +20,49 @@ export const postSignUp = async (user: SignUpProps) => {
 }
 
 // 로그인
-export const postLogin = async (user: LoginProps) => {
+export const postLogin = async (info: LoginProps) => {
   try{
-    const response = await publicApi.post("/user/login", user);
+    const response = await publicApi.post("/user/login", info);
     
     if (response && response.status === 200){
-      const accessToken = response.headers["jwtToken"]["accessToken"]
-      const refreshToken = response.headers["jwtToken"]["refreshToken"]
+      const accessToken = response.data.jwtToken.accessToken
+      const refreshToken = response.data.jwtToken.refreshToken
 
       console.log("access 토큰 :", accessToken);
       console.log("refresh 토큰 :", refreshToken);
 
       localStorage.setItem('access_token', accessToken);
       localStorage.setItem('refresh_token', refreshToken);
-    }
+
+      return response.data.userName
+    } 
   }
   catch (error) {
     console.log("postLogin을 실패한 이유는??",error)
+  }
+}
+
+// 문자 요청
+export const postMessage = async (info: MessageProps) => {
+  try{
+    const response = await publicApi.post("/sms", info);
+    console.log("문자 요청 ",response.data.statusName)
+  }
+  catch (error) {
+    console.log("postMessage를 실패한 이유는??",error)
+  }
+}
+
+// 문자 인증 요청
+export const postMessageCert = async (info: MessageCertProps) => {
+  try{
+    const response = await publicApi.post("/sms/verify", info);
+    if (response.status === 200 ) {
+      console.log("문자 인증 success")
+      return response.status
+    }
+  }
+  catch (error) {
+    console.log("postMessageCert을 실패한 이유는??",error)
   }
 }

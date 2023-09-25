@@ -19,36 +19,35 @@ import { useRecoilState } from "recoil"
 import { 
   NameState, 
   PhoneState, 
-  PinNumberState } from "/src/recoil/auth"
+  PinRegisterState} from "/src/recoil/auth"
 
 // 타입스크립트
-import { SignUpProps } from "/src/type/auth"
 
 // API
 
 function PinRegister () {
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
   const [name, setName] = useRecoilState<string>(NameState);
-  const [pinNumber,setPinNumber] = useRecoilState<string>(PinNumberState)
+  const [pinRegister,setPinRegister] = useRecoilState<string>(PinRegisterState)
   
   // 라우터 
   const navigate = useNavigate()
   const movePinCheck = () => {navigate(`/pincheck`)}
 
-  const handlePinNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlepinRegisterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length > 1){
       event.target.value = event.target.value.slice(0,1)
       return 
     }
     if (event.target.value !== "") {
-      setPinNumber(pinNumber + event.target.value);
+      setPinRegister(pinRegister + event.target.value);
     }
     else {
-      setPinNumber(pinNumber.slice(0,pinNumber.length-1))
+      setPinRegister(pinRegister.slice(0,pinRegister.length-1))
     }
-    console.log(`Pin : ${pinNumber}`)
+    console.log(`Pin : ${pinRegister}`)
     
-    if (pinNumber.length >= 4) {
+    if (pinRegister.length >= 4) {
       movePinCheck()
     }
   };
@@ -63,26 +62,26 @@ function PinRegister () {
         <Input
           $size="20px,20px" 
           $simplepassword
-          value={pinNumber.length >= 1 ? pinNumber[0] : ""}
-          onChange={handlePinNumberChange}
+          value={pinRegister.length >= 1 ? pinRegister[0] : ""}
+          onChange={handlepinRegisterChange}
           ></Input>
         <Input 
           $size="20px,20px" 
           $simplepassword
-          value={pinNumber.length >= 2 ? pinNumber[1] : ""}
-          onChange={handlePinNumberChange}
+          value={pinRegister.length >= 2 ? pinRegister[1] : ""}
+          onChange={handlepinRegisterChange}
           ></Input>
         <Input 
           $size="20px,20px" 
           $simplepassword
-          value={pinNumber.length >= 3 ? pinNumber[2] : ""}
-          onChange={handlePinNumberChange}
+          value={pinRegister.length >= 3 ? pinRegister[2] : ""}
+          onChange={handlepinRegisterChange}
           ></Input>
         <Input 
           $size="20px,20px" 
           $simplepassword
-          value={pinNumber.length >= 4 ? pinNumber[3] : ""}
-          onChange={handlePinNumberChange}
+          value={pinRegister.length >= 4 ? pinRegister[3] : ""}
+          onChange={handlepinRegisterChange}
           ></Input>
         <Image
           src={plus}
@@ -90,8 +89,8 @@ function PinRegister () {
         <Input 
           $size="20px,20px" 
           $simplepassword
-          value={pinNumber.length >= 5 ? pinNumber[4] : ""}
-          onChange={handlePinNumberChange}
+          value={pinRegister.length >= 5 ? pinRegister[4] : ""}
+          onChange={handlepinRegisterChange}
           ></Input>
       </InputBox>
 

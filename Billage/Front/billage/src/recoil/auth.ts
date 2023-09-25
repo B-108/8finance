@@ -13,12 +13,18 @@ export const PhoneState = atom<string>({
   default: "",
 })
 
-export const PinNumberState = atom<string>({
-  key: 'PinNumberState',
+export const PinCheckState = atom<string>({
+  key: 'PinCheckState',
   default: "",
 })
 
-export const PinNumberCheckState = atom<string>({
-  key: 'PinNumberCheckState',
+export const PinEnterState = atom<string>({
+  key: 'PinEnterState',
   default: "",
 })
+
+export const PinRegisterState = atom<string>({
+  key: 'PinRegisterState',
+  default: "",
+})
+

@@ -20,15 +20,18 @@ import Input, {
 import { PhoneState } from "/src/recoil/auth";
 import { useRecoilState } from "recoil";
 
+// 타입스크립트
+import { routeActionProps } from "/src/type";
+
 function Login(){
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
   
-  const MAX_LENGTH = 10;
+  const MAX_LENGTH = 20;
 
   // 라우터
   const navigate = useNavigate()
   const moveSignUp = () => {navigate(`/signup`)}
-  const movePinEnter = () => {navigate('/pinenter')}
+  const movePinEnter = () => {navigate('/pinenter/login')}
 
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length > MAX_LENGTH) {
