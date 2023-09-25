@@ -66,11 +66,11 @@ function SignUp(){
     setCertNum(event.target.value.split(' ').join(''));
   };
 
-  const requestMessage = () => {
+  const messageRequest = () => {
     axiosMessage()
   }
 
-  const certificateMessage = async () => {
+  const messageCertification = async () => {
     const response = await axiosMessagCert()
     if (response !== 200) {
       console.log("문자 인증 번호가 필요함")
@@ -136,7 +136,7 @@ function SignUp(){
           <Button
             $smallGreenBtn
             $size="26%,30px"
-            onClick={requestMessage}>전송
+            onClick={messageRequest}>전송
           </Button>
         </ButtonBox>
       </InputDiv>
@@ -155,7 +155,7 @@ function SignUp(){
         $basicGreenBtn 
         $size="93%,43px" 
         $Green
-        onClick={certificateMessage}>가입 하기</Button>
+        onClick={messageCertification}>가입 하기</Button>
 
       <div 
         style={{ 

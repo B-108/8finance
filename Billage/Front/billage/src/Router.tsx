@@ -41,13 +41,13 @@ const router = createBrowserRouter([
               errorElement: <ErrorComponent />,
             },
             {
-              path: '/pinenter',
-              element: <PinEnter />,
+              path: '/pincheck',
+              element: <PinCheck />,
               errorElement: <ErrorComponent />,
             },
             {
-              path: '/pincheck',
-              element: <PinCheck />,
+              path: '/pinenter/:routeAction',
+              element: <PinEnter />,
               errorElement: <ErrorComponent />,
             },
             {
