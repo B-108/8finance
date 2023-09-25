@@ -56,12 +56,12 @@ function PinEnter () {
   };
 
   const axiosLogin = async (Pin : string):Promise<void> => {
-    const user: LoginProps = {
+    const info: LoginProps = {
       userCellNo: phone,
       userSimplePass: Pin,
     }
     try {
-      const response = await postLogin(user)
+      const response = await postLogin(info)
       if (response) {moveMain()}
     }
     catch(error) {

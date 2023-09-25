@@ -64,13 +64,13 @@ function PinCheck () {
   };
 
   const axiosSignUp = async (Pin : string):Promise<void> => {
-    const user: SignUpProps = {
+    const info: SignUpProps = {
       userCellNo: phone,
       userName: name,
       userSimplePass: Pin,
     }
     try {
-      await postSignUp(user)
+      await postSignUp(info)
     }
     catch(error) {
       console.log(error)
