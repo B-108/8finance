@@ -6,11 +6,13 @@ const { persistAtom } = recoilPersist();
 export const NameState = atom<string>({
   key: 'NameState',
   default: "",
+  effects_UNSTABLE: [persistAtom],
 })
 
 export const PhoneState = atom<string>({
   key: 'PhoneState',
   default: "",
+  effects_UNSTABLE: [persistAtom],
 })
 
 export const PinCheckState = atom<string>({
