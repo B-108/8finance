@@ -17,8 +17,10 @@ import Transfer from './pages/Transfer/Transfer';
 import TADetail from './pages/TransactionDetail/TransactionDetail';
 import TransactionHistory from './pages/TransactionHistory/TransactionHistory';
 import SendMoney from './pages/SendMoney/SendMoney';
-import MyAccounts from './pages/MyAccounts/MyAccounts';
+import MyAccounts from './pages/Account/MyAccounts/MyAccounts';
 import PinEnter from './pages/Pin/PinEnter/PinEnter';
+import AccountEnroll from './pages/Account/AccountEnroll/AccountEnroll';
+import LoadAccounts from './pages/Account/LoadAccounts/LoadAccounts';
 
 const router = createBrowserRouter([
     {
@@ -31,79 +33,79 @@ const router = createBrowserRouter([
             //     errorElement: <ErrorComponent />,
             // },
             {
-              path: '',
-              element: <Login />,
-              errorElement: <ErrorComponent />,
+                path: '',
+                element: <Login />,
+                errorElement: <ErrorComponent />,
             },
             {
-              path: '/signup',
-              element: <SignUp />,
-              errorElement: <ErrorComponent />,
+                path: '/signup',
+                element: <SignUp />,
+                errorElement: <ErrorComponent />,
             },
             {
-              path: '/pinenter',
-              element: <PinEnter />,
-              errorElement: <ErrorComponent />,
+                path: '/pinenter',
+                element: <PinEnter />,
+                errorElement: <ErrorComponent />,
             },
             {
-              path: '/pincheck',
-              element: <PinCheck />,
-              errorElement: <ErrorComponent />,
+                path: '/pincheck',
+                element: <PinCheck />,
+                errorElement: <ErrorComponent />,
             },
             {
-              path: '/pinregister',
-              element: <PinRegister />,
-              errorElement: <ErrorComponent />,
+                path: '/pinregister',
+                element: <PinRegister />,
+                errorElement: <ErrorComponent />,
             },
             {
-              path: '/incheck',
-              element: <PinCheck />,
-              errorElement: <ErrorComponent />,
+                path: '/incheck',
+                element: <PinCheck />,
+                errorElement: <ErrorComponent />,
             },
             {
-              path: '/main',
-              element: <Main />,
-              errorElement: <ErrorComponent />,
+                path: '/main',
+                element: <Main />,
+                errorElement: <ErrorComponent />,
             },
             {
-              path: '/transfer',
-              element: <Transfer />,
-              errorElement: <ErrorComponent />,
+                path: '/transfer',
+                element: <Transfer />,
+                errorElement: <ErrorComponent />,
             },
             {
-              path: '/transactionlist',
-              element: <TransactionList />,
-              errorElement: <ErrorComponent />,
+                path: '/transactionlist',
+                element: <TransactionList />,
+                errorElement: <ErrorComponent />,
             },
             {
-              path: '/transactiondetail',
-              element: <TADetail />,
-              errorElement: <ErrorComponent />,
+                path: '/transactiondetail',
+                element: <TADetail />,
+                errorElement: <ErrorComponent />,
             },
             {
-              path: '/transactionhistory',
-              element: <TransactionHistory />,
-              errorElement: <ErrorComponent />,
+                path: '/transactionhistory',
+                element: <TransactionHistory />,
+                errorElement: <ErrorComponent />,
             },
             {
-              path: '/findpassword',
-              element: <FindPW />,
-              errorElement: <ErrorComponent />,
+                path: '/findpassword',
+                element: <FindPW />,
+                errorElement: <ErrorComponent />,
             },
             {
-              path: '/changepassword',
-              element: <ChangePW />,
-              errorElement: <ErrorComponent />,
+                path: '/changepassword',
+                element: <ChangePW />,
+                errorElement: <ErrorComponent />,
             },
             {
-              path: '/notifications',
-              element: <Notifications />,
-              errorElement: <ErrorComponent />,
+                path: '/notifications',
+                element: <Notifications />,
+                errorElement: <ErrorComponent />,
             },
             {
-              path: '/iou',
-              element: <IOU />,
-              errorElement: <ErrorComponent />,
+                path: '/iou',
+                element: <IOU />,
+                errorElement: <ErrorComponent />,
             },
             {
                 path: '/sendmoney',
@@ -113,6 +115,16 @@ const router = createBrowserRouter([
             {
                 path: '/myAccounts',
                 element: <MyAccounts />,
+                errorElement: <ErrorComponent />,
+            },
+            {
+                path: '/AccountEnroll',
+                element: <AccountEnroll />,
+                errorElement: <ErrorComponent />,
+            },
+            {
+                path: '/LoadAccounts',
+                element: <LoadAccounts />,
                 errorElement: <ErrorComponent />,
             },
         ],
