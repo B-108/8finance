@@ -171,7 +171,6 @@ public class TransferService {
 
     // 이체 (오픈뱅킹에 요청)
     public void transferCash(TransferCashRequestDto dto, HttpServletRequest request) {
-
         String actCode = "2";
         String bankCode = dto.getTranWdBankCode();
 

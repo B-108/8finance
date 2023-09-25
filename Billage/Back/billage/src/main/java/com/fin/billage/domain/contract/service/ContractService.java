@@ -3,6 +3,8 @@ package com.fin.billage.domain.contract.service;
 import com.fin.billage.domain.contract.dto.*;
 import com.fin.billage.domain.contract.entity.Contract;
 import com.fin.billage.domain.contract.repository.ContractRepository;
+import com.fin.billage.domain.transfer.api.TransferController;
+import com.fin.billage.domain.transfer.dto.TransferCashRequestDto;
 import com.fin.billage.domain.user.entity.User;
 import com.fin.billage.domain.user.repository.UserRepository;
 import com.fin.billage.util.JwtUtil;
@@ -19,6 +21,7 @@ public class ContractService {
     private final ContractRepository contractRepository;
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
+    private final TransferController transferController;
 
     // 차용증 등록
     public Contract addContract(ContractRequestDto dto, HttpServletRequest request) {
@@ -77,17 +80,16 @@ public class ContractService {
     }
 
     // 차용증 수락, 거절
-    public Contract respondToContract(ContractRespondDto dto) {
+    public Contract respondToContract(TransferCashRequestDto dto, Boolean yN, HttpServletRequest request) {
         Contract contract = contractRepository.findById(dto.getContractId()).orElse(null);
 
-        if (dto.getContractYN() == true) {
+        if (yN) {
             contract.updateContractState(true);
-           // 자동이체 로직 가져와서 호출해서 쓰기
-
-            } else if (dto.getContractYN() == false) {
+            // 자동이체 로직 가져와서 호출해서 쓰기
+            transferController.transferCash(dto, request);
+            } else if (!yN) {
             contract.updateContractState(false);
         }
-
         contractRepository.save(contract);
         return contract;
     }
