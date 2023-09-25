@@ -16,6 +16,8 @@ import PinCheck from './pages/Pin/PinCheck/PinCheck';
 import Transfer from './pages/Transfer/Transfer';
 import TADetail from './pages/TransactionDetail/TransactionDetail';
 import TransactionHistory from './pages/TransactionHistory/TransactionHistory';
+import SendMoney from './pages/SendMoney/SendMoney';
+import MyAccounts from './pages/MyAccounts/MyAccounts';
 
 const router = createBrowserRouter([
     {
@@ -92,7 +94,17 @@ const router = createBrowserRouter([
                 element: <IOU />,
                 errorElement: <ErrorComponent />,
             },
-            
+
+            {
+                path: '/sendmoney',
+                element: <SendMoney />,
+                errorElement: <ErrorComponent />,
+            },
+            {
+                path: '/myAccounts',
+                element: <MyAccounts />,
+                errorElement: <ErrorComponent />,
+            },
         ],
         errorElement: <NotFound />,
     },
