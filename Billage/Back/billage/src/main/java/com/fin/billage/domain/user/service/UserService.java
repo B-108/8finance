@@ -28,7 +28,8 @@ public class UserService {
     @Transactional
     public UserSignUpResponseDto signup(UserSignUpRequestDto userSignUpRequestDto) {
         // 폰 번호 & 이름 중복 검증 => 이미 가입한 이용자입니다.
-        if (userRepository.existsByUserCellNoAndUserName(userSignUpRequestDto.getUserCellNo(), userSignUpRequestDto.getUserName())) {
+        if (userRepository.existsByUserCellNo(userSignUpRequestDto.getUserCellNo()) ||
+                userRepository.existsByUserCellNoAndUserName(userSignUpRequestDto.getUserCellNo(), userSignUpRequestDto.getUserName())) {
             throw new RuntimeException("이미");
         }
 
