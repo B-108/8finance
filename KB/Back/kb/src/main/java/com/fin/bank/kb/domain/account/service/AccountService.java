@@ -20,7 +20,7 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
 
-    public boolean deposit(String customerName, String phoneNumber, String accountNumber, double amount) {
+    public boolean deposit(String customerName, String phoneNumber, String accountNumber, BigDecimal amount) {
         // 사용자 정보를 사용하여 계좌를 조회
         Optional<Account> optionalAccount = accountRepository.findByUser_UserNameAndUser_UserCellNoAndAccountNum(
                 customerName, phoneNumber, accountNumber);
@@ -28,7 +28,7 @@ public class AccountService {
         if (optionalAccount.isPresent()) {
             Account account = optionalAccount.get();
             int accountStatus = Integer.parseInt(String.valueOf(account.getAccountStatus())); // 문자열 '1'을 정수로 변환
-            if (accountStatus != 1) {
+            if (accountStatus == 1) {
                 return false; // 입금 실패
             }
             // 입금 가능하면 계좌 잔액을 증가시키고 저장
@@ -40,7 +40,7 @@ public class AccountService {
         return false; // 입금 실패
     }
 
-    public boolean withdraw(String customerName, String phoneNumber, String accountNumber, double amount) {
+    public boolean withdraw(String customerName, String phoneNumber, String accountNumber, BigDecimal amount) {
         // 사용자 정보를 사용하여 계좌를 조회
         Optional<Account> optionalAccount = accountRepository.findByUser_UserNameAndUser_UserCellNoAndAccountNum(
                 customerName, phoneNumber, accountNumber);
@@ -48,7 +48,7 @@ public class AccountService {
         if (optionalAccount.isPresent()) {
             Account account = optionalAccount.get();
             int accountStatus = Integer.parseInt(String.valueOf(account.getAccountStatus())); // 문자열 '1'을 정수로 변환
-            if (accountStatus != 1) {
+            if (accountStatus == 1) {
                 return false; // 출금 실패
             }
             double currentBalance = account.getAccountBalanceAmt().doubleValue();

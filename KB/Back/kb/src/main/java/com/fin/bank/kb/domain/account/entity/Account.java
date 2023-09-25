@@ -5,11 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.type.descriptor.sql.TinyIntTypeDescriptor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -49,7 +49,7 @@ public class Account {
 
     // 계좌 상태
     @Column(name = "ac_status", nullable = false, length = 1)
-    private TinyIntTypeDescriptor accountStatus;
+    private Integer accountStatus;
 
     // 계좌 생성 일자
     @Column(name = "ac_create_date", nullable = false, columnDefinition = "DATETIME")
@@ -77,6 +77,8 @@ public class Account {
     @JoinColumn(name = "user_pk")
     private User user;
 
+    @OneToMany(mappedBy = "account")
+    private List<Transaction> transactions;
 
     public void setAccountBalanceAmt(BigDecimal subtract) {
         this.accountBalanceAmt = accountBalanceAmt;

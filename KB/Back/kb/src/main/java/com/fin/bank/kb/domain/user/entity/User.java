@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "bank_user")
 @SQLDelete(sql = "UPDATE user SET user_delete_date = now() WHERE user_pk = ?;")
 public class User {
 
@@ -73,16 +73,14 @@ public class User {
         this.userModifyDate = userModifyDate;
         this.userDeleteDate = userDeleteDate;
         this.userCarrotTemp = userCarrotTemp;
-        this.userAgreeYn = userAgreeYn;
-        this.userAgreeDate = userAgreeDate;
     }
 
-    public void setPassword(String newPassword) {
-        this.userSimplePass = newPassword;
-    }
-
-    public String getCellNo() {
-        return this.userCellNo;
-    }
+//    public void setPassword(String newPassword) {
+//        this.userSimplePass = newPassword;
+//    }
+//
+//    public String getCellNo() {
+//        return this.userCellNo;
+//    }
 
 }

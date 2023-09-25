@@ -3,6 +3,8 @@ package com.fin.bank.kb.domain.account.api;
 import com.fin.bank.kb.domain.account.dto.AccountRequestDto;
 import com.fin.bank.kb.domain.account.dto.AccountResponseDto;
 import com.fin.bank.kb.domain.account.entity.Account;
+import com.fin.bank.kb.domain.account.entity.Transaction;
+import com.fin.bank.kb.domain.account.repository.TransactionRepository;
 import com.fin.bank.kb.domain.account.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -31,6 +35,7 @@ public class AccountController {
     public ResponseEntity<AccountResponseDto> deposit( // 입금: deposit
         @RequestBody AccountRequestDto requestDto
     ) {
+
         boolean success = accountService.deposit(
                 requestDto.getCustomerName(),
                 requestDto.getPhoneNumber(),
@@ -39,6 +44,18 @@ public class AccountController {
         );
 
         if (success) {
+            // 거래 내역 생성 및 저장
+            Transaction transaction = Transaction.builder()
+                    .tranAmt(requestDto.getAmount())
+                    .tranDate(LocalDateTime.now())
+                    .tranContent("Deposit")
+                    .tranType(tranType.DEPOSIT.getValue())
+                    .counterparty("Bank")
+                    .counterpartyAccount("Bank Account")
+                    .account(account) // 해당 거래 내역이 속한 계좌 설정
+                    .build();
+            TransactionRepository.save(transaction);
+
             AccountResponseDto responseDto = AccountResponseDto.builder()
                     .message("Deposit successful")
                     .build();
@@ -63,6 +80,18 @@ public class AccountController {
                 requestDto.getAmount()
         );
         if (success) { // 성공할 경우
+            // 거래 내역 생성 및 저장
+            Transaction transaction = Transaction.builder()
+                    .tranAmt(requestDto.getAmount())
+                    .tranDate(LocalDateTime.now())
+                    .tranContent("Withdrawal")
+                    .tranType(TransactionType.WITHDRAWAL.getValue())
+                    .counterparty("Bank")
+                    .counterpartyAccount("Bank Account")
+                    .account(account) // 해당 거래 내역이 속한 계좌 설정
+                    .build();
+            TransactionRepository.save(transaction);
+
             AccountResponseDto responseDto = AccountResponseDto.builder()
                     .message("Withdrawal successful")
                     .build();
