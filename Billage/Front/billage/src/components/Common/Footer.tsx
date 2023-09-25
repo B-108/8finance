@@ -4,6 +4,7 @@ import account from '/src/assets/creditCard.svg'
 import hamburger from '/src/assets/hamburger.svg'
 import Image from './Image'
 import styled from "styled-components"
+import { useNavigate } from 'react-router-dom'
 
 interface TextProps {
     children?: React.ReactNode;
@@ -50,24 +51,37 @@ const FooterContainer = styled.div`
 `;
 
 function Footer(){
-    return (
-      <FooterContainer>
-          <div style={{ width: '100%', display: 'flex', justifyContent: 'space-around', marginTop: 'auto' }}>
-              <div>
-                  <Image src={home} alt="home" width="30px"></Image>
-                  <Text>홈</Text>
-              </div>
-              <div>
-                  <Image src={account} alt="account" width="30px"></Image>
-                  <Text>계좌</Text>
-              </div>
-              <div>
-                  <Image src={hamburger} alt="hamburger" width="32px"></Image>
-                  <Text>설정</Text>
-              </div>
-          </div>
-      </FooterContainer>
-    );
+  // 라우터
+  const navigate = useNavigate()
+  const moveMain = () => {navigate(`/main`)}
+  const moveAccounts = () => {navigate(`/myaccounts`)}
+
+  return (
+    <FooterContainer>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'space-around', marginTop: 'auto' }}>
+        <div >
+          <Image 
+            src={home} 
+            alt="home" 
+            width="30px"
+            onClick={moveMain}></Image>
+          <Text>홈</Text>
+        </div>
+        <div>
+          <Image 
+            src={account} 
+            alt="account" 
+            width="30px"
+            onClick={moveAccounts}></Image>
+          <Text>계좌</Text>
+        </div>
+        <div>
+          <Image src={hamburger} alt="hamburger" width="32px"></Image>
+          <Text>설정</Text>
+        </div>
+      </div>
+    </FooterContainer>
+  );
 }
 
 export default Footer
