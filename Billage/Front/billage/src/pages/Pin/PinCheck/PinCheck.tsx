@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 // 이미지
 import plus from "/src/assets/plus.svg"
@@ -16,9 +17,9 @@ import { InputBox } from "./PinCheck.style"
 import { useRecoilState } from "recoil"
 import { 
   NameState, 
-  PhoneState, 
-  PinNumberCheckState, 
-  PinNumberState } from "/src/recoil/auth"
+  PhoneState,
+  PinCheckState,
+  PinRegisterState, } from "/src/recoil/auth"
 
 // 타입스크립트
 import { SignUpProps } from "/src/type/auth"
@@ -29,9 +30,12 @@ import { postSignUp } from "/src/api/auth"
 function PinCheck () {
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
   const [name, setName] = useRecoilState<string>(NameState);
-  const [pinNumber,setPinNumber] = useRecoilState<string>(PinNumberState)
-  const [pinCheck,setPinCheck] = useRecoilState<string>(PinNumberCheckState)
+  const [pinRegister,setPinRegister] = useRecoilState<string>(PinRegisterState)
+  const [pinCheck,setPinCheck] = useRecoilState<string>(PinCheckState)
   
+  // 라우터 
+  const navigate = useNavigate()
+  const moveMain = () => {navigate(`/Main`)}
 
   const handlePinCheckChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length > 1){
@@ -48,11 +52,12 @@ function PinCheck () {
     
     if (pinCheck.length >= 4 ) {
       
-      if (pinNumber === pinCheck + event.target.value){
-        axiosSignUp(pinCheck+event.target.value)
+      if (pinRegister === pinCheck + event.target.value){
+        axiosSignUp(pinCheck + event.target.value)
+        moveMain()
       }
 
-      else if (pinNumber !== pinCheck + event.target.value){
+      else if (pinRegister !== pinCheck + event.target.value){
         console.log("비밀번호 확인이 틀렸을 때")
       }
     }
@@ -109,7 +114,7 @@ function PinCheck () {
         <Input 
           $size="20px,20px" 
           $simplepassword
-          value={pinCheck.length >= 5 ? pinNumber[4] : ""}
+          value={pinCheck.length >= 5 ? pinRegister[4] : ""}
           onChange={handlePinCheckChange}
           ></Input>
       </InputBox>
