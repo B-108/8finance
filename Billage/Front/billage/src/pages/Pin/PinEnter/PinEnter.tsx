@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 
 // 이미지
 import plus from "/src/assets/plus.svg"
@@ -23,7 +24,6 @@ import { LoginProps } from "/src/type/auth"
 
 // API
 import { postLogin } from "/src/api/auth"
-import { useNavigate } from "react-router-dom"
 
 
 // 로그인, 돈이체(빌려, 갚아), 계좌등록
@@ -33,6 +33,7 @@ function PinEnter () {
   const [pinEnter,setPinEnter] = useRecoilState<string>(PinEnterState)
 
    // 라우터 
+   const { routeAction } = useParams<{ routeAction?: string}>()
   const navigate = useNavigate()
   const moveMain = () => {navigate(`/Main`)}
 
@@ -51,7 +52,9 @@ function PinEnter () {
     
     if (pinEnter.length >= 4 ) {
       console.log("비밀번호 5자리 입력 들어오면",pinEnter + event.target.value)
-      axiosLogin(pinEnter + event.target.value)
+      if (routeAction === "login") {
+        axiosLogin(pinEnter + event.target.value)
+      }
     }
   };
 
