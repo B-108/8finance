@@ -24,7 +24,14 @@ import { useRecoilState } from "recoil";
 import { 
   NameState, 
   PhoneState } from "/src/recoil/auth";
+ 
+// 타입스크립트
+import { 
+  MessageCertProps,
+  MessageProps } from "/src/type/auth";
 
+// API
+import { postMessage, postMessageCert } from "/src/api/auth";
 
 function SignUp(){
   const [name, setName] = useRecoilState<string>(NameState);
@@ -43,7 +50,6 @@ function SignUp(){
       event.target.value = event.target.value.slice(0, MAX_LENGTH);
     }
     setName(event.target.value.split(' ').join(''));
-    console.log(name)
   };
 
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +57,6 @@ function SignUp(){
       event.target.value = event.target.value.slice(0, MAX_LENGTH);
     }
     setPhone(event.target.value.split(' ').join(''));
-    console.log(phone)
   };
 
   const handleCertNumChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,9 +64,46 @@ function SignUp(){
       event.target.value = event.target.value.slice(0, MAX_LENGTH);
     }
     setCertNum(event.target.value.split(' ').join(''));
-    console.log(certNum)
   };
-  
+
+  const messageRequest = () => {
+    axiosMessage()
+  }
+
+  const messageCertification = async () => {
+    const response = await axiosMessagCert()
+    if (response !== 200) {
+      console.log("문자 인증 번호가 필요함")
+      return
+    }
+    await movePinRegister()
+  }
+
+  const axiosMessage = async (): Promise<void> => {
+    const info: MessageProps = {
+      to : phone,
+    }
+    try {
+      await postMessage(info)
+    }
+    catch(error) {
+      console.log(error)
+    }
+  }
+
+  const axiosMessagCert = async (): Promise<number|undefined> => {
+    const info: MessageCertProps = {
+      phoneNumber : phone,
+      verifyNumber : certNum
+    }
+    try {
+      return await postMessageCert(info)
+    }
+    catch(error) {
+      console.log(error)
+    }
+  }
+
   return(
     <CenteredContainer $center>
       <Image src={logo} alt="로고" width="120px"></Image>
@@ -94,7 +136,7 @@ function SignUp(){
           <Button
             $smallGreenBtn
             $size="26%,30px"
-            >전송
+            onClick={messageRequest}>전송
           </Button>
         </ButtonBox>
       </InputDiv>
@@ -113,7 +155,7 @@ function SignUp(){
         $basicGreenBtn 
         $size="93%,43px" 
         $Green
-        onClick={movePinRegister}>가입 하기</Button>
+        onClick={messageCertification}>가입 하기</Button>
 
       <div 
         style={{ 
