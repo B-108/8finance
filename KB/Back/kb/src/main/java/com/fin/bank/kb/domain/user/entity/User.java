@@ -1,5 +1,6 @@
 package com.fin.bank.kb.domain.user.entity;
 
+import com.fin.bank.kb.domain.account.entity.Account;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -56,6 +58,9 @@ public class User {
     @Column(name = "user_agree_date")
     private LocalDateTime userAgreeDate;
 
+    @OneToMany(mappedBy = "user") // 다대일 관계 설정
+    private List<Account> accounts; // Account 엔티티와의 연관 관계 필드 추가
+
     @Builder
     public User(Long userPk, String userSeqNo, String userCellNo, String userName, String userInfo, String userSimplePass, LocalDateTime userJoinDate, LocalDateTime userModifyDate, LocalDateTime userDeleteDate, Integer userCarrotTemp, Character userAgreeYn, LocalDateTime userAgreeDate) {
         this.userPk = userPk;
@@ -75,8 +80,9 @@ public class User {
     public void setPassword(String newPassword) {
         this.userSimplePass = newPassword;
     }
-    public void modifyAgreeYn(char yn) {
-            this.userAgreeYn = yn;
-            this.userAgreeDate = LocalDateTime.now();
+
+    public String getCellNo() {
+        return this.userCellNo;
     }
+
 }

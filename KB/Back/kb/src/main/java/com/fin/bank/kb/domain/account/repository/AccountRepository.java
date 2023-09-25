@@ -1,22 +1,15 @@
 package com.fin.bank.kb.domain.account.repository;
 
 import com.fin.bank.kb.domain.account.entity.Account;
-import com.fin.bank.kb.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
+    Optional<Account> findByUser_UserNameAndUser_UserCellNoAndAccountNum(String customerName, String phoneNumber, String accountNumber);
 
-    Optional<Account> findByUserAndAccountMainYnIsTrue(User user);
-
-//    Account findByUserId(User user);
-
-    Optional<List<Account>> findAllByUser(User user);
-
-    Optional<Account> findByUserAndAccountId(User user, Long account_id);
-
-
-    Optional<Account> findByUser(User user);
+    List<Account> findByUser_UserNameAndUser_UserCellNo(String customerName, String phoneNumber);
 }

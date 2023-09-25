@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.type.descriptor.sql.TinyIntTypeDescriptor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -13,52 +14,71 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Builder
-@Table(name = "account")
-@NoArgsConstructor // 기본생성자
+@Table(name = "bank_account")
+@NoArgsConstructor
 @AllArgsConstructor
 public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "account_id")
+
+    // 계좌
+    @Column(name = "ac_id")
     private Long accountId;
 
+    // 계좌번호
+    @Column(name = "ac_num", nullable = false, length = 20)
+    private String accountNum;
+
+    // 잔액
+    @Column(name = "ac_balance_amt")
+    private BigDecimal accountBalanceAmt;
+
+    // 계좌가 속해있는 은행
+    @Column(name = "account_bank_code", nullable = false, length = 20)
+    private String accountBankCode;
+
+    // 계좌 타입
+    // 1: 수시 입출금, 2: 예적금, 6: 수익증권, T: 종합계좌
+    @Column(name = "ac_type", nullable = false, length = 1)
+    private Character accountType;
+
+    // 계좌이름
+    @Column(name = "ac_name", nullable = false, length = 20)
+    private String accountAlias;
+
+    // 계좌 상태
+    @Column(name = "ac_status", nullable = false, length = 1)
+    private TinyIntTypeDescriptor accountStatus;
+
+    // 계좌 생성 일자
+    @Column(name = "ac_create_date", nullable = false, columnDefinition = "DATETIME")
+    private LocalDateTime accountCreateDate;
+
+    // 계좌 해지 일자
+    @Column(name = "ac_delete_date", columnDefinition = "DATETIME")
+    private LocalDateTime accountDeleteDate;
+
+    // 계좌 휴면 일자
+    @Column(name = "ac_dormant_date", columnDefinition = "DATETIME")
+    private LocalDateTime accountDormantDate;
+
+    // 계좌 수정 일자
+    @Column(name = "ac_modify_date", columnDefinition = "DATETIME")
+    private LocalDateTime accountModifyDate;
+
+    // 계좌 비밃전호
+    @Column(name = "ac_password", nullable = false, length = 20)
+    private Integer accountPassword;
+
+    // User 엔티티와 다대일 관계
+    // 하나의 고객에 여러 계좌가 올 수 있음
     @ManyToOne
     @JoinColumn(name = "user_pk")
     private User user;
 
-    // 잔액
-    @Column(name = "account_balance_amt")
-    private BigDecimal accountBalanceAmt;
 
-    @Column(name = "account_bank_code", nullable = false, length = 20)
-    private String accountBankCode;
-
-    @Column(name = "account_num", nullable = false, length = 20)
-    private String accountNum;
-
-    @Column(name = "account_alias", length = 50)
-    private String accountAlias;
-
-    @Column(name = "account_main_yn", columnDefinition = "BOOLEAN DEFAULT false")
-    private Boolean accountMainYn;
-
-    @Column(name = "account_regist_date", nullable = false, columnDefinition = "DATETIME")
-    private LocalDateTime accountRegistDate;
-
-    @Column(name = "account_delete_date", columnDefinition = "DATETIME")
-    private LocalDateTime accountDeleteDate;
-
-    @Column(name = "account_modify_date", columnDefinition = "DATETIME")
-    private LocalDateTime accountModifyDate;
-
-    public void updateAccountMainYn(Boolean yn) {
-        this.accountMainYn = yn;
+    public void setAccountBalanceAmt(BigDecimal subtract) {
+        this.accountBalanceAmt = accountBalanceAmt;
     }
-
-    public void deleteAccount() {
-        this.accountDeleteDate = LocalDateTime.now();
-    }
-
-
 }
