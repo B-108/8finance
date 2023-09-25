@@ -35,16 +35,18 @@ const StyledInput = styled.input<InputProps>`
 
     // 회원 관련 입력
     ${(props) =>
-        props.$active &&
-        css`
-            border: 3px solid ${theme.color.gray[70]};
-            font-size: ${theme.fontSize.DF_16};
-            border-radius: ${theme.radius.S_10};
-
-            &:focus {
-                outline: 1px solid ${theme.color.green[0]};
-            }
-        `}
+      props.$active &&
+      css`
+        border: 3px solid ${theme.color.gray[70]};
+        font-size: ${theme.fontSize.DF_16};
+        border-radius: ${theme.radius.S_10};
+        padding : 0px 2.5% 0px 2.5%;
+        
+        &:focus {
+          outline: 1px solid transparent;
+          border: 3px solid ${theme.color.green[0]};
+        }
+      `}
 
     // 간편 비밀번호 입력
     ${(props) =>
@@ -112,7 +114,7 @@ export const ButtonBox = styled.div`
     display: flex;
     justify-content: flex-end;
     margin-left: 35%;
-    width: 55%;
+    width: 52%;
 `;
 
 // 오른쪽에 이미지 달린 인풋

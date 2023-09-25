@@ -43,23 +43,32 @@ function SignUp(){
   // 라우터 
   const navigate = useNavigate()
   const moveLogin = () => {navigate(`/`)}
-  const movePinRegister = () => {navigate(`/pinregister`)}
-    
+  const movePinRegister = () => {navigate(`/pinregister`)} 
+  
+  // 이름 입력
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if(!isNaN(Number(event.target.value[event.target.value.length-1]))) {return}
+
     if (event.target.value.length > MAX_LENGTH) {
       event.target.value = event.target.value.slice(0, MAX_LENGTH);
     }
     setName(event.target.value.split(' ').join(''));
   };
 
+  // 전화번호 입력
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if(isNaN(Number(event.target.value))) {return}
+
     if (event.target.value.length > MAX_LENGTH) {
       event.target.value = event.target.value.slice(0, MAX_LENGTH);
     }
     setPhone(event.target.value.split(' ').join(''));
   };
 
+  // 인증번호 입력
   const handleCertNumChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if(isNaN(Number(event.target.value))) {return}
+
     if (event.target.value.length > MAX_LENGTH) {
       event.target.value = event.target.value.slice(0, MAX_LENGTH);
     }
@@ -117,10 +126,10 @@ function SignUp(){
         <Input
           type="name"
           value={name}
-          $size="93%,40px"
+          $size="86%,40px"
           $active
-          onChange={handleNameChange} 
-        />
+          onChange={handleNameChange}/>
+          
       </InputDiv>
 
       <InputDiv style={{ marginBottom: '1rem' }}>
@@ -128,7 +137,7 @@ function SignUp(){
         <Input
           type="phone"
           value={phone}
-          $size="93%,40px"
+          $size="86%,40px"
           $active
           onChange={handlePhoneChange}/>
       
@@ -146,14 +155,14 @@ function SignUp(){
         <Input
           type="number"
           value={certNum}
-          $size="93%,40px"
+          $size="86%,40px"
           $active
           onChange={handleCertNumChange}/>
       </InputDiv>
               
       <Button 
         $basicGreenBtn 
-        $size="93%,43px" 
+        $size="91%,43px" 
         $Green
         onClick={messageCertification}>가입 하기</Button>
 
