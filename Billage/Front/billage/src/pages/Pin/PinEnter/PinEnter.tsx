@@ -23,6 +23,7 @@ import { LoginProps } from "/src/type/auth"
 
 // API
 import { postLogin } from "/src/api/auth"
+import { useNavigate } from "react-router-dom"
 
 
 // 로그인, 돈이체(빌려, 갚아), 계좌등록
@@ -30,6 +31,10 @@ import { postLogin } from "/src/api/auth"
 function PinEnter () {
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
   const [pinEnter,setPinEnter] = useRecoilState<string>(PinEnterState)
+
+   // 라우터 
+  const navigate = useNavigate()
+  const moveMain = () => {navigate(`/Main`)}
 
   const handlepinEnterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length > 1){
@@ -56,7 +61,8 @@ function PinEnter () {
       userSimplePass: Pin,
     }
     try {
-      await postLogin(user)
+      const response = await postLogin(user)
+      if (response) {moveMain()}
     }
     catch(error) {
       console.log(error)
