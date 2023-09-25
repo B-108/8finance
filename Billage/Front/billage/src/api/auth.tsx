@@ -6,6 +6,7 @@ import {
   LoginProps, 
   SignUpProps } from "../type/auth";
 
+// 회원가입
 export const postSignUp = async (user: SignUpProps) => {
   try{
     const response = await publicApi.post("/user/signup", user);
@@ -17,6 +18,7 @@ export const postSignUp = async (user: SignUpProps) => {
   }
 }
 
+// 로그인
 export const postLogin = async (user: LoginProps) => {
   try{
     const response = await publicApi.post("/user/login", user);
