@@ -1,15 +1,11 @@
-import Input, { ButtonInput, TranInputDiv, TranInputTitle } from '/src/components/Common/Input';
+import Input, { ButtonInput, InputDiv, TranInputDiv, TranInputTitle } from '/src/components/Common/Input';
 import React, { useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import CenteredContainer from '/src/components/Common/CenterAlign';
 import Header from '/src/components/Header/Header';
 import plus from '/src/assets/plus.svg';
-import calendar from '/src/assets/calendar.svg';
-import magnifyingGlass from '/src/assets/magnifyingGlass.svg';
 import Button from '/src/components/Common/Button';
 
-function Transfer() {
+function SendMoney() {
     const [friendInfo, setFriendInfo] = useState<string>('');
     const [accountInfo, setAccountInfo] = useState<string>('');
     const [amount, setAmount] = useState<string>('');
@@ -38,63 +34,32 @@ function Transfer() {
 
     return (
         <CenteredContainer>
-            <Header headerTitle="차용증 작성"></Header>
-            {/* <DatePicker selected={endDate} onChange={(date) => setEndDate(date)} /> */}
-            <TranInputDiv>
-                <TranInputTitle>지인 선택</TranInputTitle>
-                <ButtonInput
-                    value={friendInfo}
-                    $active
-                    $size="98%,40px"
-                    onChange={handleFriendInfoChange}
-                    $buttonImage={magnifyingGlass} // 이미지 버튼 추가
-                />
-            </TranInputDiv>
-            <hr />
+            <Header headerTitle="이체하기"></Header>
             <TranInputDiv>
                 <TranInputTitle>돈 받을 계좌</TranInputTitle>
-                <ButtonInput
-                    value={accountInfo}
-                    $active
-                    $size="98%,40px"
-                    onChange={handleAccountInfoChange}
-                    $buttonImage={plus} // 이미지 버튼 추가
-                />
+                <Input $active $size="98%,40px"></Input>
             </TranInputDiv>
             <hr />
             <TranInputDiv>
-                <TranInputTitle>돈 갚을 날짜</TranInputTitle>
-                <ButtonInput
-                    value={endDate}
-                    $active
-                    $size="98%,40px"
-                    onChange={handleEndDateChange}
-                    $buttonImage={calendar} // 이미지 버튼 추가
-                />
+                <TranInputTitle>상대방 계좌</TranInputTitle>
+                <Input $active $size="98%,40px"></Input>
             </TranInputDiv>
             <hr />
             <TranInputDiv>
-                <TranInputTitle>
-                    자동이체
-                    <input type="checkbox" id="myCheckbox" />
-                </TranInputTitle>
-                <ButtonInput
-                    value={transferDate}
-                    $active
-                    $size="98%,40px"
-                    onChange={handleTransferDateChange}
-                    $buttonImage={calendar} // 이미지 버튼 추가
-                />
+                <TranInputTitle>내 계좌</TranInputTitle>
+                <Input $active $size="98%,40px"></Input>
             </TranInputDiv>
             <hr />
             <TranInputDiv>
-                <TranInputTitle>빌릴 금액</TranInputTitle>
+                <TranInputTitle>돌려줄 금액</TranInputTitle>
+
                 <Input value={amount} $active $size="98%,40px" onChange={handleAmountChange}></Input>
                 <SmallButtonsContainer></SmallButtonsContainer>
             </TranInputDiv>
             <hr />
             <TranInputDiv>
-                <TranInputTitle>이자율</TranInputTitle>
+                <TranInputTitle>남은 금액</TranInputTitle>
+
                 <Input
                     type="interest"
                     value={interest}
@@ -104,17 +69,12 @@ function Transfer() {
                 ></Input>
             </TranInputDiv>
             <hr />
-            <TranInputDiv>
-                <TranInputTitle>총 상환 금액</TranInputTitle>
-                <Input value={friendInfo} $active $size="98%,40px" onChange={handleFriendInfoChange}></Input>
-            </TranInputDiv>
-            <hr />
             <ButtonContainer></ButtonContainer>
         </CenteredContainer>
     );
 }
 
-export default Transfer;
+export default SendMoney;
 
 const SmallButtonsContainer = () => {
     return (
