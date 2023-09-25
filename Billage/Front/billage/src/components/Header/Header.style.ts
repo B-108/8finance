@@ -5,17 +5,16 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 98%;
-  height: 10%;
-  margin: 2% 0px 0px 0px;
+  width: 92%;
+  height: 70px;
 `
 
 export const LeftSection = styled.div`
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    height: 100%;
-    width: 50%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  width: 50%;
 `;
 
 export const Title = styled.div<{ $noDisplay:boolean }>`

@@ -55,7 +55,9 @@ const StyledText = styled.div<TextProps>`
     ${(props) =>
         props.$description && 
         css`
+          color: ${theme.color.gray[55]};
           font-size: ${theme.fontSize.S_14};
+          font-weight: 800;
         `
     }
 
