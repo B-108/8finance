@@ -20,4 +20,7 @@ public class ContractLoanDetailResponseDto {
 
     // 이자율
     private Float contractInterestRate;
+
+    // 현재까지 갚은 금액
+    private BigDecimal repaymentCash;
 }

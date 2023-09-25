@@ -25,4 +25,7 @@ public class ContractLoanResponseDto {
 
     // 거래상태
     private int contractState;
+
+    // 현재까지 갚은 금액
+    private BigDecimal repaymentCash;
 }

@@ -6,6 +6,7 @@ import com.fin.billage.domain.contract.dto.ContractRespondDto;
 import com.fin.billage.domain.contract.dto.ContractResponseDto;
 import com.fin.billage.domain.contract.entity.Contract;
 import com.fin.billage.domain.contract.service.ContractService;
+import com.fin.billage.domain.transfer.dto.TransferCashRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,9 +43,13 @@ public class ContractController {
     }
 
     // 차용증 수락, 거절 ( + 수락 시 이체까지 시켜야함)
-   @PatchMapping("/agreeYn")
-    public ResponseEntity<Contract> respondToContract(@RequestBody ContractRespondDto dto) {
-       Contract contract = contractService.respondToContract(dto);
+   @PatchMapping("/agreeYn/{yN}")
+    public ResponseEntity<Contract> respondToContract(
+            @RequestBody TransferCashRequestDto dto,
+            @PathVariable Boolean yN,
+            HttpServletRequest request
+   ) {
+       Contract contract = contractService.respondToContract(dto, yN, request);
        return new ResponseEntity<>(contract, HttpStatus.OK);
    }
 }
