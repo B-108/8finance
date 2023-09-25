@@ -33,9 +33,9 @@ const router = createBrowserRouter([
             //     errorElement: <ErrorComponent />,
             // },
             {
-                path: '',
-                element: <Login />,
-                errorElement: <ErrorComponent />,
+              path: '',
+              element: <Login />,
+              errorElement: <ErrorComponent />,
             },
             {
               path: '/signup',
@@ -53,19 +53,9 @@ const router = createBrowserRouter([
               errorElement: <ErrorComponent />,
             },
             {
-              path: '/pinenter/:routeAction',
-              element: <PinEnter />,
+              path: '/pinregister',
+              element: <PinRegister />,
               errorElement: <ErrorComponent />,
-            },
-            {
-                path: '/pinregister',
-                element: <PinRegister />,
-                errorElement: <ErrorComponent />,
-            },
-            {
-                path: '/incheck',
-                element: <PinCheck />,
-                errorElement: <ErrorComponent />,
             },
             {
                 path: '/main',
@@ -118,17 +108,17 @@ const router = createBrowserRouter([
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/myAccounts',
+                path: '/myaccounts',
                 element: <MyAccounts />,
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/AccountEnroll',
+                path: '/accountenroll',
                 element: <AccountEnroll />,
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/LoadAccounts',
+                path: '/loadaccounts',
                 element: <LoadAccounts />,
                 errorElement: <ErrorComponent />,
             },

@@ -34,8 +34,8 @@ function MyAccounts() {
                         $isClicked={isAccountClicked} // 계좌 클릭 여부 상태 전달
                     ></Accounts>
                 </AccountsContainer>
-                <Footer></Footer>
             </CenteredContainer>
+            <Footer/>
         </>
     );
 }

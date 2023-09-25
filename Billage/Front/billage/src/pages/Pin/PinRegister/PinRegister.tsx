@@ -39,7 +39,7 @@ function PinRegister () {
       event.target.value = event.target.value.slice(0,1)
       return 
     }
-    if (event.target.value !== "") {
+    if (event.target.value !== " ") {
       setPinRegister(pinRegister + event.target.value);
     }
     else {
