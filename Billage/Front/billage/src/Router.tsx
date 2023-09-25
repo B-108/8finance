@@ -18,6 +18,7 @@ import TADetail from './pages/TransactionDetail/TransactionDetail';
 import TransactionHistory from './pages/TransactionHistory/TransactionHistory';
 import SendMoney from './pages/SendMoney/SendMoney';
 import MyAccounts from './pages/MyAccounts/MyAccounts';
+import PinEnter from './pages/Pin/PinEnter/PinEnter';
 
 const router = createBrowserRouter([
     {
@@ -30,71 +31,80 @@ const router = createBrowserRouter([
             //     errorElement: <ErrorComponent />,
             // },
             {
-                path: '',
-                element: <Login />,
-                errorElement: <ErrorComponent />,
+              path: '',
+              element: <Login />,
+              errorElement: <ErrorComponent />,
             },
             {
-                path: '/signup',
-                element: <SignUp />,
-                errorElement: <ErrorComponent />,
+              path: '/signup',
+              element: <SignUp />,
+              errorElement: <ErrorComponent />,
             },
             {
-                path: '/PinRegister',
-                element: <PinRegister />,
-                errorElement: <ErrorComponent />,
+              path: '/pinenter',
+              element: <PinEnter />,
+              errorElement: <ErrorComponent />,
             },
             {
-                path: '/PinCheck',
-                element: <PinCheck />,
-                errorElement: <ErrorComponent />,
+              path: '/pincheck',
+              element: <PinCheck />,
+              errorElement: <ErrorComponent />,
             },
             {
-                path: '/main',
-                element: <Main />,
-                errorElement: <ErrorComponent />,
+              path: '/pinregister',
+              element: <PinRegister />,
+              errorElement: <ErrorComponent />,
             },
             {
-                path: '/transfer',
-                element: <Transfer />,
-                errorElement: <ErrorComponent />,
+              path: '/incheck',
+              element: <PinCheck />,
+              errorElement: <ErrorComponent />,
             },
             {
-                path: '/transactionlist',
-                element: <TransactionList />,
-                errorElement: <ErrorComponent />,
+              path: '/main',
+              element: <Main />,
+              errorElement: <ErrorComponent />,
             },
             {
-                path: '/transactiondetail',
-                element: <TADetail />,
-                errorElement: <ErrorComponent />,
+              path: '/transfer',
+              element: <Transfer />,
+              errorElement: <ErrorComponent />,
             },
             {
-                path: '/transactionhistory',
-                element: <TransactionHistory />,
-                errorElement: <ErrorComponent />,
+              path: '/transactionlist',
+              element: <TransactionList />,
+              errorElement: <ErrorComponent />,
             },
             {
-                path: '/findpassword',
-                element: <FindPW />,
-                errorElement: <ErrorComponent />,
+              path: '/transactiondetail',
+              element: <TADetail />,
+              errorElement: <ErrorComponent />,
             },
             {
-                path: '/changepassword',
-                element: <ChangePW />,
-                errorElement: <ErrorComponent />,
+              path: '/transactionhistory',
+              element: <TransactionHistory />,
+              errorElement: <ErrorComponent />,
             },
             {
-                path: '/notifications',
-                element: <Notifications />,
-                errorElement: <ErrorComponent />,
+              path: '/findpassword',
+              element: <FindPW />,
+              errorElement: <ErrorComponent />,
             },
             {
-                path: '/iou',
-                element: <IOU />,
-                errorElement: <ErrorComponent />,
+              path: '/changepassword',
+              element: <ChangePW />,
+              errorElement: <ErrorComponent />,
             },
-
+            {
+              path: '/notifications',
+              element: <Notifications />,
+              errorElement: <ErrorComponent />,
+            },
+            {
+              path: '/iou',
+              element: <IOU />,
+              errorElement: <ErrorComponent />,
+            },
             {
                 path: '/sendmoney',
                 element: <SendMoney />,

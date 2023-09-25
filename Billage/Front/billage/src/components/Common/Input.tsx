@@ -9,7 +9,7 @@ interface InputProps {
     value?: string | number | Date;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
     disabled?: boolean;
-    type?: 'phone' | 'number' | 'money' | 'name' | 'day' | 'interest' | 'amount' | 'totalAmount';
+    type?: 'phone' | 'number' | 'money' | 'name' | 'day' | 'interest' | 'amount' | 'totalAmount' | 'pin';
     // 사이즈 설정
     $size?: string;
     // 활성 상태
