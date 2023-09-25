@@ -38,13 +38,18 @@ const router = createBrowserRouter([
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/signup',
-                element: <SignUp />,
-                errorElement: <ErrorComponent />,
+              path: '/signup',
+              element: <SignUp />,
+              errorElement: <ErrorComponent />,
             },
             {
               path: '/pincheck',
               element: <PinCheck />,
+              errorElement: <ErrorComponent />,
+            },
+            {
+              path: '/pinenter/:routeAction',
+              element: <PinEnter />,
               errorElement: <ErrorComponent />,
             },
             {
