@@ -6,6 +6,7 @@ import {
   MessageCertProps, 
   MessageProps } from "../type/auth";
 
+// 계좌 등록
 export const postAccountRegister = async (info: AccountProps) => {
   try{
     await privateApi.post("/api/account",info)
@@ -16,6 +17,7 @@ export const postAccountRegister = async (info: AccountProps) => {
   }
 }
 
+// 전체 계좌 조회
 export const getAccountList = async () => {
   try{
     const response = await privateApi.get("/api/account")
@@ -26,6 +28,19 @@ export const getAccountList = async () => {
     console.log("getAccountList 실패",error)
   }
 }
+
+// 주계좌 등록
+export const patchMainAccount = async (accountId:number) => {
+  try{
+    const response = await privateApi.patch(`/api/account/${accountId}`)
+    console.log("주계좌 등록 성공 ")
+    return response
+  }
+  catch (error){
+    console.log("getAccountList 실패",error)
+  }
+}
+
 
 // 문자 요청
 export const postMyDataMessage = async (info: MessageProps) => {
