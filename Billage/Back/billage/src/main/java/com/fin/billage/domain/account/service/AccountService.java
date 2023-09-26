@@ -58,6 +58,7 @@ public class AccountService {
 
         for (Account account : accounts) {
             AccountResponseDto dto = AccountResponseDto.builder()
+                    .accountId(account.getAccountId())
                     .accountBankCode(account.getAccountBankCode())
                     .accountNum(account.getAccountNum())
                     .accountRegistDate(account.getAccountRegistDate())

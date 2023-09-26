@@ -25,7 +25,7 @@ public class Account {
     private Long accountId;
 
     @ManyToOne
-    @JoinColumn(name = "user_pk")
+    @JoinColumn(name = "user_pk", nullable = false)
     private User user;
 
     // 잔액
