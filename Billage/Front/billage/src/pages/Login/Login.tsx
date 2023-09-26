@@ -21,7 +21,6 @@ import { PhoneState } from "/src/recoil/auth";
 import { useRecoilState } from "recoil";
 
 // 타입스크립트
-import { routeActionProps } from "/src/type";
 
 function Login(){
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
@@ -34,11 +33,13 @@ function Login(){
   const movePinEnter = () => {navigate('/pinenter/login')}
 
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // 숫자가 아니면 입력 못 받도록
+    if(isNaN(Number(event.target.value))) {return}
+
     if (event.target.value.length > MAX_LENGTH) {
       event.target.value = event.target.value.slice(0, MAX_LENGTH);
     }
     setPhone(event.target.value.split(' ').join(''));
-    console.log(phone)
   };
 
   return(
@@ -55,7 +56,7 @@ function Login(){
             <Input
                 type="phone"
                 value={phone}
-                $size="90%,40px"
+                $size="86%,40px"
                 $active
                 onChange={handlePhoneChange}/>
         </InputDiv>

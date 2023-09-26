@@ -19,6 +19,7 @@ interface ButtonProps {
     $smallGreenBtn?: boolean;
     $smallGrayBtn?: boolean;
     $smallBlackBtn?: boolean;
+    $registerBtn?: boolean;
 
     // 색상 지정
     $Green?: boolean;
@@ -83,6 +84,22 @@ const StyledButton = styled.button<ButtonProps>`
             font-size: ${theme.fontSize.S_14};
             border-radius: ${theme.radius.M_15};
             background-color: ${theme.color.black};
+        `}
+
+    // 계좌 등록 버튼
+    ${(props) =>
+        props.$registerBtn &&
+        css`
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          color: ${theme.color.black};
+          font-weight: 800;
+          font-size: ${theme.fontSize.DF_16};
+          border-radius: ${theme.radius.S_10};
+          border: 3px solid ${theme.color.green[0]};
+          background-color: ${theme.color.white};
+          margin: 20px 0px 10px 0px;
         `}
 
     // 초록색 
