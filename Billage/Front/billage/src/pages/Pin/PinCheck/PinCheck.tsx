@@ -43,6 +43,7 @@ function PinCheck () {
       return 
     }
     if (event.target.value !== "") {
+      if (event.target.value === " "){ return }
       setPinCheck(pinCheck + event.target.value);
     }
     else {

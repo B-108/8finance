@@ -61,6 +61,7 @@ const StyledInput = styled.input<InputProps>`
             &:focus {
                 outline: 1px solid ${theme.color.green[0]};
                 background-color: ${theme.color.green[0]};
+                border: 1px solid ${theme.color.green[0]}
             }
         `}
 
@@ -90,7 +91,7 @@ export const InputHeader = styled.div`
     width: fit-content;
     font-size: ${theme.fontSize.XS_12};
     color: #757575;
-    margin-bottom: 45px;
+    margin-bottom: 40px;
     background-color: ${theme.color.white};
     position: absolute;
     left: 10%;
@@ -107,7 +108,6 @@ export const InputDiv = styled.div`
 
 export const InputAuthHeader = styled(InputHeader)`
     margin-bottom: 47px;
-    
 `;
 
 export const ButtonBox = styled.div`
