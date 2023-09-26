@@ -5,5 +5,4 @@ export const InputBox = styled.div`
   justify-content: space-between;
   width: 270px;
   margin: 30px;
-
 `

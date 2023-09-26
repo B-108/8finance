@@ -56,6 +56,7 @@ const StyledInput = styled.input<InputProps>`
             background-color: ${theme.color.gray[100]};
             font-size: ${theme.fontSize.DF_16};
             border-radius: 100%;
+            aspect-ratio: 1 / 1;
 
             &:focus {
                 outline: 1px solid ${theme.color.green[0]};
@@ -85,16 +86,6 @@ const Input = (props: InputProps) => {
 
 export default Input;
 
-export const InputHeader = styled.div`
-    width: fit-content;
-    font-size: ${theme.fontSize.XS_12};
-    color: #757575;
-    margin-bottom: 45px;
-    background-color: ${theme.color.white};
-    position: absolute;
-    left: 10%;
-`;
-
 export const InputDiv = styled.div`
     position: relative;
     display: flex;
@@ -104,10 +95,19 @@ export const InputDiv = styled.div`
     width: 100%;
 `;
 
-export const InputAuthHeader = styled(InputHeader)`
-    margin-bottom: 47px;
-    
+export const InputHeader = styled.div`
+  width: fit-content;
+  font-size: ${theme.fontSize.XS_12};
+  color: #757575;
+  margin-bottom: 40px;
+  background-color: ${theme.color.white};
+  position: absolute;
+  left: 10%;
 `;
+
+export const AccountInputHeader = styled(InputHeader)`
+  left: 8%;
+`
 
 export const ButtonBox = styled.div`
     position: absolute;

@@ -73,6 +73,8 @@ const StyledBox = styled.div<BoxProps>`
             box-shadow: 2px 2px 14px 0px rgba(0, 0, 0, 0.25);
         `
     }
+
+    // 
 `
 
 const Box = (props:BoxProps) => {
