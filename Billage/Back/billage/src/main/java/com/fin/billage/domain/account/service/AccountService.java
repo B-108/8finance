@@ -30,10 +30,19 @@ public class AccountService {
         User user = userRepository.findById(user_pk).orElse(null);
 
         boolean mainYn = false;
-//         가지고 있는 계좌가 null(0개) 일 때 첫 번째 등록 계좌를 주계좌로
-        Optional<Account> userAccounts = accountRepository.findByUser(user);
-        if (!userAccounts.isPresent()) {
+        //주 계좌가 없을 때 주계좌 설정
+        List<Account> userMainAccounts = accountRepository.findByUserAndAccountMainYn(user, true);
+
+        if (userMainAccounts.isEmpty()) {
             mainYn = true;
+        }
+
+        // 이미 존재하는 은행의 계좌가 있을 떄 중복방지
+        Account existAccount = accountRepository.findByUserAndAccountNumAndAccountBankCode(user, dto.getAccountNum(), dto.getAccountBankCode());
+
+        if (existAccount != null) {
+            // 이미 등록된 계좌가 존재하면 실패
+            return null;
         }
 
         Account account = Account.builder()
