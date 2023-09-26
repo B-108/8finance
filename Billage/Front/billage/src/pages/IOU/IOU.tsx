@@ -89,13 +89,15 @@ function IOUPage() {
                                 <Amount>￦ {contract.contractAmt} 원</Amount>
                                 <hr />
                                 <Content>
-                                    위 금액을 채무자({contract.debtorUser})가 채권자({contract.creditorUser})로부터{' '}
-                                    {contract.contractStartDate}일 틀림없이 빌렸습니다.
+                                    위 금액을 채무자({contract.debtorUser.userNmae})가 채권자(
+                                    {contract.creditorUser.userName})로부터 {contract.contractStartDate}일 틀림없이
+                                    빌렸습니다.
                                 </Content>
                                 <Content>
-                                    채무자({contract.debtorUser})는 위 금액을 연 이자 {contract.contractInterestRate}%로
-                                    하여 {contract.contractMaturityDate}일까지 채권자(
-                                    {contract.creditorUser})에게 갚겠습니다.
+                                    채무자({contract.debtorUser.userNmae})는 위 금액을 연 이자{' '}
+                                    {contract.contractInterestRate}%로 하여 {contract.contractMaturityDate}일까지
+                                    채권자(
+                                    {contract.creditorUser.userName})에게 갚겠습니다.
                                 </Content>
                             </div>
                             <Dates>날짜: {currentDate} 일</Dates>
@@ -103,12 +105,12 @@ function IOUPage() {
                             <div style={{ justifyContent: 'space-around', marginTop: 'auto' }}>
                                 <div style={{ width: '50px', height: '50px', display: 'flex' }}>
                                     채권자 <br />
-                                    이름 : {contract.creditorUser}
+                                    이름 : {contract.creditorUser.userName}
                                 </div>
                                 <hr />
                                 <div style={{ width: '50px', height: '50px', display: 'flex' }}>
                                     채무자 <br />
-                                    이름 : {contract.debtorUser}
+                                    이름 : {contract.debtorUser.userNmae}
                                 </div>
                             </div>
                         </IOUContent>
