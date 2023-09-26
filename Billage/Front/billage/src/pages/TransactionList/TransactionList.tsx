@@ -1,11 +1,39 @@
 import Header from "/src/components/Header/Header"
 import Text from "/src/components/Common/Text"
 import Button from "/src/components/Common/Button"
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import CenteredContainer from "/src/components/Common/CenterAlign"
 import TransactionItem from "/src/components/TransactionLIst/TransactionItem/TransactionItem"
+//API
+import { getBorrowList, getLendList } from "/src/api/transaciton"
+//타입스크립트
+import { TransactionType } from "/src/type/transaction"
+
 function TransactionList() {
     const [toggle, setToggle] = useState(true)
+    const [list, setList] = useState<TransactionType[]>([]) 
+
+    const axiosTransActionList =async (): Promise<void> => {
+        try{
+            if (toggle) {
+                const response = await getBorrowList()
+                setList(response?.data)
+                console.log('빌린목록 조회',response?.data) 
+            }
+            else{
+                const response = await getLendList()
+                setList(response?.data)
+                console.log('빌려준 목록 조회', response?.data)            
+            }
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+
+    useEffect(()=>{
+        axiosTransActionList()
+      }, list)
 
     const handleBorrowedClick = () => {
         setToggle(true);
@@ -38,6 +66,9 @@ function TransactionList() {
                         빌려준목록</Button>
                 </div>
             </div>
+            {/* {list.map((item, index) => (
+                <TransactionItem toggle={toggle} key={index} item={item}/>
+            ))} */}
             {[1,2,3,4].map((item) => (
                 <TransactionItem toggle={toggle} key={item}/>
             ))}
