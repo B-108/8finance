@@ -46,4 +46,9 @@ public class UserController {
     public ResponseEntity<?> refreshToken(HttpServletRequest request) {
         return new ResponseEntity<>(userService.refreshToken(request), HttpStatus.OK);
     }
+
+    @GetMapping("/{userCellNo}")
+    public ResponseEntity<?> getUserInfo(@PathVariable String userCellNo) {
+        return new ResponseEntity<>(userService.getUserInfo(userCellNo), HttpStatus.OK);
+    }
 }
