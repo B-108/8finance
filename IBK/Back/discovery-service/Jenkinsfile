@@ -49,7 +49,11 @@ pipeline {
                     sh '''
                     echo 'Deploy'
 
-                    docker run -d -p 8761:8761 --name ibk-discover-service docker-springboot-ibk-discovery-service:0.0.1
+                    docker stop ibk-discover-service
+                    docker rm ibk-discover-service
+                    docker rmi ibk-discover-service
+
+                    docker run -d -P 8761:8761 --name ibk-discover-service docker-springboot-ibk-discovery-service:0.0.1
                     '''
                 }
             }
