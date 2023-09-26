@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // 스타일 컴포넌트
 import { 
@@ -24,6 +25,10 @@ import rightArrow from '/src/assets/rightArrow.svg';
 function MyAccounts() {
   const [isAccountClicked, setIsAccountClicked] = useState(false);
 
+  // 라우터
+  const navigate = useNavigate()
+  const moveAccountEnroll = () => {navigate(`/accountenroll`)}
+
   const handleAccountClick = () => {
     setIsAccountClicked(true); // 클릭 시 테두리 색 변경
     setTimeout(() => {
@@ -43,7 +48,8 @@ function MyAccounts() {
         
         <Button
           $registerBtn
-          $size="94%,45px">
+          $size="94%,45px"
+          onClick = {moveAccountEnroll}>
             <LeftSection>
               <Image
                 src={colorCreditCard}

@@ -12,17 +12,21 @@ export const Container = styled.div`
 export const LeftSection = styled.div`
   display: flex;
   justify-content: flex-start;
+  align-content: center;
   align-items: center;
-  height: 100%;
+  height: 80px;
+  line-height: 80px;
   width: 50%;
+
 `;
 
 export const Title = styled.div<{ $noDisplay:boolean }>`
   display: flex;
-  align-items: center;
   width: 90%;
-  height: 50%;
+  height: 80px;
+  line-height: 84px;
   font-weight: 800;
   font-size: ${theme.fontSize.M_20};
   padding: ${(props) => props.$noDisplay ? "0px" : "0px 0px 0px 7px"};
+
 `
