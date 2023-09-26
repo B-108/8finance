@@ -27,8 +27,13 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterchain) throws IOException, ServletException {
         String token = jwtUtil.resolveToken((HttpServletRequest) servletRequest);
 
+        System.out.println("JwtAuthenticationFilter의 doFilter");
+
         // 토큰 유효성 검사
         if (token != null && jwtUtil.validateToken(token)) {
+
+            System.out.println("JwtAuthenticationFilter의 doFilter 내부 if문");
+
             if ((((HttpServletRequest) servletRequest).getRequestURI().equals("/user/refresh"))) {
                 Authentication authentication = jwtUtil.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
