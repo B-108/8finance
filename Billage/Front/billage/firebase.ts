@@ -15,7 +15,7 @@ const firebaseConfig = {
 const VAPID_KEY = 'BLyXSyo5zKNbKpt0bBiMxn0_noRIgYSMudkZZO_cQPkw6lUy7A15vcjVrbxbKxOxTzGTlJqkNY-iO5t9wzcBLcY'
 const app = initializeApp(firebaseConfig);
 export const messaging = getMessaging(app);
-
+export let token = ''
 function requestPermission() {
     console.log('Requesting permission...');
     Notification.requestPermission().then((permission) => {
@@ -26,7 +26,7 @@ function requestPermission() {
                 .then((currentToken) => {
                     if (currentToken) {
                         console.log('currentToken', currentToken);
-                        
+                        token = currentToken;    
                     } else {
                         console.log('No registration token available.');
                     }
