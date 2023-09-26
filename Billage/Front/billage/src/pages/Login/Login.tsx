@@ -19,7 +19,8 @@ import Input, {
 // 리코일
 import { PhoneState } from "/src/recoil/auth";
 import { useRecoilState } from "recoil";
-import { token } from "firebase";
+// import { token } from "firebase";
+
 // 타입스크립트
 
 function Login(){

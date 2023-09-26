@@ -63,4 +63,7 @@ export const postMessageCert = async (info: MessageCertProps) => {
       return response.status
     }
   }
+  catch (error) {
+    console.log("postMessageCert 실패한 이유는??",error)
+  }
 }
