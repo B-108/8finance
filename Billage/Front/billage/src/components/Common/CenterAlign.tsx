@@ -20,6 +20,7 @@ export const Container = styled.div<InputContainer>`
     justify-content: ${(props) => props.$center ? "center" : ""};
     height: 93vh; /* 화면 높이의 100% */
     overflow-y: scroll;
+
     
     &::-webkit-scrollbar {
     width: 0%; /* 스크롤바의 너비 */

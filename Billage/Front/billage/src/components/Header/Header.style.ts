@@ -5,8 +5,8 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 92%;
-  height: 70px;
+  width: 94%;
+  height: 80px;
 `
 
 export const LeftSection = styled.div`

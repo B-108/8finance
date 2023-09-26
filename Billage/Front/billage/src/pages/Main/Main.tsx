@@ -27,12 +27,12 @@ function Main(){
         
         <Text
           $title
-          $size="98%,50px">확인 하지 않은 알림!</Text>
+          $size="94%,50px">확인 하지 않은 알림!</Text>
 
         <Box
           onClick={moveNotifications}
           $alarmBox
-          $size="89%,80px">
+          $size="88%,80px">
           <AlarmHeader>
             <Image
               src={alarmBell2}
@@ -46,7 +46,7 @@ function Main(){
 
         <Text
           $title
-          $size="98%,50px">나의거래</Text>
+          $size="94%,50px">나의거래</Text>
 
         <div style={{width:"100%"}}>
           <Splide
@@ -84,7 +84,7 @@ function Main(){
           <Box
             onClick={moveTransfer}
             $transaction
-            $size="46%,60px">
+            $size="45%,60px">
             <ContentBox>
               <Text
                 $smallTitle
@@ -102,7 +102,7 @@ function Main(){
           <Box
             onClick={moveTransactionList}
             $transaction
-            $size="46%,60px">
+            $size="45%,60px">
             <ContentBox>
               <Text
                 $smallTitle
