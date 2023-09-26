@@ -1,21 +1,32 @@
-import Input, { ButtonInput } from '/src/components/Common/Input';
+// Transfer.tsx
+
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+
+// 공통 컴포넌트 및 이미지
+import Input, { ButtonInput } from '/src/components/Common/Input';
 import CenteredContainer from '/src/components/Common/CenterAlign';
 import Header from '/src/components/Header/Header';
+import Button from '/src/components/Common/Button';
+
 import plus from '/src/assets/plus.svg';
 import calendar from '/src/assets/calendar.svg';
 import magnifyingGlass from '/src/assets/magnifyingGlass.svg';
-import Button from '/src/components/Common/Button';
-import { TranInputDiv, TranInputTitle } from './Transfer.style';
+
+// 스타일 컴포넌트
+import { ButtonContainer, SmallButtonsContainer, TranInputDiv, TranInputTitle } from './Transfer.style';
+
+// 타입스크립트
+import { IOUProps } from '/src/type/iou';
+import { postIOU } from '/src/api/iou';
 
 function Transfer() {
     const [friendInfo, setFriendInfo] = useState<string>('');
     const [accountInfo, setAccountInfo] = useState<string>('');
+    const [transferDate, setTransferDate] = useState<Date | null>(null); // Date 타입으로 상태 변경
+    const [autoTransferDate, setAutoTransferDate] = useState<Date | null>(null); // Date 타입으로 상태 변경
     const [amount, setAmount] = useState<string>('');
-    const [transferDate, setTransferDate] = useState(new Date());
-    const [autoTransferDate, setAutoTransferDate] = useState(new Date());
     const [interest, setInterest] = useState<string>('');
     const [totalAmount, setTotalAmount] = useState<string>('');
 
@@ -31,14 +42,39 @@ function Transfer() {
     const handleTotalAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTotalAmount(event.target.value);
     };
-    const handleTransferDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setTransferDate(event.target.value);
+
+    // Date 타입 상태 변경 함수
+    const handleTransferDateChange = (date: Date | null) => {
+        setTransferDate(date);
     };
-    const handleAutoTransferDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAutoTransferDate(event.target.value);
+    const handleAutoTransferDateChange = (date: Date | null) => {
+        setAutoTransferDate(date);
     };
+
     const handleInterestChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInterest(event.target.value);
+    };
+
+    // 채용증 생성 요청을 보내는 함수
+    const axiosPostIOU = async () => {
+        const iouData: IOUProps = {
+            creditorUser: 2, // 채권자 사용자 ID
+            contractDebtorAcNum: accountInfo,
+            contractMaturityDate: transferDate ? transferDate.toISOString() : '', // Date 객체를 문자열로 변환
+            contractAutoTranYn: false,
+            contractAutoDate: autoTransferDate ? autoTransferDate.toISOString() : '', // Date 객체를 문자열로 변환
+            contractAmt: amount,
+            contractInterestRate: interest,
+            contractDueAmt: totalAmount,
+        };
+
+        // 차용증 생성 요청API.
+        try {
+            await postIOU(iouData);
+            console.log('차용증이 성공적으로 생성되었습니다.');
+        } catch (error) {
+            console.error('차용증 생성에 실패했습니다.', error);
+        }
     };
 
     return (
@@ -52,7 +88,7 @@ function Transfer() {
                     $active
                     $size="98%,40px"
                     onChange={handleFriendInfoChange}
-                    $buttonImage={magnifyingGlass} // 이미지 버튼 추가
+                    $buttonImage={magnifyingGlass}
                 />
             </TranInputDiv>
             <hr />
@@ -63,7 +99,7 @@ function Transfer() {
                     $active
                     $size="98%,40px"
                     onChange={handleAccountInfoChange}
-                    $buttonImage={plus} // 이미지 버튼 추가
+                    $buttonImage={plus}
                 />
             </TranInputDiv>
             <hr />
@@ -71,9 +107,16 @@ function Transfer() {
                 <TranInputTitle>돈 갚을 날짜</TranInputTitle>
                 <DatePicker
                     selected={transferDate}
-                    onChange={(date) => setTransferDate(date)}
+                    onChange={handleTransferDateChange}
                     dateFormat="yyyy-MM-dd"
-                    customInput={<ButtonInput value={transferDate} $active $size="98%,40px" $buttonImage={calendar} />}
+                    customInput={
+                        <ButtonInput
+                            value={transferDate ? transferDate.toISOString() : ''}
+                            $active
+                            $size="98%,40px"
+                            $buttonImage={calendar}
+                        />
+                    }
                 />
             </TranInputDiv>
             <hr />
@@ -84,10 +127,15 @@ function Transfer() {
                 </TranInputTitle>
                 <DatePicker
                     selected={autoTransferDate}
-                    onChange={(date) => setAutoTransferDate(date)}
+                    onChange={handleAutoTransferDateChange}
                     dateFormat="yyyy-MM-dd"
                     customInput={
-                        <ButtonInput value={autoTransferDate} $active $size="98%,40px" $buttonImage={calendar} />
+                        <ButtonInput
+                            value={autoTransferDate ? autoTransferDate.toISOString() : ''}
+                            $active
+                            $size="98%,40px"
+                            $buttonImage={calendar}
+                        />
                     }
                 />
             </TranInputDiv>
@@ -95,7 +143,20 @@ function Transfer() {
             <TranInputDiv>
                 <TranInputTitle>빌릴 금액</TranInputTitle>
                 <Input value={amount} $active $size="98%,40px" onChange={handleAmountChange}></Input>
-                <SmallButtonsContainer></SmallButtonsContainer>
+                <SmallButtonsContainer>
+                    <Button $smallBlackBtn $size="10%,25px" style={{ margin: '6px' }}>
+                        +1만
+                    </Button>
+                    <Button $smallBlackBtn $size="10%,25px" style={{ margin: '6px' }}>
+                        +5만
+                    </Button>
+                    <Button $smallBlackBtn $size="10%,25px" style={{ margin: '6px' }}>
+                        +10만
+                    </Button>
+                    <Button $smallBlackBtn $size="10%,25px" style={{ margin: '6px' }}>
+                        +100만
+                    </Button>
+                </SmallButtonsContainer>
             </TranInputDiv>
             <hr />
             <TranInputDiv>
@@ -114,51 +175,16 @@ function Transfer() {
                 <Input value={totalAmount} $active $size="98%,40px" onChange={handleTotalAmountChange}></Input>
             </TranInputDiv>
             <hr />
-            <ButtonContainer></ButtonContainer>
+            <ButtonContainer>
+                <Button $basicGrayBtn $size="100%, 50px" style={{ margin: '10px' }}>
+                    작성취소
+                </Button>
+                <Button $basicGreenBtn $size="100%, 50px" style={{ margin: '10px' }} onClick={axiosPostIOU}>
+                    작성완료
+                </Button>
+            </ButtonContainer>
         </CenteredContainer>
     );
 }
 
 export default Transfer;
-
-const SmallButtonsContainer = () => {
-    return (
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Button $smallBlackBtn $size="10%,25px" style={{ margin: '6px' }}>
-                +1만
-            </Button>
-            <Button $smallBlackBtn $size="10%,25px" style={{ margin: '6px' }}>
-                +5만
-            </Button>
-            <Button $smallBlackBtn $size="10%,25px" style={{ margin: '6px' }}>
-                +10만
-            </Button>
-            <Button $smallBlackBtn $size="10%,25px" style={{ margin: '6px' }}>
-                +100만
-            </Button>
-        </div>
-    );
-};
-
-//하단 작성
-const ButtonContainer = () => {
-    return (
-        <div
-            style={{
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'flex-end',
-                position: 'absolute',
-                bottom: '20px',
-            }}
-        >
-            <Button $basicGrayBtn $size="100%, 50px" style={{ margin: '10px' }}>
-                작성취소
-            </Button>
-            <Button $basicGreenBtn $size="100%, 50px" style={{ margin: '10px' }}>
-                작성완료
-            </Button>
-        </div>
-    );
-};

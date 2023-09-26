@@ -18,3 +18,17 @@ export const TranInputTitle = styled.div`
 export const StyledCheckbox = styled.input`
     font-size: 16px;
 `;
+
+export const SmallButtonsContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
+`;
+
+export const ButtonContainer = styled.div`
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: absolute;
+    bottom: 20px;
+`;
