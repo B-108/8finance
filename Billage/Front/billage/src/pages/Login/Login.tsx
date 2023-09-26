@@ -19,7 +19,7 @@ import Input, {
 // 리코일
 import { PhoneState } from "/src/recoil/auth";
 import { useRecoilState } from "recoil";
-// import { token } from "firebase";
+import { token } from "firebase";
 
 // 타입스크립트
 
@@ -54,12 +54,10 @@ function Login(){
             {
               action: '첫번째 액션',
               title: '첫번째 제목',
-              icon: '/images/demos/action-1-128x128.png',
             },
             {
               action: '두번째 액션',
               title: '두번째 제목',
-              icon: '/images/demos/action-4-128x128.png',
             },
           ],
         };
