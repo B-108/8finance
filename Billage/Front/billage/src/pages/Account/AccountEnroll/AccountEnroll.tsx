@@ -8,7 +8,6 @@ import Header from '/src/components/Header/Header';
 import Button from '/src/components/Common/Button';
 import Text from '/src/components/Common/Text';
 import Input, { 
-  AccountInputHeader, 
   ButtonBox, 
   InputDiv} from '/src/components/Common/Input';
 

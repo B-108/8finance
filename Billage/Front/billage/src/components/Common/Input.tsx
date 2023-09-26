@@ -86,6 +86,16 @@ const Input = (props: InputProps) => {
 
 export default Input;
 
+export const InputHeader = styled.div`
+    width: fit-content;
+    font-size: ${theme.fontSize.XS_12};
+    color: #757575;
+    margin-bottom: 45px;
+    background-color: ${theme.color.white};
+    position: absolute;
+    left: 10%;
+`;
+
 export const InputDiv = styled.div`
     position: relative;
     display: flex;
@@ -95,19 +105,10 @@ export const InputDiv = styled.div`
     width: 100%;
 `;
 
-export const InputHeader = styled.div`
-  width: fit-content;
-  font-size: ${theme.fontSize.XS_12};
-  color: #757575;
-  margin-bottom: 40px;
-  background-color: ${theme.color.white};
-  position: absolute;
-  left: 10%;
+export const InputAuthHeader = styled(InputHeader)`
+    margin-bottom: 47px;
+    
 `;
-
-export const AccountInputHeader = styled(InputHeader)`
-  left: 8%;
-`
 
 export const ButtonBox = styled.div`
     position: absolute;
