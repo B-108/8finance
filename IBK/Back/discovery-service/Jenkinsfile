@@ -51,7 +51,7 @@ pipeline {
 
 
 
-                    docker run -d 8761:8761 --name ibk-discover-service docker-springboot-ibk-discovery-service:0.0.1
+                    docker run -d --name ibk-discover-service docker-springboot-ibk-discovery-service:0.0.1
                     '''
                 }
             }
