@@ -29,15 +29,14 @@ export const AccountsBox = styled.div`
 `;
 
 export const Accounts = styled.img<{ $isClicked: boolean }>`
-    width: 99%;
+    width: 97%;
     margin-bottom: 5px;
-    border: 3px solid gray;
-    border-radius: 40px;
+    border: 3px solid transparent;
 
     ${(props) =>
       props.$isClicked &&
       css`
-        border-image: ${theme.color.mix.border};
+        border-image-source: ${theme.color.mix.border};
         border-image-slice: 1;
     `}
 `;

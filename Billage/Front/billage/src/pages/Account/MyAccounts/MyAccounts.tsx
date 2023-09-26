@@ -31,6 +31,7 @@ import { AccountType } from '/src/type/account';
 
 function MyAccounts() {
   const [accounts, setAccounts] = useState<AccountType[]>([])
+  
 
   // 라우터
   const navigate = useNavigate()
