@@ -31,6 +31,7 @@ const StyledText = styled.div<TextProps>`
     width: ${(props) => props.$size?.split(',')[0]};
     height: ${(props) => props.$size?.split(',')[1]};
     justify-content: space-around;
+
     // 간편 비밀번호 Title Text
     ${(props) =>
         props.$pinText && 
