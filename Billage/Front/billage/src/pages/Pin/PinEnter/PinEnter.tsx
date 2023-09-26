@@ -80,25 +80,25 @@ function PinEnter () {
 
       <InputBox>
         <Input
-          $size="20px,20px" 
+          $size="20px," 
           $simplepassword
           value={pinEnter.length >= 1 ? pinEnter[0] : ""}
           onChange={handlepinEnterChange}
           ></Input>
         <Input 
-          $size="20px,20px" 
+          $size="20px," 
           $simplepassword
           value={pinEnter.length >= 2 ? pinEnter[1] : ""}
           onChange={handlepinEnterChange}
           ></Input>
         <Input 
-          $size="20px,20px" 
+          $size="20px," 
           $simplepassword
           value={pinEnter.length >= 3 ? pinEnter[2] : ""}
           onChange={handlepinEnterChange}
           ></Input>
         <Input 
-          $size="20px,20px" 
+          $size="20px," 
           $simplepassword
           value={pinEnter.length >= 4 ? pinEnter[3] : ""}
           onChange={handlepinEnterChange}
@@ -107,7 +107,7 @@ function PinEnter () {
           src={plus}
           alt="plus"></Image>
         <Input 
-          $size="20px,20px" 
+          $size="20px," 
           $simplepassword
           value={pinEnter.length >= 5 ? pinEnter[4] : ""}
           onChange={handlepinEnterChange}

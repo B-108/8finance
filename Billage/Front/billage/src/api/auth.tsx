@@ -10,7 +10,7 @@ import {
 // 회원가입
 export const postSignUp = async (info: SignUpProps) => {
   try{
-    const response = await publicApi.post("/user/signup", info);
+    const response = await publicApi.post("/api/user/signup", info);
     console.log(response.data);
     return response.data;
   }
@@ -22,7 +22,7 @@ export const postSignUp = async (info: SignUpProps) => {
 // 로그인
 export const postLogin = async (info: LoginProps) => {
   try{
-    const response = await publicApi.post("/user/login", info);
+    const response = await publicApi.post("/api/user/login", info);
     
     if (response && response.status === 200){
       const accessToken = response.data.jwtToken.accessToken
@@ -45,8 +45,8 @@ export const postLogin = async (info: LoginProps) => {
 // 문자 요청
 export const postMessage = async (info: MessageProps) => {
   try{
-    const response = await publicApi.post("/sms", info);
-    console.log("문자 요청 ",response.data.statusName)
+    const response = await publicApi.post("/api/sms", info);
+    console.log("회원가입 문자 요청 ",response.data.statusName)
   }
   catch (error) {
     console.log("postMessage를 실패한 이유는??",error)
@@ -56,9 +56,9 @@ export const postMessage = async (info: MessageProps) => {
 // 문자 인증 요청
 export const postMessageCert = async (info: MessageCertProps) => {
   try{
-    const response = await publicApi.post("/sms/verify", info);
+    const response = await publicApi.post("/api/sms/verify", info);
     if (response.status === 200 ) {
-      console.log("문자 인증 success")
+      console.log("회원가입 문자 인증 success")
       return response.status
     }
   }
