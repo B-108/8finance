@@ -1,0 +1,66 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Springboot build') {
+            steps {
+                dir('Billage/Back/billage'){
+                    sh '''
+                    pwd
+                    echo 'springboot build'
+                    cp /jenkins/backend-config/ibk/discovery-service/application.yml /var/jenkins_home/workspace/billage_back/Billage/Back/billage/src/main/resources/
+                    chmod +x gradlew
+                    ./gradlew clean build
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Dockerimage build') {
+            steps {
+                dir('Billage/Back/billage'){
+                    sh '''
+                    echo 'Dockerimage build'
+                    docker build -t docker-springboot-ibk-dicovery-service:0.0.1 .
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                dir('Billage/Back/billage'){
+                    sh '''
+                    echo 'Deploy'
+
+                    docker run -d -p 8761:8761 --name ibk-dicover-service docker-springboot-ibk-dicovery-service:0.0.1
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+    }
+}
