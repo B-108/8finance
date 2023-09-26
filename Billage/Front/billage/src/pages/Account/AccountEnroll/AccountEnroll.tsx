@@ -40,7 +40,11 @@ function AccountEnroll() {
 
   // 라우터 
   const navigate = useNavigate()
-  const moveLoadAccounts = () => {navigate(`/loadaccounts`)}
+  const moveLoadAccounts = async () => {
+    // const response = await axiosMyDataMessagCert()
+    // if(isChecked && response) {navigate(`/loadaccounts`)}
+    if(isChecked) {navigate(`/loadaccounts`)}
+  }
 
   // 전화번호 입력
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +72,7 @@ function AccountEnroll() {
       to : phone,
     }
     try {
-      await postMyDataMessage(info)
+      return await postMyDataMessage(info)
     }
     catch(error) {
       console.log(error)
