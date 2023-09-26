@@ -57,10 +57,10 @@ public class User {
     private LocalDateTime userAgreeDate;
 
     @Column(name = "firebase_token")
-    private String firebaseToken;
+    private String userFirebaseToken;
 
     @Builder
-    public User(Long userPk, String userSeqNo, String userCellNo, String userName, String userInfo, String userSimplePass, LocalDateTime userJoinDate, LocalDateTime userModifyDate, LocalDateTime userDeleteDate, Integer userCarrotTemp, Character userAgreeYn, LocalDateTime userAgreeDate, String firebaseToken) {
+    public User(Long userPk, String userSeqNo, String userCellNo, String userName, String userInfo, String userSimplePass, LocalDateTime userJoinDate, LocalDateTime userModifyDate, LocalDateTime userDeleteDate, Integer userCarrotTemp, Character userAgreeYn, LocalDateTime userAgreeDate, String userFirebaseToken) {
         this.userPk = userPk;
         this.userSeqNo = userSeqNo;
         this.userCellNo = userCellNo;
@@ -73,7 +73,7 @@ public class User {
         this.userCarrotTemp = userCarrotTemp;
         this.userAgreeYn = userAgreeYn;
         this.userAgreeDate = userAgreeDate;
-        this.firebaseToken = firebaseToken;
+        this.userFirebaseToken = userFirebaseToken;
     }
 
     public void setPassword(String newPassword) {

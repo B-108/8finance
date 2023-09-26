@@ -39,6 +39,7 @@ public class UserService {
                         .userCellNo(userSignUpRequestDto.getUserCellNo())
                         .userName(userSignUpRequestDto.getUserName())
                         .userSimplePass(encryptPassword)
+                        .userFirebaseToken(userSignUpRequestDto.getFirebaseToken())
                         .build());
 
         return UserSignUpResponseDto.builder()
@@ -123,7 +124,7 @@ public class UserService {
     public UserGetInfoResponseDto getUserInfo(String userCellNo) {
         User findUser = userRepository.findByUserCellNo(userCellNo).orElseThrow(() -> new RuntimeException("없어요"));
         return UserGetInfoResponseDto.builder()
-                .firebaseToken(findUser.getFirebaseToken())
+                .firebaseToken(findUser.getUserFirebaseToken())
                 .isUserInfo(true)
                 .build();
     }

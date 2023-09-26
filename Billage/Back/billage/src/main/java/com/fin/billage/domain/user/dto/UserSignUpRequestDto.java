@@ -9,4 +9,5 @@ public class UserSignUpRequestDto {
     private String userCellNo;
     private String userName;
     private String userSimplePass;
+    private String firebaseToken;
 }
