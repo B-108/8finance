@@ -1,9 +1,11 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import theme from '/src/themes';
 import Image from './Image';
 
 interface InputProps {
+    ref?: React.Ref<HTMLInputElement>; 
+    
     children?: React.ReactNode;
     onClick?: () => void;
     value?: string | number | Date;
@@ -81,9 +83,13 @@ const StyledInput = styled.input<InputProps>`
         `}
 `;
 
-const Input = (props: InputProps) => {
-    return <StyledInput {...props}></StyledInput>;
-};
+// const Input = (props: InputProps) => {
+//     return <StyledInput {...props}></StyledInput>;
+// };
+
+const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+  return <StyledInput {...props} ref={ref}></StyledInput>;
+});
 
 export default Input;
 
@@ -118,7 +124,6 @@ export const ButtonBox = styled.div`
     width: 52%;
 `;
 
-// 오른쪽에 이미지 달린 인풋
 export const ButtonInput = (props: InputProps) => {
     return (
         <InputDiv>
@@ -130,3 +135,16 @@ export const ButtonInput = (props: InputProps) => {
         </InputDiv>
     );
 };
+
+
+
+// export const ButtonInput = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+//   return (
+//       <InputDiv>
+//           <StyledInput {...props} ref={ref}></StyledInput>
+//           <ButtonBox>
+//               {props.$buttonImage && <Image src={props.$buttonImage} alt="Button Image" width="30px" />}
+//           </ButtonBox>
+//       </InputDiv>
+//   );
+// });
