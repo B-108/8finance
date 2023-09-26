@@ -136,7 +136,7 @@ public class JwtUtil {
 
         String newToken = Jwts.builder()
                 .setSubject(token.getSubject()) // 토큰의 이름 설정
-                .claim("auth", token) // 권한 넣기
+                .claim("auth", scope) // 권한 넣기
                 .claim("type", "ACCESS")
                 .claim("userPk", token.get("userPk")) // pk 값 넣기
                 .claim("userCellNo", token.get("userCellNo"))

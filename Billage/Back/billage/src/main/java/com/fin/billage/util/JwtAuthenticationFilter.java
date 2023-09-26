@@ -29,11 +29,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
         // 토큰 유효성 검사
         if (token != null && jwtUtil.validateToken(token)) {
-
-            System.out.println(((HttpServletRequest) servletRequest).getRequestURI());
-
-            if (!((HttpServletRequest) servletRequest).getRequestURI().equals("/user/refresh")) {
-                System.out.println("악!");
+            if ((((HttpServletRequest) servletRequest).getRequestURI().equals("/user/refresh"))) {
                 Authentication authentication = jwtUtil.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
