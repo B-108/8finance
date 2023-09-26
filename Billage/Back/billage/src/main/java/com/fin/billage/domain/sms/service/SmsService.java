@@ -2,12 +2,15 @@ package com.fin.billage.domain.sms.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fin.billage.domain.contract.entity.Transaction;
 import com.fin.billage.domain.sms.dto.SmsDto;
 import com.fin.billage.domain.sms.dto.SmsRequestDto;
 import com.fin.billage.domain.sms.dto.SmsResponseDto;
 import com.fin.billage.domain.sms.dto.SmsVerifyDto;
 import com.fin.billage.domain.sms.entity.Sms;
 import com.fin.billage.domain.sms.repository.SmsRepository;
+import com.fin.billage.domain.transfer.entity.Url;
+import com.fin.billage.domain.transfer.repository.RequestUrlRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -15,11 +18,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
+import reactor.core.publisher.Mono;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -39,6 +47,8 @@ import java.util.Random;
 @Slf4j
 @RequiredArgsConstructor
 public class SmsService {
+
+    private final RequestUrlRepository requestUrlRepository;
     private final SmsRepository smsRepository;
 
     @Value("${naver-cloud-sms.accessKey}")
@@ -164,4 +174,58 @@ public class SmsService {
         }
     }
 
+    // 마이데이터 문자 인증 보내기
+    public void sendMyDataSms(SmsDto messageDto) {
+        WebClient webClient = WebClient.builder()
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)  // 기본 헤더 설정
+                .build();
+
+        Url url = requestUrlRepository.findRequestUrlByRequestBankCodeAndRequestActCode("101", "101");
+        // HTTP POST 요청 보내기
+        webClient.post()
+                .uri(url.getRequestUrl())
+                .body(BodyInserters.fromValue(messageDto))
+                .retrieve()
+                .bodyToMono(String.class)
+                .subscribe(
+                        responseBody -> {
+                            System.out.println("문자 인증 성공");
+                        },
+                        error -> {
+                            System.out.println("문자 인증 실패" + error.getMessage());
+                        }
+                );
+    }
+
+    // 마이데이터 문자 인증 검증
+    public boolean verifyMyDataSms(SmsVerifyDto verifyDto) {
+        WebClient webClient = WebClient.builder()
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)  // 기본 헤더 설정
+                .build();
+
+        Url url = requestUrlRepository.findRequestUrlByRequestBankCodeAndRequestActCode("101", "102");
+        System.out.println(url.getRequestUrl());
+        try {
+            // HTTP POST 요청 보내기
+            String responseBody = webClient.post()
+                    .uri(url.getRequestUrl())
+                    .body(BodyInserters.fromValue(verifyDto))
+                    .retrieve()
+                    .onStatus(HttpStatus::isError, response -> Mono.error(new WebClientResponseException(response.statusCode().value(), response.statusCode().getReasonPhrase(), response.headers().asHttpHeaders(), null, null)))
+                    .bodyToMono(String.class)
+                    .block(); // 이 부분에서 결과를 기다립니다.
+
+            // responseBody 변수에 API 응답 결과가 문자열로 들어갑니다.
+            System.out.println("API 응답: " + responseBody);
+
+            // 여기서 responseBody를 분석하고 필요한 작업을 수행하십시오.
+            if(responseBody.equals("true")) return true;
+
+        } catch (WebClientResponseException ex) {
+            System.out.println("HTTP 요청 실패: " + ex.getRawStatusCode() + " " + ex.getStatusText());
+        } catch (Exception ex) {
+            System.out.println("문자 인증 실패: " + ex.getMessage());
+        }
+        return false;
+    }
 }
