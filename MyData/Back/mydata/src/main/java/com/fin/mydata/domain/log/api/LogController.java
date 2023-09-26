@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/mydata")
+@RequestMapping("/myData")
 public class LogController {
 
     private final LogService logService;
