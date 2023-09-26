@@ -8,7 +8,7 @@ pipeline {
                     sh '''
                     pwd
                     echo 'springboot build'
-                    cp /var/jenkins_home/backend-config/ibk/discovery-service/application.yml /var/jenkins_home/workspace/ibk_eureka_service/IBK/Back/discovery-server/src/main/resources/
+                    cp /var/jenkins_home/backend-config/ibk/discovery-service/application.yml /var/jenkins_home/workspace/ibk_eureka_service/IBK/Back/discovery-service/src/main/resources/
                     chmod +x gradlew
                     ./gradlew clean build
                     '''
