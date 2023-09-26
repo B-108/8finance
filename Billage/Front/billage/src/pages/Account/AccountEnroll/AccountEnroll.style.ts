@@ -1,13 +1,21 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import fontSize from '/src/themes/fontSize';
-import color from '/src/themes/color';
+import theme from '/src/themes';
 
-export const Text = styled.div`
+export const AgreementDiv = styled.div`
     display: flex;
-    justify-content: space-between;
-    width: 98%;
-    margin: 20px;
-    font-weight: bold;
-    font-size: ${fontSize.S_14};
-    color: ${color.gray[100]};
+    align-items: center;
+    font-size: ${theme.fontSize.DF_16};
+    margin-bottom: 1rem;
+    width: 94%;
 `;
+
+export const Checkbox = styled.input`
+  width: 35px; 
+  aspect-ratio : 1 / 1;
+  margin-right : 10px;
+`;
+
+export const P = styled.p`
+
+`
