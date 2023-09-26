@@ -53,18 +53,20 @@ public class TransferService {
 
         Flux.fromIterable(bankCodes)
                 .flatMap(bankCode -> {
-                    Url url = requestUrlRepository.findRequestUrlByRequestBankCodeAndRequestActCode(bankCode, "4");
+                    Url url = requestUrlRepository.findByRequestBankCodeAndRequestActCode(bankCode, "004");
 
                     // API에 요청을 보내고 응답을 Mono로 받음
+                    List<TransferRequestBodyDto> list = new ArrayList<>();
                     TransferRequestBodyDto dto = TransferRequestBodyDto.builder()
                             .userName(userName)
                             .userCellNo(userCellNo)
                             .bankCode(bankCode)
                             .build();
+                    list.add(dto);
 
                     Mono<AccountResponseDto> responseMono = webClient.post()
                             .uri(url.getRequestUrl()) // 실제 API의 엔드포인트 URL로 변경
-                            .body(BodyInserters.fromValue(dto))
+                            .body(BodyInserters.fromValue(list))
                             .retrieve()
                             .bodyToMono(AccountResponseDto.class);
                     return responseMono;
@@ -77,10 +79,10 @@ public class TransferService {
 
     // 이체 (오픈뱅킹에 요청)
     public void transferCash(TransferCashRequestDto dto, HttpServletRequest request) {
-        String actCode = "2";
+        String actCode = "002";
         String bankCode = dto.getTranWdBankCode();
 
-        Url url = requestUrlRepository.findRequestUrlByRequestBankCodeAndRequestActCode(bankCode, actCode);
+        Url url = requestUrlRepository.findByRequestBankCodeAndRequestActCode(bankCode, actCode);
 
         Long user_pk = jwtUtil.extractUserPkFromToken(request);
         User user = userRepository.findById(user_pk).orElse(null);
