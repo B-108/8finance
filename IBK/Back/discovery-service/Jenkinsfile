@@ -8,7 +8,6 @@ pipeline {
                     sh '''
                     pwd
                     echo 'springboot build'
-                    mkdir /var/jenkins_home/workspace/ibk_eureka_server/IBK/Back/discovery-server/src/main/resources/
                     cp /var/jenkins_home/backend-config/ibk/discovery-service/application.yml /var/jenkins_home/workspace/ibk_eureka_server/IBK/Back/discovery-server/src/main/resources/
                     chmod +x gradlew
                     ./gradlew clean build
@@ -30,7 +29,7 @@ pipeline {
                 dir('IBK/Back/discovery-server'){
                     sh '''
                     echo 'Dockerimage build'
-                    docker build -t docker-springboot-ibk-dicovery-service:0.0.1 .
+                    docker build -t docker-springboot-ibk-discovery-service:0.0.1 .
                     '''
                 }
             }
@@ -50,7 +49,7 @@ pipeline {
                     sh '''
                     echo 'Deploy'
 
-                    docker run -d -p 8761:8761 --name ibk-dicover-service docker-springboot-ibk-dicovery-service:0.0.1
+                    docker run -d -p 8761:8761 --name ibk-discover-service docker-springboot-ibk-discovery-service:0.0.1
                     '''
                 }
             }
