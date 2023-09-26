@@ -8,7 +8,7 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: 100vh;
-  
+  font-family: 'LINESeedKR-Bd';
 `
 
 function App() {
