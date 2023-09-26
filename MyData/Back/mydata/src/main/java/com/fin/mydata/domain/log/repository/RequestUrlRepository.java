@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface RequestUrlRepository extends JpaRepository <RequestUrl, Long> {
 
-    List<String> findRequestUrlsByRequestActCode(int actCode);
+//    List<String> findRequestUrlsByRequestActCode(int actCode);
+//
+//    String findRequestUrlByRequestActCodeAndRequestBankCode(String actCode, String bankCode);
 
-    String findRequestUrlByRequestActCodeAndRequestBankCode(String actCode, String bankCode);
+    RequestUrl findByRequestBankCodeAndRequestActCode(String bankCode, String s);
 }

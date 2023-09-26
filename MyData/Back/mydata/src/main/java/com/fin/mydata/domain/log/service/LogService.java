@@ -3,16 +3,20 @@ package com.fin.mydata.domain.log.service;
 import com.fin.mydata.domain.log.dto.AccountRequestDto;
 import com.fin.mydata.domain.log.dto.AccountResponseDto;
 import com.fin.mydata.domain.log.entity.Log;
+import com.fin.mydata.domain.log.entity.RequestUrl;
 import com.fin.mydata.domain.log.repository.LogRepository;
+import com.fin.mydata.domain.log.repository.RequestUrlRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +26,7 @@ import java.util.List;
 public class LogService {
 
     private final LogRepository logRepository;
+    private final RequestUrlRepository requestUrlRepository;
 
     // 나의 은행 계좌 가져오기 -> 은행 요청
     public List<AccountResponseDto> searchBank(List<AccountRequestDto> requestList) {
@@ -47,10 +52,21 @@ public class LogService {
 
         Flux.fromIterable(requestList)
                 .flatMap(request -> {
+                    RequestUrl requestUrl = requestUrlRepository.findByRequestBankCodeAndRequestActCode(request.getBankCode(), "004");
+                    // API에 요청을 보내고 응답을 Mono로 받음
+                    List<AccountRequestDto> list = new ArrayList<>();
+                    AccountRequestDto dto = AccountRequestDto.builder()
+                            .userName(request.getUserName())
+                            .userCellNo(request.getUserCellNo())
+                            .bankCode(request.getBankCode())
+                            .build();
+                    list.add(dto);
+
+
                     // API에 요청을 보내고 응답을 Mono로 받음
                     Mono<AccountResponseDto> responseMono = webClient.post()
-                            .uri("API_URL_HERE") // 실제 API의 엔드포인트 URL로 변경
-                            .body(BodyInserters.fromValue(request))
+                            .uri(requestUrl.getRequestUrl()) // 실제 API의 엔드포인트 URL로 변경
+                            .body(BodyInserters.fromValue(list))
                             .retrieve()
                             .bodyToMono(AccountResponseDto.class);
 
