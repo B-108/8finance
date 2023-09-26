@@ -4,7 +4,6 @@ import com.fin.bank.kb.domain.account.dto.AccountRequestDto;
 import com.fin.bank.kb.domain.account.dto.AccountResponseDto;
 import com.fin.bank.kb.domain.account.entity.Account;
 import com.fin.bank.kb.domain.account.enums.TransactionType;
-import com.fin.bank.kb.domain.account.repository.TransactionRepository;
 import com.fin.bank.kb.domain.account.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +19,6 @@ import java.util.List;
 public class AccountController {
 
     private final AccountService accountService;
-    private TransactionRepository transactionRepository;
 
     /**
      * 빌리지가 오픈뱅킹센터로 요청하면 오픈뱅킹센터가 각 은행에게 입금 또는 출금을 요청한다.
@@ -29,47 +27,28 @@ public class AccountController {
      */
 
     // 고객의 입금 요청 API
-    @PostMapping("/deposit") // 고객의 입금을 처리하는 엔드포인트 설정
-    public ResponseEntity<AccountResponseDto> deposit(
-        @RequestBody AccountRequestDto requestDto // 요청 본문에서 고객 정보 및 입금 정보를 받
-    ) {
-        // 계좌 서비스(AccountService)를 통해 입금 처리를 시도
-        boolean success = accountService.deposit(
-                requestDto.getCustomerName(),
-                requestDto.getPhoneNumber(),
-                requestDto.getAccountNumber(),
-                requestDto.getAmount()
-        );
+    @PostMapping("/deposit")
+    public ResponseEntity<AccountResponseDto> deposit(@RequestBody AccountRequestDto requestDto) {
+        boolean success = accountService.deposit(requestDto);
         if (success) {
-            // 입금 성공 시, 거래 내역을 생성하고 저장하고 응답을 반환
             return new ResponseEntity<>(createSuccessResponse(TransactionType.DEPOSIT), HttpStatus.OK);
         } else {
-            // 입금 실패 시, 에러 응답 반환
             return new ResponseEntity<>(createErrorResponse(), HttpStatus.BAD_REQUEST);
         }
     }
 
 
     // 고객의 출금 요청 API
-    @PostMapping("/withdraw") // 고객의 출금을 처리하는 엔드포인트 설정
-    public ResponseEntity<AccountResponseDto> withdraw( // 출금: withdraw
-            @RequestBody AccountRequestDto requestDto
-    ) {
-        // 계좌 서비스(AccountService)를 통해 출금 처리를 시도
-        boolean success = accountService.withdraw(
-                requestDto.getCustomerName(),
-                requestDto.getPhoneNumber(),
-                requestDto.getAccountNumber(),
-                requestDto.getAmount()
-        );
+    @PostMapping("/withdraw")
+    public ResponseEntity<AccountResponseDto> withdraw(@RequestBody AccountRequestDto requestDto) {
+        boolean success = accountService.withdraw(requestDto);
         if (success) {
-            // 출금 성공 시 응답 반환
             return new ResponseEntity<>(createSuccessResponse(TransactionType.WITHDRAWAL), HttpStatus.OK);
         } else {
-            // 출금 실패 시 에러 응답 반환
             return new ResponseEntity<>(createErrorResponse(), HttpStatus.BAD_REQUEST);
         }
     }
+
 
     // 성공 응답 생성 메서드
     private AccountResponseDto createSuccessResponse(TransactionType transactionType) {
@@ -86,12 +65,11 @@ public class AccountController {
     }
 
     // 고객의 계좌 목록 조회 요청 API
-    @GetMapping("/accountList") // 고객의 계좌 목록을 조회하는 엔드포인트 설정
+    @GetMapping("/accountList")
     public ResponseEntity<List<Account>> getAccountList(
             @RequestParam String customerName,
             @RequestParam String phoneNumber
     ) {
-        // 계좌 서비스(AccountService)를 통해 고객의 계좌 목록을 조회
         List<Account> accountList = accountService.getAccountList(customerName, phoneNumber);
         return new ResponseEntity<>(accountList, HttpStatus.OK);
     }

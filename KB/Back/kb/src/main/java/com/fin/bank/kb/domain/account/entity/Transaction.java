@@ -14,47 +14,68 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Builder
-@Table(name = "bank_transaction_list")
+@Table(name = "bank_transaction")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Transaction {
 
+    // 거래번호
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    @Column(name = "bank_transaction_list_id", nullable = false, length = 20)
-    private Integer banktranId;
-
     @Column(name = "tran_id")
     private Long tranId;
 
-    @Column(name = "tran_amount")
-    private BigDecimal tranAmt;
-
-    @Column(name = "tran_date")
+    // 거래 일자 및 시간
+    @Column(name = "tran_date", nullable = false)
     private LocalDateTime tranDate;
 
-    @Column(name = "tran_content")
-    private String tranContent;
-
-    @Enumerated(EnumType.STRING) // 문자열로 매핑
+    // 거래 유형 (예: 입금, 출금)
+    @Enumerated(EnumType.STRING)
     @Column(name = "tran_type")
     private TransactionType tranType;
 
-    @Column(name = "tran_tg", length = 20)
-    private String tranTg;
+    // 거래 금액
+    @Column(name = "tran_amt", nullable = false)
+    private BigDecimal tranAmt;
 
-    @Column(name = "tran_tg_ac", length = 20)
-    private String tranTgAc;
 
-    @Column(name = "counterparty", length = 50) // 상대방(대상) 정보 추가
-    private String counterparty;
 
-    @Column(name = "counterparty_account", length = 50) // 상대방(대상) 계좌 정보 추가
-    private String counterpartyAccount;
+    // 지급인 이름
+    @Column(name = "tran_wd_name", nullable = false, length = 20)
+    private String tranWdName;
 
-    // Account 엔티티와 다대일 관계q
-    // 하나의 계좌에 여러개의 거래 내역이 있을 수 있음.
+    // 지급인 핸드폰 번호
+    @Column(name = "tran_wd_cell_no", nullable = false, length = 20)
+    private String tranWdCellNo;
+
+    // 지급인 은행 코드
+    @Column(name = "tran_wd_bank_code", nullable = false, length = 20)
+    private String tranWdBankCode;
+
+    // 지급인 계좌 번호
+    @Column(name = "tran_wd_ac_num", nullable = false, length = 20)
+    private String tranWdAcNum;
+
+
+
+    // 수취인 이름
+    @Column(name = "tran_dp_name", nullable = false, length = 20)
+    private String tranDpName;
+
+    // 수취인 핸드폰 번호
+    @Column(name = "tran_dp_cell_no", nullable = false, length = 20)
+    private String tranDpCellNo;
+
+    // 수취인 은행 코드
+    @Column(name = "tran_dp_bank_code", nullable = false, length = 20)
+    private String tranDpBankCode;
+
+    // 수취인 계좌 번호
+    @Column(name = "tran_dp_ac_num", nullable = false, length = 20)
+    private String tranDpAcNum;
+
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ac_id")
     private Account account;

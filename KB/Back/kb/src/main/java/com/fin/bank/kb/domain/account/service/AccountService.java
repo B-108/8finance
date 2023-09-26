@@ -1,5 +1,6 @@
 package com.fin.bank.kb.domain.account.service;
 
+import com.fin.bank.kb.domain.account.dto.AccountRequestDto;
 import com.fin.bank.kb.domain.account.entity.Account;
 import com.fin.bank.kb.domain.account.entity.Transaction;
 import com.fin.bank.kb.domain.account.enums.TransactionType;
@@ -22,40 +23,51 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
 
-    // 계좌 번호를 통해 계좌 정보 조회
-    public Account getAccountByAccountNumber(String accountNumber) {
-        return accountRepository.findByAccountNumber(accountNumber);
-    }
-
     // 입금 서비스 메서드
-    public boolean deposit(String customerName, String phoneNumber, String accountNumber, BigDecimal amount) {
-        // 사용자 정보를 사용하여 계좌를 조회
+    public boolean deposit(AccountRequestDto requestDto) {
+        // 사용자 정보를 사용하여 계좌 조회(유효성 검증)
         Optional<Account> optionalAccount = accountRepository.findByUser_UserNameAndUser_UserCellNoAndAccountNumber(
-                customerName, phoneNumber, accountNumber);
+                requestDto.getTranDpName(),
+                requestDto.getTranDpCellNo(),
+                requestDto.getTranDpAcNum());
 
         if (optionalAccount.isPresent()) {
             Account account = optionalAccount.get();
             if (isAccountBlocked(account)) {
-                System.out.println("입금 실패: 계좌가 잠겨 있음");
                 return false; // 입금 실패: 계좌가 잠겨 있음
             }
 
             // 입금 가능하면 계좌 잔액을 증가시키고 저장
-            account.setAccountAddBalanceAmt(account.getAccountBalanceAmt().add(amount));
+            account.setAccountAddBalanceAmt(account.getAccountBalanceAmt().add(requestDto.getAmount()));
             accountRepository.save(account);
 
             // 입금 이력을 생성 및 저장
-            saveTransaction(account, amount, TransactionType.DEPOSIT);
+            saveTransaction(
+                    account,
+                    requestDto.getAmount(),
+                    TransactionType.DEPOSIT,
+                    requestDto.getTranDate(),
+                    requestDto.getTranWdName(),
+                    requestDto.getTranWdCellNo(),
+                    requestDto.getTranWdBankCode(),
+                    requestDto.getTranWdAcNum(),
+                    requestDto.getTranDpName(),
+                    requestDto.getTranDpCellNo(),
+                    requestDto.getTranDpBankCode(),
+                    requestDto.getTranDpAcNum()
+            );
             return true; // 입금 성공
         }
         return false; // 입금 실패: 계좌를 찾을 수 없음
     }
 
     // 출금 서비스 메서드
-    public boolean withdraw(String customerName, String phoneNumber, String accountNumber, BigDecimal amount) {
-        // 사용자 정보를 사용하여 계좌를 조회
+    public boolean withdraw(AccountRequestDto requestDto) {
+        // 사용자 정보를 사용하여 계좌 조회(유효성 검증)
         Optional<Account> optionalAccount = accountRepository.findByUser_UserNameAndUser_UserCellNoAndAccountNumber(
-                customerName, phoneNumber, accountNumber);
+                requestDto.getTranDpName(),
+                requestDto.getTranDpCellNo(),
+                requestDto.getTranDpAcNum());
 
         if (optionalAccount.isPresent()) {
             Account account = optionalAccount.get();
@@ -63,13 +75,26 @@ public class AccountService {
                 return false; // 출금 실패: 계좌가 잠겨 있음
             }
             BigDecimal currentBalance = account.getAccountBalanceAmt();
-            if (currentBalance != null && amount != null && currentBalance.compareTo(amount) >= 0) {
+            if (currentBalance != null && requestDto.getAmount() != null && currentBalance.compareTo(requestDto.getAmount()) >= 0) {
                 // 출금 가능하면 계좌 잔액을 감소시키고 저장
-                account.setAccountSubtractBalanceAmt(account.getAccountBalanceAmt().subtract(amount));
+                account.setAccountSubtractBalanceAmt(account.getAccountBalanceAmt().subtract(requestDto.getAmount()));
                 accountRepository.save(account);
 
                 // 출금 이력을 생성 및 저장
-                saveTransaction(account, amount, TransactionType.WITHDRAWAL);
+                saveTransaction(
+                        account,
+                        requestDto.getAmount(),
+                        TransactionType.WITHDRAWAL,
+                        requestDto.getTranDate(),
+                        requestDto.getTranWdName(),
+                        requestDto.getTranWdCellNo(),
+                        requestDto.getTranWdBankCode(),
+                        requestDto.getTranWdAcNum(),
+                        requestDto.getTranDpName(),
+                        requestDto.getTranDpCellNo(),
+                        requestDto.getTranDpBankCode(),
+                        requestDto.getTranDpAcNum()
+                );
                 return true; // 출금 성공
             }
         }
@@ -89,15 +114,37 @@ public class AccountService {
         return account.getAccountStatus() == 2; // 계좌 상태 2가 비활성화
     }
 
-    // 거래 내역을 저장하는 내부 메서드
-    private void saveTransaction(Account account, BigDecimal amount, TransactionType transactionType) {
+    // 계좌 번호를 통해 계좌 정보 조회
+    public Account getAccountByAccountNumber(String accountNumber) {
+        return accountRepository.findByAccountNumber(accountNumber);
+    }
+
+    private void saveTransaction(
+            Account account,
+            BigDecimal amount,
+            TransactionType transactionType,
+            LocalDateTime tranDate,
+            String tranWdName,
+            String tranWdCellNo,
+            String tranWdBankCode,
+            String tranWdAcNum,
+            String tranDpName,
+            String tranDpCellNo,
+            String tranDpBankCode,
+            String tranDpAcNum) {
+        // Transaction 객체 생성 및 저장
         Transaction transaction = Transaction.builder()
-                .tranAmt(amount) // 거래 금액을 설정
-                .tranDate(LocalDateTime.now()) // 현재 시간을 기록한 거래 일자를 설정
-                .tranContent(transactionType.getValue()) // 거래 내용을 설정 - 입금: Deposit, 출금: Withdraw
-                .tranType(transactionType) // 거래 타입을 설정 - 입금: DEPOSIT, 출금: WITHDRAW
-                .counterparty("Bank")
-                .counterpartyAccount("Bank Account")
+                .tranDate(tranDate)
+                .tranType(transactionType)
+                .tranAmt(amount)
+                .tranWdName(tranWdName)
+                .tranWdCellNo(tranWdCellNo)
+                .tranWdBankCode(tranWdBankCode)
+                .tranWdAcNum(tranWdAcNum)
+                .tranDpName(tranDpName)
+                .tranDpCellNo(tranDpCellNo)
+                .tranDpBankCode(tranDpBankCode)
+                .tranDpAcNum(tranDpAcNum)
                 .account(account)
                 .build();
         transactionRepository.save(transaction);
