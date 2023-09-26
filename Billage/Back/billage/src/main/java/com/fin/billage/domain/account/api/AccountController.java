@@ -25,7 +25,12 @@ public class AccountController {
             HttpServletRequest request
     ) {
         Account account = accountService.addMyAccount(dto, request);
-        return new ResponseEntity<>(account, HttpStatus.OK);
+
+        if (account != null) {
+            return new ResponseEntity<>(account, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     // 내 계좌 조회
