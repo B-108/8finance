@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/log")
+@RequestMapping("/mydata")
 public class LogController {
 
     private final LogService logService;
@@ -23,4 +23,6 @@ public class LogController {
         List<AccountResponseDto> accountResponseDtoList = logService.searchBank(list);
         return new ResponseEntity<>(accountResponseDtoList, HttpStatus.OK);
     }
+
+
 }
