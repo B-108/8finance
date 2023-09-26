@@ -119,4 +119,12 @@ public class UserService {
                 .accessToken(jwtUtil.refreshAccessToken(refreshToken))
                 .build();
     }
+
+    public UserGetInfoResponseDto getUserInfo(String userCellNo) {
+        User findUser = userRepository.findByUserCellNo(userCellNo).orElseThrow(() -> new RuntimeException("없어요"));
+        return UserGetInfoResponseDto.builder()
+                .firebaseToken(findUser.getFirebaseToken())
+                .isUserInfo(true)
+                .build();
+    }
 }
