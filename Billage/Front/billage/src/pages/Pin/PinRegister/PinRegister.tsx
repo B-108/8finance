@@ -39,7 +39,8 @@ function PinRegister () {
       event.target.value = event.target.value.slice(0,1)
       return 
     }
-    if (event.target.value !== " ") {
+    if (event.target.value !== "") {
+      if (event.target.value === " "){ return }
       setPinRegister(pinRegister + event.target.value);
     }
     else {
@@ -60,25 +61,25 @@ function PinRegister () {
 
       <InputBox>
         <Input
-          $size="20px,20px" 
+          $size="20px,"
           $simplepassword
           value={pinRegister.length >= 1 ? pinRegister[0] : ""}
           onChange={handlepinRegisterChange}
           ></Input>
         <Input 
-          $size="20px,20px" 
+          $size="20px," 
           $simplepassword
           value={pinRegister.length >= 2 ? pinRegister[1] : ""}
           onChange={handlepinRegisterChange}
           ></Input>
         <Input 
-          $size="20px,20px" 
+          $size="20px," 
           $simplepassword
           value={pinRegister.length >= 3 ? pinRegister[2] : ""}
           onChange={handlepinRegisterChange}
           ></Input>
         <Input 
-          $size="20px,20px" 
+          $size="20px," 
           $simplepassword
           value={pinRegister.length >= 4 ? pinRegister[3] : ""}
           onChange={handlepinRegisterChange}
@@ -87,7 +88,7 @@ function PinRegister () {
           src={plus}
           alt="plus"></Image>
         <Input 
-          $size="20px,20px" 
+          $size="20px," 
           $simplepassword
           value={pinRegister.length >= 5 ? pinRegister[4] : ""}
           onChange={handlepinRegisterChange}

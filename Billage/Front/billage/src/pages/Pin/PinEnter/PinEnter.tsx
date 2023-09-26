@@ -43,6 +43,7 @@ function PinEnter () {
       return 
     }
     if (event.target.value !== "") {
+      if (event.target.value === " "){ return }
       setPinEnter(pinEnter + event.target.value);
     }
     else {
