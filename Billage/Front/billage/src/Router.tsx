@@ -118,17 +118,17 @@ const router = createBrowserRouter([
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/myAccounts',
+                path: '/myaccounts',
                 element: <MyAccounts />,
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/AccountEnroll',
+                path: '/accountenroll',
                 element: <AccountEnroll />,
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/LoadAccounts',
+                path: '/loadaccounts',
                 element: <LoadAccounts />,
                 errorElement: <ErrorComponent />,
             },
