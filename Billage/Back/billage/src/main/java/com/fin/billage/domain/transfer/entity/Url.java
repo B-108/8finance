@@ -7,10 +7,10 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Builder
-@Table(name = "request_url")
+@Table(name = "url")
 @NoArgsConstructor // 기본생성자
 @AllArgsConstructor
-public class RequestUrl {
+public class Url {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "request_id")

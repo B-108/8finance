@@ -6,8 +6,8 @@ import com.fin.billage.domain.contract.entity.Transaction;
 import com.fin.billage.domain.contract.repository.ContractRepository;
 import com.fin.billage.domain.contract.repository.TransactionRepository;
 import com.fin.billage.domain.transfer.dto.*;
+import com.fin.billage.domain.transfer.entity.Url;
 import com.fin.billage.domain.transfer.repository.RequestUrlRepository;
-import com.fin.billage.domain.user.dto.UserSetPasswordRequestDto;
 import com.fin.billage.domain.user.entity.User;
 import com.fin.billage.domain.user.repository.UserRepository;
 import com.fin.billage.util.JwtUtil;
@@ -15,12 +15,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,7 +53,8 @@ public class TransferService {
 
         Flux.fromIterable(bankCodes)
                 .flatMap(bankCode -> {
-                    String bankUrl = requestUrlRepository.findRequestUrlByRequestActCodeAndRequestBankCode("4", bankCode);
+                    Url url = requestUrlRepository.findRequestUrlByRequestBankCodeAndRequestActCode(bankCode, "4");
+
                     // API에 요청을 보내고 응답을 Mono로 받음
                     TransferRequestBodyDto dto = TransferRequestBodyDto.builder()
                             .userName(userName)
@@ -64,7 +63,7 @@ public class TransferService {
                             .build();
 
                     Mono<AccountResponseDto> responseMono = webClient.post()
-                            .uri(bankUrl) // 실제 API의 엔드포인트 URL로 변경
+                            .uri(url.getRequestUrl()) // 실제 API의 엔드포인트 URL로 변경
                             .body(BodyInserters.fromValue(dto))
                             .retrieve()
                             .bodyToMono(AccountResponseDto.class);
@@ -81,7 +80,7 @@ public class TransferService {
         String actCode = "2";
         String bankCode = dto.getTranWdBankCode();
 
-        String bankUrl = requestUrlRepository.findRequestUrlByRequestActCodeAndRequestBankCode(actCode, bankCode);
+        Url url = requestUrlRepository.findRequestUrlByRequestBankCodeAndRequestActCode(bankCode, actCode);
 
         Long user_pk = jwtUtil.extractUserPkFromToken(request);
         User user = userRepository.findById(user_pk).orElse(null);
@@ -97,7 +96,7 @@ public class TransferService {
 
         // HTTP POST 요청 보내기
         webClient.post()
-                .uri(bankUrl)
+                .uri(url.getRequestUrl())
                 .body(BodyInserters.fromValue(dto))
                 .retrieve()
                 .bodyToMono(String.class)

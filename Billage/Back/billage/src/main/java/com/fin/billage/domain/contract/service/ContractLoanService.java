@@ -42,22 +42,22 @@ public class ContractLoanService {
     }
 
     // 빌려준 거래 목록 리스트
-    public List<ContractLoanResponseDto> searchLendList(Long contractId, HttpServletRequest request) {
+    public List<ContractLoanResponseDto> searchLendList(HttpServletRequest request) {
         Long user_pk = jwtUtil.extractUserPkFromToken(request);
         User user = userRepository.findById(user_pk).orElse(null);
 
-        Contract contract = contractRepository.findByContractId(contractId);
-
+//        Contract contract = contractRepository.findByContractId(contractId);
+//        Contract contract = contractRepository.findByContractId(user);
         // 송금인(tran_wd)가 debeter_user인 경우의 tran_amt를 가져와서
         // calculateTransaction(List<Bigdecimal> tran_amt, 빌린금액)에 넣어주기
-        String tranWd = contract.getDebtorUser().getUserName();
-        List<BigDecimal> tranAmtList = transactionRepository.findTranAmtByContractAndTranWd(contract, tranWd);
+
 
         List<Contract> contracts = contractRepository.findAllByCreditorUser(user);
-
         List<ContractLoanResponseDto> lendList = new ArrayList<>();
 
         for (Contract c : contracts) {
+            String tranWd = c.getDebtorUser().getUserName();
+            List<BigDecimal> tranAmtList = transactionRepository.findTranAmtByContractAndTranWd(c, tranWd);
             ContractLoanResponseDto contractLoanResponseDto = ContractLoanResponseDto.builder()
                     .contractId(c.getContractId())
                     .contractAmt(c.getContractAmt())
@@ -74,22 +74,21 @@ public class ContractLoanService {
     }
 
     // 빌린 거래 목록 리스트
-    public List<ContractLoanResponseDto> searchBorrowList(Long contractId, HttpServletRequest request) {
+    public List<ContractLoanResponseDto> searchBorrowList(HttpServletRequest request) {
         Long user_pk = jwtUtil.extractUserPkFromToken(request);
         User user = userRepository.findById(user_pk).orElse(null);
 
-        Contract contract = contractRepository.findByContractId(contractId);
+//        Contract contract = contractRepository.findByContractId(contractId);
 
         // 송금인(tran_wd)가 debeter_user인 경우의 tran_amt를 가져와서
         // calculateTransaction(List<Bigdecimal> tran_amt, 빌린금액)에 넣어주기
-        String tranWd = contract.getDebtorUser().getUserName();
-        List<BigDecimal> tranAmtList = transactionRepository.findTranAmtByContractAndTranWd(contract, tranWd);
 
         List<Contract> contracts = contractRepository.findAllByDebtorUser(user);
-
         List<ContractLoanResponseDto> borrowList = new ArrayList<>();
 
         for (Contract c : contracts) {
+            String tranWd = c.getDebtorUser().getUserName();
+            List<BigDecimal> tranAmtList = transactionRepository.findTranAmtByContractAndTranWd(c, tranWd);
             ContractLoanResponseDto contractLoanResponseDto = ContractLoanResponseDto.builder()
                     .contractId(c.getContractId())
                     .contractAmt(c.getContractAmt())

@@ -27,21 +27,19 @@ public class ContractLoanController {
     // 내가 채무자면 빌려준 목록
 
     // 빌려준 거래 조회
-    @GetMapping("/{contractId}/lend")
+    @GetMapping("/lend")
     public ResponseEntity<List<ContractLoanResponseDto>> searchLendList(
-            @PathVariable Long contractId,
             HttpServletRequest request
     ) {
-        List<ContractLoanResponseDto> loanResponseDtoList = contractLoanService.searchLendList(contractId, request);
+        List<ContractLoanResponseDto> loanResponseDtoList = contractLoanService.searchLendList(request);
         return new ResponseEntity<>(loanResponseDtoList, HttpStatus.OK);
     }
 
     // 빌린 거래 조회
-    @GetMapping("/{contractId}/borrow")
+    @GetMapping("/borrow")
     public ResponseEntity<List<ContractLoanResponseDto>> searchBorrowList(
-            @PathVariable Long contractId,
             HttpServletRequest request) {
-        List<ContractLoanResponseDto> loanResponseDtoList = contractLoanService.searchBorrowList(contractId, request);
+        List<ContractLoanResponseDto> loanResponseDtoList = contractLoanService.searchBorrowList(request);
         return new ResponseEntity<>(loanResponseDtoList, HttpStatus.OK);
     }
 

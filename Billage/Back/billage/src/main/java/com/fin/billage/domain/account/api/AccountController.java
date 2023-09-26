@@ -16,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/account")
 public class AccountController {
-
     private final AccountService accountService;
 
     // 내 계좌 등록
