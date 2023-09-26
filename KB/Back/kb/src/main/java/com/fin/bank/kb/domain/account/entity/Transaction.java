@@ -1,6 +1,7 @@
 package com.fin.bank.kb.domain.account.entity;
 
 import com.fin.bank.kb.domain.account.entity.Account;
+import com.fin.bank.kb.domain.account.enums.TransactionType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,8 +37,9 @@ public class Transaction {
     @Column(name = "tran_content")
     private String tranContent;
 
+    @Enumerated(EnumType.STRING) // 문자열로 매핑
     @Column(name = "tran_type")
-    private Integer tranType;
+    private TransactionType tranType;
 
     @Column(name = "tran_tg", length = 20)
     private String tranTg;
@@ -45,9 +47,15 @@ public class Transaction {
     @Column(name = "tran_tg_ac", length = 20)
     private String tranTgAc;
 
+    @Column(name = "counterparty", length = 50) // 상대방(대상) 정보 추가
+    private String counterparty;
+
+    @Column(name = "counterparty_account", length = 50) // 상대방(대상) 계좌 정보 추가
+    private String counterpartyAccount;
+
     // Account 엔티티와 다대일 관계
     // 하나의 계좌에 여러개의 거래 내역이 있을 수 있음.
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ac_id")
     private Account account;
 }

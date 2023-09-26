@@ -28,7 +28,7 @@ public class Account {
 
     // 계좌번호
     @Column(name = "ac_num", nullable = false, length = 20)
-    private String accountNum;
+    private String accountNumber;
 
     // 잔액
     @Column(name = "ac_balance_amt")
@@ -43,11 +43,12 @@ public class Account {
     @Column(name = "ac_type", nullable = false, length = 1)
     private Character accountType;
 
-    // 계좌이름
+    // 계좌 이름 (별칭)
     @Column(name = "ac_name", nullable = false, length = 20)
     private String accountAlias;
 
     // 계좌 상태
+    // 1: 활성, 2: 비활성, ...
     @Column(name = "ac_status", nullable = false, length = 1)
     private Integer accountStatus;
 
@@ -73,14 +74,21 @@ public class Account {
 
     // User 엔티티와 다대일 관계
     // 하나의 고객에 여러 계좌가 올 수 있음
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_pk")
     private User user;
 
+    // 하나의 계좌에 여러 거래 내역이 올 수 있음
     @OneToMany(mappedBy = "account")
     private List<Transaction> transactions;
 
-    public void setAccountBalanceAmt(BigDecimal subtract) {
-        this.accountBalanceAmt = accountBalanceAmt;
+    // 잔액 감소 메서드
+    public void setAccountSubtractBalanceAmt(BigDecimal subtract) {
+        this.accountBalanceAmt = this.accountBalanceAmt.subtract(subtract);
+    }
+
+    // 잔액 증가 메서드
+    public void setAccountAddBalanceAmt(BigDecimal accountBalanceAmt) {
+        this.accountBalanceAmt = this.accountBalanceAmt.add(accountBalanceAmt);
     }
 }

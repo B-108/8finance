@@ -1,11 +1,11 @@
 package com.fin.bank.kb.domain.user.entity;
 
 import com.fin.bank.kb.domain.account.entity.Account;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
@@ -13,10 +13,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-@NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "bank_user")
-@SQLDelete(sql = "UPDATE user SET user_delete_date = now() WHERE user_pk = ?;")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,27 +61,5 @@ public class User {
 
     @OneToMany(mappedBy = "user") // 다대일 관계 설정
     private List<Account> accounts; // Account 엔티티와의 연관 관계 필드 추가
-
-    @Builder
-    public User(Long userPk, String userSeqNo, String userCellNo, String userName, String userInfo, String userSimplePass, LocalDateTime userJoinDate, LocalDateTime userModifyDate, LocalDateTime userDeleteDate, Integer userCarrotTemp, Character userAgreeYn, LocalDateTime userAgreeDate) {
-        this.userPk = userPk;
-        this.userSeqNo = userSeqNo;
-        this.userCellNo = userCellNo;
-        this.userName = userName;
-        this.userInfo = userInfo;
-        this.userSimplePass = userSimplePass;
-        this.userJoinDate = userJoinDate;
-        this.userModifyDate = userModifyDate;
-        this.userDeleteDate = userDeleteDate;
-        this.userCarrotTemp = userCarrotTemp;
-    }
-
-//    public void setPassword(String newPassword) {
-//        this.userSimplePass = newPassword;
-//    }
-//
-//    public String getCellNo() {
-//        return this.userCellNo;
-//    }
 
 }
