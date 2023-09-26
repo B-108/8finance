@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 public class AccountResponseDto {
 
+    private Long accountId;
     private String accountBankCode;
     private String accountNum;
     private Boolean accountMainYn;
