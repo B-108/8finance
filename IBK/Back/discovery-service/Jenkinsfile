@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Springboot build') {
             steps {
-                dir('IBK/Back/discovery-server'){
+                dir('IBK/Back/discovery-service'){
                     sh '''
                     pwd
                     echo 'springboot build'
@@ -26,7 +26,7 @@ pipeline {
 
         stage('Dockerimage build') {
             steps {
-                dir('IBK/Back/discovery-server'){
+                dir('IBK/Back/discovery-service'){
                     sh '''
                     echo 'Dockerimage build'
                     docker build -t docker-springboot-ibk-discovery-service:0.0.1 .
@@ -45,7 +45,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                dir('IBK/Back/discovery-server'){
+                dir('IBK/Back/discovery-service'){
                     sh '''
                     echo 'Deploy'
 
