@@ -52,7 +52,7 @@ pipeline {
                     docker stop billage-back
                     docker rm billage-back
 
-                    docker run -d --name billage-back docker-springboot-billage:0.0.1
+                    docker run -d -p 8080:8080 --name billage-back docker-springboot-billage:0.0.1
                     '''
                 }
             }
