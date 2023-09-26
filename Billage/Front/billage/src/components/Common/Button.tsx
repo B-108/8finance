@@ -51,7 +51,6 @@ const StyledButton = styled.button<ButtonProps>`
             background-color: ${theme.color.green[0]};
         `}
 
-    // 회색 큰/중간 사이즈 버튼
     ${(props) =>
         props.$basicGrayBtn &&
         css`

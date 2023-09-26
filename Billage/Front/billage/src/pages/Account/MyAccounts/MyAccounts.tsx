@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // 스타일 컴포넌트
 import { 
@@ -17,19 +18,50 @@ import Image from '/src/components/Common/Image';
 
 // 이미지
 import sampleAccount from '/src/assets/sampleAccount.svg';
-import sampleAccount2 from '/src/assets/sampleAccount2.svg';
 import colorCreditCard from '/src/assets/colorCreditCard.svg';
 import rightArrow from '/src/assets/rightArrow.svg';
 
-function MyAccounts() {
-  const [isAccountClicked, setIsAccountClicked] = useState(false);
+// API
+import { 
+  getAccountList, 
+  patchMainAccount } from '/src/api/account';
+  
+// 타입스크립트
+import { AccountType } from '/src/type/account';
 
-  const handleAccountClick = () => {
-    setIsAccountClicked(true); // 클릭 시 테두리 색 변경
-    setTimeout(() => {
-        setIsAccountClicked(false); // 3초 후에 테두리 색 원래대로 복구
-    }, 3000); // 3초 동안 유지
-  };
+function MyAccounts() {
+  const [accounts, setAccounts] = useState<AccountType[]>([])
+
+  // 라우터
+  const navigate = useNavigate()
+  const moveAccountEnroll = () => {navigate(`/accountenroll`)}
+  
+  // 전체 계좌조회
+  const axiosAccountList = async (): Promise<void> => {
+    try {
+      const response = await getAccountList()
+      setAccounts(response?.data)
+      console.log(response?.data)
+    }
+    catch(error) {
+      console.log(error)
+    }
+  }
+
+  // 주계좌 등록
+  const axiosMainAccount = async (accountId:number): Promise<void> => {
+    try {
+      const response = await patchMainAccount(accountId)
+      console.log(response)
+    }
+    catch(error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
+    axiosAccountList()
+  },[])
 
   return (
     <>
@@ -43,7 +75,8 @@ function MyAccounts() {
         
         <Button
           $registerBtn
-          $size="94%,45px">
+          $size="94%,45px"
+          onClick = {moveAccountEnroll}>
             <LeftSection>
               <Image
                 src={colorCreditCard}
@@ -51,6 +84,7 @@ function MyAccounts() {
                 width="32px"></Image>
               계좌 등록
             </LeftSection>
+
             <RightSection>
               <Image
                 src={rightArrow}
@@ -60,17 +94,16 @@ function MyAccounts() {
         </Button>
 
         <AccountsBox>
+          {accounts && accounts.map((account,index) => (
           <Accounts
+            key={index}
             src={sampleAccount}
-            onClick={handleAccountClick}
-            $isClicked={isAccountClicked} // 계좌 클릭 여부 상태 전달
-          ></Accounts>
-          <Accounts
-            src={sampleAccount2}
-            onClick={handleAccountClick}
-            $isClicked={isAccountClicked} // 계좌 클릭 여부 상태 전달
-          ></Accounts>
+            onClick={() => {
+              axiosMainAccount(account.accountId)}}
+            $isClicked={account.accountMainYn}>
+          </Accounts>))}
         </AccountsBox>
+
       </CenteredContainer>
       <Footer/>
     </>

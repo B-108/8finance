@@ -15,7 +15,6 @@ import theme from "/src/themes";
 // 스타일 컴포넌트  
 import { 
   ButtonBox, 
-  InputAuthHeader, 
   InputDiv, 
   InputHeader } from "/src/components/Common/Input"
 
@@ -65,7 +64,7 @@ function SignUp(){
     setPhone(event.target.value.split(' ').join(''));
   };
 
-  // 인증번호 입력
+  // 인증번호
   const handleCertNumChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if(isNaN(Number(event.target.value))) {return}
 
@@ -88,6 +87,7 @@ function SignUp(){
     await movePinRegister()
   }
 
+  // 문자인증 번호요청
   const axiosMessage = async (): Promise<void> => {
     const info: MessageProps = {
       to : phone,
@@ -100,6 +100,7 @@ function SignUp(){
     }
   }
 
+  // 문자 인증 요청
   const axiosMessagCert = async (): Promise<number|undefined> => {
     const info: MessageCertProps = {
       phoneNumber : phone,
@@ -133,7 +134,7 @@ function SignUp(){
       </InputDiv>
 
       <InputDiv style={{ marginBottom: '1rem' }}>
-        <InputAuthHeader>핸드폰 번호</InputAuthHeader>
+        <InputHeader>핸드폰 번호</InputHeader>
         <Input
           type="phone"
           value={phone}

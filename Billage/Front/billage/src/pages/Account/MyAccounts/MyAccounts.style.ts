@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import color from '/src/themes/color';
+import theme from '/src/themes';
 
 export const LeftSection = styled.div`
   display: flex;
@@ -25,22 +26,18 @@ export const AccountsBox = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* border: 1px solid red; */
 `;
 
 export const Accounts = styled.img<{ $isClicked: boolean }>`
-    width: 100%;
-    margin-bottom: 7px;
-    border-radius: 20px;
-
-    &:active,
-    &:focus {
-        border: 2px solid ${color.green[100]}; // 클릭 또는 포커스 시 테두리 색상 변경
-    }
+    width: 99%;
+    margin-bottom: 5px;
+    border: 3px solid gray;
+    border-radius: 40px;
 
     ${(props) =>
-        props.$isClicked &&
-        css`
-            border: 2px solid ${color.green[100]}; // 계좌 클릭 시 테두리 색상 변경
-        `}
+      props.$isClicked &&
+      css`
+        border-image: ${theme.color.mix.border};
+        border-image-slice: 1;
+    `}
 `;
