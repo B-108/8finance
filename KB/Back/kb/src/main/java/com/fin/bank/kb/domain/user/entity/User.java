@@ -59,7 +59,7 @@ public class User {
     @Column(name = "user_agree_date")
     private LocalDateTime userAgreeDate;
 
-    @OneToMany(mappedBy = "user") // 다대일 관계 설정
-    private List<Account> accounts; // Account 엔티티와의 연관 관계 필드 추가
+//    @OneToMany(mappedBy = "user") // 다대일 관계 설정
+//    private List<Account> accounts; // Account 엔티티와의 연관 관계 필드 추가
 
 }

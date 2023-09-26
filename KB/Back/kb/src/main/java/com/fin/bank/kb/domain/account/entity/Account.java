@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -74,13 +73,9 @@ public class Account {
 
     // User 엔티티와 다대일 관계
     // 하나의 고객에 여러 계좌가 올 수 있음
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_pk")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_pk", nullable = false)
     private User user;
-
-    // 하나의 계좌에 여러 거래 내역이 올 수 있음
-    @OneToMany(mappedBy = "account")
-    private List<Transaction> transactions;
 
     // 잔액 감소 메서드
     public void setAccountSubtractBalanceAmt(BigDecimal subtract) {

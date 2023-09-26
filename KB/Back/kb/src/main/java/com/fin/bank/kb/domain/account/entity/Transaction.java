@@ -53,7 +53,7 @@ public class Transaction {
     @Column(name = "counterparty_account", length = 50) // 상대방(대상) 계좌 정보 추가
     private String counterpartyAccount;
 
-    // Account 엔티티와 다대일 관계
+    // Account 엔티티와 다대일 관계q
     // 하나의 계좌에 여러개의 거래 내역이 있을 수 있음.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ac_id")

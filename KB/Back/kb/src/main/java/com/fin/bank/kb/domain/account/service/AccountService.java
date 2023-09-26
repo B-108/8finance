@@ -92,10 +92,10 @@ public class AccountService {
     // 거래 내역을 저장하는 내부 메서드
     private void saveTransaction(Account account, BigDecimal amount, TransactionType transactionType) {
         Transaction transaction = Transaction.builder()
-                .tranAmt(amount)
-                .tranDate(LocalDateTime.now())
-                .tranContent(transactionType.getValue())
-                .tranType(transactionType)
+                .tranAmt(amount) // 거래 금액을 설정
+                .tranDate(LocalDateTime.now()) // 현재 시간을 기록한 거래 일자를 설정
+                .tranContent(transactionType.getValue()) // 거래 내용을 설정 - 입금: Deposit, 출금: Withdraw
+                .tranType(transactionType) // 거래 타입을 설정 - 입금: DEPOSIT, 출금: WITHDRAW
                 .counterparty("Bank")
                 .counterpartyAccount("Bank Account")
                 .account(account)
