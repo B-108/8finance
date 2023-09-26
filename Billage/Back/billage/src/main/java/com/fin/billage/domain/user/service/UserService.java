@@ -112,8 +112,6 @@ public class UserService {
 
     public UserRefreshTokenResponseDto refreshToken(HttpServletRequest request) {
 
-        System.out.println("악");
-
         String refreshToken = jwtUtil.resolveToken(request);
 
         return UserRefreshTokenResponseDto.builder()
