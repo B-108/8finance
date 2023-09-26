@@ -19,7 +19,7 @@ import Input, {
 // 리코일
 import { PhoneState } from "/src/recoil/auth";
 import { useRecoilState } from "recoil";
-
+import { token } from "firebase";
 // 타입스크립트
 
 function Login(){
@@ -41,6 +41,34 @@ function Login(){
     }
     setPhone(event.target.value.split(' ').join(''));
   };
+
+  const sendNotification = () => {
+    console.log('알림버튼')
+    console.log(token)
+    if ('serviceWorker' in navigator && 'PushManager' in window) {
+      navigator.serviceWorker.ready.then((registration) => {
+        const title = '알림입니다~';
+        const options = {
+          actions: [
+            {
+              action: '첫번째 액션',
+              title: '첫번째 제목',
+              icon: '/images/demos/action-1-128x128.png',
+            },
+            {
+              action: '두번째 액션',
+              title: '두번째 제목',
+              icon: '/images/demos/action-4-128x128.png',
+            },
+          ],
+        };
+
+        registration.showNotification(title, options);
+      });
+    }
+  };
+
+
 
   return(
     <CenteredContainer $center>
@@ -72,7 +100,7 @@ function Login(){
             <span> | </span>
             <span>간편 비밀번호 찾기</span>
         </div>
-
+    <Button onClick={sendNotification}>알림</Button>
     </CenteredContainer>
   )
 }

@@ -36,8 +36,8 @@ function LoadAccounts() {
 
   const axiosAccountRegister = async (): Promise<void> => {
     const info: AccountProps = {
-      accountBankCode : "004",
-      accountNum :"111-11111-2222", 
+      accountBankCode : "002",
+      accountNum :"111-111-22222", 
     }
     try {
       await postAccountRegister(info)
