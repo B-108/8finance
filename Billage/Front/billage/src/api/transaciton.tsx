@@ -26,3 +26,15 @@ export const getLendList = async () => {
         console.log('getLendList 실패', error)
     }
 }
+
+//거래 상세 조회
+export const getTransActionDetail = async (contractId : Number) => {
+    try{
+        const response = await privateApi.get(`/api/${contractId}/detail`)
+        console.log("거래 상세 조회 성공")
+        return response
+    }
+    catch(error){
+        console.log('getTransActionDetail 실패', error)
+    }
+}

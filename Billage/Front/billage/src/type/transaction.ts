@@ -11,3 +11,11 @@ export interface Transaction{
     contractState: number;
     repatmentCash: string;
   }
+
+  export interface TransactionDetailType{
+    contractMaturityDate : string;
+    contractStartDate : string;
+    contractAmt : string;
+    contractInterestRate : string;
+    repaymentCash : string;
+  }
