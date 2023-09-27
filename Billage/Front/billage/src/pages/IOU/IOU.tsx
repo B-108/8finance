@@ -89,12 +89,12 @@ function IOUPage() {
                                 <Amount>￦ {contract.contractAmt} 원</Amount>
                                 <hr />
                                 <Content>
-                                    위 금액을 채무자({contract.debtorUser.userNmae})가 채권자(
+                                    위 금액을 채무자({contract.debtorUser.userName})가 채권자(
                                     {contract.creditorUser.userName})로부터 {contract.contractStartDate}일 틀림없이
                                     빌렸습니다.
                                 </Content>
                                 <Content>
-                                    채무자({contract.debtorUser.userNmae})는 위 금액을 연 이자{' '}
+                                    채무자({contract.debtorUser.userName})는 위 금액을 연 이자{' '}
                                     {contract.contractInterestRate}%로 하여 {contract.contractMaturityDate}일까지
                                     채권자(
                                     {contract.creditorUser.userName})에게 갚겠습니다.
@@ -110,7 +110,7 @@ function IOUPage() {
                                 <hr />
                                 <div style={{ width: '50px', height: '50px', display: 'flex' }}>
                                     채무자 <br />
-                                    이름 : {contract.debtorUser.userNmae}
+                                    이름 : {contract.debtorUser.userName}
                                 </div>
                             </div>
                         </IOUContent>
