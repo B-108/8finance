@@ -2,15 +2,18 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-    url: jdbc:mysql://localhost:3306/kb?useSSL=false&serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/kb
     username: root
     password: ssafy1234
 
+#    url: jdbc:mysql://j9b108.p.ssafy.io:3308/kb?useSSL=false&serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8
+#    username: kb_admin
+#    password: b108kb
 
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       use-new-id-generator-mappings: false
@@ -21,16 +24,22 @@ spring:
 
 #  security:
 #    user:
-#      name : user
-#      password : 1234
+#      name: user
+#      password: 1234
 
 
 #jwt:
 #  #  secret key는 256비트 이상으로 만들것
 #  secret: beggVJDH3fB6MDstc1mPE3cRWuqdngkwjmHeSrjbJCe1Zbg4382HppmexqrXlqgG
-#  access-expired-seconds : 3600 # 60 * 60 : 1시간
-#  refresh-expired-seconds : 86400 # 60 * 60 * 24 : 하루
+#  access-expired-seconds: 3600 # 60 * 60 : 1시간
+#  refresh-expired-seconds: 86400 # 60 * 60 * 24 : 하루
 
-8fin:
-  authentication :
-    scope : 8fin
+#8fin:
+#  authentication:
+#    scope: 8fin
+#
+#naver-cloud-sms:
+#  accessKey: WGY1FPVCeAMrYfoIpaGa
+#  secretKey: w8v8PG5cbbQnUrPxnfgTgkc17kFAzKEySA16HSPK
+#  serviceId: ncp:sms:kr:316535170375:billage
+#  senderPhone: 01025461508

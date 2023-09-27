@@ -25,18 +25,17 @@ public class AccountService {
 
     // 입금 서비스 메서드
     public boolean deposit(AccountRequestDto requestDto) {
+        System.out.println(requestDto.getTranDpName() + " " + requestDto.getTranDpCellNo() + " " + requestDto.getTranDpAcNum());
+
         // 사용자 정보를 사용하여 계좌 조회(유효성 검증)
-        Optional<Account> optionalAccount = accountRepository.findByUser_UserNameAndUser_UserCellNoAndAccountNumber(
+        Account account = accountRepository.findByUser_UserNameAndUser_UserCellNoAndAccountNumber(
                 requestDto.getTranDpName(),
                 requestDto.getTranDpCellNo(),
-                requestDto.getTranDpAcNum());
+                requestDto.getTranDpAcNum()).orElseThrow(()-> new RuntimeException("계좌없음"));
 
-        if (optionalAccount.isPresent()) {
-            Account account = optionalAccount.get();
             if (isAccountBlocked(account)) {
                 return false; // 입금 실패: 계좌가 잠겨 있음
             }
-
             // 입금 가능하면 계좌 잔액을 증가시키고 저장
             account.setAccountAddBalanceAmt(account.getAccountBalanceAmt().add(requestDto.getAmount()));
             accountRepository.save(account);
@@ -57,8 +56,6 @@ public class AccountService {
                     requestDto.getTranDpAcNum()
             );
             return true; // 입금 성공
-        }
-        return false; // 입금 실패: 계좌를 찾을 수 없음
     }
 
     // 출금 서비스 메서드
