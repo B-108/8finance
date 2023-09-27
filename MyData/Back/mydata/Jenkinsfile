@@ -8,7 +8,7 @@ pipeline {
                     sh '''
                     pwd
                     echo 'springboot build'
-                    cp /var/jenkins_home/backend-config/mydata/application.yml /var/jenkins_home/workspace/mydata_back/MyData/Back/mydata/src/main/resources/
+                    cp -r /var/jenkins_home/backend-config/mydata/ /var/jenkins_home/workspace/mydata_back/MyData/Back/mydata/src/main/resources/
                     chmod +x gradlew
                     ./gradlew clean build
                     '''
