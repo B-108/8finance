@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import Text from "/src/components/Common/Text";
 import ProgressBar from '../../Common/ProgressBar';
-interface HistoryProps {
+import { TransactionType } from '/src/type/transaction';
+
+interface TransactionItemProps {
+    item: TransactionType;
     toggle: boolean;
   }
 
-  function TransactionItem({ toggle }: HistoryProps) {
+  function TransactionItem({ item, toggle }: TransactionItemProps) {
 
     const [progress, setProgress] = useState(0);
 
@@ -27,7 +30,7 @@ interface HistoryProps {
                     <div style={{marginBottom : '15%'}}>
                         <Text>000님과의 거래에요!</Text>
                     </div>
-                    <ProgressBar progress={progress} />
+                    <ProgressBar progress={(Number(item.repatmentCash)/Number(item.contractAmt))*100} />
                 </div>
                 
                 <div id="right"style={{flex: '3.5', textAlign:'center'}}>
@@ -36,6 +39,7 @@ interface HistoryProps {
                             {toggle ? '빌린금액' : '빌려준 금액'}
                         </Text>
                         <Text $smallContent>
+                            {item.contractAmt}
                             ￦500.000
                         </Text> 
                     </div>
@@ -44,6 +48,7 @@ interface HistoryProps {
                             남은금액
                         </Text>
                         <Text>
+                            {item.repatmentCash}
                             ￦260.000
                         </Text>
                     </div>
