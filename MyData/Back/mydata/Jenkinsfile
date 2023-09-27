@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Springboot build') {
+            steps {
+                dir('MyData/Back/mydata'){
+                    sh '''
+                    pwd
+                    echo 'springboot build'
+                    cp /var/jenkins_home/backend-config/mydata/application.yml /var/jenkins_home/workspace/mydata_back/MyData/Back/mydata/src/main/resources/
+                    chmod +x gradlew
+                    ./gradlew clean build
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Dockerimage build') {
+            steps {
+                dir('MyData/Back/mydata'){
+                    sh '''
+                    echo 'Dockerimage build'
+                    docker build -t docker-springboot-mydata:0.0.1 .
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                dir('MyData/Back/mydata'){
+                    sh '''
+                    echo 'Deploy'
+
+
+
+                    docker run -d -p 8762:8762 --name mydata-back docker-springboot-mydata:0.0.1
+
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+    }
+}
