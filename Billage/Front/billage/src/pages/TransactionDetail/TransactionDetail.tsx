@@ -26,7 +26,6 @@ function TADetail() {
         try {
             const response = await getTransActionDetail(location.state.contractId);
             setDetail(response?.data);
-            // console.log(detail);
         } catch (error) {
             console.log(error);
         }
@@ -36,14 +35,12 @@ function TADetail() {
         axiosDetail();
     }, []);
 
-    const [progress, setProgress] = useState(0);
-
     const navigate = useNavigate();
     const location = useLocation();
     // console.log(location)
     // console.log(detail)
-    const moveTransactionHistory = () => {
-        navigate(`/transactionhistory`);
+    const moveTransactionHistory = (contractId: number) => {
+        navigate(`/transaction/history/${contractId}`, {state: contractId});
     };
     const moveToIOU = (contractId: number) => {
         navigate(`/transaction/detail/${contractId}/iou`, { state: { contractId } });
@@ -133,8 +130,8 @@ function TADetail() {
                 <hr />
 
                 <Text $smallTitle>거래내역</Text>
-                <Box $transaction onClick={moveTransactionHistory}>
-                    총 4건의 거래내역이 있습니다.
+                <Box $transaction onClick={() => {moveTransactionHistory(location.state.contractId)}}>
+                    거래내역 확인하러 가기.
                 </Box>
             </div>
         </>

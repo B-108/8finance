@@ -38,3 +38,16 @@ export const getTransActionDetail = async (contractId : number) => {
         console.log('getTransActionDetail 실패', error)
     }
 }
+
+//거래 내역 상세 조회
+export const getTransActionHistory = async (contractId : number) => {
+    try{
+        const response = await privateApi.get(`/api/loan/${contractId}/trinfo`)
+        console.log("거래 내역 상세 조회 성공")
+        return response
+    }
+    catch(error){
+        console.log('getTransActionHistory 실패', error)
+    }
+}
+
