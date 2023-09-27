@@ -86,18 +86,18 @@ function IOUPage() {
                         <IOUContent>
                             <Title>차 용 증</Title>
                             <div style={{ width: '90%', height: '40vh' }}>
-                                <Amount>￦ {contract.contractAmt} 원</Amount>
+                                <Amount>￦ {contract?.contractAmt} 원</Amount>
                                 <hr />
                                 <Content>
-                                    위 금액을 채무자({contract.debtorUser.userName})가 채권자(
-                                    {contract.creditorUser.userName})로부터 {contract.contractStartDate}일 틀림없이
+                                    위 금액을 채무자({contract?.debtorUser.userName})가 채권자(
+                                    {contract?.creditorUser.userName})로부터 {contract?.contractStartDate}일 틀림없이
                                     빌렸습니다.
                                 </Content>
                                 <Content>
-                                    채무자({contract.debtorUser.userName})는 위 금액을 연 이자{' '}
-                                    {contract.contractInterestRate}%로 하여 {contract.contractMaturityDate}일까지
+                                    채무자({contract?.debtorUser.userName})는 위 금액을 연 이자{' '}
+                                    {contract?.contractInterestRate}%로 하여 {contract?.contractMaturityDate}일까지
                                     채권자(
-                                    {contract.creditorUser.userName})에게 갚겠습니다.
+                                    {contract?.creditorUser.userName})에게 갚겠습니다.
                                 </Content>
                             </div>
                             <Dates>날짜: {currentDate} 일</Dates>
@@ -105,12 +105,12 @@ function IOUPage() {
                             <div style={{ justifyContent: 'space-around', marginTop: 'auto' }}>
                                 <div style={{ width: '50px', height: '50px', display: 'flex' }}>
                                     채권자 <br />
-                                    이름 : {contract.creditorUser.userName}
+                                    이름 : {contract?.creditorUser.userName}
                                 </div>
                                 <hr />
                                 <div style={{ width: '50px', height: '50px', display: 'flex' }}>
                                     채무자 <br />
-                                    이름 : {contract.debtorUser.userName}
+                                    이름 : {contract?.debtorUser.userName}
                                 </div>
                             </div>
                         </IOUContent>
