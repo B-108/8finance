@@ -49,6 +49,8 @@ pipeline {
                     sh '''
                     echo 'Deploy'
 
+                    docker stop kb-back
+                    docker rm kb-back
 
                     docker run -d -p 8763:8763 --name kb-back docker-springboot-kb:0.0.1
 
