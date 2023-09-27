@@ -26,7 +26,7 @@ function TADetail() {
         try {
             const response = await getTransActionDetail(location.state.contractId);
             setDetail(response?.data);
-            console.log(detail);
+            // console.log(detail);
         } catch (error) {
             console.log(error);
         }
@@ -47,19 +47,8 @@ function TADetail() {
     };
     const moveToIOU = (contractId: number) => {
         navigate(`/transaction/detail/${contractId}/iou`, { state: { contractId } });
-        console.log(contractId);
     };
-    useEffect(() => {
-        const timer = setInterval(() => {
-            if (progress < 75) {
-                setProgress(progress + 25);
-            }
-        }, 1000);
 
-        return () => clearInterval(timer);
-    }, [progress]);
-
-    // const BalanceCash = (Number(detail?.contractAmt) - Number(detail?.repaymentCash))/Number(detail?.contractAmt)
     const totalRepaymentCash =
         Number(detail?.contractAmt) + (Number(detail?.contractAmt) * Number(detail?.contractInterestRate)) / 100;
     return (
