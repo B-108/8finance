@@ -89,6 +89,7 @@ function PinCheck () {
     if (inputRefs[0].current) {
       inputRefs[0].current.focus();
     }
+    setPinCheck("")
   }, []);
 
   return (

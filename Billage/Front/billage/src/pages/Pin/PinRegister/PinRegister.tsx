@@ -65,6 +65,7 @@ function PinRegister () {
     if (inputRefs[0].current) {
       inputRefs[0].current.focus();
     }
+    setPinRegister("")
   }, []);
 
   return (
