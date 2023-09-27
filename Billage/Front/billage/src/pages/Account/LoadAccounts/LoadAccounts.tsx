@@ -29,6 +29,21 @@ import { postAccountRegister } from '/src/api/account';
 
 function LoadAccounts() {
   const [isAccountClicked, setIsAccountClicked] = useState(false);
+  const [bankList, setBankList] = useState([
+    {
+      logo: NH,
+      bankName: '농협은행',
+      accountNumber: '123-456-7890',
+      isClicked: false
+    },
+    {
+      logo: KB,
+      bankName: '농협은행',
+      accountNumber: '123-456-7890',
+      isClicked: false
+    },
+    // Add more banks as needed
+  ]);
 
   const handleAccountClick = () => {
       setIsAccountClicked(!isAccountClicked); // 클릭 시 테두리 색 변경

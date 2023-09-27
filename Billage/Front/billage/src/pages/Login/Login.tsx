@@ -14,12 +14,15 @@ import Input, {
   InputHeader } from "/src/components/Common/Input"
 
 // 이미지
-  import logo from 'src/assets/logo.png'
+import logo from 'src/assets/logo.png'
 
 // 리코일
 import { PhoneState } from "/src/recoil/auth";
 import { useRecoilState } from "recoil";
 import { token } from "firebase";
+
+// API
+import { getPhoneCheck } from "/src/api/auth";
 
 // 타입스크립트
 
@@ -31,7 +34,16 @@ function Login(){
   // 라우터
   const navigate = useNavigate()
   const moveSignUp = () => {navigate(`/signup`)}
-  const movePinEnter = () => {navigate('/pinenter/login')}
+
+  const movePinEnter = async () => {
+    const response = await axiosPhoneCheck()
+    if( !response ) { 
+      console.log("회원이 아닙니다.")
+      return 
+    }
+    else { navigate('/pinenter/login') }
+  }
+
   const moveMain = () => {
     if(localStorage.getItem('access_token')){
       navigate(`/main`)
@@ -71,6 +83,17 @@ function Login(){
       });
     }
   };
+
+  // 회원 인증 요청
+  const axiosPhoneCheck = async (): Promise<object|undefined>  => {
+    try {
+      const response = await getPhoneCheck(phone)
+      return response
+    }
+    catch(error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
     moveMain()
