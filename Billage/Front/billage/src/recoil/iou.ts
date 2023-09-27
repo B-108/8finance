@@ -8,7 +8,7 @@ export const contractState = atom({
             userName: '',
         }, // 채권자
         debtorUser: {
-            userNmae: '',
+            userName: '',
         }, // 채무자
         contractDebtorAcNum: '', // 돈을 빌리는 사람이 돈을 받을 계좌(은행)
         contractStartDate: '', // 계약 시작 날짜 (거래상태가 진행중으로 바뀔 때 업데이트)
