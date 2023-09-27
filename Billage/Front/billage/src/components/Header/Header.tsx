@@ -4,6 +4,7 @@ import Image from "../Common/Image"
 import alramBell from "src/assets/alramBell.svg"
 import backIcon from "src/assets/backIcon.svg"
 import { useNavigate } from "react-router-dom"
+import Button from "../Common/Button"
 
 interface HeaderProps {
   headerTitle: string;
@@ -13,6 +14,7 @@ function Header ({headerTitle} : HeaderProps) {
   const [noDisplayImg, setNoDisplayImg] = useState(false)
 
   const navigate = useNavigate()
+  const moveLogin = () => {navigate(`/`)}
   const moveNotifications = () => {navigate(`/notifications`)}
   const handleGoBack = () => {navigate(-1);};
 
@@ -20,6 +22,12 @@ function Header ({headerTitle} : HeaderProps) {
     if (headerTitle === "Billage") {
       setNoDisplayImg(true)
     }
+  }
+
+  const logout = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    moveLogin()
   }
 
   useEffect(() => {
@@ -39,9 +47,10 @@ function Header ({headerTitle} : HeaderProps) {
         <Title
           $noDisplay = {noDisplayImg}>{headerTitle}</Title>
       </LeftSection>
-
+      <Button
+        $smallGreenBtn
+        onClick={logout}>임시로그아웃</Button>
       <Image 
-        
         src={alramBell} 
         alt="alramBell"
         width="20px"
