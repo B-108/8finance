@@ -62,7 +62,6 @@ function PinEnter () {
     }
     
     if (pinEnter.length >= 4 && event.target.value) {
-      console.log("비밀번호 5자리 입력 들어오면",pinEnter + event.target.value)
       if (routeAction === "login") {
         axiosLogin(pinEnter + event.target.value)
       }

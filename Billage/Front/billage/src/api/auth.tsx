@@ -28,9 +28,6 @@ export const postLogin = async (info: LoginProps) => {
             const accessToken = response.data.jwtToken.accessToken;
             const refreshToken = response.data.jwtToken.refreshToken;
 
-            console.log('access 토큰 :', accessToken);
-            console.log('refresh 토큰 :', refreshToken);
-
             localStorage.setItem('access_token', accessToken);
             localStorage.setItem('refresh_token', refreshToken);
 
