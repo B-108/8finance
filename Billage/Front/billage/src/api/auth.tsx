@@ -67,3 +67,15 @@ export const postMessageCert = async (info: MessageCertProps) => {
     console.log("postMessageCert 실패한 이유는??",error)
   }
 }
+
+// 
+export const getPhoneCheck = async (phone:string) => {
+  try{
+    const response = await publicApi.get(`/api/user/${phone}`);
+    console.log("회원인지 인증 success")
+    return response
+  }
+  catch (error) {
+    console.log("getPhoneCheck 실패한 이유는??",error)
+  }
+}
