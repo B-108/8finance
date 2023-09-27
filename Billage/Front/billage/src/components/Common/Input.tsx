@@ -18,6 +18,8 @@ interface InputProps {
     $active?: boolean;
     // 간편 비밀번호
     $simplepassword?: boolean;
+    // 간편 비밀번호 입력 활성화
+    $IsValue? : boolean;
     // 사진
     $buttonImage?: string;
 }
@@ -59,13 +61,21 @@ const StyledInput = styled.input<InputProps>`
             font-size: ${theme.fontSize.DF_16};
             border-radius: 100%;
             aspect-ratio: 1 / 1;
+            color: transparent;
 
             &:focus {
-                outline: 1px solid ${theme.color.green[0]};
-                background-color: ${theme.color.green[0]};
-                border: 1px solid ${theme.color.green[0]}
+              outline: 1px solid ${theme.color.green[0]};
+              border: 1px solid ${theme.color.green[0]}
             }
         `}
+
+    ${(props) => props.$IsValue &&
+      css`
+        outline: 1px solid ${theme.color.green[0]};
+        background-color: ${theme.color.green[0]};
+        border: 1px solid ${theme.color.green[0]}
+      `
+    }
 
     // 타입이 "interest"인 경우 "%" 기호 표시
     ${(props) =>

@@ -94,6 +94,7 @@ function PinRegister () {
           ref={inputRefs[0]}
           $size="20px," 
           $simplepassword
+          $IsValue = {pinRegister.length >= 2 ? true : false}
           value={pinRegister.length >= 1 ? pinRegister.slice(0,2) : ""}
           onChange={(event) => handlepinRegisterChange(event, 0)}
         ></Input>
@@ -101,6 +102,7 @@ function PinRegister () {
           ref={inputRefs[1]}
           $size="20px," 
           $simplepassword
+          $IsValue = {pinRegister.length >= 4 ? true : false}
           value={pinRegister.length >= 3 ? pinRegister.slice(2,4) : ""}
           onChange={(event) => handlepinRegisterChange(event, 1)}
         ></Input>
@@ -108,6 +110,7 @@ function PinRegister () {
           ref={inputRefs[2]}
           $size="20px," 
           $simplepassword
+          $IsValue = {pinRegister.length >= 6 ? true : false}
           value={pinRegister.length >= 5 ? pinRegister.slice(4,6) : ""}
           onChange={(event) => handlepinRegisterChange(event, 2)}
         ></Input>
@@ -115,6 +118,7 @@ function PinRegister () {
           ref={inputRefs[3]}
           $size="20px," 
           $simplepassword
+          $IsValue = {pinRegister.length >= 8 ? true : false}
           value={pinRegister.length >= 7 ? pinRegister.slice(6,8) : ""}
           onChange={(event) => handlepinRegisterChange(event, 3)}
         ></Input>
@@ -126,6 +130,7 @@ function PinRegister () {
           ref={inputRefs[4]}
           $size="20px," 
           $simplepassword
+          $IsValue = {pinRegister.length >= 10 ? true : false}
           value={pinRegister.length >= 9 ? pinRegister.slice(8,10) : ""}
           onChange={(event) => handlepinRegisterChange(event, 4)}
         ></Input>
