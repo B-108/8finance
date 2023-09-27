@@ -10,3 +10,9 @@ export interface AccountType {
   accountNum: string;
   accountRegistDate: string;
 }
+
+export interface BankType {
+  logo: string;
+  code?: string,
+  bankName: string;
+}
