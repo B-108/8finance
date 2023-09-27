@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
+
 import { useNavigate } from "react-router-dom"
 
 // 이미지
@@ -29,12 +30,13 @@ function PinRegister () {
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
   const [name, setName] = useRecoilState<string>(NameState);
   const [pinRegister,setPinRegister] = useRecoilState<string>(PinRegisterState)
-  
+  const inputRefs = Array.from({ length: 5 }, () => useRef<HTMLInputElement>(null));
+
   // 라우터 
   const navigate = useNavigate()
   const movePinCheck = () => {navigate(`/pincheck`)}
 
-  const handlepinRegisterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlepinRegisterChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     if (event.target.value.length > 1){
       event.target.value = event.target.value.slice(0,1)
       return 
@@ -46,12 +48,24 @@ function PinRegister () {
     else {
       setPinRegister(pinRegister.slice(0,pinRegister.length-1))
     }
-    console.log(`Pin : ${pinRegister}`)
+
+    if (event.target.value.length === 1 && index < 4) {
+      const nextInput = inputRefs[index + 1].current;
+      if (nextInput) {
+        nextInput.focus();
+      }
+    }
     
     if (pinRegister.length >= 4) {
       movePinCheck()
     }
   };
+
+  useEffect(() => {
+    if (inputRefs[0].current) {
+      inputRefs[0].current.focus();
+    }
+  }, []);
 
   return (
     <CenteredContainer $center>
@@ -61,38 +75,44 @@ function PinRegister () {
 
       <InputBox>
         <Input
-          $size="20px,"
+          ref={inputRefs[0]}
+          $size="20px," 
           $simplepassword
           value={pinRegister.length >= 1 ? pinRegister[0] : ""}
-          onChange={handlepinRegisterChange}
-          ></Input>
+          onChange={(event) => handlepinRegisterChange(event, 0)}
+        ></Input>
         <Input 
+          ref={inputRefs[1]}
           $size="20px," 
           $simplepassword
           value={pinRegister.length >= 2 ? pinRegister[1] : ""}
-          onChange={handlepinRegisterChange}
-          ></Input>
+          onChange={(event) => handlepinRegisterChange(event, 1)}
+        ></Input>
         <Input 
+          ref={inputRefs[2]}
           $size="20px," 
           $simplepassword
           value={pinRegister.length >= 3 ? pinRegister[2] : ""}
-          onChange={handlepinRegisterChange}
-          ></Input>
+          onChange={(event) => handlepinRegisterChange(event, 2)}
+        ></Input>
         <Input 
+          ref={inputRefs[3]}
           $size="20px," 
           $simplepassword
           value={pinRegister.length >= 4 ? pinRegister[3] : ""}
-          onChange={handlepinRegisterChange}
-          ></Input>
+          onChange={(event) => handlepinRegisterChange(event, 3)}
+        ></Input>
         <Image
           src={plus}
-          alt="plus"></Image>
+          alt="plus"
+        />
         <Input 
+          ref={inputRefs[4]}
           $size="20px," 
           $simplepassword
           value={pinRegister.length >= 5 ? pinRegister[4] : ""}
-          onChange={handlepinRegisterChange}
-          ></Input>
+          onChange={(event) => handlepinRegisterChange(event, 4)}
+        ></Input>
       </InputBox>
 
       <Text

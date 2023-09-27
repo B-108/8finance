@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 
 // 이미지
@@ -32,12 +32,14 @@ function PinCheck () {
   const [name, setName] = useRecoilState<string>(NameState);
   const [pinRegister,setPinRegister] = useRecoilState<string>(PinRegisterState)
   const [pinCheck,setPinCheck] = useRecoilState<string>(PinCheckState)
+  const inputRefs = Array.from({ length: 5 }, () => useRef<HTMLInputElement>(null));
+
 
   // 라우터 
   const navigate = useNavigate()
   const moveMain = () => {navigate(`/Main`)}
 
-  const handlePinCheckChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePinCheckChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     if (event.target.value.length > 1){
       event.target.value = event.target.value.slice(0,1)
       return 
@@ -49,10 +51,15 @@ function PinCheck () {
     else {
       setPinCheck(pinCheck.slice(0,pinCheck.length-1))
     }
-    console.log(`Pin : ${pinCheck}`)
     
+    if (event.target.value.length === 1 && index < 4) {
+      const nextInput = inputRefs[index + 1].current;
+      if (nextInput) {
+        nextInput.focus();
+      }
+    }
+
     if (pinCheck.length >= 4 ) {
-      
       if (pinRegister === pinCheck + event.target.value){
         axiosSignUp(pinCheck + event.target.value)
         moveMain()
@@ -78,6 +85,12 @@ function PinCheck () {
     }
   }
 
+  useEffect(() => {
+    if (inputRefs[0].current) {
+      inputRefs[0].current.focus();
+    }
+  }, []);
+
   return (
     <CenteredContainer $center>
       <Text
@@ -86,38 +99,44 @@ function PinCheck () {
 
       <InputBox>
         <Input
-          $size="20px,20px" 
+          ref={inputRefs[0]}
+          $size="20px," 
           $simplepassword
           value={pinCheck.length >= 1 ? pinCheck[0] : ""}
-          onChange={handlePinCheckChange}
-          ></Input>
+          onChange={(event) => handlePinCheckChange(event, 0)}
+        ></Input>
         <Input 
-          $size="20px,20px" 
+          ref={inputRefs[1]}
+          $size="20px," 
           $simplepassword
           value={pinCheck.length >= 2 ? pinCheck[1] : ""}
-          onChange={handlePinCheckChange}
-          ></Input>
+          onChange={(event) => handlePinCheckChange(event, 1)}
+        ></Input>
         <Input 
-          $size="20px,20px" 
+          ref={inputRefs[2]}
+          $size="20px," 
           $simplepassword
           value={pinCheck.length >= 3 ? pinCheck[2] : ""}
-          onChange={handlePinCheckChange}
-          ></Input>
+          onChange={(event) => handlePinCheckChange(event, 2)}
+        ></Input>
         <Input 
-          $size="20px,20px" 
+          ref={inputRefs[3]}
+          $size="20px," 
           $simplepassword
           value={pinCheck.length >= 4 ? pinCheck[3] : ""}
-          onChange={handlePinCheckChange}
-          ></Input>
+          onChange={(event) => handlePinCheckChange(event, 3)}
+        ></Input>
         <Image
           src={plus}
-          alt="plus"></Image>
+          alt="plus"
+        />
         <Input 
-          $size="20px,20px" 
+          ref={inputRefs[4]}
+          $size="20px," 
           $simplepassword
-          value={pinCheck.length >= 5 ? pinRegister[4] : ""}
-          onChange={handlePinCheckChange}
-          ></Input>
+          value={pinCheck.length >= 5 ? pinCheck[4] : ""}
+          onChange={(event) => handlePinCheckChange(event, 4)}
+        ></Input>
       </InputBox>
 
       <Text
