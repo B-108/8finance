@@ -29,6 +29,10 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { getIOU } from '/src/api/iou';
 
+
+//navigate
+import { useLocation } from 'react-router-dom';
+
 function IOUPage() {
     // Recoil 상태에서 데이터 읽어오기
     const [contract, setContract] = useRecoilState(contractState);
@@ -36,10 +40,11 @@ function IOUPage() {
 
     const currentDate = new Date().toISOString().split('T')[0];
 
+    const location  = useLocation()
     // API 요청을 수행하여 데이터 가져오기
     const axiosIOU = async (): Promise<void> => {
         try {
-            const response = await getIOU();
+            const response = await getIOU(location.state.contractId);
             setContract(response?.data);
         } catch (error) {
             console.error(error);
