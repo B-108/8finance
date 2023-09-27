@@ -168,7 +168,10 @@ function PinCheck () {
 
       <Text
         $description
-        >숫자4자리와 영문자 하나로 설정해 주세요!</Text>
+        >숫자4자리와 영문자 혹은</Text>
+      <Text
+        $description
+        >특수기호 하나로 설정해 주세요!</Text>
     </CenteredContainer>
   )
 }
