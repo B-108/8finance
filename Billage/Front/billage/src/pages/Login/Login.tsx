@@ -68,7 +68,6 @@ function Login(){
   };
 
 
-
   return(
     <CenteredContainer $center>
 
@@ -78,7 +77,7 @@ function Login(){
             $mainText
             $size="60%,">Billage에 오신걸 환영합니다!</Text>
 
-        <InputDiv style={{marginBottom : '2rem'}}>
+        <InputDiv style={{marginBottom : '1rem'}}>
             <InputHeader>핸드폰 번호</InputHeader>
             <Input
                 type="phone"
@@ -94,7 +93,10 @@ function Login(){
             $Green onClick={movePinEnter}
             >로그인</Button>
         
-        <div style={{ fontSize: theme.fontSize.XS_12, color:theme.color.gray[55], marginTop: '1rem'}}>
+        <div style={{ 
+          fontSize: theme.fontSize.XS_12, 
+          color:theme.color.gray[55], 
+          marginTop: '1rem'}}>
             <span onClick={moveSignUp} >회원가입</span>
             <span> | </span>
             <span>간편 비밀번호 찾기</span>

@@ -32,7 +32,7 @@ function PinCheck () {
   const [name, setName] = useRecoilState<string>(NameState);
   const [pinRegister,setPinRegister] = useRecoilState<string>(PinRegisterState)
   const [pinCheck,setPinCheck] = useRecoilState<string>(PinCheckState)
-  
+
   // 라우터 
   const navigate = useNavigate()
   const moveMain = () => {navigate(`/Main`)}
@@ -43,6 +43,7 @@ function PinCheck () {
       return 
     }
     if (event.target.value !== "") {
+      if (event.target.value === " "){ return }
       setPinCheck(pinCheck + event.target.value);
     }
     else {

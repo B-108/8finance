@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 // 이미지
@@ -31,26 +31,37 @@ import { postLogin } from "/src/api/auth"
 function PinEnter () {
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
   const [pinEnter,setPinEnter] = useRecoilState<string>(PinEnterState)
+  const inputRefs = Array.from({ length: 5 }, () => useRef<HTMLInputElement>(null));
 
-   // 라우터 
-   const { routeAction } = useParams<{ routeAction?: string}>()
+
+  // 라우터 
+  const { routeAction } = useParams<{ routeAction?: string}>()
   const navigate = useNavigate()
   const moveMain = () => {navigate(`/Main`)}
 
-  const handlepinEnterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlepinEnterChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     if (event.target.value.length > 1){
       event.target.value = event.target.value.slice(0,1)
       return 
     }
+
     if (event.target.value !== "") {
+      if (event.target.value === " "){ return }
       setPinEnter(pinEnter + event.target.value);
     }
+
     else {
       setPinEnter(pinEnter.slice(0,pinEnter.length-1))
     }
-    console.log(`Pin : ${pinEnter}`)
+
+    if (event.target.value.length === 1 && index < 4) {
+      const nextInput = inputRefs[index + 1].current;
+      if (nextInput) {
+        nextInput.focus();
+      }
+    }
     
-    if (pinEnter.length >= 4 ) {
+    if (pinEnter.length >= 4 && event.target.value) {
       console.log("비밀번호 5자리 입력 들어오면",pinEnter + event.target.value)
       if (routeAction === "login") {
         axiosLogin(pinEnter + event.target.value)
@@ -72,6 +83,12 @@ function PinEnter () {
     }
   }
 
+  useEffect(() => {
+    if (inputRefs[0].current) {
+      inputRefs[0].current.focus();
+    }
+  }, []);
+
   return (
     <CenteredContainer $center>
       <Text
@@ -80,38 +97,44 @@ function PinEnter () {
 
       <InputBox>
         <Input
+          ref={inputRefs[0]}
           $size="20px," 
           $simplepassword
           value={pinEnter.length >= 1 ? pinEnter[0] : ""}
-          onChange={handlepinEnterChange}
-          ></Input>
+          onChange={(event) => handlepinEnterChange(event, 0)}
+        ></Input>
         <Input 
+          ref={inputRefs[1]}
           $size="20px," 
           $simplepassword
           value={pinEnter.length >= 2 ? pinEnter[1] : ""}
-          onChange={handlepinEnterChange}
-          ></Input>
+          onChange={(event) => handlepinEnterChange(event, 1)}
+        ></Input>
         <Input 
+          ref={inputRefs[2]}
           $size="20px," 
           $simplepassword
           value={pinEnter.length >= 3 ? pinEnter[2] : ""}
-          onChange={handlepinEnterChange}
-          ></Input>
+          onChange={(event) => handlepinEnterChange(event, 2)}
+        ></Input>
         <Input 
+          ref={inputRefs[3]}
           $size="20px," 
           $simplepassword
           value={pinEnter.length >= 4 ? pinEnter[3] : ""}
-          onChange={handlepinEnterChange}
-          ></Input>
+          onChange={(event) => handlepinEnterChange(event, 3)}
+        ></Input>
         <Image
           src={plus}
-          alt="plus"></Image>
+          alt="plus"
+        />
         <Input 
+          ref={inputRefs[4]}
           $size="20px," 
           $simplepassword
           value={pinEnter.length >= 5 ? pinEnter[4] : ""}
-          onChange={handlepinEnterChange}
-          ></Input>
+          onChange={(event) => handlepinEnterChange(event, 4)}
+        ></Input>
       </InputBox>
 
       <Text
