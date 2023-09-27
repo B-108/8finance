@@ -29,6 +29,7 @@ function Transfer() {
     const [amount, setAmount] = useState<string>('');
     const [interest, setInterest] = useState<string>('');
     const [totalAmount, setTotalAmount] = useState<string>('');
+    const [autoTransfer, setAutoTransfer] = useState<boolean>(false); // 자동이체 체크박스 상태
 
     const handleFriendInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFriendInfo(event.target.value);
@@ -55,13 +56,18 @@ function Transfer() {
         setInterest(event.target.value);
     };
 
+    const handleAutoTransferChange = () => {
+        // 자동이체 체크박스가 변경될 때 호출되는 함수
+        setAutoTransfer(!autoTransfer); // 체크박스 상태를 반전시킴
+    };
+
     // 채용증 생성 요청을 보내는 함수
     const axiosPostIOU = async () => {
         const iouData: IOUProps = {
             creditorUser: 2, // 채권자 사용자 ID
             contractDebtorAcNum: accountInfo,
             contractMaturityDate: transferDate ? transferDate.toISOString() : '', // Date 객체를 문자열로 변환
-            contractAutoTranYn: false,
+            contractAutoTranYn: autoTransfer,
             contractAutoDate: autoTransferDate ? autoTransferDate.toISOString() : '', // Date 객체를 문자열로 변환
             contractAmt: amount,
             contractInterestRate: interest,
@@ -123,7 +129,7 @@ function Transfer() {
             <TranInputDiv>
                 <TranInputTitle>
                     자동이체
-                    <input type="checkbox" id="myCheckbox" />
+                    <input type="checkbox" id="myCheckbox" checked={autoTransfer} onChange={handleAutoTransferChange} />
                 </TranInputTitle>
                 <DatePicker
                     selected={autoTransferDate}
