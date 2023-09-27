@@ -37,7 +37,8 @@ function PinCheck () {
 
   // 라우터 
   const navigate = useNavigate()
-  const moveMain = () => {navigate(`/Main`)}
+  const moveMain = () => {navigate(`/main`)}
+  const movePinRegister = () => {navigate(`/pinregister`)}
 
   const handlePinCheckChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     if (event.target.value.length > 2){
@@ -77,12 +78,15 @@ function PinCheck () {
     const pinNumber = pinCheck.split(" ").join("") + event.target.value.split(" ").join("")
     
     if (pinCheck.length >= 8 && event.target.value) {
-      if (pinRegister === pinNumber){
+      if (pinRegister.split(" ").join("") === pinNumber){
+        console.log("pinRegister",pinRegister)
+        console.log("pinNumber",pinNumber)
         axiosSignUp(pinNumber)
         moveMain()
       }
 
-      else if (pinRegister !== pinNumber){
+      else if (pinRegister.split(" ").join("") !== pinNumber){
+        movePinRegister()
         console.log("비밀번호 확인이 틀렸을 때")
       }
     }
@@ -120,6 +124,7 @@ function PinCheck () {
           ref={inputRefs[0]}
           $size="20px," 
           $simplepassword
+          $IsValue = {pinCheck.length >= 2 ? true : false}
           value={pinCheck.length >= 1 ? pinCheck.slice(0,2) : ""}
           onChange={(event) => handlePinCheckChange(event, 0)}
         ></Input>
@@ -127,6 +132,7 @@ function PinCheck () {
           ref={inputRefs[1]}
           $size="20px," 
           $simplepassword
+          $IsValue = {pinCheck.length >= 4 ? true : false}
           value={pinCheck.length >= 3 ? pinCheck.slice(2,4) : ""}
           onChange={(event) => handlePinCheckChange(event, 1)}
         ></Input>
@@ -134,6 +140,7 @@ function PinCheck () {
           ref={inputRefs[2]}
           $size="20px," 
           $simplepassword
+          $IsValue = {pinCheck.length >= 6 ? true : false}
           value={pinCheck.length >= 5 ? pinCheck.slice(4,6) : ""}
           onChange={(event) => handlePinCheckChange(event, 2)}
         ></Input>
@@ -141,6 +148,7 @@ function PinCheck () {
           ref={inputRefs[3]}
           $size="20px," 
           $simplepassword
+          $IsValue = {pinCheck.length >= 8 ? true : false}
           value={pinCheck.length >= 7 ? pinCheck.slice(6,8) : ""}
           onChange={(event) => handlePinCheckChange(event, 3)}
         ></Input>
@@ -152,6 +160,7 @@ function PinCheck () {
           ref={inputRefs[4]}
           $size="20px," 
           $simplepassword
+          $IsValue = {pinCheck.length >= 10 ? true : false}
           value={pinCheck.length >= 9 ? pinCheck.slice(8,10) : ""}
           onChange={(event) => handlePinCheckChange(event, 4)}
         ></Input>

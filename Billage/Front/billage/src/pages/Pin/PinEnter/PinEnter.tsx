@@ -118,6 +118,7 @@ function PinEnter () {
           ref={inputRefs[0]}
           $size="20px," 
           $simplepassword
+          $IsValue = {pinEnter.length >= 2 ? true : false}
           value={pinEnter.length >= 1 ? pinEnter.slice(0,2) : ""}
           onChange={(event) => handlepinEnterChange(event, 0)}
         ></Input>
@@ -125,6 +126,7 @@ function PinEnter () {
           ref={inputRefs[1]}
           $size="20px," 
           $simplepassword
+          $IsValue = {pinEnter.length >= 4 ? true : false}
           value={pinEnter.length >= 3 ? pinEnter.slice(2,4) : ""}
           onChange={(event) => handlepinEnterChange(event, 1)}
         ></Input>
@@ -132,6 +134,7 @@ function PinEnter () {
           ref={inputRefs[2]}
           $size="20px," 
           $simplepassword
+          $IsValue = {pinEnter.length >= 6 ? true : false}
           value={pinEnter.length >= 5 ? pinEnter.slice(4,6) : ""}
           onChange={(event) => handlepinEnterChange(event, 2)}
         ></Input>
@@ -139,6 +142,7 @@ function PinEnter () {
           ref={inputRefs[3]}
           $size="20px," 
           $simplepassword
+          $IsValue = {pinEnter.length >= 8 ? true : false}
           value={pinEnter.length >= 7 ? pinEnter.slice(6,8) : ""}
           onChange={(event) => handlepinEnterChange(event, 3)}
         ></Input>
@@ -150,6 +154,7 @@ function PinEnter () {
           ref={inputRefs[4]}
           $size="20px," 
           $simplepassword
+          $IsValue = {pinEnter.length >= 10 ? true : false}
           value={pinEnter.length >= 9 ? pinEnter.slice(8,10) : ""}
           onChange={(event) => handlepinEnterChange(event, 4)}
         ></Input>

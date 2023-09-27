@@ -54,11 +54,6 @@ const router = createBrowserRouter([
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/pinenter/:routeAction',
-                element: <PinEnter />,
-                errorElement: <ErrorComponent />,
-            },
-            {
                 path: '/pinregister',
                 element: <PinRegister />,
                 errorElement: <ErrorComponent />,
