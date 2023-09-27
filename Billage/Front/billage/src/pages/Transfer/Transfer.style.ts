@@ -25,7 +25,7 @@ export const SmallButtonsContainer = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
-    width: 80%;
+    width: 70%;
     display: flex;
     justify-content: center;
     align-items: flex-end;
