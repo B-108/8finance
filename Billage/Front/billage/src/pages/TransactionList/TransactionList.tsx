@@ -45,7 +45,7 @@ function TransactionList() {
     setToggle(false);
     };
     const moveToDetail= (contractId: number) =>{
-        navigate(`/transactiondetail/${contractId}`, {state: {contractId, toggle}})
+        navigate(`/transaction/detail/${contractId}`, { state: { contractId, toggle } });
     }
     return(
         <>

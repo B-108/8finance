@@ -14,11 +14,11 @@ export const postIOU = async (info: IOUProps) => {
 };
 
 // 차용증 조회
-export const getIOU = async () => {
+export const getIOU = async (contractId: number) => {
     try {
-        // const response = await privateApi.get(`/api/contract/${contractId}`);
+        const response = await privateApi.get(`/api/contract/${contractId}`);
         //테스트용
-        const response = await privateApi.get('/api/contract/2');
+        // const response = await privateApi.get('/api/contract/2');
         console.log(response.data);
         console.log('차용증 조회 성공 ');
         return response;

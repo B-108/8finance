@@ -38,24 +38,24 @@ const router = createBrowserRouter([
                 errorElement: <ErrorComponent />,
             },
             {
-              path: '/signup',
-              element: <SignUp />,
-              errorElement: <ErrorComponent />,
+                path: '/signup',
+                element: <SignUp />,
+                errorElement: <ErrorComponent />,
             },
             {
-              path: '/pincheck',
-              element: <PinCheck />,
-              errorElement: <ErrorComponent />,
+                path: '/pincheck',
+                element: <PinCheck />,
+                errorElement: <ErrorComponent />,
             },
             {
-              path: '/pinenter/:routeAction',
-              element: <PinEnter />,
-              errorElement: <ErrorComponent />,
+                path: '/pinenter/:routeAction',
+                element: <PinEnter />,
+                errorElement: <ErrorComponent />,
             },
             {
-              path: '/pinenter/:routeAction',
-              element: <PinEnter />,
-              errorElement: <ErrorComponent />,
+                path: '/pinenter/:routeAction',
+                element: <PinEnter />,
+                errorElement: <ErrorComponent />,
             },
             {
                 path: '/pinregister',
@@ -83,8 +83,13 @@ const router = createBrowserRouter([
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/transactiondetail/:id',
+                path: '/transaction/detail/:id',
                 element: <TADetail />,
+                errorElement: <ErrorComponent />,
+            },
+            {
+                path: '/transaction/detail/:id/iou',
+                element: <IOU />,
                 errorElement: <ErrorComponent />,
             },
             {
@@ -105,11 +110,6 @@ const router = createBrowserRouter([
             {
                 path: '/notifications',
                 element: <Notifications />,
-                errorElement: <ErrorComponent />,
-            },
-            {
-                path: '/iou',
-                element: <IOU />,
                 errorElement: <ErrorComponent />,
             },
             {
