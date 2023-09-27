@@ -1,12 +1,12 @@
 import { privateApi } from ".";
 
 // 타입스크립트
-import { Transaction } from "../type/transaction";
+// import { Transaction } from "../type/transaction";
 
 //빌린 거래 조회
 export const getBorrowList = async () => {
     try{
-        const response = await privateApi.get("/api/borrow")
+        const response = await privateApi.get("/api/loan/borrow")
         console.log("빌린 거래 목록 조회 성공")
         return response
     }
@@ -18,7 +18,7 @@ export const getBorrowList = async () => {
 //빌려준 거래 조회
 export const getLendList = async () => {
     try{
-        const response = await privateApi.get("/api/lend")
+        const response = await privateApi.get("/api/loan/lend")
         console.log("빌려준 거래 목록 조회 성공")
         return response
     }
@@ -28,9 +28,9 @@ export const getLendList = async () => {
 }
 
 //거래 상세 조회
-export const getTransActionDetail = async (contractId : Number) => {
+export const getTransActionDetail = async (contractId : number) => {
     try{
-        const response = await privateApi.get(`/api/${contractId}/detail`)
+        const response = await privateApi.get(`/api/loan/${contractId}/detail`)
         console.log("거래 상세 조회 성공")
         return response
     }

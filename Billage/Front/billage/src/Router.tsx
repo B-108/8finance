@@ -83,7 +83,7 @@ const router = createBrowserRouter([
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/transactiondetail',
+                path: '/transactiondetail/:id',
                 element: <TADetail />,
                 errorElement: <ErrorComponent />,
             },

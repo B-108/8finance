@@ -20,15 +20,9 @@ import { TransactionDetailType } from "/src/type/transaction"
 
 
 function TADetail(){
-    const image = [calendar, clock, calendar, clock, total]
-    const borrowlist = ['빌린날짜', '갚는날짜', '빌린금액', '이자', '갚을금액']
-    const lentlist = ['빌려준날짜', '갚는날짜', '빌려준금액', '이자', '받을금액']
-    const borrowdetail = ['2023.08.20(일)', '2023.10.10(화)', 500000+'원', 10+'%', 500000*1.1+'원']
-    const lentdetail = ['2023.08.20(일)', '2023.10.10(화)', 500000+'원', 10+'%', 500000*1.1+'원']
-
+   
     //거래 상세 조회
-    const [detail, setDetail] = useState<TransactionDetailType[]>([])
-
+    const [detail, setDetail] = useState<TransactionDetailType>()
     const axiosDetail =async (): Promise<void> => {
         try{
             const response = await getTransActionDetail(location.state.contractId)
@@ -39,15 +33,17 @@ function TADetail(){
             console.log(error)
         }
     }
-
+    
     useEffect(()=>{
         axiosDetail()
-      },[])
-
+    },[])
+    
     const [progress, setProgress] = useState(0);
     
     const navigate = useNavigate()
     const location = useLocation()
+    console.log(location)
+    console.log(detail)
     const moveTransactionHistory = () => {navigate(`/transactionhistory`)}
 
     useEffect(() => {
@@ -60,7 +56,8 @@ function TADetail(){
         return () => clearInterval(timer);
       }, [progress]);
 
-
+    // const BalanceCash = (Number(detail?.contractAmt) - Number(detail?.repaymentCash))/Number(detail?.contractAmt)
+    const totalRepaymentCash = Number(detail?.contractAmt) + (Number(detail?.contractAmt) * Number(detail?.contractInterestRate) /100)
     return(
         <>
         <div style={{margin:'0px 2%'}}>
@@ -82,51 +79,51 @@ function TADetail(){
 
             <FlexDiv $margin="3% 0%">
                 <div style={{display: 'flex'}}>
-                <Image src={calendar} alt="빌린날짜"></Image>
+                <Image src={clock} alt="빌린날짜"></Image>
                 <Text>{location.state.toggle ? '빌린' : '빌려준'} 날짜</Text>
                 </div>
-                <Text>2023.08.20(일)</Text>
+                <Text>{detail?.contractStartDate}</Text>
             </FlexDiv>
             <FlexDiv $margin="3% 0%">
                 <div style={{display: 'flex'}}>
                 <Image src={clock} alt="갚는날짜"></Image>
                 <Text>{location.state.toggle ? '갚는' : '받는'} 날짜</Text>
                 </div>
-                <Text>2023.10.10(화)</Text>
+                <Text>{detail?.contractMaturityDate}</Text>
             </FlexDiv>
             <FlexDiv $margin="3% 0%">
                 <div style={{display: 'flex'}}>
                 <Image src={calendar} alt="빌린금액"></Image>
                 <Text>{location.state.toggle ? '빌린' : '빌려준'} 금액</Text>
                 </div>
-                <Text>500.000원</Text>
+                <Text>{detail?.contractAmt}원</Text>
             </FlexDiv>
             <FlexDiv $margin="3% 0%">
                 <div style={{display: 'flex'}}>
                 <Image src={calendar} alt="이자"></Image>
                 <Text>이자</Text>
                 </div>
-                <Text>10%</Text>
+                <Text>{detail?.contractInterestRate}%</Text>
             </FlexDiv>
             <FlexDiv $margin="3% 0%">
                 <div style={{display: 'flex'}}>
                 <Image src={total} alt="갚을금액"></Image>
                 <Text>{location.state.toggle ? '갚을' : '받을'} 금액</Text>
                 </div>
-                <Text>550.000원</Text>
+                <Text>{totalRepaymentCash}원</Text>
             </FlexDiv>
 
             <hr />
             <FlexDiv $alignItems="center" $textAlign="center" $margin="5% 0">
                 <div style={{flex : 8}}>
-                    <ProgressBar progress={progress} />
+                    <ProgressBar progress={Math.round(100 - (Number(detail?.repaymentCash) / totalRepaymentCash) * 100)} />
                 </div>
                 <div style={{flex: 2.5 ,borderRadius: '10px', backgroundColor : '#EAEAEA' }}>
                     <Text $smallContent>
                         남은금액
                     </Text>
                     <Text>
-                        ￦260.000
+                        ￦{Number(detail?.repaymentCash)}
                     </Text>
                 </div>
             </FlexDiv>
@@ -139,6 +136,12 @@ function TADetail(){
             <Box 
               $transaction
               onClick={moveTransactionHistory}>총 4건의 거래내역이 있습니다.</Box>
+        </div>
+        </>
+    )
+}
+
+export default TADetail
 
             {/* 삭제 ㄴㄴㄴㄴㄴㄴㄴ */}
             {/* {
@@ -154,9 +157,3 @@ function TADetail(){
                 </FlexDiv>
             )
             )} */}
-            </div>
-        </>
-    )
-}
-
-export default TADetail
