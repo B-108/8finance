@@ -112,8 +112,8 @@ export const InputDiv = styled.div`
     width: 100%;
 `;
 
-export const InputAuthHeader = styled(InputHeader)`
-    margin-bottom: 47px;
+export const AccountInputHeader = styled(InputHeader)`
+    margin-bottom: 40px;
 `;
 
 export const ButtonBox = styled.div`

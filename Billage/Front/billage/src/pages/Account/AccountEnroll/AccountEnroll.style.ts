@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import fontSize from '/src/themes/fontSize';
 import theme from '/src/themes';
 
 export const AgreementDiv = styled.div`

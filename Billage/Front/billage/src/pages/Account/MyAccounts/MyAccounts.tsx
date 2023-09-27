@@ -31,7 +31,8 @@ import { AccountType } from '/src/type/account';
 
 function MyAccounts() {
   const [accounts, setAccounts] = useState<AccountType[]>([])
-  
+  const [mainAccount, setMainAccount] = useState([]);
+
 
   // 라우터
   const navigate = useNavigate()
@@ -42,7 +43,6 @@ function MyAccounts() {
     try {
       const response = await getAccountList()
       setAccounts(response?.data)
-      console.log(response?.data)
     }
     catch(error) {
       console.log(error)
@@ -53,6 +53,7 @@ function MyAccounts() {
   const axiosMainAccount = async (accountId:number): Promise<void> => {
     try {
       const response = await patchMainAccount(accountId)
+      axiosAccountList()
       console.log(response)
     }
     catch(error) {

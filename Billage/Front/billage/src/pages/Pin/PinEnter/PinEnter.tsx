@@ -51,7 +51,6 @@ function PinEnter () {
     }
 
     else {
-      console.log("back")
       setPinEnter(pinEnter.slice(0,pinEnter.length-1))
     }
 

@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import color from '/src/themes/color';
 import theme from '/src/themes';
 
 export const LeftSection = styled.div`
