@@ -10,27 +10,26 @@ interface TransactionItemProps {
 
   function TransactionItem({ item, toggle }: TransactionItemProps) {
 
-    const [progress, setProgress] = useState(0);
+    // const [progress, setProgress] = useState(0);
 
-    useEffect(() => {
-        const timer = setInterval(() => {
-          if (progress < 75) {
-            setProgress(progress + 25);
-          }
-        }, 1000);
+    // useEffect(() => {
+    //     const timer = setInterval(() => {
+    //       if (progress < 75) {
+    //         setProgress(progress + 25);
+    //       }
+    //     }, 1000);
     
-        return () => clearInterval(timer);
-      }, [progress]);
- 
+    //     return () => clearInterval(timer);
+    //   }, [progress]);
 
     return(
-            <div style={{margin: '3% 0%', display: 'flex', border: '3px solid #6E960D', borderRadius: 15 ,width: '90%'}}>
+            <div style={{margin: '3% 0%', display: 'flex', border: '3px solid #6E960D', borderRadius: 15 ,width: '100%'}}>
                 
                 <div id="left" style={{ flex: '8.5', display:'flex', flexDirection: 'column', marginLeft: '3%'}}>
                     <div style={{marginBottom : '15%'}}>
-                        <Text>000님과의 거래에요!</Text>
+                        <Text>{toggle? item.creditorUser.userName : item.debtorUser.userName}님과의 거래에요!</Text>
                     </div>
-                    <ProgressBar progress={(Number(item.repatmentCash)/Number(item.contractAmt))*100} />
+                    <ProgressBar progress={((item.contractAmt - item.repaymentCash)/item.contractAmt)*100} />
                 </div>
                 
                 <div id="right"style={{flex: '3.5', textAlign:'center'}}>
@@ -39,8 +38,7 @@ interface TransactionItemProps {
                             {toggle ? '빌린금액' : '빌려준 금액'}
                         </Text>
                         <Text $smallContent>
-                            {item.contractAmt}
-                            ￦500.000
+                            ￦{item.contractAmt}
                         </Text> 
                     </div>
                     <div style={{borderRadius: '10px', backgroundColor : '#EAEAEA' }}>
@@ -48,8 +46,7 @@ interface TransactionItemProps {
                             남은금액
                         </Text>
                         <Text>
-                            {item.repatmentCash}
-                            ￦260.000
+                            ￦{item.repaymentCash}
                         </Text>
                     </div>
                 </div>

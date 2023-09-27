@@ -35,7 +35,7 @@ function TransactionList() {
 
     useEffect(()=>{
         axiosTransActionList()
-      }, list)
+      }, [toggle])
 
     const handleBorrowedClick = () => {
         setToggle(true);
@@ -71,7 +71,7 @@ function TransactionList() {
                 </div>
             </div>
             {list?.map((item, index) => (
-                <div onClick={() => moveToDetail(item.contractId)}>
+                <div style={{width : '95%'}} onClick={() => moveToDetail(item.contractId)}>
                 <TransactionItem key={index} item={item} toggle={toggle} />
                 </div>
           ))}
