@@ -40,6 +40,8 @@ function PinEnter () {
   const moveMain = () => {navigate(`/Main`)}
 
   const handlepinEnterChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    
+    // 한칸에 2글자(공백 + 값) 제한
     if (event.target.value.length > 2){
       event.target.value = event.target.value.slice(0,2)
       return 
@@ -50,6 +52,11 @@ function PinEnter () {
       if (event.target.value[1] === undefined) { 
         setPinEnter(pinEnter.slice(0,pinEnter.length-2))
         return
+      }
+
+      if(pinEnter.length <=8 && isNaN(Number(event.target.value[1]))) {return}
+      else if (pinEnter.length > 8 && !/^[a-zA-Z!@#$%^&*(),.?":{}|<>]+$/.test(event.target.value[1])) {
+        return;
       }
       setPinEnter(pinEnter + event.target.value[1] + " ");
     }
@@ -63,17 +70,13 @@ function PinEnter () {
     if (event.target.value.length === 2 && index < 4) {
       const nextInput = inputRefs[index + 1].current;
       
-      if (nextInput) {
-        nextInput.focus();
-      }
+      if (nextInput) { nextInput.focus() }
     }
 
     else if (!event.target.value.length && index > 0 && index < 6) {
       const backInput = inputRefs[index - 1].current;
 
-      if (backInput) {
-        backInput.focus();
-      }
+      if (backInput) { backInput.focus() }
     }
     
     if (pinEnter.length >= 8 && event.target.value) {
