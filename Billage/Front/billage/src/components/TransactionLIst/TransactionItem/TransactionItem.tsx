@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import Text from "/src/components/Common/Text";
 import ProgressBar from '../../Common/ProgressBar';
 import { TransactionType } from '/src/type/transaction';
