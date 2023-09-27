@@ -1,0 +1,67 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Springboot build') {
+            steps {
+                dir('IBK/Back/user-service'){
+                    sh '''
+                    pwd
+                    echo 'springboot build'
+                    cp -r /var/jenkins_home/backend-config/ibk/user-service/ /var/jenkins_home/workspace/ibk_user_service/IBK/Back/user-service/src/main/resources/
+                    chmod +x gradlew
+                    ./gradlew clean build
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Dockerimage build') {
+            steps {
+                dir('IBK/Back/user-service'){
+                    sh '''
+                    echo 'Dockerimage build'
+                    docker build -t docker-springboot-ibk-user-service:0.0.1 .
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                dir('IBK/Back/user-service'){
+                    sh '''
+                    echo 'Deploy'
+
+                    docker run -d -p 8011:8011 --name ibk-user-service docker-springboot-ibk-user-service:0.0.1
+
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+    }
+}
