@@ -162,7 +162,7 @@ function PinEnter () {
 
       <Text
         $description
-        >숫자4자리와 영문자 하나로 설정해 주세요!</Text>
+        >간편 비밀번호 5자리를 입력해 주세요!</Text>
     </CenteredContainer>
   )
 }
