@@ -18,7 +18,7 @@ export const getIOU = async () => {
     try {
         // const response = await privateApi.get(`/api/contract/${contractId}`);
         //테스트용
-        const response = await privateApi.get('/api/contract/1');
+        const response = await privateApi.get('/api/contract/2');
         console.log(response.data);
         console.log('차용증 조회 성공 ');
         return response;

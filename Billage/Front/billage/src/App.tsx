@@ -1,4 +1,5 @@
-import { Outlet } from 'react-router-dom';
+import { useEffect } from "react"
+import { Outlet, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '../firebase';
 
@@ -15,12 +16,12 @@ function App() {
     return <Outlet />;
 }
 
-function Root() {
-    return(
-      <Container>
-        <App />
-      </Container>
-      ) 
+function Root() {  
+  return(
+    <Container>
+      <App />
+    </Container>
+    ) 
   }
 
 export default Root;

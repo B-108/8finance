@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // 컴포넌트 재사용
@@ -32,6 +32,11 @@ function Login(){
   const navigate = useNavigate()
   const moveSignUp = () => {navigate(`/signup`)}
   const movePinEnter = () => {navigate('/pinenter/login')}
+  const moveMain = () => {
+    if(localStorage.getItem('access_token')){
+      navigate(`/main`)
+    }
+  }
 
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     // 숫자가 아니면 입력 못 받도록
@@ -67,6 +72,9 @@ function Login(){
     }
   };
 
+  useEffect(() => {
+    moveMain()
+  },[])
 
   return(
     <CenteredContainer $center>
