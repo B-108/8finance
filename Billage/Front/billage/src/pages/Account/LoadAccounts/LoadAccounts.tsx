@@ -19,6 +19,10 @@ import Button from '/src/components/Common/Button';
 // 이미지
 import NH from '/src/assets/NH.svg';
 import KB from '/src/assets/KB.svg';
+import HANA from '/src/assets/HANA.svg';
+import IBK from '/src/assets/IBK.svg';
+import SINHAN from '/src/assets/SINHAN.svg';
+import URI from '/src/assets/URI.svg';
 
 // 타입스크립트
 import { AccountProps } from '/src/type/account';
@@ -29,21 +33,6 @@ import { postAccountRegister } from '/src/api/account';
 
 function LoadAccounts() {
   const [isAccountClicked, setIsAccountClicked] = useState(false);
-  const [bankList, setBankList] = useState([
-    {
-      logo: NH,
-      bankName: '농협은행',
-      accountNumber: '123-456-7890',
-      isClicked: false
-    },
-    {
-      logo: KB,
-      bankName: '농협은행',
-      accountNumber: '123-456-7890',
-      isClicked: false
-    },
-    // Add more banks as needed
-  ]);
 
   const handleAccountClick = () => {
       setIsAccountClicked(!isAccountClicked); // 클릭 시 테두리 색 변경
