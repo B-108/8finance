@@ -89,7 +89,7 @@ const router = createBrowserRouter([
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/transactionhistory',
+                path: '/transaction/history/:id',
                 element: <TransactionHistory />,
                 errorElement: <ErrorComponent />,
             },

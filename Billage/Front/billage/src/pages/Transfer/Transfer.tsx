@@ -150,16 +150,16 @@ function Transfer() {
                 <TranInputTitle>빌릴 금액</TranInputTitle>
                 <Input value={amount} $active $size="98%,40px" onChange={handleAmountChange}></Input>
                 <SmallButtonsContainer>
-                    <Button $smallBlackBtn $size="10%,25px" style={{ margin: '6px' }}>
+                    <Button $smallBlackBtn $size="10%,25px" >
                         +1만
                     </Button>
-                    <Button $smallBlackBtn $size="10%,25px" style={{ margin: '6px' }}>
+                    <Button $smallBlackBtn $size="10%,25px" >
                         +5만
                     </Button>
-                    <Button $smallBlackBtn $size="10%,25px" style={{ margin: '6px' }}>
+                    <Button $smallBlackBtn $size="10%,25px" >
                         +10만
                     </Button>
-                    <Button $smallBlackBtn $size="10%,25px" style={{ margin: '6px' }}>
+                    <Button $smallBlackBtn $size="10%,25px" >
                         +100만
                     </Button>
                 </SmallButtonsContainer>
@@ -182,10 +182,10 @@ function Transfer() {
             </TranInputDiv>
             <hr />
             <ButtonContainer>
-                <Button $basicGrayBtn $size="100%, 50px" style={{ margin: '10px' }}>
+                <Button $basicGrayBtn $size="100%, 50px">
                     작성취소
                 </Button>
-                <Button $basicGreenBtn $size="100%, 50px" style={{ margin: '10px' }} onClick={axiosPostIOU}>
+                <Button $basicGreenBtn $size="100%, 50px" onClick={axiosPostIOU}>
                     작성완료
                 </Button>
             </ButtonContainer>

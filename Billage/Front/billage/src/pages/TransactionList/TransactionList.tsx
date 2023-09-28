@@ -44,8 +44,9 @@ function TransactionList() {
     const handleLentClick = () => {
     setToggle(false);
     };
-    const moveToDetail= (contractId: number) =>{
-        navigate(`/transaction/detail/${contractId}`, { state: { contractId, toggle } });
+    const moveToDetail = (contractId: number, creditoruser: string, debtoruser: string) => {
+        navigate(`/transaction/detail/${contractId}`,
+         { state: { contractId, toggle, creditoruser, debtoruser } });
     }
     return(
         <>
@@ -71,7 +72,8 @@ function TransactionList() {
                 </div>
             </div>
             {list?.map((item, index) => (
-                <div style={{width : '95%'}} onClick={() => moveToDetail(item.contractId)}>
+                <div style={{width : '95%'}} onClick={() =>
+                 moveToDetail(item.contractId, item.creditorUser.userName, item.debtorUser.userName)}>
                 <TransactionItem key={index} item={item} toggle={toggle} />
                 </div>
           ))}
