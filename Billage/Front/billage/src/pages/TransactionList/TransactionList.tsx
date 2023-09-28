@@ -12,7 +12,7 @@ import { TransactionType } from "/src/type/transaction"
 
 function TransactionList() {
     const [toggle, setToggle] = useState(true)
-    const [list, setList] = useState<TransactionType[]>([]) 
+  const [list, setList] = useState<TransactionType[]>([]) 
     const navigate = useNavigate();
 
     const axiosTransActionList =async (): Promise<void> => {

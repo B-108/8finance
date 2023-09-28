@@ -1,22 +1,80 @@
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+
+// 재사용 컴포넌트
 import Box from "/src/components/Common/Box"
 import CenteredContainer from "/src/components/Common/CenterAlign"
 import Image from "/src/components/Common/Image"
 import Text from "/src/components/Common/Text"
 import Header from "/src/components/Header/Header"
+import Footer from "/src/components/Common/Footer"
+import DonutChart from "/src/components/Common/DonutChart"
+
+// 스타일 컴포넌트
+import { 
+  AlarmContent, 
+  AlarmDate, 
+  AlarmHeader, 
+  BottomSection, 
+  Content, 
+  ContentBox, 
+  Remain, 
+  SendBtn, 
+  SignBox, 
+  TextBox, 
+  TextDown, 
+  TextUp, 
+  TopSection, 
+  TransactionBox } from "./Main.style"
+
+// 이미지
 import alarmBell2 from "/src/assets/alarmBell2.svg"
 import wallet from "/src/assets/wallet.svg"
 import Document from "/src/assets/DocumentList.svg"
-import Footer from "/src/components/Common/Footer"
+import Dollar from "/src/assets/dollar.svg"
+
+// 라이브러리
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
-import { AlarmContent, AlarmDate, AlarmHeader, Content, ContentBox, TransactionBox } from "./Main.style"
-import { useNavigate } from "react-router-dom"
+
+// 타입스크립트
+import { TransactionType } from "/src/type/transaction"
+
+// API
+import { 
+  getBorrowList, 
+  getLendList } from "/src/api/transaciton"
+
+// 리코일
+import { PhoneState } from "/src/recoil/auth"
+import { useRecoilState } from "recoil"
 
 function Main(){
+  const [transList, setTransList] = useState<TransactionType[]>([])
+  const [phone, setPhone] = useRecoilState<string>(PhoneState);
+
+  // 라우터
   const navigate = useNavigate()
   const moveTransfer = () => {navigate(`/transfer`)}
   const moveTransactionList = () => {navigate(`/transactionlist`)}
   const moveNotifications = () => {navigate(`/notifications`)}
+
+  const axiosAllTransActionList = async (): Promise<void> => {
+    try {
+      const Borrow = await getBorrowList()
+      const Lend = await getLendList()
+      setTransList([...Borrow?.data, ...Lend?.data])
+    }
+    catch(error){
+      console.log(error)
+    }
+  } 
+
+  useEffect(() => {
+    axiosAllTransActionList()
+  }, [])
+
+  
 
   return(
     <>
@@ -50,37 +108,72 @@ function Main(){
 
         <div style={{width:"100%"}}>
           <Splide
-            options={ {
+            options={{
               focus  : 'center',
               rewind: true,
               arrows : false,
               gap   : '5%',
-              padding: '12%',
-            } }
-            aria-label="My Favorite Images">
-            <SplideSlide>
-              <Box
-                $mainTransaction
-                $size="100%,270px">
-              </Box>
-            </SplideSlide>
-            <SplideSlide>
-              <Box
-                $mainTransaction
-                $size="100%,270px">
-              </Box>
-            </SplideSlide>
-            <SplideSlide>
-              <Box
-                $mainTransaction
-                $size="100%,270px">
-              </Box>
-            </SplideSlide>
+              padding: '12%',}}
+              aria-label="My Favorite Images">
+
+            {transList && transList.map((transAction,index) => (
+              transAction.contractState === 1 ? (
+                <SplideSlide key={index}>
+                  {transAction.debtorUser.userCellNo === phone ? (
+                    <Box
+                      $mainTransaction
+                      $size="100%,270px">
+                      <TopSection>
+                        <SignBox>빌린 돈</SignBox>
+                        <TextUp>'{transAction.creditorUser.userName}'</TextUp>
+                        <TextDown>님에게 빌렸어요!</TextDown>
+                        <DonutChart/>
+                      </TopSection>
+
+                      <BottomSection>
+                        <Image
+                          src={Dollar}
+                          alt="Dollar"
+                          width="20px"></Image>
+                        <TextBox>
+                          <Remain>남은금액</Remain>
+                          <Remain>{transAction.contractAmt - transAction.repaymentCash}</Remain>
+                        </TextBox>
+                        <SendBtn>돈 돌려주기</SendBtn>
+                      </BottomSection>
+                    </Box>
+                    ) : (
+                    <Box
+                      $mainTransaction
+                      $size="100%,270px">
+                      <TopSection>
+                        <SignBox>빌려준 돈</SignBox>
+                        <TextUp>'{transAction.debtorUser.userName}'</TextUp>
+                        <TextDown>님에게 빌려줬어요!</TextDown>
+                        <DonutChart/>
+                      </TopSection>
+
+                      <BottomSection>
+                        <Image
+                          src={Dollar}
+                          alt="Dollar"
+                          width="20px"></Image>
+                        <TextBox>
+                          <Remain>남은금액</Remain>
+                          <Remain>{transAction.contractAmt - transAction.repaymentCash}</Remain>
+                        </TextBox>
+                        <SendBtn>뭐 넣지?</SendBtn>
+                      </BottomSection>
+                    </Box>
+                    )
+                  }
+                </SplideSlide>
+              ) : ("")
+            ))} 
           </Splide>
         </div>
 
         <TransactionBox>
-
           <Box
             onClick={moveTransfer}
             $transaction
