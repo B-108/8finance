@@ -65,7 +65,7 @@ export const postMessageCert = async (info: MessageCertProps) => {
   }
 }
 
-// 
+// 회원 여부 판정
 export const getPhoneCheck = async (phone:string) => {
   try{
     const response = await publicApi.get(`/api/user/${phone}`);

@@ -30,7 +30,10 @@ import {
   MessageProps } from "/src/type/auth";
 
 // API
-import { postMessage, postMessageCert } from "/src/api/auth";
+import { 
+  getPhoneCheck, 
+  postMessage, 
+  postMessageCert } from "/src/api/auth";
 
 function SignUp(){
   const [name, setName] = useRecoilState<string>(NameState);
@@ -79,11 +82,27 @@ function SignUp(){
   }
 
   const messageCertification = async () => {
-    const response = await axiosMessagCert()
-    if (response !== 200) {
-      console.log("문자 인증 번호가 필요함")
+    const responseMessage = await axiosMessagCert()
+    const responsePhonecheck = await axiosPhoneCheck()
+    // 이름 입력 확인
+    if (!name) {
+      console.log("이름을 입력하세요")
       return
     }
+    
+    // 전화번호로 이미 회원인지 판정
+    if (responsePhonecheck) { 
+      console.log("이미 회원입니다.")
+      return 
+    }
+
+    // 문자인증 확인
+    if (responseMessage !== 200) {
+      console.log("문자 인증 번호를 입력해주세요")
+      return
+    }
+    
+
     await movePinRegister()
   }
 
@@ -108,6 +127,17 @@ function SignUp(){
     }
     try {
       return await postMessageCert(info)
+    }
+    catch(error) {
+      console.log(error)
+    }
+  }
+
+  // 회원 인증 요청
+  const axiosPhoneCheck = async (): Promise<object|undefined>  => {
+    try {
+      const response = await getPhoneCheck(phone)
+      return response
     }
     catch(error) {
       console.log(error)
