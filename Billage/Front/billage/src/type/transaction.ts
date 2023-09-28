@@ -28,3 +28,15 @@ export interface Transaction{
     contractInterestRate : number;
     repaymentCash : number;
   }
+
+  export interface TransactionHistoryType{
+    tranWd : string;
+    tranWdAcNum : string;
+    tranWdBankCode : string;
+    tranDp : string;
+    tranDpAcNum : string;
+    tranDpBankCode : string;
+    tranAmt : number;
+    tranContent : number;
+    tranDate : string;
+  }
