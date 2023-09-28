@@ -46,6 +46,7 @@ export const SignBox = styled.div`
   border-radius: ${theme.radius.XS_5};
   padding: 2% 2.5% 2% 2.5%;
   margin: 5% 15% 0px 0px;
+  /* border: 1px solid red; */
 `
 
 export const BottomSection = styled.div`
