@@ -50,8 +50,8 @@ import { PhoneState } from "/src/recoil/auth"
 import { useRecoilState } from "recoil"
 
 function Main(){
-  const [transList, setTransList] = useState<TransactionType[]>([])
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
+  const [transList, setTransList] = useState<TransactionType[]>([])
 
   // 라우터
   const navigate = useNavigate()
@@ -59,12 +59,13 @@ function Main(){
   const moveTransactionList = () => {navigate(`/transactionlist`)}
   const moveNotifications = () => {navigate(`/notifications`)}
 
-  const axiosAllTransActionList = async (): Promise<void> => {
+  const axiosAllTransActionList = async () => {
     try {
       const Borrow = await getBorrowList()
       const Lend = await getLendList()
-      setTransList([...Borrow?.data, ...Lend?.data])
-      console.log(Borrow?.data)
+      const response = await [...Borrow?.data, ...Lend?.data]
+      console.log(response.filter((data,index) => (data.contractState === 1)))
+      await setTransList(response.filter((data,index) => (data.contractState === 1)))
     }
     catch(error){
       console.log(error)
@@ -75,7 +76,8 @@ function Main(){
     axiosAllTransActionList()
   }, [])
 
-  
+  // 로딩 페이지가 하나 더 있으면 좋겠다.
+  if (!transList) {return "";}
 
   return(
     <>
@@ -115,62 +117,90 @@ function Main(){
               arrows : false,
               gap   : '5%',
               padding: '12%',}}
-              aria-label="My Favorite Images">
+              aria-label="My Favorite Images"> 
+            {transList.length > 0 ? (
+              <>
+                {transList && transList.map((transAction,index) => (
+                transAction.contractState === 1 ? (
+                  <SplideSlide key={index}>
+                    {transAction.debtorUser.userCellNo === phone ? (
+                      <Box
+                        $mainTransaction
+                        $size="100%,270px">
+                        <TopSection>
+                          <SignBox>빌린 돈</SignBox>
+                          <TextUp>'{transAction.creditorUser.userName}'</TextUp>
+                          <TextDown>님에게 빌렸어요!</TextDown>
+                          <DonutChart/>
+                        </TopSection>
 
-            {transList && transList.map((transAction,index) => (
-              transAction.contractState === 1 ? (
-                <SplideSlide key={index}>
-                  {transAction.debtorUser.userCellNo === phone ? (
-                    <Box
-                      $mainTransaction
-                      $size="100%,270px">
-                      <TopSection>
-                        <SignBox>빌린 돈</SignBox>
-                        <TextUp>'{transAction.creditorUser.userName}'</TextUp>
-                        <TextDown>님에게 빌렸어요!</TextDown>
-                        <DonutChart/>
-                      </TopSection>
+                        <BottomSection>
+                          <Image
+                            src={Dollar}
+                            alt="Dollar"
+                            width="20px"></Image>
+                          <TextBox>
+                            <Remain>남은금액</Remain>
+                            <Remain>{transAction.contractAmt - transAction.repaymentCash}</Remain>
+                          </TextBox>
+                          <SendBtn>돈 돌려주기</SendBtn>
+                        </BottomSection>
+                      </Box>
+                      ) : (
+                      <Box
+                        $mainTransaction
+                        $size="100%,270px">
+                        <TopSection>
+                          <SignBox>빌려준 돈</SignBox>
+                          <TextUp>'{transAction.debtorUser.userName}'</TextUp>
+                          <TextDown>님에게 빌려줬어요!</TextDown>
+                          <DonutChart/>
+                        </TopSection>
 
-                      <BottomSection>
-                        <Image
-                          src={Dollar}
-                          alt="Dollar"
-                          width="20px"></Image>
-                        <TextBox>
-                          <Remain>남은금액</Remain>
-                          <Remain>{transAction.contractAmt - transAction.repaymentCash}</Remain>
-                        </TextBox>
-                        <SendBtn>돈 돌려주기</SendBtn>
-                      </BottomSection>
-                    </Box>
-                    ) : (
-                    <Box
-                      $mainTransaction
-                      $size="100%,270px">
-                      <TopSection>
-                        <SignBox>빌려준 돈</SignBox>
-                        <TextUp>'{transAction.debtorUser.userName}'</TextUp>
-                        <TextDown>님에게 빌려줬어요!</TextDown>
-                        <DonutChart/>
-                      </TopSection>
+                        <BottomSection>
+                          <Image
+                            src={Dollar}
+                            alt="Dollar"
+                            width="20px"></Image>
+                          <TextBox>
+                            <Remain>남은금액</Remain>
+                            <Remain>{transAction.contractAmt - transAction.repaymentCash}</Remain>
+                          </TextBox>
+                          <SendBtn>뭐 넣지?</SendBtn>
+                        </BottomSection>
+                      </Box>
+                      )
+                    }
+                  </SplideSlide>
+                ) : ("")
+              ))} 
+              </>
+            ) : (
+              <SplideSlide>
+                <Box
+                  $mainTransaction
+                  $size="100%,270px">
+                  <TopSection>
+                    <SignBox>빌린 돈</SignBox>
+                    <TextUp>지인에게</TextUp>
+                    <TextDown>부담없이 빌리세요!</TextDown>
+                    <DonutChart/>
+                  </TopSection>
 
-                      <BottomSection>
-                        <Image
-                          src={Dollar}
-                          alt="Dollar"
-                          width="20px"></Image>
-                        <TextBox>
-                          <Remain>남은금액</Remain>
-                          <Remain>{transAction.contractAmt - transAction.repaymentCash}</Remain>
-                        </TextBox>
-                        <SendBtn>뭐 넣지?</SendBtn>
-                      </BottomSection>
-                    </Box>
-                    )
-                  }
-                </SplideSlide>
-              ) : ("")
-            ))} 
+                  <BottomSection>
+                    <Image
+                      src={Dollar}
+                      alt="Dollar"
+                      width="20px"></Image>
+                    <TextBox>
+                      <Remain>남은금액</Remain>
+                      <Remain>0</Remain>
+                    </TextBox>
+                    <SendBtn>돈 돌려주기</SendBtn>
+                  </BottomSection>
+                </Box>
+              </SplideSlide>
+            )}
           </Splide>
         </div>
 
