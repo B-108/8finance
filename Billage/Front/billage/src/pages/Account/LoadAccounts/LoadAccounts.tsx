@@ -34,6 +34,10 @@ import { postAccountRegister } from '/src/api/account';
 function LoadAccounts() {
   const [isAccountClicked, setIsAccountClicked] = useState(false);
 
+  // 라우터 
+  const navigate = useNavigate()
+  const moveLoadBanks = () => {navigate(`/loadbanks`)}
+
   const handleAccountClick = () => {
       setIsAccountClicked(!isAccountClicked); // 클릭 시 테두리 색 변경
   };
@@ -89,7 +93,8 @@ function LoadAccounts() {
         <BtnContainter style={{ margin: '10px' }}>
           <Button 
             $basicGrayBtn 
-            $size="48%, 40px">돌아가기
+            $size="48%, 40px"
+            onClick={moveLoadBanks}>돌아가기
           </Button>
           <Button 
             $basicGreenBtn 
