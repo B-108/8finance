@@ -19,6 +19,10 @@ import Button from '/src/components/Common/Button';
 // 이미지
 import NH from '/src/assets/NH.svg';
 import KB from '/src/assets/KB.svg';
+import HANA from '/src/assets/HANA.svg';
+import IBK from '/src/assets/IBK.svg';
+import SINHAN from '/src/assets/SINHAN.svg';
+import URI from '/src/assets/URI.svg';
 
 // 타입스크립트
 import { AccountProps } from '/src/type/account';

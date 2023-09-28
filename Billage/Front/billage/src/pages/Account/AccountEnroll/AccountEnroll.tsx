@@ -40,10 +40,10 @@ function AccountEnroll() {
 
   // 라우터 
   const navigate = useNavigate()
-  const moveLoadAccounts = async () => {
+  const moveLoadBanks = async () => {
     // const response = await axiosMyDataMessagCert()
     // if(isChecked && response) {navigate(`/loadaccounts`)}
-    if(isChecked) {navigate(`/loadaccounts`)}
+    if(isChecked) {navigate(`/loadbanks`)}
   }
 
   // 전화번호 입력
@@ -139,7 +139,7 @@ function AccountEnroll() {
         <Button 
           $basicGreenBtn 
           $size="94%, 40px"
-          onClick={moveLoadAccounts}>
+          onClick={moveLoadBanks}>
           계좌 불러오기
         </Button>
 

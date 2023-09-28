@@ -21,6 +21,7 @@ import MyAccounts from './pages/Account/MyAccounts/MyAccounts';
 import PinEnter from './pages/Pin/PinEnter/PinEnter';
 import AccountEnroll from './pages/Account/AccountEnroll/AccountEnroll';
 import LoadAccounts from './pages/Account/LoadAccounts/LoadAccounts';
+import LoadBanks from './pages/Account/LoadBanks/LoadBanks';
 
 const router = createBrowserRouter([
     {
@@ -45,11 +46,6 @@ const router = createBrowserRouter([
             {
                 path: '/pincheck',
                 element: <PinCheck />,
-                errorElement: <ErrorComponent />,
-            },
-            {
-                path: '/pinenter/:routeAction',
-                element: <PinEnter />,
                 errorElement: <ErrorComponent />,
             },
             {
@@ -130,6 +126,11 @@ const router = createBrowserRouter([
             {
                 path: '/loadaccounts',
                 element: <LoadAccounts />,
+                errorElement: <ErrorComponent />,
+            },
+            {
+                path: '/loadbanks',
+                element: <LoadBanks />,
                 errorElement: <ErrorComponent />,
             },
         ],
