@@ -28,9 +28,6 @@ export const postLogin = async (info: LoginProps) => {
             const accessToken = response.data.jwtToken.accessToken;
             const refreshToken = response.data.jwtToken.refreshToken;
 
-            console.log('access 토큰 :', accessToken);
-            console.log('refresh 토큰 :', refreshToken);
-
             localStorage.setItem('access_token', accessToken);
             localStorage.setItem('refresh_token', refreshToken);
 
@@ -65,5 +62,17 @@ export const postMessageCert = async (info: MessageCertProps) => {
   }
   catch (error) {
     console.log("postMessageCert 실패한 이유는??",error)
+  }
+}
+
+// 
+export const getPhoneCheck = async (phone:string) => {
+  try{
+    const response = await publicApi.get(`/api/user/${phone}`);
+    console.log("회원인지 인증 success")
+    return response
+  }
+  catch (error) {
+    console.log("getPhoneCheck 실패한 이유는??",error)
   }
 }
