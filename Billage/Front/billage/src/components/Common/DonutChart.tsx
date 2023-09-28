@@ -40,13 +40,13 @@ function DonutChart () {
             offsetY: -13,
             show: true,
             color: "#888",
-            fontSize: "13px",
+            fontSize: "15px",
           },
           value: {
             formatter: function (val) {
               return val;
             },
-            offsetY: 6,
+            offsetY: 10,
             color: "#111",
             fontSize: "30px",
             show: true,
@@ -70,7 +70,7 @@ function DonutChart () {
     stroke: {
       lineCap: "round",
     },
-    labels: ["Percent"],
+    labels: ["D-day"],
   };
 
   const seriesRadial = [23000/23000 * 100];

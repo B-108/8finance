@@ -64,6 +64,7 @@ function Main(){
       const Borrow = await getBorrowList()
       const Lend = await getLendList()
       setTransList([...Borrow?.data, ...Lend?.data])
+      console.log(Borrow?.data)
     }
     catch(error){
       console.log(error)
