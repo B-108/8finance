@@ -42,7 +42,7 @@ export const getTransActionDetail = async (contractId : number) => {
 //거래 내역 상세 조회
 export const getTransActionHistory = async (contractId : number) => {
     try{
-        const response = await privateApi.get(`/api/loan/${contractId}/trinfo`)
+        const response = await privateApi.get(`/api/loan/${contractId}/trInfo`)
         console.log("거래 내역 상세 조회 성공")
         return response
     }

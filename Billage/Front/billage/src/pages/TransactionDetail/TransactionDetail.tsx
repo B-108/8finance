@@ -37,8 +37,8 @@ function TADetail() {
 
     const navigate = useNavigate();
     const location = useLocation();
-    // console.log(location)
-    // console.log(detail)
+
+    const state = location.state
     const moveTransactionHistory = (contractId: number) => {
         navigate(`/transaction/history/${contractId}`, {state: contractId});
     };
@@ -52,11 +52,11 @@ function TADetail() {
         <>
             <div style={{ margin: '0px 2%' }}>
                 <Header headerTitle="거래상세내용"></Header>
-                <Text $title>{location.state.toggle ? '빌린' : '빌려준'} 거래</Text>
+                <Text $title>{state.toggle ? '빌린' : '빌려준'} 거래</Text>
 
                 <div style={{ display: 'flex', margin: '3% 0px' }}>
                     <Image src={handshake} alt="악수"></Image>
-                    <Text $smallTitle>000님과의 거래!</Text>
+                    <Text $smallTitle>{state.toggle ? state.creditoruser : state.debtoruser}님과의 거래!</Text>
                 </div>
 
                 <Text $description>상대방과 거래 시 작성한 상세 내용관 돈이 오고간 내역을 확인 할 수 있어요!</Text>
@@ -67,7 +67,7 @@ function TADetail() {
                     <Button
                         $smallGreenBtn
                         onClick={() => {
-                            moveToIOU(location.state.contractId);
+                            moveToIOU(state.contractId);
                         }}
                     >
                         차용증
@@ -77,21 +77,21 @@ function TADetail() {
                 <FlexDiv $margin="3% 0%">
                     <div style={{ display: 'flex' }}>
                         <Image src={clock} alt="빌린날짜"></Image>
-                        <Text>{location.state.toggle ? '빌린' : '빌려준'} 날짜</Text>
+                        <Text>{state.toggle ? '빌린' : '빌려준'} 날짜</Text>
                     </div>
                     <Text>{detail?.contractStartDate}</Text>
                 </FlexDiv>
                 <FlexDiv $margin="3% 0%">
                     <div style={{ display: 'flex' }}>
                         <Image src={clock} alt="갚는날짜"></Image>
-                        <Text>{location.state.toggle ? '갚는' : '받는'} 날짜</Text>
+                        <Text>{state.toggle ? '갚는' : '받는'} 날짜</Text>
                     </div>
                     <Text>{detail?.contractMaturityDate}</Text>
                 </FlexDiv>
                 <FlexDiv $margin="3% 0%">
                     <div style={{ display: 'flex' }}>
                         <Image src={calendar} alt="빌린금액"></Image>
-                        <Text>{location.state.toggle ? '빌린' : '빌려준'} 금액</Text>
+                        <Text>{state.toggle ? '빌린' : '빌려준'} 금액</Text>
                     </div>
                     <Text>{detail?.contractAmt}원</Text>
                 </FlexDiv>
@@ -105,7 +105,7 @@ function TADetail() {
                 <FlexDiv $margin="3% 0%">
                     <div style={{ display: 'flex' }}>
                         <Image src={total} alt="갚을금액"></Image>
-                        <Text>{location.state.toggle ? '갚을' : '받을'} 금액</Text>
+                        <Text>{state.toggle ? '갚을' : '받을'} 금액</Text>
                     </div>
                     <Text>{totalRepaymentCash}원</Text>
                 </FlexDiv>
@@ -124,7 +124,7 @@ function TADetail() {
                 </FlexDiv>
 
                 <Button $basicGreenBtn $size="100%, 40px">
-                    {location.state.toggle ? '돈 보내기' : '돈 달라하기'}
+                    {state.toggle ? '돈 보내기' : '돈 달라하기'}
                 </Button>
 
                 <hr />
