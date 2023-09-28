@@ -94,6 +94,12 @@ function PinEnter () {
     try {
       const response = await postLogin(info)
       if (response) {moveMain()}
+      else {
+        if (inputRefs[0].current) {
+          inputRefs[0].current.focus();
+        }
+        setPinEnter(" ")
+      }
     }
     catch(error) {
       console.log(error)
