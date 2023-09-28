@@ -79,8 +79,6 @@ function PinCheck () {
     
     if (pinCheck.length >= 8 && event.target.value) {
       if (pinRegister.split(" ").join("") === pinNumber){
-        console.log("pinRegister",pinRegister)
-        console.log("pinNumber",pinNumber)
         axiosSignUp(pinNumber)
         moveMain()
       }
