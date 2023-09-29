@@ -52,27 +52,22 @@ public class LogService {
 
         Flux.fromIterable(requestList)
                 .flatMap(request -> {
-                    RequestUrl requestUrl = requestUrlRepository.findByRequestBankCodeAndRequestActCode(request.getBankCode(), "004");
-                    // API에 요청을 보내고 응답을 Mono로 받음
                     List<AccountRequestDto> list = new ArrayList<>();
-                    AccountRequestDto dto = AccountRequestDto.builder()
-                            .userName(request.getUserName())
-                            .userCellNo(request.getUserCellNo())
-                            .bankCode(request.getBankCode())
-                            .build();
-                    list.add(dto);
-
+                    list.add(request);
+                    RequestUrl requestUrl = requestUrlRepository.findByRequestBankCodeAndRequestActCode(request.getBankCode(), "004");
 
                     // API에 요청을 보내고 응답을 Mono로 받음
-                    Mono<AccountResponseDto> responseMono = webClient.post()
-                            .uri(requestUrl.getRequestUrl()) // 실제 API의 엔드포인트 URL로 변경
+                    Mono<List<AccountResponseDto>> responseMono = webClient.post()
+                            .uri(requestUrl.getRequestUrl()) // 엔드포인트 URL을 원하는대로 변경
+                            .contentType(MediaType.APPLICATION_JSON)
                             .body(BodyInserters.fromValue(list))
                             .retrieve()
-                            .bodyToMono(AccountResponseDto.class);
+                            .bodyToFlux(AccountResponseDto.class)
+                            .collectList();
 
                     return responseMono;
                 })
-                .doOnNext(accountResponses::add) // 각 응답을 리스트에 추가
+                .doOnNext(accountResponses::addAll) // 각 응답을 리스트에 추가
                 .blockLast(); // 모든 요청이 완료될 때까지 블록
 
         return accountResponses;
