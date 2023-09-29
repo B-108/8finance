@@ -41,9 +41,8 @@ function AccountEnroll() {
   // 라우터 
   const navigate = useNavigate()
   const moveLoadBanks = async () => {
-    // const response = await axiosMyDataMessagCert()
-    // if(isChecked && response) {navigate(`/loadaccounts`)}
-    if(isChecked) {navigate(`/loadbanks`)}
+    const response = await axiosMyDataMessagCert()
+    if( response && isChecked) {navigate(`/loadbanks`)}
   }
 
   // 전화번호 입력
