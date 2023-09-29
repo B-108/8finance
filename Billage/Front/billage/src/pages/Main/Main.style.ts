@@ -38,6 +38,12 @@ export const TextDown = styled.div`
   font-size: ${theme.fontSize.M_20};
 `
 
+export const DDay = styled.div`
+  position: absolute;
+  font-size: 40px;
+  color: black;
+`
+
 export const SignBox = styled.div`
   color: ${theme.color.white};
   font-size: ${theme.fontSize.S_14};

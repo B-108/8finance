@@ -18,6 +18,7 @@ import {
   BottomSection, 
   Content, 
   ContentBox, 
+  DDay, 
   Remain, 
   SendBtn, 
   SignBox, 
@@ -131,7 +132,10 @@ function Main(){
                           <SignBox>빌린 돈</SignBox>
                           <TextUp>'{transAction.creditorUser.userName}'</TextUp>
                           <TextDown>님에게 빌렸어요!</TextDown>
-                          <DonutChart/>
+                          <DonutChart 
+                            Return={transAction.repaymentCash}
+                            Money={transAction.contractAmt}
+                            />
                         </TopSection>
 
                         <BottomSection>
@@ -154,7 +158,9 @@ function Main(){
                           <SignBox>빌려준 돈</SignBox>
                           <TextUp>'{transAction.debtorUser.userName}'</TextUp>
                           <TextDown>님에게 빌려줬어요!</TextDown>
-                          <DonutChart/>
+                          <DonutChart
+                            Return={transAction.repaymentCash}
+                            Money={transAction.contractAmt}/>
                         </TopSection>
 
                         <BottomSection>
