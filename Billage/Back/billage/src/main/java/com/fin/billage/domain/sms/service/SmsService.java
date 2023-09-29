@@ -2,7 +2,6 @@ package com.fin.billage.domain.sms.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fin.billage.domain.contract.entity.Transaction;
 import com.fin.billage.domain.sms.dto.SmsDto;
 import com.fin.billage.domain.sms.dto.SmsRequestDto;
 import com.fin.billage.domain.sms.dto.SmsResponseDto;

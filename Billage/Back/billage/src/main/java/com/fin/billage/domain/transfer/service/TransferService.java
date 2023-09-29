@@ -36,6 +36,7 @@ public class TransferService {
     private final TransactionRepository transactionRepository;
     private final JwtUtil jwtUtil;
 
+
     // 나의 은행 계좌 가져오기 -> 마이데이터에 요청
     public List<AccountResponseDto> searchBank(List<String> bankCodes, HttpServletRequest request) {
         Long userPk = jwtUtil.extractUserPkFromToken(request);
@@ -43,19 +44,16 @@ public class TransferService {
         String userName = user.getUserName();
         String userCellNo = user.getUserCellNo();
 
-        List<AccountResponseDto> accountResponses = new ArrayList<>();
 
 
         WebClient webClient = WebClient.builder()
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)  // 기본 헤더 설정
                 .build();
 
+        List<AccountResponseDto> accountResponses = new ArrayList<>();
 
         Flux.fromIterable(bankCodes)
                 .flatMap(bankCode -> {
-                    Url url = requestUrlRepository.findByRequestBankCodeAndRequestActCode(bankCode, "004");
-
-                    // API에 요청을 보내고 응답을 Mono로 받음
                     List<TransferRequestBodyDto> list = new ArrayList<>();
                     TransferRequestBodyDto dto = TransferRequestBodyDto.builder()
                             .userName(userName)
@@ -64,14 +62,20 @@ public class TransferService {
                             .build();
                     list.add(dto);
 
-                    Mono<AccountResponseDto> responseMono = webClient.post()
-                            .uri(url.getRequestUrl()) // 실제 API의 엔드포인트 URL로 변경
+                    Url url = requestUrlRepository.findByRequestBankCodeAndRequestActCode(bankCode, "004");
+
+                    // API에 요청을 보내고 응답을 Mono로 받음
+                    Mono<List<AccountResponseDto>> responseMono = webClient.post()
+                            .uri(url.getRequestUrl()) // 엔드포인트 URL을 원하는대로 변경
+                            .contentType(MediaType.APPLICATION_JSON)
                             .body(BodyInserters.fromValue(list))
                             .retrieve()
-                            .bodyToMono(AccountResponseDto.class);
+                            .bodyToFlux(AccountResponseDto.class)
+                            .collectList();
+
                     return responseMono;
                 })
-                .doOnNext(accountResponses::add) // 각 응답을 리스트에 추가
+                .doOnNext(accountResponses::addAll) // 각 응답을 리스트에 추가
                 .blockLast(); // 모든 요청이 완료될 때까지 블록
 
         return accountResponses;
