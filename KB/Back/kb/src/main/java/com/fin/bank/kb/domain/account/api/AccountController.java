@@ -1,7 +1,9 @@
 package com.fin.bank.kb.domain.account.api;
 
 import com.fin.bank.kb.domain.account.dto.AccountRequestDto;
+import com.fin.bank.kb.domain.account.dto.AccountRequestDtos;
 import com.fin.bank.kb.domain.account.dto.AccountResponseDto;
+import com.fin.bank.kb.domain.account.dto.AccountResponseDtos;
 import com.fin.bank.kb.domain.account.entity.Account;
 import com.fin.bank.kb.domain.account.enums.TransactionType;
 import com.fin.bank.kb.domain.account.service.AccountService;
@@ -65,12 +67,24 @@ public class AccountController {
     }
 
     // 고객의 계좌 목록 조회 요청 API
-    @GetMapping("/accountList")
-    public ResponseEntity<List<Account>> getAccountList(
-            @RequestParam String customerName,
-            @RequestParam String phoneNumber
-    ) {
-        List<Account> accountList = accountService.getAccountList(customerName, phoneNumber);
+//    @GetMapping("/accountList")
+//    public ResponseEntity<List<Account>> getAccountList(
+//            @RequestParam String customerName,
+//            @RequestParam String phoneNumber
+//    ) {
+//        List<Account> accountList = accountService.getAccountList(customerName, phoneNumber);
+//        return new ResponseEntity<>(accountList, HttpStatus.OK);
+//    }
+
+    // (수정) 고객의 계좌 목록 조회 요청 API
+    @PostMapping("/accountList") // 고객의 계좌 목록을 조회하는 엔드포인트 설정
+    public ResponseEntity<List<AccountResponseDtos>> getAccountList(@RequestBody List<AccountRequestDtos> list ) {
+        List<AccountResponseDtos> accountList = accountService.getAccountList(list);
+
+        for (AccountResponseDtos a : accountList) {
+            System.out.println(a.getAccountNum() + " " + a.getBankName());
+        }
         return new ResponseEntity<>(accountList, HttpStatus.OK);
     }
+
 }
