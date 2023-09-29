@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 // 스타일 컴포넌트
 import { 
-  Accounts, 
+  Account,
+  AccountImg,
+  AccountNUm,
   AccountsBox, 
   LeftSection,
   RightSection} from './MyAccounts.style';
@@ -20,6 +22,16 @@ import Image from '/src/components/Common/Image';
 import sampleAccount from '/src/assets/sampleAccount.svg';
 import colorCreditCard from '/src/assets/colorCreditCard.svg';
 import rightArrow from '/src/assets/rightArrow.svg';
+import account_IBK1 from '/src/assets/account/account_IBK1.svg'
+import account_IBK2 from '/src/assets/account/account_IBK2.svg'
+import account_IBK3 from '/src/assets/account/account_IBK3.svg'
+import account_IBK4 from '/src/assets/account/account_IBK4.svg'
+import account_IBK5 from '/src/assets/account/account_IBK5.svg'
+import account_KB1 from '/src/assets/account/account_KB1.svg'
+import account_KB2 from '/src/assets/account/account_KB2.svg'
+import account_KB3 from '/src/assets/account/account_KB3.svg'
+import account_KB4 from '/src/assets/account/account_KB4.svg'
+import account_KB5 from '/src/assets/account/account_KB5.svg'
 
 // API
 import { 
@@ -31,7 +43,6 @@ import { AccountType } from '/src/type/account';
 
 function MyAccounts() {
   const [accounts, setAccounts] = useState<AccountType[]>([])
-  const [mainAccount, setMainAccount] = useState([]);
 
 
   // 라우터
@@ -97,13 +108,21 @@ function MyAccounts() {
 
         <AccountsBox>
           {accounts && accounts.map((account,index) => (
-          <Accounts
+          <Account 
             key={index}
-            src={sampleAccount}
-            onClick={() => {
-              axiosMainAccount(account.accountId)}}
-            $isClicked={account.accountMainYn}>
-          </Accounts>))}
+            $isClicked={account.accountMainYn} >
+            <AccountNUm>
+              {account.accountBankCode === "004" ? "KB 국민은행 _ ":"IBK 기업은행 _ "}
+              {account.accountNum}
+            </AccountNUm>
+
+            <AccountImg
+              src={account_KB1}
+              onClick={() => {
+                axiosMainAccount(account.accountId)}}>
+            </AccountImg>
+          </Account>
+          ))}
         </AccountsBox>
 
       </CenteredContainer>

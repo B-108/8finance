@@ -15,11 +15,16 @@ import calendar from '/src/assets/calendar.svg';
 import magnifyingGlass from '/src/assets/magnifyingGlass.svg';
 
 // 스타일 컴포넌트
-import { ButtonContainer, SmallButtonsContainer, TranInputDiv, TranInputTitle } from './Transfer.style';
+import { 
+  ButtonContainer, 
+  SmallButtonsContainer, 
+  TranInputDiv, 
+  TranInputTitle } from './Transfer.style';
 
 // 타입스크립트
 import { IOUProps } from '/src/type/iou';
 import { postIOU } from '/src/api/iou';
+
 
 function Transfer() {
     const [friendInfo, setFriendInfo] = useState<string>('');
@@ -85,30 +90,28 @@ function Transfer() {
 
     return (
         <CenteredContainer>
-            <Header headerTitle="차용증 작성"></Header>
+            <Header 
+              headerTitle="차용증 작성"></Header>
 
             <TranInputDiv>
                 <TranInputTitle>지인 선택</TranInputTitle>
                 <ButtonInput
                     value={friendInfo}
                     $active
-                    $size="98%,40px"
+                    $size="86%,40px"
                     onChange={handleFriendInfoChange}
-                    $buttonImage={magnifyingGlass}
-                />
+                    $buttonImage={magnifyingGlass}/>
             </TranInputDiv>
-            <hr />
+
             <TranInputDiv>
                 <TranInputTitle>돈 받을 계좌</TranInputTitle>
                 <ButtonInput
                     value={accountInfo}
                     $active
-                    $size="98%,40px"
+                    $size="86%,40px"
                     onChange={handleAccountInfoChange}
-                    $buttonImage={plus}
-                />
+                    $buttonImage={plus}/>
             </TranInputDiv>
-            <hr />
             <TranInputDiv>
                 <TranInputTitle>돈 갚을 날짜</TranInputTitle>
                 <DatePicker
@@ -119,13 +122,10 @@ function Transfer() {
                         <ButtonInput
                             value={transferDate ? transferDate.toISOString() : ''}
                             $active
-                            $size="98%,40px"
-                            $buttonImage={calendar}
-                        />
-                    }
-                />
+                            $size="86%,40px"
+                            $buttonImage={calendar}/>}/>
             </TranInputDiv>
-            <hr />
+
             <TranInputDiv>
                 <TranInputTitle>
                     자동이체
@@ -139,56 +139,57 @@ function Transfer() {
                         <ButtonInput
                             value={autoTransferDate ? autoTransferDate.toISOString() : ''}
                             $active
-                            $size="98%,40px"
-                            $buttonImage={calendar}
-                        />
-                    }
-                />
+                            $size="86%,40px"
+                            $buttonImage={calendar}/>}/>
             </TranInputDiv>
-            <hr />
-            <TranInputDiv>
+
+            <TranInputDiv style={{alignItems:"center"}}>
                 <TranInputTitle>빌릴 금액</TranInputTitle>
-                <Input value={amount} $active $size="98%,40px" onChange={handleAmountChange}></Input>
+                <Input 
+                  value={amount} 
+                  $active 
+                  $size="86%,40px" 
+                  onChange={handleAmountChange}></Input>
                 <SmallButtonsContainer>
-                    <Button $smallBlackBtn $size="10%,25px" >
-                        +1만
-                    </Button>
-                    <Button $smallBlackBtn $size="10%,25px" >
-                        +5만
-                    </Button>
-                    <Button $smallBlackBtn $size="10%,25px" >
-                        +10만
-                    </Button>
-                    <Button $smallBlackBtn $size="10%,25px" >
-                        +100만
-                    </Button>
+                  <Button style={{margin:"7px 0px 0px 5px"}}
+                    $smallBlackBtn $size="18%,25px" >+1만
+                  </Button>
+                  <Button style={{margin:"7px 0px 0px 5px"}}
+                    $smallBlackBtn $size="18%,25px" >+5만
+                  </Button>
+                  <Button style={{margin:"7px 0px 0px 5px"}}
+                    $smallBlackBtn $size="18%,25px" >+10만
+                  </Button>
+                  <Button style={{margin:"7px 0px 0px 5px"}}
+                    $smallBlackBtn $size="18%,25px" >+100만
+                  </Button>
                 </SmallButtonsContainer>
             </TranInputDiv>
-            <hr />
-            <TranInputDiv>
+
+            <TranInputDiv style={{alignItems:"center"}}>
                 <TranInputTitle>이자율</TranInputTitle>
                 <Input
                     type="interest"
                     value={interest}
                     $active
-                    $size="98%,40px"
+                    $size="86%,40px"
                     onChange={handleInterestChange}
                 ></Input>
             </TranInputDiv>
-            <hr />
-            <TranInputDiv>
+
+            <TranInputDiv style={{alignItems:"center"}}>
                 <TranInputTitle>총 상환 금액</TranInputTitle>
-                <Input value={totalAmount} $active $size="98%,40px" onChange={handleTotalAmountChange}></Input>
+                <Input value={totalAmount} $active $size="86%,40px" onChange={handleTotalAmountChange}></Input>
             </TranInputDiv>
-            <hr />
             <ButtonContainer>
-                <Button $basicGrayBtn $size="100%, 50px">
+                <Button $basicGrayBtn $size="48%, 50px">
                     작성취소
                 </Button>
-                <Button $basicGreenBtn $size="100%, 50px" onClick={axiosPostIOU}>
+                <Button $basicGreenBtn $size="48%, 50px" onClick={axiosPostIOU}>
                     작성완료
                 </Button>
             </ButtonContainer>
+
         </CenteredContainer>
     );
 }

@@ -73,7 +73,7 @@ const StyledInput = styled.input<InputProps>`
       css`
         outline: 1px solid ${theme.color.green[0]};
         background-color: ${theme.color.green[0]};
-        border: 1px solid ${theme.color.green[0]}
+        border: 1px solid ${theme.color.green[0]};
       `
     }
 
@@ -140,7 +140,7 @@ export const ButtonInput = (props: InputProps) => {
             <StyledInput {...props}></StyledInput>
             <ButtonBox>
                 {/* 이미지 버튼 추가해야 됨 */}
-                {props.$buttonImage && <Image src={props.$buttonImage} alt="Button Image" width="30px" />}
+                {props.$buttonImage && <Image src={props.$buttonImage} alt="Button Image" width="25px" />}
             </ButtonBox>
         </InputDiv>
     );
