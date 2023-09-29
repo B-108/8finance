@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -28,4 +29,7 @@ public class ContractLoanResponseDto {
 
     // 현재까지 갚은 금액
     private BigDecimal repaymentCash;
+
+    // 상환일까지 남은 기간
+    private Long remainingLoanTerm;
 }
