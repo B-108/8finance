@@ -19,6 +19,7 @@ export interface Transaction{
     contractAmt: number;
     contractState: number;
     repaymentCash: number;
+    remainingLoanTerm: number;
   }
 
   export interface TransactionDetailType{
