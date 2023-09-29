@@ -5,14 +5,14 @@ export const TranInputDiv = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    height: 80px;
+    margin-bottom: 10px;
 `;
 
 export const TranInputTitle = styled.div`
     font-size: ${theme.fontSize.DF_16};
-    margin: 0px;
     font-weight: 800;
+    width: 90%;
+    padding: 0% 5% 0% 5%;
 `;
 
 export const StyledCheckbox = styled.input`
@@ -21,13 +21,14 @@ export const StyledCheckbox = styled.input`
 
 export const SmallButtonsContainer = styled.div`
     display: flex;
+    width: 90%;
     justify-content: flex-end;
 `;
 
 export const ButtonContainer = styled.div`
-    width: 70%;
+    width: 94%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: flex-end;
     position: absolute;
     bottom: 20px;

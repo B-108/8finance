@@ -1,7 +1,14 @@
 // 라이브러리
 import Chart from "react-apexcharts";
 
-function DonutChart ({Return,Money,Day}) {
+interface DonutChartProps {
+  Return: number;
+  Money: number;
+  Day: number;
+}
+
+function DonutChart ({Return,Money,Day}:DonutChartProps) {
+
 
   const optionsRadial = {
     plotOptions: {
@@ -43,9 +50,9 @@ function DonutChart ({Return,Money,Day}) {
             fontSize: "15px",
           },
           value: {
-            // formatter: function (val) {
-            //   return val;
-            // },
+            formatter: function (val) {
+              return val;
+            },
             offsetY: 10,
             color: "#111",
             fontSize: "30px",
@@ -73,7 +80,7 @@ function DonutChart ({Return,Money,Day}) {
     labels: ["상환율"],
   };
 
-  const seriesRadial = [Math.floor(Return/Money * 100)];
+  const seriesRadial = [Number((Return/Money * 100))];
   return(
     <div>
     <Chart
