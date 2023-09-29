@@ -135,7 +135,7 @@ function Main(){
                           <DonutChart 
                             Return={transAction.repaymentCash}
                             Money={transAction.contractAmt}
-                            />
+                            Day={transAction.remainingLoanTerm}/>
                         </TopSection>
 
                         <BottomSection>
@@ -160,7 +160,8 @@ function Main(){
                           <TextDown>님에게 빌려줬어요!</TextDown>
                           <DonutChart
                             Return={transAction.repaymentCash}
-                            Money={transAction.contractAmt}/>
+                            Money={transAction.contractAmt}
+                            Day={transAction.remainingLoanTerm}/>
                         </TopSection>
 
                         <BottomSection>
