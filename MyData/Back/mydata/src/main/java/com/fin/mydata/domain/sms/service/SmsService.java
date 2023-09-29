@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-@PropertySource("classpath:application.yml")
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
