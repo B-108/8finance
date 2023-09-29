@@ -11,9 +11,13 @@ import com.fin.billage.domain.user.repository.UserRepository;
 import com.fin.billage.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import java.time.temporal.ChronoUnit;
+
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +69,7 @@ public class ContractLoanService {
                     .creditorUser(c.getCreditorUser())
                     .debtorUser(c.getDebtorUser())
                     .repaymentCash(calculateTransaction(tranAmtList, c.getContractAmt()))
+                    .remainingLoanTerm(ChronoUnit.DAYS.between(LocalDate.now(), c.getContractMaturityDate()))
                     .build();
 
             lendList.add(contractLoanResponseDto);
@@ -96,6 +101,7 @@ public class ContractLoanService {
                     .creditorUser(c.getCreditorUser())
                     .debtorUser(c.getDebtorUser())
                     .repaymentCash(calculateTransaction(tranAmtList, c.getContractAmt()))
+                    .remainingLoanTerm(ChronoUnit.DAYS.between(LocalDate.now(), c.getContractMaturityDate()))
                     .build();
 
             borrowList.add(contractLoanResponseDto);
