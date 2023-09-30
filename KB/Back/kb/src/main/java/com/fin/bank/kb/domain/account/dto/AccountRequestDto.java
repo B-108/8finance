@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class AccountRequestDtos {
+public class AccountRequestDto {
     private String userName;
     private String userCellNo;
     private String bankCode;

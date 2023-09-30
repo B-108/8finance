@@ -1,7 +1,7 @@
 package com.fin.bank.kb.domain.account.api;
 
-import com.fin.bank.kb.domain.account.dto.AccountRequestDtos;
-import com.fin.bank.kb.domain.account.dto.AccountResponseDtos;
+import com.fin.bank.kb.domain.account.dto.AccountRequestDto;
+import com.fin.bank.kb.domain.account.dto.AccountResponseDto;
 import com.fin.bank.kb.domain.account.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,10 +26,10 @@ public class AccountController {
 
     // (수정) 고객의 계좌 목록 조회 요청 API
     @PostMapping("/accountList") // 고객의 계좌 목록을 조회하는 엔드포인트 설정
-    public ResponseEntity<List<AccountResponseDtos>> getAccountList(@RequestBody List<AccountRequestDtos> list ) {
-        List<AccountResponseDtos> accountList = accountService.getAccountList(list);
+    public ResponseEntity<List<AccountResponseDto>> getAccountList(@RequestBody List<AccountRequestDto> list ) {
+        List<AccountResponseDto> accountList = accountService.getAccountList(list);
 
-        for (AccountResponseDtos a : accountList) {
+        for (AccountResponseDto a : accountList) {
             System.out.println(a.getAccountNum() + " " + a.getBankName());
         }
         return new ResponseEntity<>(accountList, HttpStatus.OK);

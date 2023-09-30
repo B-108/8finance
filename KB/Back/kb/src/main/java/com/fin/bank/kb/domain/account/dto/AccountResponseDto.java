@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class AccountResponseDtos {
+public class AccountResponseDto {
     private String bankName;
     private String accountNum;
 }
