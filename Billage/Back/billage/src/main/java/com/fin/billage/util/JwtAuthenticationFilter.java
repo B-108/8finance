@@ -1,6 +1,5 @@
 package com.fin.billage.util;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -14,7 +13,6 @@ import java.io.IOException;
 
 // JWT 인증을 위해 생성되는 토큰
 // 요청이 들어오면 헤더에서 토큰 추출하는 역할
-@Slf4j
 public class JwtAuthenticationFilter extends GenericFilterBean {
     private final JwtUtil jwtUtil;
 
@@ -27,12 +25,8 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterchain) throws IOException, ServletException {
         String token = jwtUtil.resolveToken((HttpServletRequest) servletRequest);
 
-        System.out.println("JwtAuthenticationFilter의 doFilter");
-
         // 토큰 유효성 검사
         if (token != null && jwtUtil.validateToken(token)) {
-
-            System.out.println("JwtAuthenticationFilter의 doFilter 내부 if문");
 
             if ((((HttpServletRequest) servletRequest).getRequestURI().equals("/user/refresh"))) {
                 Authentication authentication = jwtUtil.getAuthentication(token);
