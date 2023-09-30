@@ -38,8 +38,6 @@ public class Transaction {
     @Column(name = "tran_amt", nullable = false)
     private BigDecimal tranAmt;
 
-
-
     // 지급인 이름
     @Column(name = "tran_wd_name", nullable = false, length = 20)
     private String tranWdName;
@@ -56,8 +54,6 @@ public class Transaction {
     @Column(name = "tran_wd_ac_num", nullable = false, length = 20)
     private String tranWdAcNum;
 
-
-
     // 수취인 이름
     @Column(name = "tran_dp_name", nullable = false, length = 20)
     private String tranDpName;
@@ -73,8 +69,6 @@ public class Transaction {
     // 수취인 계좌 번호
     @Column(name = "tran_dp_ac_num", nullable = false, length = 20)
     private String tranDpAcNum;
-
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ac_id")
