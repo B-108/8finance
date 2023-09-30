@@ -45,6 +45,9 @@ function TADetail() {
     const moveToIOU = (contractId: number) => {
         navigate(`/transaction/detail/${contractId}/iou`, { state: { contractId } });
     };
+     const moveToSendMoney = () => {
+        navigate(`/sendmoney`, { state: { state} });
+    };
 
     const totalRepaymentCash =
         Number(detail?.contractAmt) + (Number(detail?.contractAmt) * Number(detail?.contractInterestRate)) / 100;
@@ -123,8 +126,14 @@ function TADetail() {
                     </div>
                 </FlexDiv>
 
-                <Button $basicGreenBtn $size="100%, 40px">
-                    {state.toggle ? '돈 보내기' : '돈 달라하기'}
+                <Button
+                    $basicGreenBtn
+                    $size="100%, 40px"
+                    onClick={() => {
+                        if (state.toggle) {
+                            moveToSendMoney();
+                        }}}
+                    >{state.toggle ? '돈 보내기' : '돈 달라하기'}
                 </Button>
 
                 <hr />

@@ -70,16 +70,16 @@ function SendMoney() {
                   onChange={handleAmountChange}></Input>
                 <SmallButtonsContainer>
                   <Button style={{margin:"7px 0px 0px 5px"}}
-                    $smallBlackBtn $size="18%,25px" >+1만
+                    $smallBlackBtn $size="100%,25px" >+1만
                   </Button>
                   <Button style={{margin:"7px 0px 0px 5px"}}
-                    $smallBlackBtn $size="18%,25px" >+5만
+                    $smallBlackBtn $size="100%,25px" >+5만
                   </Button>
                   <Button style={{margin:"7px 0px 0px 5px"}}
-                    $smallBlackBtn $size="18%,25px" >+10만
+                    $smallBlackBtn $size="100%,25px" >+10만
                   </Button>
                   <Button style={{margin:"7px 0px 0px 5px"}}
-                    $smallBlackBtn $size="18%,25px" >+100만
+                    $smallBlackBtn $size="100%,25px" >+100만
                   </Button>
                 </SmallButtonsContainer>
             </InputDiv>
