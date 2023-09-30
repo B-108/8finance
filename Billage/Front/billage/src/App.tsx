@@ -3,6 +3,12 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '../firebase';
 
+// 알림용 컴포넌트들
+import AlertDialog from "./components/Util/Alert/AlertDialog";
+import ConfirmDialog from "./components/Util/Confirm/ConfirmDialog";
+import PromptDialog from "./components/Util/Prompt/PromptDialog";
+import AlertSimpleDialog from "./components/Util/AlertSimple/AlertSimpleDialog";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -19,7 +25,15 @@ function App() {
 function Root() {  
   return(
     <Container>
-      <App />
+      <AlertDialog>
+        <AlertSimpleDialog>
+          <ConfirmDialog>
+            <PromptDialog>
+              <App />
+            </PromptDialog>
+          </ConfirmDialog>
+        </AlertSimpleDialog>
+      </AlertDialog>
     </Container>
     ) 
   }

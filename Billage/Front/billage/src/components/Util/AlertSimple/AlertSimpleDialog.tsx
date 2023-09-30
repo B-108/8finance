@@ -1,0 +1,39 @@
+import { useState } from 'react';
+import AlertSimpleContext from '/src/context/alertSimple/AlertSimpleContext';
+import AlertSimple from './AlertSimple';
+
+type AlertState = {
+  message: string;
+  onClose: () => void;
+};
+
+const AlertSimpleDialog = ({ children }: { children: React.ReactNode }) => {
+  const [state, setState] = useState<AlertState>();
+  const [visible, setVisible] = useState(true)
+
+  const alert = (message?: any): Promise<undefined> => {
+    return new Promise((resolve) => {
+      setState({
+        message: message !== undefined ? `${message}` : '',
+        onClose: () => {
+          setState(undefined);
+          resolve(undefined);
+        },
+      });
+      setTimeout(() => {
+        setState(undefined);
+        resolve(undefined);
+        setVisible(false)
+      }, 3000);
+    });
+  };
+
+  return (
+    <AlertSimpleContext.Provider value={{ alert }}>
+      {children}
+      {state && <AlertSimple message={state.message} onClose={state.onClose} visible={visible} />}
+    </AlertSimpleContext.Provider>
+  );
+};
+
+export default AlertSimpleDialog;
