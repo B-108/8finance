@@ -9,5 +9,4 @@ class KbApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
