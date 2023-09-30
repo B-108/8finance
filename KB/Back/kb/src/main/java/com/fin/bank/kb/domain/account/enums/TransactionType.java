@@ -1,4 +1,4 @@
-package com.fin.bank.kb.domain.transfer.enums;
+package com.fin.bank.kb.domain.account.enums;
 
 public enum TransactionType {
     DEPOSIT("Deposit"),

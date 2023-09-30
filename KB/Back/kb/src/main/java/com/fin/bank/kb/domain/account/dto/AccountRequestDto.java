@@ -1,6 +1,6 @@
-package com.fin.bank.kb.domain.transfer.dto;
+package com.fin.bank.kb.domain.account.dto;
 
-import com.fin.bank.kb.domain.transfer.enums.TransactionType;
+import com.fin.bank.kb.domain.account.enums.TransactionType;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-public class TransferRequestDto {
+public class AccountRequestDto {
     private LocalDateTime tranDate; // 거래 일자 및 시간
     private TransactionType tranType; // 거래 유형 (입금 또는 출금)
     private BigDecimal tranAmt; // 거래 금액
