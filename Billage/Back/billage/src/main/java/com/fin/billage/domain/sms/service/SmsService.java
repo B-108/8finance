@@ -175,19 +175,13 @@ public class SmsService {
 
     // 마이데이터 문자 인증 보내기
     public void sendMyDataSms(SmsDto messageDto) {
-
-        System.out.println("SmsService 내부 sendMyDataSms 함수 내부까지는 온거다");
-
+        
         WebClient webClient = WebClient.builder()
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)  // 기본 헤더 설정
                 .build();
 
         Url url = requestUrlRepository.findRequestUrlByRequestBankCodeAndRequestActCode("101", "101");
 
-        System.out.println("DB에서 가져온 url : " + url);
-        System.out.println("url 내부 정보 : " + url.getRequestUrl());
-        System.out.println("url toString : " + url.toString());
-        
         // HTTP POST 요청 보내기
         webClient.post()
                 .uri(url.getRequestUrl())
