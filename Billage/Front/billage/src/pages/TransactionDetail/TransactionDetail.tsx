@@ -39,6 +39,8 @@ function TADetail() {
     const location = useLocation();
 
     const state = location.state
+    console.log(state)
+    console.log(detail)
     const moveTransactionHistory = (contractId: number) => {
         navigate(`/transaction/history/${contractId}`, {state: contractId});
     };

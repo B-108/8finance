@@ -1,5 +1,5 @@
 import Input, { ButtonInput } from '/src/components/Common/Input';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CenteredContainer from '/src/components/Common/CenterAlign';
 import Header from '/src/components/Header/Header';
 import plus from '/src/assets/plus.svg';
@@ -8,15 +8,34 @@ import { ButtonContainer, InputDiv, InputTitle, SmallButtonsContainer } from './
 import magnifyingGlass from '/src/assets/magnifyingGlass.svg';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+import { getAccountList } from '/src/api/account';
+import { AccountType } from '/src/type/account';
+
 function SendMoney() {
     const [friendInfo, setFriendInfo] = useState<string>('');
     const [accountInfo, setAccountInfo] = useState<string>('');
     const [myAccountInfo, setMyAccountInfo] = useState<string>('');
-    const [amount, setAmountInfo] = useState<string>('');
+    const [amount, setAmountInfo] = useState<string>('0');
     const navigate = useNavigate()
     const location = useLocation()
 
-
+    const [accounts, setAccounts] = useState<AccountType[]>([])
+    // 전체 계좌조회
+    const axiosAccountList = async (): Promise<void> => {
+        try {
+        const response = await getAccountList()
+        setAccounts(response?.data)
+        }
+        catch(error) {
+        console.log(error)
+        }
+    }
+    // useEffect(()=>{
+    //     axiosAccountList()
+    //   },[])
+    
+    console.log(amount)
+    
     const handleFriendInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFriendInfo(event.target.value);
     };
@@ -41,9 +60,9 @@ function SendMoney() {
                 <ButtonInput
                     value={friendInfo}
                     $active
-                    $size="86%,40px"
+                    $size="88%,40px"
                     onChange={handleFriendInfoChange}
-                    $buttonImage={magnifyingGlass}/>
+                    />
             </InputDiv>
             <hr />
             <InputDiv>
@@ -51,20 +70,38 @@ function SendMoney() {
                 <ButtonInput
                     value={accountInfo}
                     $active
-                    $size="86%,40px"
+                    $size="88%,40px"
                     onChange={handleAccountInfoChange}
-                    $buttonImage={plus}/>
+                    />
             </InputDiv>
             <hr />
-            <InputDiv>
+            <InputDiv style={{alignItems:"center"}}>
                 <InputTitle>내 계좌</InputTitle>
-                <ButtonInput
+                {/* <ButtonInput
                     value={myAccountInfo}
                     $active
-                    $size="86%,40px"
+                    $size="88%,40px"
                     onChange={handleMyAccountInfoChange}
                     $buttonImage={plus} // 이미지 버튼 추가
-                />
+                /> */}
+                    <select
+                    value={myAccountInfo}
+                    onChange={() => handleMyAccountInfoChange}
+                    style={{width : '95%', height: '40px', borderRadius: '10px', border: '3px solid'}}
+                    // $active
+                    // $size="86%,40px"
+                >
+                    {accounts.map((account) => (
+                        <option
+                            key={account.accountId}
+                            value={account.accountNum}
+                            disabled={!account.accountMainYn}
+                        >
+                            {account.accountNum}
+                        </option>
+                    ))}
+                </select>
+
             </InputDiv>
             <hr />
             
@@ -73,8 +110,10 @@ function SendMoney() {
                 <Input
                   value={amount} 
                   $active 
-                  $size="86%,40px" 
-                  onChange={handleAmountChange}></Input>
+                  $size="88%,40px" 
+                  $position
+                  onChange={handleAmountChange}
+                  ></Input>
                 <SmallButtonsContainer>
                   <Button style={{margin:"7px 0px 0px 5px"}}
                     $smallBlackBtn $size="100%,25px"
@@ -102,7 +141,7 @@ function SendMoney() {
             <hr />
             <InputDiv style={{alignItems:"center"}}>
                 <InputTitle>남은 금액</InputTitle>
-                <Input $active $size="86%,40px"></Input>
+                {/* <Input $active $size="88%,40px">{location.state.repaymentCash - Number(amount)}</Input> */}
             </InputDiv>
             <hr />
             <ButtonContainer>
