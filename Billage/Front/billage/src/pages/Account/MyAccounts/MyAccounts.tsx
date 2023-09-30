@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { 
+  useState, 
+  useEffect,
+  useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // 스타일 컴포넌트
@@ -41,6 +44,9 @@ import {
 // 타입스크립트
 import { AccountType } from '/src/type/account';
 
+// 알림 모달
+import ConfirmContext from '/src/context/confirm/ConfirmContext';
+
 function MyAccounts() {
   const [accounts, setAccounts] = useState<AccountType[]>([])
 
@@ -71,6 +77,23 @@ function MyAccounts() {
       console.log(error)
     }
   }
+
+  
+  const { confirm: confirmComp } = useContext(ConfirmContext);
+
+  const onConfirmClick = async (text: string) => {
+    const result = await confirmComp(text);
+    console.log("custom", result);
+    return result;
+  };
+
+  const openConfirm = async (accountId:number) => {
+    const nextAction = await onConfirmClick("주계좌로 선택하시나요?");
+    if (nextAction) {
+      axiosMainAccount(accountId)
+    }
+    return;
+  };
 
   useEffect(()=>{
     axiosAccountList()
@@ -119,7 +142,7 @@ function MyAccounts() {
             <AccountImg
               src={account_KB4}
               onClick={() => {
-                axiosMainAccount(account.accountId)}}>
+                openConfirm(account.accountId)}}>
             </AccountImg>
           </Account>
           ))}

@@ -4,14 +4,13 @@ import theme from "/src/themes";
 //배경 클릭 시 나와야 되나?
 
 
-
 export const DialogContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  width: 99%;
-  height: 99%;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   background-color: rgb(0, 0, 0, 0.3);
   backdrop-filter: blur(2px);
@@ -33,7 +32,7 @@ export const DialogContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 255px;
+    width: 265px;
     height: 100px;
     padding: 20px;
     background-color: white;
