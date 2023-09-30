@@ -6,5 +6,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class AccountResponseDto {
-    private String message;
+    private String bankName;
+    private String accountNum;
 }
