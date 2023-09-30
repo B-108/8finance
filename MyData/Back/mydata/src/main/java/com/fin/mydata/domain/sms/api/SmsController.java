@@ -2,7 +2,6 @@ package com.fin.mydata.domain.sms.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fin.mydata.domain.sms.dto.SmsDto;
-import com.fin.mydata.domain.sms.dto.SmsResponseDto;
 import com.fin.mydata.domain.sms.dto.SmsVerifyDto;
 import com.fin.mydata.domain.sms.service.SmsService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,6 @@ public class SmsController {
     // 문자인증 보내기
     @PostMapping
     public void sendSms(@RequestBody SmsDto messageDto) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
-        System.out.println("test");
         try {
             smsService.sendSms(messageDto);;
             // 이후의 로직 처리
