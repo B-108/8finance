@@ -6,12 +6,16 @@ import plus from '/src/assets/plus.svg';
 import Button from '/src/components/Common/Button';
 import { ButtonContainer, InputDiv, InputTitle, SmallButtonsContainer } from './SendMoney.style';
 import magnifyingGlass from '/src/assets/magnifyingGlass.svg';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function SendMoney() {
     const [friendInfo, setFriendInfo] = useState<string>('');
     const [accountInfo, setAccountInfo] = useState<string>('');
     const [myAccountInfo, setMyAccountInfo] = useState<string>('');
     const [amount, setAmountInfo] = useState<string>('');
+    const navigate = useNavigate()
+    const location = useLocation()
+
 
     const handleFriendInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFriendInfo(event.target.value);
@@ -24,6 +28,9 @@ function SendMoney() {
     };
     const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setAmountInfo(event.target.value);
+    };
+    const handleButtonClick = (increment: number) => {
+        setAmountInfo((prevAmount) => (parseInt(prevAmount) + increment).toString());
     };
 
     return (
@@ -70,16 +77,24 @@ function SendMoney() {
                   onChange={handleAmountChange}></Input>
                 <SmallButtonsContainer>
                   <Button style={{margin:"7px 0px 0px 5px"}}
-                    $smallBlackBtn $size="100%,25px" >+1만
+                    $smallBlackBtn $size="100%,25px"
+                    onClick={() => handleButtonClick(10000)}
+                    >+1만
                   </Button>
                   <Button style={{margin:"7px 0px 0px 5px"}}
-                    $smallBlackBtn $size="100%,25px" >+5만
+                    $smallBlackBtn $size="100%,25px"
+                    onClick={() => handleButtonClick(50000)}
+                    >+5만
                   </Button>
                   <Button style={{margin:"7px 0px 0px 5px"}}
-                    $smallBlackBtn $size="100%,25px" >+10만
+                    $smallBlackBtn $size="100%,25px" 
+                    onClick={() => handleButtonClick(100000)}
+                    >+10만
                   </Button>
                   <Button style={{margin:"7px 0px 0px 5px"}}
-                    $smallBlackBtn $size="100%,25px" >+100만
+                    $smallBlackBtn $size="100%,25px"
+                    onClick={() => handleButtonClick(1000000)}
+                    >+100만
                   </Button>
                 </SmallButtonsContainer>
             </InputDiv>
