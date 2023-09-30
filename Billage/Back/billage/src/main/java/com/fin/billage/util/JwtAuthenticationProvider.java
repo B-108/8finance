@@ -28,8 +28,6 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-        System.out.println("JwtAuthenticationProvider의 authenticate 내부");
-
         User findUser = userRepository.findByUserCellNo(authentication.getName())
                 .orElseThrow(()-> new RuntimeException("없어 이런 놈들"));
 
