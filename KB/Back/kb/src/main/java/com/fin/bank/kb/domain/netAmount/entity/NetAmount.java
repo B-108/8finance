@@ -20,9 +20,6 @@ public class NetAmount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "net_bank_code", nullable = false) // 은행 코드
-    private String bankCode;
-
     @Column(name = "net_dp_amt", nullable = false) // 입금 금액
     private BigDecimal depositAmount;
 
@@ -35,4 +32,21 @@ public class NetAmount {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false) // 상태 코드
     private TransactionStatus status; // 상태 (돈을 보내야하는지, 받아야하는지)
+
+    // bankCode 필드 대신 BankList 객체를 참조하도록 변경
+    // 외래 키 이름은 'bank_code'로 설정
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="bank_code")
+    private BankList bank;
+
+    // 생성자 수정: bank 객체 추가
+    public NetAmount(BigDecimal depositAmount, BigDecimal withdrawalAmount) {
+        this.depositAmount= depositAmount;
+        this.withdrawalAmount= withdrawalAmount;
+    }
+
+    public void updateNetAmoundAndStatus(BigDecimal netAmountValue, TransactionStatus status){
+        this.netAmount = netAmountValue;
+        this.status= status;
+    }
 }

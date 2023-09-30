@@ -9,11 +9,5 @@ import java.util.List;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-    BigDecimal calculateTotalDeposit(String bankCode);
-
-    BigDecimal calculateTotalWithdrawal(String bankCode);
-
-    List<String> findDistinctBankCodes();
-
     List<Transaction> findByTranTypeAndTranWdBankCode(String deposit, String bankCode);
 }

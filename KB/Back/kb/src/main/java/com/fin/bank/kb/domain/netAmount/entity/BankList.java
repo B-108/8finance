@@ -1,11 +1,18 @@
 package com.fin.bank.kb.domain.netAmount.entity;
 
-import org.springframework.data.annotation.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 
+@Entity
+@Getter
+@Builder
+@Table(name = "bank_banklist") // "bank_banklist" 테이블과 매핑
+@NoArgsConstructor // 기본 생성자
+@AllArgsConstructor // 모든 필드를 가지는 생성자
 public class BankList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
