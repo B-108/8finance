@@ -52,7 +52,7 @@ pipeline {
                     docker stop mydata-back
                     docker rm mydata-back
 
-                    docker run -d -p 8762:8762 --name mydata-back docker-springboot-mydata:0.0.1
+                    docker run -d -p 8762:8080 --name mydata-back docker-springboot-mydata:0.0.1
 
                     '''
                 }
