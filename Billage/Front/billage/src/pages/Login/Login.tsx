@@ -1,4 +1,8 @@
-import { useState, useEffect } from "react";
+import { 
+  useState, 
+  useEffect,
+  useContext, 
+  useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 // 컴포넌트 재사용
@@ -24,10 +28,15 @@ import { token } from "firebase";
 // API
 import { getPhoneCheck } from "/src/api/auth";
 
+// 알림 모달
+import AlertSimpleContext from "/src/context/alertSimple/AlertSimpleContext";
+
 // 타입스크립트
 
 function Login(){
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
+  const [isEnd, setIsEnd] = useState(false);
+
   
   const MAX_LENGTH = 20;
 
@@ -36,9 +45,14 @@ function Login(){
   const moveSignUp = () => {navigate(`/signup`)}
 
   const movePinEnter = async () => {
+    if (!phone) {
+      onAlertSimpleClick("핸드폰 번호를 입력해주세요.")
+      return
+    }
+
     const response = await axiosPhoneCheck()
     if( !response ) { 
-      console.log("회원이 아닙니다.")
+      onAlertSimpleClick("회원이 아닙니다. 핸드폰번호를 확인해주세요.")
       return 
     }
     else { navigate('/pinenter/login') }
@@ -94,6 +108,19 @@ function Login(){
       console.log(error)
     }
   }
+  
+  // SimpleAlert 창
+  const HandleIsEnd = useCallback(() => {
+    setIsEnd(!isEnd);
+  }, [isEnd]);
+
+  const { alert: alertSimpleComp } = useContext(AlertSimpleContext);
+  
+  const onAlertSimpleClick = async (text: string) => {
+    const result = await alertSimpleComp(text);
+    console.log("custom", result);
+    HandleIsEnd();
+  };
 
   useEffect(() => {
     moveMain()

@@ -80,7 +80,8 @@ function DonutChart ({Return,Money,Day}:DonutChartProps) {
     labels: ["상환율"],
   };
 
-  const seriesRadial = [Number((Return/Money * 100))];
+  // const seriesRadial = [Number((Return/Money * 100))];
+  const seriesRadial = [64];
   return(
     <div>
     <Chart

@@ -64,7 +64,7 @@ const StyledButton = styled.button<ButtonProps>`
         props.$smallGreenBtn &&
         css`
             font-size: ${theme.fontSize.DF_16};
-            border-radius: ${theme.radius.XS_5};
+            border-radius: ${theme.radius.DF_8};
             background-color: ${theme.color.green[0]};
         `}
 
@@ -76,6 +76,7 @@ const StyledButton = styled.button<ButtonProps>`
             border-radius: ${theme.radius.DF_8};
             background-color: ${theme.color.gray[40]};
         `}
+
     // 검은색 작은 사이즈 버튼 (빌릴금액)
     ${(props) =>
         props.$smallBlackBtn &&

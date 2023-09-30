@@ -98,7 +98,7 @@ function Transfer() {
                 <ButtonInput
                     value={friendInfo}
                     $active
-                    $size="86%,40px"
+                    $size="88%,40px"
                     onChange={handleFriendInfoChange}
                     $buttonImage={magnifyingGlass}/>
             </TranInputDiv>
@@ -108,7 +108,7 @@ function Transfer() {
                 <ButtonInput
                     value={accountInfo}
                     $active
-                    $size="86%,40px"
+                    $size="88%,40px"
                     onChange={handleAccountInfoChange}
                     $buttonImage={plus}/>
             </TranInputDiv>
@@ -122,7 +122,7 @@ function Transfer() {
                         <ButtonInput
                             value={transferDate ? transferDate.toISOString() : ''}
                             $active
-                            $size="86%,40px"
+                            $size="88%,40px"
                             $buttonImage={calendar}/>}/>
             </TranInputDiv>
 
@@ -139,7 +139,7 @@ function Transfer() {
                         <ButtonInput
                             value={autoTransferDate ? autoTransferDate.toISOString() : ''}
                             $active
-                            $size="86%,40px"
+                            $size="88%,40px"
                             $buttonImage={calendar}/>}/>
             </TranInputDiv>
 
@@ -148,7 +148,7 @@ function Transfer() {
                 <Input 
                   value={amount} 
                   $active 
-                  $size="86%,40px" 
+                  $size="88%,40px" 
                   onChange={handleAmountChange}></Input>
                 <SmallButtonsContainer>
                   <Button style={{margin:"7px 0px 0px 5px"}}
@@ -172,14 +172,14 @@ function Transfer() {
                     type="interest"
                     value={interest}
                     $active
-                    $size="86%,40px"
+                    $size="88%,40px"
                     onChange={handleInterestChange}
                 ></Input>
             </TranInputDiv>
 
             <TranInputDiv style={{alignItems:"center"}}>
                 <TranInputTitle>총 상환 금액</TranInputTitle>
-                <Input value={totalAmount} $active $size="86%,40px" onChange={handleTotalAmountChange}></Input>
+                <Input value={totalAmount} $active $size="88%,40px" onChange={handleTotalAmountChange}></Input>
             </TranInputDiv>
             <ButtonContainer>
                 <Button $basicGrayBtn $size="48%, 50px">

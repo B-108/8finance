@@ -1,4 +1,9 @@
-import { useEffect, useRef, useState } from "react"
+import { 
+  useEffect, 
+  useRef, 
+  useState, 
+  useCallback,
+  useContext } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 // 이미지
@@ -25,6 +30,9 @@ import { LoginProps } from "/src/type/auth"
 // API
 import { postLogin } from "/src/api/auth"
 
+// 알림용 모달
+import AlertSimpleContext from "/src/context/alertSimple/AlertSimpleContext"
+
 
 // 로그인, 돈이체(빌려, 갚아), 계좌등록
 
@@ -32,7 +40,7 @@ function PinEnter () {
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
   const [pinEnter,setPinEnter] = useRecoilState<string>(PinEnterState)
   const inputRefs = Array.from({ length: 5 }, () => useRef<HTMLInputElement>(null));
-
+  const [isEnd, setIsEnd] = useState(false);
 
   // 라우터 
   const { routeAction } = useParams<{ routeAction?: string}>()
@@ -95,6 +103,7 @@ function PinEnter () {
       const response = await postLogin(info)
       if (response) {moveMain()}
       else {
+        onAlertSimpleClick("비밀번호가 틀렸어요. 다시 입력해주세요.")
         if (inputRefs[0].current) {
           inputRefs[0].current.focus();
         }
@@ -105,6 +114,19 @@ function PinEnter () {
       console.log(error)
     }
   }
+
+  // SimpleAlert 창
+  const HandleIsEnd = useCallback(() => {
+    setIsEnd(!isEnd);
+  }, [isEnd]);
+  
+  const { alert: alertSimpleComp } = useContext(AlertSimpleContext);
+  
+  const onAlertSimpleClick = async (text: string) => {
+    const result = await alertSimpleComp(text);
+    console.log("custom", result);
+    HandleIsEnd();
+  };
 
   useEffect(() => {
     if (inputRefs[0].current) {

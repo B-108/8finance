@@ -29,28 +29,33 @@ export const AccountsBox = styled.div`
 
 export const Account = styled.div<{ $isClicked: boolean }>`
   position: relative;
-  width: 97%;
-  height: 250px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 96%;
+  height: 225px;
   margin-bottom: 10px;
-  border: 3px solid transparent;
+  padding-top: 6px;
+  
   border-radius: ${theme.radius.S_10};
   box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);
+  
   
     ${(props) =>
         props.$isClicked &&
         css`
+          border: 3px solid transparent;
           border-image-source: ${theme.color.mix.border};
           border-image-slice: 1;
     `}
+`
+export const AccountImg = styled.img`
+    width: 93%;
 `
 
 export const AccountNUm = styled.div`
   position: absolute;
   bottom: 0px;
-  left: 5px;
+  left: 10px;
 `
 
-export const AccountImg = styled.img`
-    width: 100%;
-
-`;
