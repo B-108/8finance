@@ -5,6 +5,7 @@ import Header from '/src/components/Header/Header';
 import plus from '/src/assets/plus.svg';
 import Button from '/src/components/Common/Button';
 import { ButtonContainer, InputDiv, InputTitle, SmallButtonsContainer } from './SendMoney.style';
+import magnifyingGlass from '/src/assets/magnifyingGlass.svg';
 
 function SendMoney() {
     const [friendInfo, setFriendInfo] = useState<string>('');
@@ -30,12 +31,22 @@ function SendMoney() {
             <Header headerTitle="이체하기"></Header>
             <InputDiv>
                 <InputTitle>돈 받을 사람</InputTitle>
-                <Input value={friendInfo} $active $size="98%,40px" onChange={handleFriendInfoChange}></Input>
+                <ButtonInput
+                    value={friendInfo}
+                    $active
+                    $size="86%,40px"
+                    onChange={handleFriendInfoChange}
+                    $buttonImage={magnifyingGlass}/>
             </InputDiv>
             <hr />
             <InputDiv>
                 <InputTitle>상대방 계좌</InputTitle>
-                <Input value={accountInfo} $active $size="98%,40px" onChange={handleAccountInfoChange}></Input>
+                <ButtonInput
+                    value={accountInfo}
+                    $active
+                    $size="86%,40px"
+                    onChange={handleAccountInfoChange}
+                    $buttonImage={plus}/>
             </InputDiv>
             <hr />
             <InputDiv>
@@ -43,42 +54,47 @@ function SendMoney() {
                 <ButtonInput
                     value={myAccountInfo}
                     $active
-                    $size="98%,40px"
+                    $size="86%,40px"
                     onChange={handleMyAccountInfoChange}
                     $buttonImage={plus} // 이미지 버튼 추가
                 />
             </InputDiv>
             <hr />
-            <InputDiv>
-                <InputTitle>돌려줄 금액</InputTitle>
-
-                <Input value={amount} $active $size="98%,40px" onChange={handleAmountChange}></Input>
+            
+            <InputDiv style={{alignItems:"center"}}>
+                <InputTitle>보내는 금액</InputTitle>
+                <Input
+                  value={amount} 
+                  $active 
+                  $size="86%,40px" 
+                  onChange={handleAmountChange}></Input>
                 <SmallButtonsContainer>
-                    <Button $smallBlackBtn $size="10%,25px" style={{ margin: '6px' }}>
-                        +1만
-                    </Button>
-                    <Button $smallBlackBtn $size="10%,25px" style={{ margin: '6px' }}>
-                        +5만
-                    </Button>
-                    <Button $smallBlackBtn $size="10%,25px" style={{ margin: '6px' }}>
-                        +10만
-                    </Button>
-                    <Button $smallBlackBtn $size="10%,25px" style={{ margin: '6px' }}>
-                        +100만
-                    </Button>
+                  <Button style={{margin:"7px 0px 0px 5px"}}
+                    $smallBlackBtn $size="18%,25px" >+1만
+                  </Button>
+                  <Button style={{margin:"7px 0px 0px 5px"}}
+                    $smallBlackBtn $size="18%,25px" >+5만
+                  </Button>
+                  <Button style={{margin:"7px 0px 0px 5px"}}
+                    $smallBlackBtn $size="18%,25px" >+10만
+                  </Button>
+                  <Button style={{margin:"7px 0px 0px 5px"}}
+                    $smallBlackBtn $size="18%,25px" >+100만
+                  </Button>
                 </SmallButtonsContainer>
             </InputDiv>
+
             <hr />
-            <InputDiv>
+            <InputDiv style={{alignItems:"center"}}>
                 <InputTitle>남은 금액</InputTitle>
-                <Input $active $size="98%,40px"></Input>
+                <Input $active $size="86%,40px"></Input>
             </InputDiv>
             <hr />
             <ButtonContainer>
-                <Button $basicGrayBtn $size="100%, 50px" style={{ margin: '10px' }}>
+                <Button $basicGrayBtn $size="48%, 50px">
                     작성취소
                 </Button>
-                <Button $basicGreenBtn $size="100%, 50px" style={{ margin: '10px' }}>
+                <Button $basicGreenBtn $size="48%, 50px">
                     작성완료
                 </Button>
             </ButtonContainer>
