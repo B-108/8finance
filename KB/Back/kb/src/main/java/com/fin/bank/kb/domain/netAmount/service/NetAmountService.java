@@ -4,7 +4,9 @@ import com.fin.bank.kb.domain.netAmount.entity.BankList;
 import com.fin.bank.kb.domain.netAmount.entity.NetAmount;
 import com.fin.bank.kb.domain.netAmount.enums.TransactionStatus;
 import com.fin.bank.kb.domain.netAmount.repository.BankListRepository;
+import com.fin.bank.kb.domain.netAmount.repository.NetAmountRepository;
 import com.fin.bank.kb.domain.transfer.entity.Transaction;
+import com.fin.bank.kb.domain.transfer.enums.TransactionType;
 import com.fin.bank.kb.domain.transfer.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -22,12 +24,13 @@ public class NetAmountService {
 
     private final TransactionRepository transactionRepository;
     private final BankListRepository bankListRepository;
+    private final NetAmountRepository netAmountRepository;
 
-    @Scheduled(fixedDelay = 1000) // 1초마다 실행
-    public void scheduleCalculateNetAmountForAllBanks() {
-        calculateNetAmountForAllBanks();
-    }
+//    public void scheduleCalculateNetAmountForAllBanks() {
+//        calculateNetAmountForAllBanks();
+//    }
 
+    @Scheduled(fixedDelay = 10000) // 1초마다 실행
     public void calculateNetAmountForAllBanks() {
 
         // 각 은행들의 은행 코드를 가져온다.
@@ -35,13 +38,17 @@ public class NetAmountService {
                 .map(BankList::getBankCode)
                 .collect(Collectors.toList());
 
+        for (String st : bankCodes) {
+            System.out.println("은행코드:" + st);
+        }
+
         // 모든 은행 코드에 대한 처리를 반복한다.
         for (String bankCode : bankCodes) {
             // 해당 은행의 deposit(입금) 거래 기록을 가져온다.
-            List<Transaction> depositTransactions = transactionRepository.findByTranTypeAndTranWdBankCode("DEPOSIT", bankCode);
+            List<Transaction> depositTransactions = transactionRepository.findByTranTypeAndTranWdBankCode(TransactionType.DEPOSIT, bankCode);
 
             // 해당 은행의 withdraw(출금) 거래 기록을 가져온다.
-            List<Transaction> withdrawalTransactions = transactionRepository.findByTranTypeAndTranWdBankCode("WITHDRAWAL", bankCode);
+            List<Transaction> withdrawalTransactions = transactionRepository.findByTranTypeAndTranWdBankCode(TransactionType.WITHDRAWAL, bankCode);
 
             // 해당 은행의 입금 금액 합계를 계산한다.
             BigDecimal totalDeposit = calculateTotalDeposit(depositTransactions);
@@ -52,31 +59,59 @@ public class NetAmountService {
             // 최종 차액을 계산하고 상태를 업데이트한다.
             NetAmount netAmount = new NetAmount(totalDeposit, totalWithdrawal);
 
-            BigDecimal netAmountValue= calculateNetAmountValue(totalDeposit, totalWithdrawal);
-            netAmount.updateNetAmoundAndStatus(netAmountValue, netAmount.getStatus());
+            TransactionResult result= calculateNetAmountValue(totalDeposit, totalWithdrawal);
+            netAmount.updateNetAmoundAndStatus(result.getNetAmount(), result.getStatus());
 
+            // Save the updated object to the database.
+            netAmountRepository.save(netAmount);
         }
     }
 
+
+    public class TransactionResult {
+        private TransactionStatus status;
+        private BigDecimal netAmount;
+
+        public TransactionResult(TransactionStatus status, BigDecimal netAmount) {
+            this.status = status;
+            this.netAmount = netAmount;
+        }
+
+        // getters
+        public TransactionStatus getStatus() {
+            return status;
+        }
+
+        public BigDecimal getNetAmount() {
+            return netAmount;
+        }
+    }
+
+
+
     // 거래 상태에 따라 상태를 저장하고 차액을 결정하는 메서드
-    private BigDecimal calculateNetAmountValue(BigDecimal totalDeposit, BigDecimal totalWithdrawal){
+    private TransactionResult calculateNetAmountValue(BigDecimal totalDeposit, BigDecimal totalWithdrawal){
         // 거래 상태를 결정한다.
         TransactionStatus status;
+        BigDecimal netAmount;
+
+
         // 입금이 출금보다 클 경우, 돈을 받아야하는 상태이다.
         if (totalDeposit.compareTo(totalWithdrawal) > 0) {
             status = TransactionStatus.RECEIVE;
-            return totalDeposit.subtract(totalWithdrawal);
+            netAmount = totalDeposit.subtract(totalWithdrawal);
         }
         // 출금이 입금보다 클 경우, 돈을 보내야하는 상태이다.
         else if (totalDeposit.compareTo(totalWithdrawal) < 0) {
             status = TransactionStatus.SEND;
-            return totalWithdrawal.subtract(totalDeposit);
+            netAmount = totalWithdrawal.subtract(totalDeposit);
         }
         // 출금과 입금이 동일한 경우, 돈이 이동할 필요가 없는 상태이다.
         else {
             status = TransactionStatus.NONE;
-            return BigDecimal.ZERO;
+            netAmount = BigDecimal.ZERO;
         }
+        return new TransactionResult(status, netAmount);
     }
 
     // 해당 은행의 deposit 거래 기록을 합산하는 메서드
@@ -93,7 +128,6 @@ public class NetAmountService {
         // 모든 입금 금액을 합산한 결과를 반환합니다.
         return totalDeposit;
     }
-
 
     // 해당 은행의 withdrawal 거래 기록을 합산하는 메서드
     private BigDecimal calculateTotalWithdrawal(List<Transaction> withdrawalTransactions) {
