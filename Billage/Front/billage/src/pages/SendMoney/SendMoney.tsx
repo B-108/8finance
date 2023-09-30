@@ -10,6 +10,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import { getAccountList } from '/src/api/account';
 import { AccountType } from '/src/type/account';
+import ConfirmBox from '/src/components/Common/YesOrNo';
 
 function SendMoney() {
     const [friendInfo, setFriendInfo] = useState<string>('');
@@ -18,6 +19,7 @@ function SendMoney() {
     const [amount, setAmountInfo] = useState<string>('0');
     const navigate = useNavigate()
     const location = useLocation()
+    const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false); // 다이얼로그 상태 추가
 
     const [accounts, setAccounts] = useState<AccountType[]>([])
     // 전체 계좌조회
@@ -33,6 +35,17 @@ function SendMoney() {
     // useEffect(()=>{
     //     axiosAccountList()
     //   },[])
+
+    const handleCancelClick = () => {
+        setIsCancelDialogOpen(true);
+    };
+
+    const handleConfirmCancel = () => {
+        setIsCancelDialogOpen(false);
+    };
+
+    const moveToPinCheck = () => {
+    };
     
     console.log(amount)
     
@@ -145,13 +158,22 @@ function SendMoney() {
             </InputDiv>
             <hr />
             <ButtonContainer>
-                <Button $basicGrayBtn $size="48%, 50px">
+                <Button $basicGrayBtn $size="48%, 50px"
+                onClick={handleCancelClick}
+                >
                     작성취소
                 </Button>
-                <Button $basicGreenBtn $size="48%, 50px">
-                    작성완료
+                <Button $basicGreenBtn $size="48%, 50px"
+                        onClick={moveToPinCheck}
+                >작성완료
                 </Button>
             </ButtonContainer>
+            {isCancelDialogOpen && (
+                <ConfirmBox
+                    onCancel={handleConfirmCancel}
+                    onConfirm={() => navigate(-1)} // 여기에 작성을 취소하거나 다른 작업을 수행하는 함수를 넣으세요.
+                />
+            )}
         </CenteredContainer>
     );
 }
