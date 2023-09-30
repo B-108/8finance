@@ -1,7 +1,7 @@
-package com.fin.bank.kb.domain.transfer.entity;
+package com.fin.bank.kb.domain.account.entity;
 
 import com.fin.bank.kb.domain.account.entity.Account;
-import com.fin.bank.kb.domain.transfer.enums.TransactionType;
+import com.fin.bank.kb.domain.account.enums.TransactionType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

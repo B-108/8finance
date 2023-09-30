@@ -1,10 +1,10 @@
-package com.fin.bank.kb.domain.transfer.dto;
+package com.fin.bank.kb.domain.account.dto;
 
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
-public class TransferResponseDto {
+public class AccountResponseDto {
     private String message;
 }

@@ -1,13 +1,11 @@
 package com.fin.bank.kb.domain.account.api;
 
-<<<<<<< KB/Back/kb/src/main/java/com/fin/bank/kb/domain/account/api/AccountController.java
-=======
 import com.fin.bank.kb.domain.account.dto.AccountRequestDto;
 import com.fin.bank.kb.domain.account.dto.AccountRequestDtos;
 import com.fin.bank.kb.domain.account.dto.AccountResponseDto;
 import com.fin.bank.kb.domain.account.dto.AccountResponseDtos;
->>>>>>> KB/Back/kb/src/main/java/com/fin/bank/kb/domain/account/api/AccountController.java
 import com.fin.bank.kb.domain.account.entity.Account;
+import com.fin.bank.kb.domain.account.enums.TransactionType;
 import com.fin.bank.kb.domain.account.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,15 +22,6 @@ public class AccountController {
 
     private final AccountService accountService;
 
-<<<<<<< KB/Back/kb/src/main/java/com/fin/bank/kb/domain/account/api/AccountController.java
-    // kb_계좌목록조회요청_API
-    @GetMapping("/accountList")
-    public ResponseEntity<List<Account>> getAccountList(
-            @RequestParam String customerName,
-            @RequestParam String phoneNumber
-    ) {
-        List<Account> accountList = accountService.getAccountList(customerName, phoneNumber);
-=======
     /**
      * 빌리지가 오픈뱅킹센터로 요청하면 오픈뱅킹센터가 각 은행에게 입금 또는 출금을 요청한다.
      * 이때 요청하기 위해 각 은행의 API를 오픈뱅킹센터가 호출해서 사용한다.
@@ -95,7 +84,6 @@ public class AccountController {
         for (AccountResponseDtos a : accountList) {
             System.out.println(a.getAccountNum() + " " + a.getBankName());
         }
->>>>>>> KB/Back/kb/src/main/java/com/fin/bank/kb/domain/account/api/AccountController.java
         return new ResponseEntity<>(accountList, HttpStatus.OK);
     }
 
