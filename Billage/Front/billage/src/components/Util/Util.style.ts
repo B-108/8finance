@@ -136,19 +136,21 @@ export const SimpleDialogContainer = styled.div<{ $visible: boolean }>`
   background: rgba(239, 239, 239, 0.8);
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
   
+  animation: ${slideIn} 0.3s forwards;
 
-  ${( props ) =>
+  /* ${( props ) =>
     props.$visible
       ? css`
           animation: ${slideIn} 0.3s forwards;
         `
       : css`
           animation: ${slideOut} 0.3s forwards;
-        `};
+        `}; */
 
   .text {
     text-align: center;
     font-size: ${theme.fontSize.DF_16};
+    margin:0px 7px;
   }
 `;
 

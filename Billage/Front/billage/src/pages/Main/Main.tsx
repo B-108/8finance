@@ -61,7 +61,6 @@ import ConfirmContext from "/src/context/confirm/ConfirmContext"
 function Main(){
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
   const [transList, setTransList] = useState<TransactionType[]>([])
-  const [isEnd, setIsEnd] = useState(false);
 
   // 라우터
   const navigate = useNavigate()
@@ -71,6 +70,7 @@ function Main(){
 
 
   // ========Alert창 사용 예시============
+  const [isEnd, setIsEnd] = useState(false);
   const HandleIsEnd = useCallback(() => {
     setIsEnd(!isEnd);
   }, [isEnd]);
@@ -84,6 +84,12 @@ function Main(){
   };
 
   // ==========AlertSimple창 사용 예시==========
+  // Alert와 마찬가지로 이거 필요
+  // const [isEnd, setIsEnd] = useState(false);
+  // const HandleIsEnd = useCallback(() => {
+  //   setIsEnd(!isEnd);
+  // }, [isEnd]);
+
   const { alert: alertSimpleComp } = useContext(AlertSimpleContext);
   
   const onAlertSimpleClick = async (text: string) => {
