@@ -52,7 +52,7 @@ pipeline {
                     docker stop ibk-user-service
                     docker rm ibk-user-service
 
-                    docker run -d -p 8011:8011 --network=ubuntu_ibk --name ibk-user-service docker-springboot-ibk-user-service:0.0.1
+                    docker run -d -p 8011:8011 --name ibk-user-service docker-springboot-ibk-user-service:0.0.1
 
                     '''
                 }
