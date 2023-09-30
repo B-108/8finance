@@ -45,8 +45,6 @@ public class SmsController {
     // 마이데이터 문자 인증 보내기
     @PostMapping("/myData")
     public void sendMyDataSms(@RequestBody SmsDto messageDto) {
-
-        System.out.println("smsController 내부 sendMyDataSms 함수까지는 온거다");
         smsService.sendMyDataSms(messageDto);
     }
 
