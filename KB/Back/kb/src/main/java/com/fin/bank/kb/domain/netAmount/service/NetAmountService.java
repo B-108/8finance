@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,30 +29,28 @@ public class NetAmountService {
     private final BankListRepository bankListRepository;
     private final NetAmountRepository netAmountRepository;
 
-//    public void scheduleCalculateNetAmountForAllBanks() {
-//        calculateNetAmountForAllBanks();
-//    }
-
-    @Scheduled(fixedDelay = 10000) // 1초마다 실행
+//    @Scheduled(fixedDelay = 10000) // 10초마다 실행
+    @Scheduled(cron = "0 0 0 * * ?") // 매일 자정에 실행
     public void calculateNetAmountForAllBanks() {
+
+        LocalDate currentDate = LocalDate.now();
+        LocalDateTime startOfDay = LocalDateTime.of(currentDate, LocalTime.MIDNIGHT);
+        LocalDateTime endOfDay = LocalDateTime.of(currentDate, LocalTime.MAX);
 
         // 각 은행들의 은행 코드를 가져온다.
         List<String> bankCodes = bankListRepository.findAll().stream()
                 .map(BankList::getBankCode)
                 .collect(Collectors.toList());
 
-        for (String st : bankCodes) {
-            System.out.println("은행코드:" + st);
-        }
-
         // 모든 은행 코드에 대한 처리를 반복한다.
         for (String bankCode : bankCodes) {
             // 해당 은행의 deposit(입금) 거래 기록을 가져온다.
-            List<Transaction> depositTransactions = transactionRepository.findByTranTypeAndTranWdBankCode(TransactionType.DEPOSIT, bankCode);
+            List<Transaction> depositTransactions = transactionRepository.findByTranTypeAndTranWdBankCodeAndTranDateBetween(
+                    TransactionType.DEPOSIT, bankCode, startOfDay, endOfDay);
 
             // 해당 은행의 withdraw(출금) 거래 기록을 가져온다.
-            List<Transaction> withdrawalTransactions = transactionRepository.findByTranTypeAndTranWdBankCode(TransactionType.WITHDRAWAL, bankCode);
-
+            List<Transaction> withdrawalTransactions = transactionRepository.findByTranTypeAndTranWdBankCodeAndTranDateBetween(
+                    TransactionType.WITHDRAWAL, bankCode, startOfDay, endOfDay);
             // 해당 은행의 입금 금액 합계를 계산한다.
             BigDecimal totalDeposit = calculateTotalDeposit(depositTransactions);
 
