@@ -39,11 +39,16 @@ function TADetail() {
     const location = useLocation();
 
     const state = location.state
+    console.log(state)
+    console.log(detail)
     const moveTransactionHistory = (contractId: number) => {
         navigate(`/transaction/history/${contractId}`, {state: contractId});
     };
     const moveToIOU = (contractId: number) => {
         navigate(`/transaction/detail/${contractId}/iou`, { state: { contractId } });
+    };
+     const moveToSendMoney = () => {
+        navigate(`/sendmoney`, { state: { state} });
     };
 
     const totalRepaymentCash =
@@ -123,8 +128,14 @@ function TADetail() {
                     </div>
                 </FlexDiv>
 
-                <Button $basicGreenBtn $size="100%, 40px">
-                    {state.toggle ? '돈 보내기' : '돈 달라하기'}
+                <Button
+                    $basicGreenBtn
+                    $size="100%, 40px"
+                    onClick={() => {
+                        if (state.toggle) {
+                            moveToSendMoney();
+                        }}}
+                    >{state.toggle ? '돈 보내기' : '돈 달라하기'}
                 </Button>
 
                 <hr />
