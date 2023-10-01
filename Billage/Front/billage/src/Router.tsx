@@ -124,7 +124,7 @@ const router = createBrowserRouter([
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/loadaccounts',
+                path: '/loadaccounts/:bankcode',
                 element: <LoadAccounts />,
                 errorElement: <ErrorComponent />,
             },

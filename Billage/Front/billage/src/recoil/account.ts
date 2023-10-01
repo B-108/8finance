@@ -31,12 +31,12 @@ export const BankListState = atom<BankType[]>({
     },
     {
       logo: KB,
-      code: "004",
+      code: `["004"]`,
       bankName: '국민은행',
     },
     {
       logo: IBK,
-      code: "002",
+      code: `["003"]`,
       bankName: '기업은행',
     },
     {

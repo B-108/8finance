@@ -26,7 +26,9 @@ function LoadBanks () {
   
   // 라우터 
   const navigate = useNavigate()
-  const moveLoadAccounts = () => {navigate(`/loadaccounts`)}
+  const moveLoadAccounts = (bankcode?:string) => {
+    navigate(`/loadaccounts/${bankcode}`)
+  }
 
   return (
     <CenteredContainer>
@@ -38,10 +40,11 @@ function LoadBanks () {
         $description
         $size="94%,">계좌를 확인할 은행을 선택해주세요.</Text>
       
-      <BankContainer
-        onClick={moveLoadAccounts}>
+      <BankContainer>
         {bankList.map((bank,index) => (
-          <BankBox key={index}>
+          <BankBox 
+            key={index}
+            onClick={() => moveLoadAccounts(bank.code)}>
             <LeftSection>
               <Image 
                 src={bank.logo} 

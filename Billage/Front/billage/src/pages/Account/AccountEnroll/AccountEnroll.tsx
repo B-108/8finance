@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { 
+  useCallback, 
+  useContext, 
+  useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // 재사용 컴포넌트
@@ -31,10 +34,14 @@ import {
 import { useRecoilState } from 'recoil';
 import { PhoneState } from '/src/recoil/auth';
 
+// 알림 모달창
+import AlertSimpleContext from '/src/context/alertSimple/AlertSimpleContext';
+
 function AccountEnroll() {
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
   const [certNum, setCertNum] = useState<string>('');
   const [isChecked, setIsChecked] = useState(false);
+  const [isEnd, setIsEnd] = useState(false);
 
   const MAX_LENGTH = 20;
 
@@ -71,7 +78,8 @@ function AccountEnroll() {
       to : phone,
     }
     try {
-      return await postMyDataMessage(info)
+      const response = await postMyDataMessage(info)
+      if (response === 200) { onAlertSimpleClick("인증번호를 요청했습니다.") }
     }
     catch(error) {
       console.log(error)
@@ -91,6 +99,18 @@ function AccountEnroll() {
       console.log(error)
     }
   }
+
+  const HandleIsEnd = useCallback(() => {
+    setIsEnd(!isEnd);
+  }, [isEnd]);
+
+  const { alert: alertSimpleComp } = useContext(AlertSimpleContext);
+  
+  const onAlertSimpleClick = async (text: string) => {
+    const result = await alertSimpleComp(text);
+    console.log("custom", result);
+    HandleIsEnd();
+  };
 
   return (
     <>

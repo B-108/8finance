@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
 // 스타일 컴포넌트
 import { 
@@ -28,15 +28,19 @@ import URI from '/src/assets/URI.svg';
 import { AccountProps } from '/src/type/account';
 
 // API
-import { postAccountRegister } from '/src/api/account';
-
+import { 
+  postAccountRegister, 
+  postBankAccounts } from '/src/api/account';
+import AlertSimpleContext from '/src/context/alertSimple/AlertSimpleContext';
 
 function LoadAccounts() {
   const [isAccountClicked, setIsAccountClicked] = useState(false);
+  const [isEnd, setIsEnd] = useState(false);
 
   // 라우터 
   const navigate = useNavigate()
   const moveLoadBanks = () => {navigate(`/loadbanks`)}
+  const bankcode:string | undefined = useParams().bankcode
 
   const handleAccountClick = () => {
       setIsAccountClicked(!isAccountClicked); // 클릭 시 테두리 색 변경
@@ -54,6 +58,37 @@ function LoadAccounts() {
       console.log(error)
     }
   }
+
+  const axiosBankAccounts = async (): Promise<void> => {
+    try {
+      const response = await postBankAccounts(bankcode)
+      if(!response) {
+        if(bankcode === `["004"]`) { onAlertSimpleClick("KB국민은행에 계좌가 없습니다.")}
+        else if(bankcode === `["003"]`) { onAlertSimpleClick("IBK기업은행에 계좌가 없습니다.")}
+        moveLoadBanks()
+      }
+      console.log(response)
+    }
+    catch(error) {
+      console.log(error)
+    }
+  }
+
+  const HandleIsEnd = useCallback(() => {
+    setIsEnd(!isEnd);
+  }, [isEnd]);
+
+  const { alert: alertSimpleComp } = useContext(AlertSimpleContext);
+  
+  const onAlertSimpleClick = async (text: string) => {
+    const result = await alertSimpleComp(text);
+    console.log("custom", result);
+    HandleIsEnd();
+  };
+
+  useEffect(()=>{
+    axiosBankAccounts()
+  },[])
 
   return (
     <>
