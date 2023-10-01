@@ -22,6 +22,8 @@ interface InputProps {
     $IsValue? : boolean;
     // 사진
     $buttonImage?: string;
+    // 배치
+    $position? : boolean;
 }
 
 const StyledInput = styled.input<InputProps>`
@@ -91,6 +93,13 @@ const StyledInput = styled.input<InputProps>`
                 transform: translateY(-50%);
             }
         `}
+    //
+        ${(props) =>
+          props.$position &&
+          css`
+              text-align: right; // 오른쪽 정렬
+          `}
+  
 `;
 
 // const Input = (props: InputProps) => {
