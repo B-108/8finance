@@ -16,3 +16,8 @@ export interface BankType {
   code?: string,
   bankName: string;
 }
+
+export interface EachBankAccountType {
+  bankName: string;
+  accountNum: string,
+}

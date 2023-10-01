@@ -68,7 +68,6 @@ function Main(){
   const moveTransactionList = () => {navigate(`/transactionlist`)}
   const moveNotifications = () => {navigate(`/notifications`)}
 
-
   // ========Alert창 사용 예시============
   const [isEnd, setIsEnd] = useState(false);
   const HandleIsEnd = useCallback(() => {

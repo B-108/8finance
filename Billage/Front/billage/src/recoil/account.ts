@@ -11,7 +11,7 @@ import URI from '/src/assets/URI.svg';
 // import KAKAO from '/src/assets/KAKAO.svg';
 
 // 타입스크립트
-import { BankType } from "../type/account";
+import { BankType, EachBankAccountType } from "../type/account";
 
 const { persistAtom } = recoilPersist();
 
@@ -22,33 +22,47 @@ const { persistAtom } = recoilPersist();
 //   effects_UNSTABLE: [persistAtom],
 // })
 
+export const EachBankAccountState = atom<EachBankAccountType[]>({
+  key: 'EachBankAccountState',
+  default: []
+})
+
+export const AccountsSelectedState = atom<EachBankAccountType[]>({
+  key: 'AccountsSelectedState',
+  default: []
+})
+
 export const BankListState = atom<BankType[]>({
   key: 'BankListState',
   default: [
     {
-      logo: NH,
-      bankName: '농협은행',
-    },
-    {
       logo: KB,
-      code: "004",
+      code: `["004"]`,
       bankName: '국민은행',
     },
     {
       logo: IBK,
-      code: "002",
+      code: `["003"]`,
       bankName: '기업은행',
     },
     {
       logo: HANA,
+      code: `["001"]`,
       bankName: '하나은행',
     },
     {
+      logo: NH,
+      code: `["002"]`,
+      bankName: '농협은행',
+    },
+    {
       logo: SINHAN,
+      code: `["005"]`,
       bankName: '신한은행',
     },
     {
       logo: URI,
+      code: `["006"]`,
       bankName: '우리은행',
     },
     // {

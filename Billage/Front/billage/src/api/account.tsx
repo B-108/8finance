@@ -37,7 +37,7 @@ export const patchMainAccount = async (accountId:number) => {
     return response
   }
   catch (error){
-    console.log("getAccountList 실패",error)
+    console.log("patchMainAccount 실패",error)
   }
 }
 
@@ -46,7 +46,8 @@ export const patchMainAccount = async (accountId:number) => {
 export const postMyDataMessage = async (info: MessageProps) => {
   try{
     const response = await privateApi.post("/api/sms/myData", info);
-    console.log("마이데이터 문자 요청 ",response.data.statusName)
+    console.log("마이데이터 문자 요청 ",response.status)
+    return response.status
   }
   catch (error) {
     console.log("postMyDataMessage를 실패한 이유는??",error)
@@ -64,5 +65,16 @@ export const postMyDataMessageCert = async (info: MessageCertProps) => {
   }
   catch (error) {
     console.log("postMyDataMessageCert을 실패한 이유는??",error)
+  }
+}
+
+// 은행별 계좌 조회
+export const postBankAccounts = async (info : string | undefined) => {
+  try{
+    const response = await privateApi.post("/api/transfer/getBank", info);
+    return response.data
+  }
+  catch (error) {
+    console.log("postBankAccounts 실패한 이유는??",error)
   }
 }
