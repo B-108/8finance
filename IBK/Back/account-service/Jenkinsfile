@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Springboot build') {
+            steps {
+                dir('IBK/Back/account-service'){
+                    sh '''
+                    pwd
+                    echo 'springboot build'
+                    cp /var/jenkins_home/backend-config/ibk/account-service/application.yml /var/jenkins_home/workspace/ibk_account_service/IBK/Back/account-service/src/main/resources/
+                    chmod +x gradlew
+                    ./gradlew clean build
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Dockerimage build') {
+            steps {
+                dir('IBK/Back/account-service'){
+                    sh '''
+                    echo 'Dockerimage build'
+                    docker build -t docker-springboot-ibk-account-service:0.0.1 .
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                dir('IBK/Back/account-service'){
+                    sh '''
+                    echo 'Deploy'
+
+
+
+                    docker run -d -p 8013:8013 --network ubuntu_ibk --name ibk-account-service docker-springboot-ibk-account-service:0.0.1
+
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+    }
+}
