@@ -117,6 +117,18 @@ function MyAccounts() {
     }
   }
 
+  const startPress = (accountId) => {
+    pressTimer.current = setTimeout(() => {
+      setIsLongPressActive(true);
+      openConfirm(accountId);
+    }, 500); // 2초 후에 openConfirm 실행
+  };
+
+  const endPress = () => {
+    clearTimeout(pressTimer.current);
+    setIsLongPressActive(false);
+  };
+
   // ConFirm 모달 창
   const { confirm: confirmComp } = useContext(ConfirmContext);
 
@@ -132,18 +144,6 @@ function MyAccounts() {
       axiosMainAccount(accountId)
     }
     return;
-  };
-
-  const startPress = (accountId) => {
-    pressTimer.current = setTimeout(() => {
-      setIsLongPressActive(true);
-      openConfirm(accountId);
-    }, 500); // 2초 후에 openConfirm 실행
-  };
-
-  const endPress = () => {
-    clearTimeout(pressTimer.current);
-    setIsLongPressActive(false);
   };
 
   useEffect(()=>{
