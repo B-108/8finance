@@ -11,7 +11,7 @@ import URI from '/src/assets/URI.svg';
 // import KAKAO from '/src/assets/KAKAO.svg';
 
 // 타입스크립트
-import { BankType } from "../type/account";
+import { BankType, EachBankAccountType } from "../type/account";
 
 const { persistAtom } = recoilPersist();
 
@@ -21,6 +21,16 @@ const { persistAtom } = recoilPersist();
 //   default: "",
 //   effects_UNSTABLE: [persistAtom],
 // })
+
+export const EachBankAccountState = atom<EachBankAccountType[]>({
+  key: 'EachBankAccountState',
+  default: []
+})
+
+export const AccountsSelectedState = atom<EachBankAccountType[]>({
+  key: 'AccountsSelectedState',
+  default: []
+})
 
 export const BankListState = atom<BankType[]>({
   key: 'BankListState',

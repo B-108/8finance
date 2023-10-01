@@ -37,7 +37,7 @@ export const patchMainAccount = async (accountId:number) => {
     return response
   }
   catch (error){
-    console.log("getAccountList 실패",error)
+    console.log("patchMainAccount 실패",error)
   }
 }
 

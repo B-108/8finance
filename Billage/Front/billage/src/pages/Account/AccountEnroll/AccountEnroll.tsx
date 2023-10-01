@@ -48,8 +48,10 @@ function AccountEnroll() {
   // 라우터 
   const navigate = useNavigate()
   const moveLoadBanks = async () => {
-    const response = await axiosMyDataMessagCert()
-    if( response && isChecked) {navigate(`/loadbanks`)}
+    const Certain = await axiosMyDataMessagCert()
+    if( !certNum ) { onAlertSimpleClick("인증번호를 입력해주세요!"); return }
+    if( !isChecked ) { onAlertSimpleClick("마이데이터 접근에 동의해주세요!"); return}
+    if( Certain && isChecked) {navigate(`/loadbanks`)}
   }
 
   // 전화번호 입력

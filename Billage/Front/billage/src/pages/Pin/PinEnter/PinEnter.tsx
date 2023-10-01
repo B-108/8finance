@@ -20,15 +20,18 @@ import { InputBox } from "./PinEnter.style"
 
 // 리코일 
 import { useRecoilState } from "recoil"
+import { AccountsSelectedState } from "/src/recoil/account"
 import { 
   PhoneState,
   PinEnterState } from "/src/recoil/auth"
   
 // 타입스크립트
 import { LoginProps } from "/src/type/auth"
+import { AccountProps } from "/src/type/account"
 
 // API
 import { postLogin } from "/src/api/auth"
+import { postAccountRegister } from "/src/api/account"
 
 // 알림용 모달
 import AlertSimpleContext from "/src/context/alertSimple/AlertSimpleContext"
@@ -41,11 +44,14 @@ function PinEnter () {
   const [pinEnter,setPinEnter] = useRecoilState<string>(PinEnterState)
   const inputRefs = Array.from({ length: 5 }, () => useRef<HTMLInputElement>(null));
   const [isEnd, setIsEnd] = useState(false);
+  const [accountsSelected, setAccountsSelected] = useRecoilState(AccountsSelectedState) 
+
 
   // 라우터 
   const { routeAction } = useParams<{ routeAction?: string}>()
   const navigate = useNavigate()
   const moveMain = () => {navigate(`/Main`)}
+  const moveMyaccount = () => {navigate(`/myaccounts`)}
 
   const handlepinEnterChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     
@@ -91,6 +97,10 @@ function PinEnter () {
       if (routeAction === "login") {
         axiosLogin(pinEnter.split(" ").join("") + event.target.value.split(" ").join(""))
       }
+
+      else if (routeAction === "account") {
+        axiosAccountRegister()
+      }
     }
   };
 
@@ -114,6 +124,29 @@ function PinEnter () {
       console.log(error)
     }
   }
+
+  
+  const axiosAccountRegister = async (): Promise<void> => {
+
+    accountsSelected.map(async (selectedAccount) => {
+      let modifiedBankCode = selectedAccount.bankName;
+
+    if (selectedAccount.bankName === "국민은행") { modifiedBankCode = "004" }
+    else if (selectedAccount.bankName === "기업은행") { modifiedBankCode = "003" }
+
+      const info: AccountProps = {
+        accountBankCode : modifiedBankCode,
+        accountNum : selectedAccount.accountNum, // 선택된 계좌 정보를 사용
+      }
+      try {
+        await postAccountRegister(info)
+      } catch (error) {
+        console.log(error)
+      }
+    });
+    moveMyaccount()
+  }
+
 
   // SimpleAlert 창
   const HandleIsEnd = useCallback(() => {

@@ -18,22 +18,16 @@ export const Banks = styled.div<{ $isClicked: boolean }>`
     margin-bottom: 15px;
     padding-left : 3%;
     border: 2px solid ${theme.color.gray[70]};
-    border-radius: 15px;
-
-    &:active,
-    &:focus {
-        border: 3px solid;
-        border-image: ${theme.color.mix.border};
-        border-image-slice: 1;
-    }
+    border-radius: 10px;
 
     ${(props) =>
-        props.$isClicked &&
-        css`
-            border-image: ${theme.color.mix.border};
-            border-image-slice: 1;
-        `}
-`;
+      props.$isClicked &&
+      css`
+          border: 3px solid;
+          border-image: ${theme.color.mix.border};
+          border-image-slice: 1;
+      `}
+    `;
 
 // 은행 이름 스타일 정의
 export const BankName = styled.div`

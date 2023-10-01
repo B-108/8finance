@@ -50,7 +50,6 @@ import ConfirmContext from '/src/context/confirm/ConfirmContext';
 function MyAccounts() {
   const [accounts, setAccounts] = useState<AccountType[]>([])
 
-
   // 라우터
   const navigate = useNavigate()
   const moveAccountEnroll = () => {navigate(`/accountenroll`)}
@@ -59,6 +58,7 @@ function MyAccounts() {
   const axiosAccountList = async (): Promise<void> => {
     try {
       const response = await getAccountList()
+      console.log(accounts)
       setAccounts(response?.data)
     }
     catch(error) {
