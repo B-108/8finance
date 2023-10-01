@@ -79,7 +79,7 @@ public class Contract {
     @Column(name = "contract_modify_date", columnDefinition = "DATETIME")
     private LocalDateTime contractModifyDate;
 
-    @Column(name = "contract_maturity_date")
+    @Column(name = "contract_maturity_date", nullable = false)
     private LocalDate contractMaturityDate;
 
     @Column(name = "contract_expire_date", columnDefinition = "DATETIME")

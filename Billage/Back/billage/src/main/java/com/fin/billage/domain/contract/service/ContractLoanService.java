@@ -1,5 +1,6 @@
 package com.fin.billage.domain.contract.service;
 
+import com.fin.billage.domain.account.entity.Account;
 import com.fin.billage.domain.contract.dto.ContractLoanDetailResponseDto;
 import com.fin.billage.domain.contract.dto.ContractLoanResponseDto;
 
@@ -113,6 +114,18 @@ public class ContractLoanService {
     // 거래 상세
     public ContractLoanDetailResponseDto detailLoan(Long contractId, HttpServletRequest request) {
         Contract contract = contractRepository.findByContractId(contractId);
+
+        String creditorAcNum = "";
+        String creditorBank = "";
+
+        if (contract.getContractCreditorAcNum() != null) {
+            creditorAcNum = contract.getContractCreditorAcNum();
+        }
+
+        if (contract.getContractCreditorBank() != null) {
+            creditorBank = (creditorBank.equals("004")) ? "국민은행" : "기업은행";
+        }
+
         // 송금인(tran_wd)가 debeter_user인 경우의 tran_amt를 가져와서
         // calculateTransaction(List<Bigdecimal> tran_amt, 빌린금액)에 넣어주기
         String tranWd = contract.getDebtorUser().getUserName();
@@ -124,6 +137,7 @@ public class ContractLoanService {
                 .contractMaturityDate(contract.getContractMaturityDate())
                 .contractInterestRate(contract.getContractInterestRate())
                 .repaymentCash(calculateTransaction(tranAmtList, contract.getContractAmt()))
+                .mainAccount(creditorBank + " " + creditorAcNum)
                 .build();
 
         return contractLoanDetailResponseDto;
