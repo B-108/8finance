@@ -1,7 +1,8 @@
 import React, { 
   useState, 
   useEffect,
-  useContext } from 'react';
+  useContext, 
+  useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // 스타일 컴포넌트
@@ -75,6 +76,8 @@ const kbAccountImages = [
 
 function MyAccounts() {
   const [accounts, setAccounts] = useState<AccountType[]>([])
+  const [isLongPressActive, setIsLongPressActive] = useState(false);
+  const pressTimer = useRef(null);
   
   // 라우터
   const navigate = useNavigate()
@@ -131,6 +134,18 @@ function MyAccounts() {
     return;
   };
 
+  const startPress = (accountId) => {
+    pressTimer.current = setTimeout(() => {
+      setIsLongPressActive(true);
+      openConfirm(accountId);
+    }, 500); // 2초 후에 openConfirm 실행
+  };
+
+  const endPress = () => {
+    clearTimeout(pressTimer.current);
+    setIsLongPressActive(false);
+  };
+
   useEffect(()=>{
     axiosAccountList()
   },[])
@@ -177,8 +192,9 @@ function MyAccounts() {
 
             <AccountImg
               src={getRandomAccountImage(account.accountBankCode,index)}
-              onClick={() => {
-                openConfirm(account.accountId)}}>
+              onMouseDown={() => startPress(account.accountId)}
+              onMouseUp={endPress}
+              onMouseLeave={endPress}>
             </AccountImg>
           </Account>
           ))}
