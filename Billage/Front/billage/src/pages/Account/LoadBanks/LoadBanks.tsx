@@ -43,11 +43,17 @@ function LoadBanks () {
     setEachBankAccount(response)
     if(!response) {
       if(bankcode === `["004"]`) { 
-        onAlertSimpleClick("KB국민은행에 계좌가 없습니다."); return 
-      }
+        onAlertSimpleClick("KB국민은행에 계좌가 없습니다."); return }
       else if(bankcode === `["003"]`) { 
-        onAlertSimpleClick("IBK기업은행에 계좌가 없습니다."); return 
-      }
+        onAlertSimpleClick("IBK기업은행에 계좌가 없습니다."); return }
+      else if(bankcode === `["001"]`) { 
+        onAlertSimpleClick("하나은행에 계좌가 없습니다."); return }
+      else if(bankcode === `["002"]`) { 
+        onAlertSimpleClick("농협은행에 계좌가 없습니다."); return }
+      else if(bankcode === `["005"]`) { 
+        onAlertSimpleClick("신한은행에 계좌가 없습니다."); return }
+      else if(bankcode === `["006"]`) { 
+        onAlertSimpleClick("우리은행에 계좌가 없습니다."); return }
     }
     navigate(`/loadaccounts`)
   }

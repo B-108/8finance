@@ -128,11 +128,11 @@ function PinEnter () {
   
   const axiosAccountRegister = async (): Promise<void> => {
 
-    accountsSelected.map(async (selectedAccount) => {
+    for (const selectedAccount of accountsSelected) {
       let modifiedBankCode = selectedAccount.bankName;
 
-    if (selectedAccount.bankName === "국민은행") { modifiedBankCode = "004" }
-    else if (selectedAccount.bankName === "기업은행") { modifiedBankCode = "003" }
+      if (selectedAccount.bankName === "국민은행") { modifiedBankCode = "004" }
+      else if (selectedAccount.bankName === "기업은행") { modifiedBankCode = "003" }
 
       const info: AccountProps = {
         accountBankCode : modifiedBankCode,
@@ -140,10 +140,11 @@ function PinEnter () {
       }
       try {
         await postAccountRegister(info)
-      } catch (error) {
+      } 
+      catch (error) {
         console.log(error)
       }
-    });
+    }
     moveMyaccount()
   }
 

@@ -48,6 +48,7 @@ function LoadAccounts() {
   const navigate = useNavigate()
   const moveLoadBanks = () => {navigate(`/loadbanks`)}
   const movePinEnter = () => { 
+    console.log(accountsSelected)
     openConfirm()
   }
 

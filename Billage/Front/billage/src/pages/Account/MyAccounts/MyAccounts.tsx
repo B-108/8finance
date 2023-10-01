@@ -47,18 +47,54 @@ import { AccountType } from '/src/type/account';
 // 알림 모달
 import ConfirmContext from '/src/context/confirm/ConfirmContext';
 
+const ibkAccountImages = [
+  account_IBK1, 
+  account_IBK2, 
+  account_IBK3, 
+  account_IBK4, 
+  account_IBK5,
+  account_IBK1, 
+  account_IBK2, 
+  account_IBK3, 
+  account_IBK4, 
+  account_IBK5
+];
+
+const kbAccountImages = [
+  account_KB1, 
+  account_KB2, 
+  account_KB3, 
+  account_KB4, 
+  account_KB5,
+  account_KB1, 
+  account_KB2, 
+  account_KB3, 
+  account_KB4, 
+  account_KB5
+];
+
 function MyAccounts() {
   const [accounts, setAccounts] = useState<AccountType[]>([])
-
+  
   // 라우터
   const navigate = useNavigate()
   const moveAccountEnroll = () => {navigate(`/accountenroll`)}
+
+  // 이미지 선택 함수
+  const getRandomAccountImage = (bankcode : string, index : number) => {
+    if(bankcode === "004") {
+      return kbAccountImages[index];
+    }
+
+    else if(bankcode === "003") {
+      return kbAccountImages[index];
+    }
+  }
   
   // 전체 계좌조회
   const axiosAccountList = async (): Promise<void> => {
     try {
       const response = await getAccountList()
-      console.log(accounts)
       setAccounts(response?.data)
     }
     catch(error) {
@@ -140,7 +176,7 @@ function MyAccounts() {
             </AccountNUm>
 
             <AccountImg
-              src={account_KB4}
+              src={getRandomAccountImage(account.accountBankCode,index)}
               onClick={() => {
                 openConfirm(account.accountId)}}>
             </AccountImg>

@@ -36,10 +36,6 @@ export const BankListState = atom<BankType[]>({
   key: 'BankListState',
   default: [
     {
-      logo: NH,
-      bankName: '농협은행',
-    },
-    {
       logo: KB,
       code: `["004"]`,
       bankName: '국민은행',
@@ -51,14 +47,22 @@ export const BankListState = atom<BankType[]>({
     },
     {
       logo: HANA,
+      code: `["001"]`,
       bankName: '하나은행',
     },
     {
+      logo: NH,
+      code: `["002"]`,
+      bankName: '농협은행',
+    },
+    {
       logo: SINHAN,
+      code: `["005"]`,
       bankName: '신한은행',
     },
     {
       logo: URI,
+      code: `["006"]`,
       bankName: '우리은행',
     },
     // {
