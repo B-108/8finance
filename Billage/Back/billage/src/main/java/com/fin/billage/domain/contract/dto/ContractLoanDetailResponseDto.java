@@ -23,4 +23,7 @@ public class ContractLoanDetailResponseDto {
 
     // 현재까지 갚은 금액
     private BigDecimal repaymentCash;
+
+    // 주계좌
+    private String mainAccount;
 }
