@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
 // 스타일 컴포넌트
 import { 
@@ -23,37 +23,74 @@ import HANA from '/src/assets/HANA.svg';
 import IBK from '/src/assets/IBK.svg';
 import SINHAN from '/src/assets/SINHAN.svg';
 import URI from '/src/assets/URI.svg';
+import basicAccount from "/src/assets/basicAccount.svg"
 
 // 타입스크립트
-import { AccountProps } from '/src/type/account';
+import { AccountProps, EachBankAccountType } from '/src/type/account';
 
 // API
-import { postAccountRegister } from '/src/api/account';
 
+// 리코일
+import { useRecoilState } from 'recoil';
+import { 
+  AccountsSelectedState, 
+  EachBankAccountState } from '/src/recoil/account';
+
+// 알림 모달창
+import ConfirmContext from '/src/context/confirm/ConfirmContext';
 
 function LoadAccounts() {
-  const [isAccountClicked, setIsAccountClicked] = useState(false);
+  const [isAccountClicked, setIsAccountClicked] = useState<boolean[]>([]);
+  const [accountsSelected, setAccountsSelected] = useRecoilState(AccountsSelectedState) 
+  const [eachBankAccount, setEachBankAccount] = useRecoilState(EachBankAccountState);
 
   // 라우터 
   const navigate = useNavigate()
   const moveLoadBanks = () => {navigate(`/loadbanks`)}
+  const movePinEnter = () => { 
+    console.log(accountsSelected)
+    openConfirm()
+  }
 
-  const handleAccountClick = () => {
-      setIsAccountClicked(!isAccountClicked); // 클릭 시 테두리 색 변경
+  const handleAccountClick = (index:number,selectedAccount:EachBankAccountType) => {
+    setIsAccountClicked(prevState => {
+      const updatedState = [...prevState];
+      updatedState[index] = !updatedState[index]; // 클릭할 때마다 toggle
+      return updatedState;
+    });
+
+    setAccountsSelected(prevState => {
+      const isAlreadySelected = prevState.includes(selectedAccount);
+      console.log(accountsSelected)
+      
+      if (isAlreadySelected) {
+          return prevState.filter(account => account !== selectedAccount); // 이미 있는 경우 제외
+      } else {
+          return [...prevState, selectedAccount]; // 없는 경우 추가
+      }
+    });
   };
 
-  const axiosAccountRegister = async (): Promise<void> => {
-    const info: AccountProps = {
-      accountBankCode : "002",
-      accountNum :"111-111-22222", 
+  // 알림 모달창
+  const { confirm: confirmComp } = useContext(ConfirmContext);
+
+  const onConfirmClick = async (text: string) => {
+    const result = await confirmComp(text);
+    console.log("custom", result);
+    return result;
+  };
+
+  const openConfirm = async () => {
+    const nextAction = await onConfirmClick(`총${accountsSelected.length}개의 계좌를 등록하시나요?`);
+    if (nextAction) {
+      navigate('/pinenter/account') 
     }
-    try {
-      await postAccountRegister(info)
-    }
-    catch(error) {
-      console.log(error)
-    }
-  }
+    return;
+  };
+  
+  useEffect(()=>{
+    setIsAccountClicked(Array(eachBankAccount.length).fill(false))
+  },[eachBankAccount])
 
   return (
     <>
@@ -68,26 +105,19 @@ function LoadAccounts() {
           >등록할 계좌를 선택해주세요.</Text>
           
         <BankContainer>
-          <Banks
-            onClick={handleAccountClick} 
-            $isClicked={isAccountClicked}>
-            <Image 
-              src={NH} 
-              alt="NH"
-              width='35px,'/>
-            <BankName>농협은행</BankName>
-            <AccountNumber>123-456-7890</AccountNumber>
-          </Banks>
-          <Banks 
-            onClick={handleAccountClick} 
-            $isClicked={isAccountClicked}>
-            <Image 
-              src={KB} 
-              alt="KB"
-              width='35px,'/>
-              <BankName>농협은행</BankName>
-              <AccountNumber>123-456-7890</AccountNumber>
-          </Banks>
+          {eachBankAccount.map((account,index)=>(
+            <Banks key={index}
+              onClick={() => {
+                handleAccountClick(index, account)}} 
+              $isClicked={isAccountClicked[index]}>
+              <Image 
+                src={basicAccount} 
+                alt="NH"
+                width='45px,'/>
+              <BankName>{account.bankName}</BankName>
+              <AccountNumber>{account.accountNum}</AccountNumber>
+            </Banks>
+          ))}
         </BankContainer>
 
         <BtnContainter style={{ margin: '10px' }}>
@@ -99,9 +129,10 @@ function LoadAccounts() {
           <Button 
             $basicGreenBtn 
             $size="48%, 40px"
-            onClick={axiosAccountRegister}>등록
+            onClick={movePinEnter}>등록
           </Button>
         </BtnContainter>
+
       </CenteredContainer>
     </>
   );

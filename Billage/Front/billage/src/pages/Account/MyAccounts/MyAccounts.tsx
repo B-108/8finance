@@ -1,7 +1,8 @@
 import React, { 
   useState, 
   useEffect,
-  useContext } from 'react';
+  useContext, 
+  useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // 스타일 컴포넌트
@@ -47,13 +48,51 @@ import { AccountType } from '/src/type/account';
 // 알림 모달
 import ConfirmContext from '/src/context/confirm/ConfirmContext';
 
+const ibkAccountImages = [
+  account_IBK1, 
+  account_IBK2, 
+  account_IBK3, 
+  account_IBK4, 
+  account_IBK5,
+  account_IBK1, 
+  account_IBK2, 
+  account_IBK3, 
+  account_IBK4, 
+  account_IBK5
+];
+
+const kbAccountImages = [
+  account_KB1, 
+  account_KB2, 
+  account_KB3, 
+  account_KB4, 
+  account_KB5,
+  account_KB1, 
+  account_KB2, 
+  account_KB3, 
+  account_KB4, 
+  account_KB5
+];
+
 function MyAccounts() {
   const [accounts, setAccounts] = useState<AccountType[]>([])
-
-
+  const [isLongPressActive, setIsLongPressActive] = useState(false);
+  const pressTimer = useRef(null);
+  
   // 라우터
   const navigate = useNavigate()
   const moveAccountEnroll = () => {navigate(`/accountenroll`)}
+
+  // 이미지 선택 함수
+  const getRandomAccountImage = (bankcode : string, index : number) => {
+    if(bankcode === "004") {
+      return kbAccountImages[index];
+    }
+
+    else if(bankcode === "003") {
+      return kbAccountImages[index];
+    }
+  }
   
   // 전체 계좌조회
   const axiosAccountList = async (): Promise<void> => {
@@ -77,6 +116,18 @@ function MyAccounts() {
       console.log(error)
     }
   }
+
+  const startPress = (accountId) => {
+    pressTimer.current = setTimeout(() => {
+      setIsLongPressActive(true);
+      openConfirm(accountId);
+    }, 500); // 2초 후에 openConfirm 실행
+  };
+
+  const endPress = () => {
+    clearTimeout(pressTimer.current);
+    setIsLongPressActive(false);
+  };
 
   // ConFirm 모달 창
   const { confirm: confirmComp } = useContext(ConfirmContext);
@@ -140,9 +191,10 @@ function MyAccounts() {
             </AccountNUm>
 
             <AccountImg
-              src={account_KB4}
-              onClick={() => {
-                openConfirm(account.accountId)}}>
+              src={getRandomAccountImage(account.accountBankCode,index)}
+              onMouseDown={() => startPress(account.accountId)}
+              onMouseUp={endPress}
+              onMouseLeave={endPress}>
             </AccountImg>
           </Account>
           ))}

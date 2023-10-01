@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // 이미지
@@ -34,11 +34,13 @@ import {
   getPhoneCheck, 
   postMessage, 
   postMessageCert } from "/src/api/auth";
+import AlertSimpleContext from "/src/context/alertSimple/AlertSimpleContext";
 
 function SignUp(){
   const [name, setName] = useRecoilState<string>(NameState);
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
   const [certNum, setCertNum] = useState<string>('');
+  const [isEnd, setIsEnd] = useState(false);
   
   const MAX_LENGTH = 20;
 
@@ -83,31 +85,30 @@ function SignUp(){
 
   const messageCertification = async () => {
     const responseMessage = await axiosMessagCert()
-    const responsePhonecheck = await axiosPhoneCheck()
     // 이름 입력 확인
     if (!name) {
-      console.log("이름을 입력하세요")
+      onAlertSimpleClick("이름을 입력해주세요")
       return
     }
     
-    // 전화번호로 이미 회원인지 판정
-    if (responsePhonecheck) { 
-      console.log("이미 회원입니다.")
-      return 
-    }
-
     // 문자인증 확인
     if (responseMessage !== 200) {
-      console.log("문자 인증 번호를 입력해주세요")
+      onAlertSimpleClick("문자 인증 번호를 확인해주세요")
       return
     }
     
-
     await movePinRegister()
   }
 
   // 문자인증 번호요청
   const axiosMessage = async (): Promise<void> => {
+    const responsePhonecheck = await axiosPhoneCheck()
+
+    // 전화번호로 이미 회원인지 판정
+    if (responsePhonecheck) { 
+      onAlertSimpleClick("이미 회원입니다.")
+      return 
+    }
     const info: MessageProps = {
       to : phone,
     }
@@ -143,6 +144,18 @@ function SignUp(){
       console.log(error)
     }
   }
+
+  const HandleIsEnd = useCallback(() => {
+    setIsEnd(!isEnd);
+  }, [isEnd]);
+
+  const { alert: alertSimpleComp } = useContext(AlertSimpleContext);
+  
+  const onAlertSimpleClick = async (text: string) => {
+    const result = await alertSimpleComp(text);
+    console.log("custom", result);
+    HandleIsEnd();
+  };
 
   return(
     <CenteredContainer $center>
