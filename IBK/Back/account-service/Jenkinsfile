@@ -25,7 +25,7 @@ pipeline {
 
                     # Copy the file
                     cp "$SRC_DIR/$FILE" "$DEST_DIR/$FILE"
-                    
+
                     chmod +x gradlew
                     ./gradlew clean build
                     '''
@@ -66,7 +66,8 @@ pipeline {
                     sh '''
                     echo 'Deploy'
 
-
+                    docker stop ibk-account-service
+                    docker rm ibk-account-service
 
                     docker run -d -p 8013:8013 --network ubuntu_ibk --name ibk-account-service docker-springboot-ibk-account-service:0.0.1
 
