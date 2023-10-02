@@ -1,5 +1,4 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Home from '/src/pages/Home';
 import Login from 'src/pages/Login/Login';
 import SignUp from 'src/pages/SignUp/SignUp';
 import ErrorComponent from 'src/pages/ErrorComponent';
@@ -22,22 +21,23 @@ import PinEnter from './pages/Pin/PinEnter/PinEnter';
 import AccountEnroll from './pages/Account/AccountEnroll/AccountEnroll';
 import LoadAccounts from './pages/Account/LoadAccounts/LoadAccounts';
 import LoadBanks from './pages/Account/LoadBanks/LoadBanks';
+import Loading from './pages/Loading';
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Root />,
         children: [
-            // {
-            //     path: '',
-            //     element: <Home />,
-            //     errorElement: <ErrorComponent />,
-            // },
-            {
-                path: '',
-                element: <Login />,
-                errorElement: <ErrorComponent />,
-            },
+          {
+            path: '/',
+            element: <Login />,
+            errorElement: <ErrorComponent />,
+          },
+          {
+              path: '/loading',
+              element: <Loading />,
+              errorElement: <ErrorComponent />,
+          },
             {
                 path: '/signup',
                 element: <SignUp />,
