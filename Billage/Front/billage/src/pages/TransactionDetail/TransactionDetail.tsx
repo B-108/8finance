@@ -48,7 +48,7 @@ function TADetail() {
         navigate(`/transaction/detail/${contractId}/iou`, { state: { contractId } });
     };
      const moveToSendMoney = () => {
-        navigate(`/sendmoney`, { state: { state} });
+        navigate(`/sendmoney`, { state: { detail, state} });
     };
 
     const totalRepaymentCash =
