@@ -22,34 +22,55 @@ interface TransactionItemProps {
     //   }, [progress]);
 
     return(
-            <div style={{margin: '3% 0%', display: 'flex', border: '3px solid #6E960D', borderRadius: 15 ,width: '100%'}}>
-                
-                <div id="left" style={{ flex: '8.5', display:'flex', flexDirection: 'column', marginLeft: '3%'}}>
-                    <div style={{marginBottom : '15%'}}>
-                        <Text>{toggle? item.creditorUser.userName : item.debtorUser.userName}님과의 거래에요!</Text>
-                    </div>
-                    <ProgressBar progress={((item.contractAmt - item.repaymentCash)/item.contractAmt)*100} />
-                </div>
-                
-                <div id="right"style={{flex: '3.5', textAlign:'center'}}>
-                    <div style={{marginBottom: '15%', marginTop:'3%'}}>
-                        <Text $smallestContent>
-                            {toggle ? '빌린금액' : '빌려준 금액'}
-                        </Text>
-                        <Text $smallContent>
-                            ￦{item.contractAmt}
-                        </Text> 
-                    </div>
-                    <div style={{borderRadius: '10px', backgroundColor : '#EAEAEA' }}>
-                        <Text $smallContent>
-                            남은금액
-                        </Text>
-                        <Text>
-                            ￦{item.repaymentCash}
-                        </Text>
-                    </div>
-                </div>
+      <div 
+        style={{
+          margin: '6px 0%', 
+          padding: "2% 3% 2% 2%",
+          display: 'flex', 
+          border: '3px solid #6E960D', 
+          borderRadius: 15 ,
+          width: '88%'}}>
+        <div 
+          id="left" 
+          style={{ 
+            flex: '8.5', 
+            display:'flex', 
+            flexDirection: 'column'}}>
+          <div style={{
+              height: "32px",
+              marginBottom : '15%'}}>
+            <Text>{toggle? item.creditorUser.userName : item.debtorUser.userName}님과의 거래에요!</Text>
+          </div>
+          <div style={{
+              marginLeft:"5%"}}>
+            <ProgressBar
+              progress={((item.contractAmt - item.repaymentCash)/item.contractAmt)*100}/>
+          </div>
+        </div>
+        
+        <div 
+          id="right"
+          style={{
+            flex: '3.5', 
+            textAlign:'center'}}>
+            <div style={{
+              marginBottom: '15%', 
+              marginTop:'3%'}}>
+              <Text $smallestContent>
+                  {toggle ? '빌린금액' : '빌려준 금액'}</Text>
+              <Text $smallContent>
+                  ￦{item.contractAmt}</Text> 
             </div>
+            <div style={{
+              borderRadius: '10px', 
+              backgroundColor : '#EAEAEA' }}>
+              <Text $smallContent>
+                  남은금액</Text>
+              <Text>
+                  ￦{item.repaymentCash}</Text>
+            </div>
+        </div>
+      </div>
     )
 }
 
