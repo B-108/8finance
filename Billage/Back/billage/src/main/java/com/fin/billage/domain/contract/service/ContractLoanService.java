@@ -123,7 +123,7 @@ public class ContractLoanService {
         }
 
         if (contract.getContractCreditorBank() != null) {
-            creditorBank = (creditorBank.equals("004")) ? "국민은행" : "기업은행";
+            creditorBank = (contract.getContractCreditorBank().equals("004")) ? "국민은행" : "기업은행";
         }
 
         // 송금인(tran_wd)가 debeter_user인 경우의 tran_amt를 가져와서
@@ -137,6 +137,7 @@ public class ContractLoanService {
                 .contractMaturityDate(contract.getContractMaturityDate())
                 .contractInterestRate(contract.getContractInterestRate())
                 .repaymentCash(calculateTransaction(tranAmtList, contract.getContractAmt()))
+                .bankCode(contract.getContractCreditorBank())
                 .mainAccount(creditorBank + " " + creditorAcNum)
                 .build();
 
