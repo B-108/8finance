@@ -26,4 +26,7 @@ public class ContractLoanDetailResponseDto {
 
     // 주계좌
     private String mainAccount;
+
+    // 은행 코드
+    private String bankCode;
 }
