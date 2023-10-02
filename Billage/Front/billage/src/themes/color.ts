@@ -18,6 +18,7 @@ const color = {
     25 : "#EAEAEA",
   },
 
+
   // 그라데이션
   mix : {
     border: "linear-gradient(90deg, #0FC95C -15.06%, #8EC915 14.47%, #28EDD5 48.21%, #8EC915 81.95%, #93C90F 111.96%)",
