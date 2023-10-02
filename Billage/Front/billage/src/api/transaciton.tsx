@@ -1,7 +1,7 @@
 import { privateApi } from ".";
 
 // 타입스크립트
-// import { Transaction } from "../type/transaction";
+import { SendMoneyType } from "../type/transaction";
 
 //빌린 거래 조회
 export const getBorrowList = async () => {
@@ -51,3 +51,14 @@ export const getTransActionHistory = async (contractId : number) => {
     }
 }
 
+//이체하기
+export const postSendMoney =async (data: SendMoneyType) => {
+    try{
+        await privateApi.post("/api/transfer", data)
+        console.log('이체 완료')
+    }
+    catch(error){
+        console.log('postSendMoney 실패', error)
+    }
+    
+}
