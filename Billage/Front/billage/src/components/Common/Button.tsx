@@ -55,6 +55,7 @@ const StyledButton = styled.button<ButtonProps>`
             font-size: ${theme.fontSize.M_20};
             border-radius: ${theme.radius.L_20};
             background-color: ${theme.color.green[0]};
+            font-weight: 800;
         `}
 
     ${(props) =>
