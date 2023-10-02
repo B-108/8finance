@@ -16,16 +16,18 @@ export const Banks = styled.div<{ $isClicked: boolean }>`
     display: flex;
     align-items: center;
     margin-bottom: 15px;
-    padding-left : 3%;
     border: 2px solid ${theme.color.gray[70]};
-    border-radius: 10px;
+    border-radius: ${theme.radius.S_10};
 
     ${(props) =>
       props.$isClicked &&
       css`
-          border: 3px solid;
-          border-image: ${theme.color.mix.border};
-          border-image-slice: 1;
+          border: 3px solid transparent;
+          border-radius: ${theme.radius.S_10};
+          background-image: linear-gradient(#fff, #fff),
+          ${theme.color.mix.border};
+          background-origin: border-box;
+          background-clip: content-box, border-box;
       `}
     `;
 

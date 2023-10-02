@@ -17,6 +17,7 @@ interface BoxProps {
     $mainTransaction? : boolean;
     $transaction? : boolean;
     $detailBox? : boolean;
+    $goDetailTransaction? : boolean;
 }
 
 const StyledBox = styled.div<BoxProps>`
@@ -73,6 +74,19 @@ const StyledBox = styled.div<BoxProps>`
             padding: 4% 4% 4% 4%;
             border-radius: ${theme.radius.S_10};
             box-shadow: 2px 2px 14px 0px rgba(0, 0, 0, 0.25);
+        `
+    }
+
+    // 거래내역 확인하러 가는 box
+    ${(props) =>
+        props.$goDetailTransaction && 
+        css`
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: ${theme.radius.S_10};
+            border: 2px solid ${theme.color.green[0]};
+            padding: 0% 3% 0% 9%;
         `
     }
 

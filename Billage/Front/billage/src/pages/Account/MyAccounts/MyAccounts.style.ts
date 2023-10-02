@@ -35,18 +35,18 @@ export const Account = styled.div<{ $isClicked: boolean }>`
   width: 96%;
   height: 225px;
   margin-bottom: 10px;
-  padding-top: 6px;
-  
-  border-radius: ${theme.radius.S_10};
   box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);
-  
+  border-radius: ${theme.radius.S_10};
   
     ${(props) =>
         props.$isClicked &&
         css`
-          border: 3px solid transparent;
-          border-image-source: ${theme.color.mix.border};
-          border-image-slice: 1;
+          border: 4px solid transparent;
+          border-radius: ${theme.radius.S_10};
+          background-image: linear-gradient(#fff, #fff),
+          ${theme.color.mix.border};
+          background-origin: border-box;
+          background-clip: content-box, border-box;
     `}
 `
 export const AccountImg = styled.img`

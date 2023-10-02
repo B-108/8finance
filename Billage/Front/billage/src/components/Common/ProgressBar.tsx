@@ -22,7 +22,6 @@ const ProgressBarWrapper = styled.div<{ progress: number }>`
   align-items: center;
   transition: width 0.3s ease-in-out;
   background-color: ${theme.color.green[0]};
-
 `;
 
 
@@ -36,7 +35,7 @@ const ProgressBarFill = styled.div`
     position: absolute;
     right: 0;
     transform: translateX(50%);
-    top: -50%;
+    top: -120%;
     transform: translateY(-100%);
   }
 `;
@@ -56,8 +55,8 @@ const ProgressBarMarker = styled.div<{ progress: number }>`
 
 const ProgressText = styled.div<{ progress: number }>`
   position: absolute;
-  left: 100%;
-  top: -30px; /* 원하는 위치에 텍스트 상자를 배치 */
+  left: 10px;
+  top: -40px; /* 원하는 위치에 텍스트 상자를 배치 */
   transform: translateX(-50%);
   background-color: ${theme.color.black};
   color : ${theme.color.white};

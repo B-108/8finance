@@ -110,9 +110,10 @@ function LoadAccounts() {
               onClick={() => {
                 handleAccountClick(index, account)}} 
               $isClicked={isAccountClicked[index]}>
-              <Image 
+              <Image
+                style={{marginLeft:"2%"}}
                 src={basicAccount} 
-                alt="NH"
+                alt="basicAccount"
                 width='45px,'/>
               <BankName>{account.bankName}</BankName>
               <AccountNumber>{account.accountNum}</AccountNumber>
