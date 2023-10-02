@@ -50,7 +50,7 @@ function PinEnter () {
   // 라우터 
   const { routeAction } = useParams<{ routeAction?: string}>()
   const navigate = useNavigate()
-  const moveMain = () => {navigate(`/Main`)}
+  const moveLoading = () => {navigate(`/loading`)}
   const moveMyaccount = () => {navigate(`/myaccounts`)}
 
   const handlepinEnterChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -111,7 +111,7 @@ function PinEnter () {
     }
     try {
       const response = await postLogin(info)
-      if (response) {moveMain()}
+      if (response) {moveLoading()}
       else {
         onAlertSimpleClick("비밀번호가 틀렸어요. 다시 입력해주세요.")
         if (inputRefs[0].current) {
