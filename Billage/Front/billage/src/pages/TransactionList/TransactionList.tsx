@@ -11,7 +11,8 @@ import TransactionItem from "/src/components/TransactionLIst/TransactionItem/Tra
 // 스타일 컴포넌트
 import { 
   ButtonBox, 
-  TitleBox } from "./TransactionList.style"
+  TitleBox, 
+  TransActionContainer} from "./TransactionList.style"
 
 // API
 import { 
@@ -80,14 +81,18 @@ function TransactionList() {
             </ButtonBox>
           </TitleBox>
 
+        <TransActionContainer>
         {list?.map((item, index) => (
-            <div style={{
-              width : '95%'}} 
+            <div 
+              key={index} 
+              style={{
+              width : '94%'}} 
               onClick={() =>
               moveToDetail(item.contractId, item.creditorUser.userName, item.debtorUser.userName)}>
               <TransactionItem key={index} item={item} toggle={toggle} />
             </div>
         ))}
+        </TransActionContainer>
 
           {/* {[1,2,3,4].map((item) => (
               <TransactionItem toggle={toggle} key={item}/>
