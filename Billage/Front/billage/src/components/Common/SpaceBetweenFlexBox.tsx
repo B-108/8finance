@@ -6,12 +6,11 @@ interface FlexDivProps {
   $textAlign?: string;
   $alignItems?: string;
   children?: React.ReactNode;
-
 }
 
 const StyledFlexDiv = styled.div<FlexDivProps>`
   display: flex;
-  width: 100%;
+  width: 92%;
   justify-content: space-between;
   margin: ${(props) => props.$margin};
   text-align: ${(props) => props.$textAlign};
