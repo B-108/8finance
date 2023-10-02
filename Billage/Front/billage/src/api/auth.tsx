@@ -19,20 +19,15 @@ export const postSignUp = async (info: SignUpProps) => {
 export const postLogin = async (info: LoginProps) => {
   try{
     const response = await publicApi.post("/api/user/login", info);
-    
-    if (response && response.status === 200){
-      const accessToken = response.data.jwtToken.accessToken
-      const refreshToken = response.data.jwtToken.refreshToken
 
-        if (response && response.status === 200) {
-            const accessToken = response.data.jwtToken.accessToken;
-            const refreshToken = response.data.jwtToken.refreshToken;
+    if (response && response.status === 200) {
+        const accessToken = response.data.jwtToken.accessToken;
+        const refreshToken = response.data.jwtToken.refreshToken;
 
-            localStorage.setItem('access_token', accessToken);
-            localStorage.setItem('refresh_token', refreshToken);
+        localStorage.setItem('access_token', accessToken);
+        localStorage.setItem('refresh_token', refreshToken);
 
-            return response.data.userName;
-        }
+        return response.data.userName;
     } 
   }
     catch (error) {
