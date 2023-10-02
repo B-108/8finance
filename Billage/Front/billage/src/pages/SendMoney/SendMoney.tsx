@@ -12,6 +12,10 @@ import { getAccountList } from '/src/api/account';
 import { AccountType } from '/src/type/account';
 import ConfirmBox from '/src/components/Common/YesOrNo';
 
+//이체
+import { SendMoneyType } from '/src/type/transaction';
+import { postSendMoney } from '/src/api/transaciton';
+
 function SendMoney() {
     const navigate = useNavigate()
     const location = useLocation()
@@ -19,21 +23,26 @@ function SendMoney() {
     const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false); // 다이얼로그 상태 추가
     // 이체 필요 데이터
     //거래ID
-    const [transId, setTransId] = useState<number>();
+    const [transId, setTransId] = useState<number>(0);
     //보내는 사람(tranWd)
     const [transWd, setTransWd] = useState<string>('');
     //보내는 사람 계좌/은행 코드(tranWdAcNum, tranWdBankCode)
     const [myAccountInfo, setMyAccountInfo] = useState<string>('');
+    const [myAccountInfoCode, setMyAccountInfoCode] = useState<string>('');
     //받는 사람(tranDp)
     const [friendInfo, setFriendInfo] = useState<string>('');
     //받는 사람 계좌/은행 코드(tranDpAcNum, tranDpBankCode)
     const [accountInfo, setAccountInfo] = useState<string>('');
+    const [accountInfoCode, setAccountInfoCode] = useState<string>('');
     //금액(tranAmt)
     const [amount, setAmountInfo] = useState<string>('0');
     
 
+    console.log(location.state)
     //내 계좌 목록
     const [accounts, setAccounts] = useState<AccountType[]>([])
+    
+    //Axios
     // 전체 계좌조회
     const axiosAccountList = async (): Promise<void> => {
         try {
@@ -45,22 +54,50 @@ function SendMoney() {
         console.log(error)
         }
     }
+    //이체
+
+    const axiosSendMoney =async (): Promise<void> => {
+        const data :SendMoneyType ={
+            contractId : transId,
+            tranWd : transWd,
+            tranWdAcNum : myAccountInfo,
+            tranWdBankCode : myAccountInfoCode,
+            tranDp : friendInfo,
+            tranDpAcNum : accountInfo,
+            tranDpBankCode : accountInfoCode,
+            tranAmt : Number(amount),
+            tranContent : '돈 보내기'
+        }
+        try{
+            await postSendMoney(data)
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+
+    //useEffect
     useEffect(()=>{
         axiosAccountList()
         setTransId(location.state.state.contractId)
         setTransWd(location.state.state.debtoruser)
         setFriendInfo(location.state.state.creditoruser)
         setAccountInfo(location.state.detail.mainAccount)
+        setAccountInfoCode(location.state.detail.bankCode)
       },[])
 
     useEffect(() => {
         const mainAccount = accounts.find(account => account.accountMainYn === true);
         if (mainAccount) {
             setMyAccountInfo(mainAccount.accountNum);
+            setMyAccountInfoCode(mainAccount.accountBankCode)
         }
     }, [accounts]);
 
+    console.log(accountInfoCode)
     
+    //함수
+
     const handleCancelClick = () => {
         setIsCancelDialogOpen(true);
     };
@@ -71,8 +108,7 @@ function SendMoney() {
 
     const moveToPinCheck = () => {
     };
-    
-    //이체시 필요 데이터 함수 
+
     const handleMyAccountInfoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         console.log(event.target.value); // 디버깅 목적
         setMyAccountInfo(event.target.value);
