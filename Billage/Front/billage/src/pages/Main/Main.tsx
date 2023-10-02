@@ -117,13 +117,11 @@ function Main(){
 
   const axiosAllTransActionList = async () => {
     try {
-      onAlertSimpleClick("AlertSimple창은 이렇게 뜹니다.")
-      onAlertClick("Alert창 이렇게 뜹니다.")
+      // onAlertClick("Alert창 이렇게 뜹니다.")`
 
       const Borrow = await getBorrowList()
       const Lend = await getLendList()
       const response = await [...Borrow?.data, ...Lend?.data]
-      console.log(response.filter((data) => (data.contractState === 1)))
       await setTransList(response.filter((data) => (data.contractState === 1)))
     }
     catch(error){
@@ -134,6 +132,14 @@ function Main(){
   useEffect(() => {
     axiosAllTransActionList()
   }, [])
+
+  const [refreshed, setRefreshed] = useState(false);
+
+  useEffect(() => {
+    if (!refreshed) {
+      setRefreshed(true);
+    }
+  }, []);
 
   // 로딩 페이지가 하나 더 있으면 좋겠다.
   if (!transList) {return "";}
