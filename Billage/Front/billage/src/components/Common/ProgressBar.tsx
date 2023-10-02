@@ -22,7 +22,6 @@ const ProgressBarWrapper = styled.div<{ progress: number }>`
   align-items: center;
   transition: width 0.3s ease-in-out;
   background-color: ${theme.color.green[0]};
-
 `;
 
 

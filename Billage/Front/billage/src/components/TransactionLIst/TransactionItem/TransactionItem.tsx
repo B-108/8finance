@@ -1,5 +1,11 @@
+// 재사용 컴포넌트
 import Text from "/src/components/Common/Text";
 import ProgressBar from '../../Common/ProgressBar';
+
+// 스타일 컴포넌트
+import { TransActionBox } from "./TransactionItem.style";
+
+// 타입스크립트
 import { TransactionType } from '/src/type/transaction';
 
 interface TransactionItemProps {
@@ -22,23 +28,22 @@ interface TransactionItemProps {
     //   }, [progress]);
 
     return(
+      <TransActionBox>
       <div 
         style={{
-          margin: '6px 0%', 
           padding: "2% 3% 2% 2%",
           display: 'flex', 
-          border: '3px solid #6E960D', 
-          borderRadius: 15 ,
-          width: '88%'}}>
+          width: '95%'}}>
         <div 
           id="left" 
           style={{ 
-            flex: '8.5', 
-            display:'flex', 
+            flex: '8.5',
+            height:"100px",
+            display:'flex',
             flexDirection: 'column'}}>
           <div style={{
-              height: "32px",
-              marginBottom : '15%'}}>
+              margin:"3px 0px 17% 3px",
+              height: "40px",}}>
             <Text>{toggle? item.creditorUser.userName : item.debtorUser.userName}님과의 거래에요!</Text>
           </div>
           <div style={{
@@ -51,26 +56,30 @@ interface TransactionItemProps {
         <div 
           id="right"
           style={{
-            flex: '3.5', 
+            flex: '3.5',
+            height:"95px", 
             textAlign:'center'}}>
             <div style={{
-              marginBottom: '15%', 
-              marginTop:'3%'}}>
-              <Text $smallestContent>
+              marginBottom: '8%', 
+              marginTop:'5%'}}>
+              <Text 
+                  $smallestContent>
                   {toggle ? '빌린금액' : '빌려준 금액'}</Text>
               <Text $smallContent>
-                  ￦{item.contractAmt}</Text> 
+                  {item.contractAmt}</Text> 
             </div>
             <div style={{
+              padding:"8px 0px",
               borderRadius: '10px', 
               backgroundColor : '#EAEAEA' }}>
               <Text $smallContent>
                   남은금액</Text>
               <Text>
-                  ￦{item.repaymentCash}</Text>
+                  {item.repaymentCash}</Text>
             </div>
         </div>
       </div>
+      </TransActionBox>
     )
 }
 

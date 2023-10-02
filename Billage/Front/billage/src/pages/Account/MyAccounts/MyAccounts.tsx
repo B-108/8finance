@@ -12,7 +12,7 @@ import {
   AccountNUm,
   AccountsBox, 
   LeftSection,
-  RightSection} from './MyAccounts.style';
+  RightSection,} from './MyAccounts.style';
 
 // 재사용 컴포넌트
 import CenteredContainer from '/src/components/Common/CenterAlign';
@@ -182,21 +182,21 @@ function MyAccounts() {
 
         <AccountsBox>
           {accounts && accounts.map((account,index) => (
-          <Account 
-            key={index}
-            $isClicked={account.accountMainYn} >
-            <AccountNUm>
-              {account.accountBankCode === "004" ? "KB 국민은행 _ ":"IBK 기업은행 _ "}
-              {account.accountNum}
-            </AccountNUm>
+            <Account 
+              key={index}
+              $isClicked={account.accountMainYn} >
+              <AccountNUm>
+                {account.accountBankCode === "004" ? "KB 국민은행 _ ":"IBK 기업은행 _ "}
+                {account.accountNum}
+              </AccountNUm>
 
-            <AccountImg
-              src={getRandomAccountImage(account.accountBankCode,index)}
-              onMouseDown={() => startPress(account.accountId)}
-              onMouseUp={endPress}
-              onMouseLeave={endPress}>
-            </AccountImg>
-          </Account>
+              <AccountImg
+                src={getRandomAccountImage(account.accountBankCode,index)}
+                onMouseDown={() => startPress(account.accountId)}
+                onMouseUp={endPress}
+                onMouseLeave={endPress}>
+              </AccountImg>
+            </Account>
           ))}
         </AccountsBox>
 
