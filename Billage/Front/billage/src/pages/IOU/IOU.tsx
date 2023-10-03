@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useRecoilState, useRecoilValue } from 'recoil'; // Recoil에서 상태값을 읽어오기 위해 추가
-import { contractState } from 'src/recoil/iou';
+import { ContractState } from 'src/recoil/iou';
 
 // 공용 컴포넌트
 import CenteredContainer from '/src/components/Common/CenterAlign';
@@ -34,20 +34,19 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { getIOU } from '/src/api/iou';
 
-
 //navigate
 import { useLocation } from 'react-router-dom';
 
 function IOUPage() {
     // Recoil 상태에서 데이터 읽어오기
-    const [contract, setContract] = useRecoilState(contractState);
+    const [contract, setContract] = useRecoilState(ContractState);
     const contentRef = useRef<HTMLDivElement>(null!);
 
     const currentDate = new Date().toISOString().split('T')[0];
 
-    const location  = useLocation()
+    const location = useLocation();
     // API 요청을 수행하여 데이터 가져오기
-    const axiosIOU = async (): Promise<void> => {
+    const axiosGetIOU = async (): Promise<void> => {
         try {
             const response = await getIOU(location.state.contractId);
             setContract(response?.data);
@@ -57,7 +56,7 @@ function IOUPage() {
     };
 
     useEffect(() => {
-        axiosIOU();
+        axiosGetIOU();
     }, []); // 빈 배열은 컴포넌트가 처음 마운트될 때만 실행됨
 
     // handleDownload 및 기타 기능 함수 정의
@@ -91,7 +90,9 @@ function IOUPage() {
                 <IOUContent>
                     <Title>차 용 증</Title>
                     <div style={{ width: '100%', height: '225px' }}>
-                        <Amount>￦ {contract?.contractAmt} (원)</Amount>
+                        <Amount>
+                            ￦ {contract?.contractAmt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} (원)
+                        </Amount>
                         <hr />
                         <Content>
                             위 금액을 채무자({contract?.debtorUser.userName})가 채권자(
@@ -104,7 +105,7 @@ function IOUPage() {
                             {contract?.creditorUser.userName})에게 갚겠습니다.
                         </Content>
                     </div>
-                    <Dates>날짜: {currentDate} 일</Dates>
+                    <Dates>{currentDate}</Dates>
                     <hr />
 
                     <UserBox>

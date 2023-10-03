@@ -23,7 +23,11 @@ import { ButtonContainer, SmallButtonsContainer, TranInputDiv, TranInputTitle } 
 import { IOUProps } from '/src/type/iou';
 import { postIOU } from '/src/api/iou';
 import { AccountType } from '/src/type/account';
+import { UserType } from '/src/type/user';
 import { getAccountList } from '/src/api/account';
+import { UserState } from '/src/recoil/user';
+import { useRecoilState } from 'recoil';
+import { getUserList } from '/src/api/user';
 
 function Transfer() {
     const [friendInfo, setFriendInfo] = useState<string>('');
@@ -46,6 +50,9 @@ function Transfer() {
 
     //내 계좌 목록
     const [accounts, setAccounts] = useState<AccountType[]>([]);
+
+    // 유저 목록
+    const [users, setUsers] = useState<UserType[]>([]);
 
     const handleCancelClick = () => {
         setIsCancelDialogOpen(true);
@@ -121,6 +128,16 @@ function Transfer() {
             console.log(error);
         }
     };
+    // 전체 유저조회
+    const axiosUserList = async (): Promise<void> => {
+        try {
+            const response = await getUserList();
+            setUsers(response?.data);
+            console.log(response?.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     // 차용증 생성
     const axiosPostIOU = async () => {
@@ -149,19 +166,34 @@ function Transfer() {
         axiosAccountList();
     }, []);
 
+    useEffect(() => {
+        axiosUserList();
+    }, []);
+
     return (
         <CenteredContainer>
             <Header headerTitle="차용증 작성"></Header>
 
             <TranInputDiv>
                 <TranInputTitle>지인 선택</TranInputTitle>
-                <ButtonInput
+                {/* <ButtonInput
                     value={friendInfo}
                     $active
                     $size="88%,40px"
                     onChange={handleFriendInfoChange}
                     $buttonImage={magnifyingGlass}
-                />
+                /> */}
+                <select
+                    value={friendInfo}
+                    onChange={handleFriendInfoChange}
+                    style={{ width: '95%', height: '40px', borderRadius: '10px', border: '3px solid #BDBDBD' }}
+                >
+                    {users.map((user) => (
+                        <option key={user.userPk} value={user.userName}>
+                            {user.userName}
+                        </option>
+                    ))}
+                </select>
             </TranInputDiv>
 
             <TranInputDiv>
