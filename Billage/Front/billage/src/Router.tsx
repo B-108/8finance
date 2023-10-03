@@ -22,7 +22,7 @@ import AccountEnroll from './pages/Account/AccountEnroll/AccountEnroll';
 import LoadAccounts from './pages/Account/LoadAccounts/LoadAccounts';
 import LoadBanks from './pages/Account/LoadBanks/LoadBanks';
 import Loading from './pages/Loading';
-import IOUCheck from './pages/IOU/IOUCheck';
+import IOUCheck from './pages/IOU/IOUCheck/IOUCheck';
 
 const router = createBrowserRouter([
     {
