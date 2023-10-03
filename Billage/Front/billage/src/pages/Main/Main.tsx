@@ -53,11 +53,6 @@ import {
 import { PhoneState } from "/src/recoil/auth"
 import { useRecoilState } from "recoil"
 
-// 알림 모달창들
-import AlertContext from "/src/context/alert/AlertContext"
-import AlertSimpleContext from "/src/context//alertSimple/AlertSimpleContext"
-import ConfirmContext from "/src/context/confirm/ConfirmContext"
-
 function Main(){
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
   const [transList, setTransList] = useState<TransactionType[]>([])
@@ -68,57 +63,9 @@ function Main(){
   const moveTransactionList = () => {navigate(`/transactionlist`)}
   const moveNotifications = () => {navigate(`/notifications`)}
 
-  // ========Alert창 사용 예시============
-  const [isEnd, setIsEnd] = useState(false);
-  const HandleIsEnd = useCallback(() => {
-    setIsEnd(!isEnd);
-  }, [isEnd]);
-
-  const { alert: alertComp } = useContext(AlertContext);
-  
-  const onAlertClick = async (text: string) => {
-    const result = await alertComp(text);
-    console.log("custom", result);
-    HandleIsEnd();
-  };
-
-  // ==========AlertSimple창 사용 예시==========
-  // Alert와 마찬가지로 이거 필요
-  // const [isEnd, setIsEnd] = useState(false);
-  // const HandleIsEnd = useCallback(() => {
-  //   setIsEnd(!isEnd);
-  // }, [isEnd]);
-
-  const { alert: alertSimpleComp } = useContext(AlertSimpleContext);
-  
-  const onAlertSimpleClick = async (text: string) => {
-    const result = await alertSimpleComp(text);
-    console.log("custom", result);
-    HandleIsEnd();
-  };
-
-  // ==============confirm창 사용 예시=============
-  const { confirm: confirmComp } = useContext(ConfirmContext);
-
-  const onConfirmClick = async (text: string) => {
-    const result = await confirmComp(text);
-    console.log("custom", result);
-    return result;
-  };
-
-  const openConfirm = async () => {
-    const nextAction = await onConfirmClick("Confirm창은 이런식으로 뜹니다.");
-    if (nextAction) {
-      moveNotifications()
-    }
-    return;
-  };
-  // ===============================================
 
   const axiosAllTransActionList = async () => {
     try {
-      // onAlertClick("Alert창 이렇게 뜹니다.")`
-
       const Borrow = await getBorrowList()
       const Lend = await getLendList()
       const response = await [...Borrow?.data, ...Lend?.data]
@@ -133,17 +80,6 @@ function Main(){
     axiosAllTransActionList()
   }, [])
 
-  const [refreshed, setRefreshed] = useState(false);
-
-  useEffect(() => {
-    if (!refreshed) {
-      setRefreshed(true);
-    }
-  }, []);
-  console.log(transList)
-  // 로딩 페이지가 하나 더 있으면 좋겠다.
-  if (!transList) {return "";}
-
   return(
     <>
       <CenteredContainer>
@@ -156,7 +92,7 @@ function Main(){
           $size="94%,50px">확인 하지 않은 알림!</Text>
 
         <Box
-          onClick={openConfirm}
+          onClick={moveNotifications}
           $alarmBox
           $size="88%,80px">
           <AlarmHeader>
