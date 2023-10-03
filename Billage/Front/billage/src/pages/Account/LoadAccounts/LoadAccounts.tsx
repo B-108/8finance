@@ -124,12 +124,12 @@ function LoadAccounts() {
         <BtnContainter style={{ margin: '10px' }}>
           <Button 
             $basicGrayBtn 
-            $size="48%, 40px"
+            $size="48%, 45px"
             onClick={moveLoadBanks}>돌아가기
           </Button>
           <Button 
             $basicGreenBtn 
-            $size="48%, 40px"
+            $size="48%, 45px"
             onClick={movePinEnter}>등록
           </Button>
         </BtnContainter>

@@ -22,6 +22,7 @@ import AccountEnroll from './pages/Account/AccountEnroll/AccountEnroll';
 import LoadAccounts from './pages/Account/LoadAccounts/LoadAccounts';
 import LoadBanks from './pages/Account/LoadBanks/LoadBanks';
 import Loading from './pages/Loading';
+import IOUCheck from './pages/IOU/IOUCheck';
 
 const router = createBrowserRouter([
     {
@@ -86,6 +87,11 @@ const router = createBrowserRouter([
             {
                 path: '/transaction/detail/:id/iou',
                 element: <IOU />,
+                errorElement: <ErrorComponent />,
+            },
+            {
+                path: '/ioucheck',
+                element: <IOUCheck />,
                 errorElement: <ErrorComponent />,
             },
             {
