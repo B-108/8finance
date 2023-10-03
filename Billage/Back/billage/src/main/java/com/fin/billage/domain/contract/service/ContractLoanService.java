@@ -70,8 +70,19 @@ public class ContractLoanService {
                 tranAmtList.add(b.getTranAmt());
             }
 
-            String creditorBankCode = (c.getContractCreditorBank().equals("국민은행")) ? "004" : "003";
-            String debtorBankCode = (c.getContractDebtorBank().equals("국민은행")) ? "004" : "003";
+            String creditorBankCode = "";
+            if (c.getContractCreditorBank().equals("국민은행")) {
+                creditorBankCode = "004";
+            } else if (c.getContractCreditorBank().equals("기업은행")) {
+                creditorBankCode = "003";
+            }
+
+            String debtorBankCode = "";
+            if (c.getContractDebtorBank().equals("국민은행")) {
+                debtorBankCode = "004";
+            } else if (c.getContractDebtorBank().equals("기업은행")) {
+                debtorBankCode = "003";
+            }
 
             ContractLoanResponseDto contractLoanResponseDto = ContractLoanResponseDto.builder()
                     .contractId(c.getContractId())
@@ -108,6 +119,7 @@ public class ContractLoanService {
         List<Contract> contracts = contractRepository.findAllByDebtorUser(user);
         List<ContractLoanResponseDto> borrowList = new ArrayList<>();
 
+
         for (Contract c : contracts) {
             String tranWd = c.getDebtorUser().getUserName();
 //            List<BigDecimal> tranAmtList = transactionRepository.findAllTranAmtByContractAndTranWd(c, tranWd);
@@ -118,8 +130,19 @@ public class ContractLoanService {
                 tranAmtList.add(b.getTranAmt());
             }
 
-            String creditorBankCode = (c.getContractCreditorBank().equals("국민은행")) ? "004" : "003";
-            String debtorBankCode = (c.getContractDebtorBank().equals("국민은행")) ? "004" : "003";
+            String creditorBankCode = "";
+            if (c.getContractCreditorBank().equals("국민은행")) {
+                creditorBankCode = "004";
+            } else if (c.getContractCreditorBank().equals("기업은행")) {
+                creditorBankCode = "003";
+            }
+
+            String debtorBankCode = "";
+            if (c.getContractDebtorBank().equals("국민은행")) {
+                debtorBankCode = "004";
+            } else if (c.getContractDebtorBank().equals("기업은행")) {
+                debtorBankCode = "003";
+            }
 
             ContractLoanResponseDto contractLoanResponseDto = ContractLoanResponseDto.builder()
                     .contractId(c.getContractId())
