@@ -42,7 +42,7 @@ function TransactionHistory () {
         <Text
           $title>전체 거래내역</Text>
         <Text
-          $smallTitle>Total : 0</Text>
+          $smallTitle>Total : {history.length}</Text>
       </TitleBox>
 
     {history.map((item) => (
