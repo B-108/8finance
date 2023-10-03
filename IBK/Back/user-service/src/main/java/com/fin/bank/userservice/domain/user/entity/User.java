@@ -11,11 +11,11 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
+@Table(name = "bank_user")
 @Entity
-@Table(name = "user")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_pk", nullable = false)
     private Long userPk;
 
@@ -54,11 +54,8 @@ public class User {
     @Column(name = "user_agree_date")
     private LocalDateTime userAgreeDate;
 
-    @Column(name = "firebase_token")
-    private String userFirebaseToken;
-
     @Builder
-    public User(Long userPk, String userSeqNo, String userCellNo, String userName, String userInfo, String userSimplePass, LocalDateTime userJoinDate, LocalDateTime userModifyDate, LocalDateTime userDeleteDate, Integer userCarrotTemp, Character userAgreeYn, LocalDateTime userAgreeDate, String userFirebaseToken) {
+    public User(Long userPk, String userSeqNo, String userCellNo, String userName, String userInfo, String userSimplePass, LocalDateTime userJoinDate, LocalDateTime userModifyDate, LocalDateTime userDeleteDate, Integer userCarrotTemp, Character userAgreeYn, LocalDateTime userAgreeDate) {
         this.userPk = userPk;
         this.userSeqNo = userSeqNo;
         this.userCellNo = userCellNo;
@@ -71,7 +68,6 @@ public class User {
         this.userCarrotTemp = userCarrotTemp;
         this.userAgreeYn = userAgreeYn;
         this.userAgreeDate = userAgreeDate;
-        this.userFirebaseToken = userFirebaseToken;
     }
 
     public void setPassword(String newPassword) {
