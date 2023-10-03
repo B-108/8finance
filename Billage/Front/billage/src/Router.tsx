@@ -5,6 +5,8 @@ import ErrorComponent from 'src/pages/ErrorComponent';
 import NotFound from 'src/pages/NotFound';
 import Root from 'src/App';
 import IOU from 'src/pages/IOU/IOU';
+import IOUCheck from './pages/IOU/IOUCheck/IOUCheck';
+import IOUAgree from './pages/IOU/IOUAgree/IOUAgree';
 import TransactionList from '/src/pages/TransactionList/TransactionList';
 import FindPW from 'src/pages/FindPassword/FindPassword';
 import ChangePW from 'src/pages/ChangePassword/ChangePassword';
@@ -22,7 +24,6 @@ import AccountEnroll from './pages/Account/AccountEnroll/AccountEnroll';
 import LoadAccounts from './pages/Account/LoadAccounts/LoadAccounts';
 import LoadBanks from './pages/Account/LoadBanks/LoadBanks';
 import Loading from './pages/Loading';
-import IOUCheck from './pages/IOU/IOUCheck/IOUCheck';
 
 const router = createBrowserRouter([
     {
@@ -92,6 +93,11 @@ const router = createBrowserRouter([
             {
                 path: '/ioucheck',
                 element: <IOUCheck />,
+                errorElement: <ErrorComponent />,
+            },
+            {
+                path: '/iouagree',
+                element: <IOUAgree />,
                 errorElement: <ErrorComponent />,
             },
             {
