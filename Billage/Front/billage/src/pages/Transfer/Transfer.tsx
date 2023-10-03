@@ -210,6 +210,7 @@ function Transfer() {
                     value={interest}
                     $active
                     $size="88%,40px"
+                    $position
                     onChange={handleInterestChange}
                 ></Input>
             </TranInputDiv>
