@@ -45,8 +45,9 @@ function TransactionHistory () {
           $smallTitle>Total : {history.length}</Text>
       </TitleBox>
 
-    {history.map((item) => (
+    {history.map((item,index) => (
         <Box
+        key={index}
         $detailBox
         $size="86%,150px">
         <DetailBox>
