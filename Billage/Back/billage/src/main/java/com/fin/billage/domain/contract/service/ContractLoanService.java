@@ -70,8 +70,8 @@ public class ContractLoanService {
                 tranAmtList.add(b.getTranAmt());
             }
 
-            String creditorBankName = (c.getContractCreditorBank().equals("004")) ? "국민은행" : "기업은행";
-            String debtorBankName = (c.getContractDebtorBank().equals("004")) ? "국민은행" : "기업은행";
+            String creditorBankCode = (c.getContractCreditorBank().equals("국민은행")) ? "004" : "003";
+            String debtorBankCode = (c.getContractDebtorBank().equals("국민은행")) ? "004" : "003";
 
             ContractLoanResponseDto contractLoanResponseDto = ContractLoanResponseDto.builder()
                     .contractId(c.getContractId())
@@ -81,11 +81,11 @@ public class ContractLoanService {
                     .debtorUser(c.getDebtorUser())
                     .repaymentCash(calculateTransaction(tranAmtList, c.getContractAmt()))
                     .remainingLoanTerm(ChronoUnit.DAYS.between(LocalDate.now(), c.getContractMaturityDate()))
-                    .creditorBankCode(c.getContractCreditorBank())
-                    .creditorBankName(creditorBankName)
+                    .creditorBankCode(creditorBankCode)
+                    .creditorBankName(c.getContractCreditorBank())
                     .creditorAcNum(c.getContractCreditorAcNum())
-                    .debtorBankCode(c.getContractDebtorBank())
-                    .debtorBankName(debtorBankName)
+                    .debtorBankCode(debtorBankCode)
+                    .debtorBankName(c.getContractDebtorBank())
                     .debtorAcNum(c.getContractDebtorAcNum())
                     .build();
 
@@ -118,8 +118,8 @@ public class ContractLoanService {
                 tranAmtList.add(b.getTranAmt());
             }
 
-            String creditorBankName = (c.getContractCreditorBank().equals("004")) ? "국민은행" : "기업은행";
-            String debtorBankName = (c.getContractDebtorBank().equals("004")) ? "국민은행" : "기업은행";
+            String creditorBankCode = (c.getContractCreditorBank().equals("국민은행")) ? "004" : "003";
+            String debtorBankCode = (c.getContractDebtorBank().equals("국민은행")) ? "004" : "003";
 
             ContractLoanResponseDto contractLoanResponseDto = ContractLoanResponseDto.builder()
                     .contractId(c.getContractId())
@@ -129,11 +129,11 @@ public class ContractLoanService {
                     .debtorUser(c.getDebtorUser())
                     .repaymentCash(calculateTransaction(tranAmtList, c.getContractAmt()))
                     .remainingLoanTerm(ChronoUnit.DAYS.between(LocalDate.now(), c.getContractMaturityDate()))
-                    .creditorBankCode(c.getContractCreditorBank())
-                    .creditorBankName(creditorBankName)
+                    .creditorBankCode(creditorBankCode)
+                    .creditorBankName(c.getContractCreditorBank())
                     .creditorAcNum(c.getContractCreditorAcNum())
-                    .debtorBankCode(c.getContractDebtorBank())
-                    .debtorBankName(debtorBankName)
+                    .debtorBankCode(debtorBankCode)
+                    .debtorBankName(c.getContractDebtorBank())
                     .debtorAcNum(c.getContractDebtorAcNum())
                     .build();
 
