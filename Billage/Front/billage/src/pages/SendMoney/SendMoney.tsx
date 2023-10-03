@@ -2,40 +2,86 @@ import Input, { ButtonInput } from '/src/components/Common/Input';
 import React, { useState, useEffect } from 'react';
 import CenteredContainer from '/src/components/Common/CenterAlign';
 import Header from '/src/components/Header/Header';
-import plus from '/src/assets/plus.svg';
 import Button from '/src/components/Common/Button';
 import { ButtonContainer, InputDiv, InputTitle, SmallButtonsContainer } from './SendMoney.style';
-import magnifyingGlass from '/src/assets/magnifyingGlass.svg';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { getAccountList } from '/src/api/account';
 import { AccountType } from '/src/type/account';
 import ConfirmBox from '/src/components/Common/YesOrNo';
-import { TransactionDetailType } from '/src/type/transaction';
-import { getTransActionDetail } from '/src/api/transaciton';
+
+//이체
+import { SendMoneyType } from '/src/type/transaction';
 
 function SendMoney() {
-    const [friendInfo, setFriendInfo] = useState<string>('');
-    const [accountInfo, setAccountInfo] = useState<string>('');
-    const [myAccountInfo, setMyAccountInfo] = useState<string>('');
-    const [amount, setAmountInfo] = useState<string>('0');
     const navigate = useNavigate();
     const location = useLocation();
+    //작성 취소 버튼 클릭시 활성
     const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false); // 다이얼로그 상태 추가
+    // 이체 필요 데이터
+    //거래ID
+    const [transId, setTransId] = useState<number>(0);
+    //보내는 사람(tranWd)
+    const [transWd, setTransWd] = useState<string>('');
+    //보내는 사람 계좌/은행 코드(tranWdAcNum, tranWdBankCode)
+    const [myAccountInfo, setMyAccountInfo] = useState<string>('');
+    const [myAccountInfoCode, setMyAccountInfoCode] = useState<string>('');
+    //받는 사람(tranDp)
+    const [friendInfo, setFriendInfo] = useState<string>('');
+    //받는 사람 계좌/은행 코드(tranDpAcNum, tranDpBankCode)
+    const [accountInfo, setAccountInfo] = useState<string>('');
+    const [accountInfoCode, setAccountInfoCode] = useState<string>('');
+    //금액(tranAmt)
+    const [amount, setAmountInfo] = useState<string>('0');
 
+    console.log(location.state);
+    //내 계좌 목록
     const [accounts, setAccounts] = useState<AccountType[]>([]);
+
+    //Axios
     // 전체 계좌조회
     const axiosAccountList = async (): Promise<void> => {
         try {
             const response = await getAccountList();
             setAccounts(response?.data);
+            console.log(response?.data);
         } catch (error) {
             console.log(error);
         }
     };
-    // useEffect(()=>{
-    //     axiosAccountList()
-    //   },[])
+    //이체
+    const data: SendMoneyType = {
+        contractId: transId,
+        tranWd: transWd,
+        tranWdAcNum: myAccountInfo,
+        tranWdBankCode: myAccountInfoCode,
+        tranDp: friendInfo,
+        tranDpAcNum: accountInfo,
+        tranDpBankCode: '004',
+        tranAmt: Number(amount),
+        tranContent: '돈보내기',
+    };
+
+    //useEffect
+    useEffect(() => {
+        axiosAccountList();
+        const mainAccountParts = location.state.detail.mainAccount.split(' ');
+        setTransId(location.state.state.contractId);
+        setTransWd(location.state.state.debtoruser);
+        setFriendInfo(location.state.state.creditoruser);
+        setAccountInfo(mainAccountParts.slice(1).join(' '));
+        setAccountInfoCode(mainAccountParts[0]);
+    }, []);
+
+    useEffect(() => {
+        const mainAccount = accounts.find((account) => account.accountMainYn === true);
+        if (mainAccount) {
+            setMyAccountInfo(mainAccount.accountNum);
+            setMyAccountInfoCode(mainAccount.accountBankCode);
+        }
+    }, [accounts]);
+
+    //함수
 
     const handleCancelClick = () => {
         setIsCancelDialogOpen(true);
@@ -45,78 +91,43 @@ function SendMoney() {
         setIsCancelDialogOpen(false);
     };
 
-    const moveToPinCheck = () => {};
-
-    // console.log(amount)
-
-    const handleFriendInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFriendInfo(event.target.value);
+    const moveToPinEnter = () => {
+        navigate('/pinenter/sendmoney', { state: data });
     };
-    const handleAccountInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAccountInfo(event.target.value);
-    };
-    const handleMyAccountInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+    const handleMyAccountInfoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        console.log(event.target.value); // 디버깅 목적
         setMyAccountInfo(event.target.value);
     };
     const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // 입력값에서 숫자만 추출
-        const inputValue = event.target.value.replace(/[^0-9]/g, ''); // 숫자 외의 문자는 제거
-        setAmountInfo(inputValue);
+        setAmountInfo(event.target.value);
     };
     const handleButtonClick = (increment: number) => {
         setAmountInfo((prevAmount) => (parseInt(prevAmount) + increment).toString());
     };
-
-    //거래 상세 조회
-    const [detail, setDetail] = useState<TransactionDetailType>();
-    const axiosDetail = async (): Promise<void> => {
-        try {
-            const response = await getTransActionDetail(location.state.contractId);
-            setDetail(response?.data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    useEffect(() => {
-        axiosDetail();
-    }, []);
-
-    const state = location.state;
-    console.log(state);
-    console.log(detail);
 
     return (
         <CenteredContainer>
             <Header headerTitle="이체하기"></Header>
             <InputDiv>
                 <InputTitle>돈 받을 사람</InputTitle>
-                <Input value={friendInfo} $active $size="88%,40px" onChange={handleFriendInfoChange} />
+                <ButtonInput value={friendInfo} $active $size="88%,40px" disabled />
             </InputDiv>
             <hr />
             <InputDiv>
                 <InputTitle>상대방 계좌</InputTitle>
-                <Input value={accountInfo} $active $size="88%,40px" onChange={handleAccountInfoChange} />
+                <ButtonInput value={accountInfo} $active $size="88%,40px" disabled />
             </InputDiv>
             <hr />
             <InputDiv style={{ alignItems: 'center' }}>
                 <InputTitle>내 계좌</InputTitle>
-                {/* <ButtonInput
-                    value={myAccountInfo}
-                    $active
-                    $size="88%,40px"
-                    onChange={handleMyAccountInfoChange}
-                    $buttonImage={plus} // 이미지 버튼 추가
-                /> */}
                 <select
                     value={myAccountInfo}
-                    onChange={() => handleMyAccountInfoChange}
-                    style={{ width: '95%', height: '40px', borderRadius: '10px', border: '3px solid' }}
-                    // $active
-                    // $size="86%,40px"
+                    onChange={handleMyAccountInfoChange}
+                    style={{ width: '95%', height: '40px', borderRadius: '10px', border: '3px solid #BDBDBD' }}
                 >
                     {accounts.map((account) => (
-                        <option key={account.accountId} value={account.accountNum} disabled={!account.accountMainYn}>
+                        <option key={account.accountId} value={account.accountNum}>
                             {account.accountNum}
                         </option>
                     ))}
@@ -126,15 +137,7 @@ function SendMoney() {
 
             <InputDiv style={{ alignItems: 'center' }}>
                 <InputTitle>보내는 금액</InputTitle>
-                <Input
-                    value={amount.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} // 숫자 포맷팅
-                    $active
-                    $size="88%,40px"
-                    $position
-                    onChange={handleAmountChange}
-                    type="amount"
-                    $inputMode="numeric"
-                ></Input>
+                <Input value={amount} $active $size="88%,40px" $position onChange={handleAmountChange}></Input>
                 <SmallButtonsContainer>
                     <Button
                         style={{ margin: '7px 0px 0px 5px' }}
@@ -174,23 +177,24 @@ function SendMoney() {
             <hr />
             <InputDiv style={{ alignItems: 'center' }}>
                 <InputTitle>남은 금액</InputTitle>
-                {/* <Input $active $size="88%,40px">{location.state.repaymentCash - Number(amount)}</Input> */}
+                <Input
+                    value={location.state.detail.repaymentCash - Number(amount)}
+                    $active
+                    $size="88%,40px"
+                    $position
+                    disabled
+                ></Input>
             </InputDiv>
             <hr />
             <ButtonContainer>
                 <Button $basicGrayBtn $size="48%, 50px" onClick={handleCancelClick}>
                     작성취소
                 </Button>
-                <Button $basicGreenBtn $size="48%, 50px" onClick={moveToPinCheck}>
+                <Button $basicGreenBtn $size="48%, 50px" onClick={moveToPinEnter}>
                     작성완료
                 </Button>
             </ButtonContainer>
-            {isCancelDialogOpen && (
-                <ConfirmBox
-                    onCancel={handleConfirmCancel}
-                    onConfirm={() => navigate(-1)} // 여기에 작성을 취소하거나 다른 작업을 수행하는 함수를 넣으세요.
-                />
-            )}
+            {isCancelDialogOpen && <ConfirmBox onCancel={handleConfirmCancel} onConfirm={() => navigate(-1)} />}
         </CenteredContainer>
     );
 }
