@@ -82,11 +82,12 @@ public class TransferService {
     }
 
     // 이체 (오픈뱅킹에 요청)
+    // 일단 무조건 이체 되게 바꿔놈
     public void transferCash(TransferCashRequestDto dto, HttpServletRequest request) {
         String actCode = "002";
         String bankCode = dto.getTranWdBankCode();
 
-        Url url = requestUrlRepository.findByRequestBankCodeAndRequestActCode(bankCode, actCode);
+//        Url url = requestUrlRepository.findByRequestBankCodeAndRequestActCode(bankCode, actCode);
 
         Long user_pk = jwtUtil.extractUserPkFromToken(request);
         User user = userRepository.findById(user_pk).orElse(null);
@@ -94,21 +95,7 @@ public class TransferService {
         String userCellNo = user.getUserCellNo();
         Contract contract = contractRepository.findByContractId(dto.getContractId());
 
-        WebClient webClient = WebClient.builder()
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)  // 기본 헤더 설정
-                .build();
-//
-//        Transaction transaction = transactionRepository.findByContract(contract);
-
-        // HTTP POST 요청 보내기
-        webClient.post()
-                .uri(url.getRequestUrl())
-                .body(BodyInserters.fromValue(dto))
-                .retrieve()
-                .bodyToMono(String.class)
-                .subscribe(
-                        responseBody -> {
-                            Transaction t = Transaction.builder()
+        Transaction t = Transaction.builder()
                                     .tranAmt(dto.getTranAmt())
                                     .contract(contract)
                                     .tranDp(dto.getTranDp())
@@ -121,11 +108,40 @@ public class TransferService {
                                     .build();
 
                             transactionRepository.save(t);
-                        },
-                        error -> {
-                            System.out.println("이체 실패" + error.getMessage());
-                        }
-                );
+
+
+//        WebClient webClient = WebClient.builder()
+//                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)  // 기본 헤더 설정
+//                .build();
+////
+////        Transaction transaction = transactionRepository.findByContract(contract);
+//
+//        // HTTP POST 요청 보내기
+//        webClient.post()
+//                .uri(url.getRequestUrl())
+//                .body(BodyInserters.fromValue(dto))
+//                .retrieve()
+//                .bodyToMono(String.class)
+//                .subscribe(
+//                        responseBody -> {
+//                            Transaction t = Transaction.builder()
+//                                    .tranAmt(dto.getTranAmt())
+//                                    .contract(contract)
+//                                    .tranDp(dto.getTranDp())
+//                                    .tranDpAcNum(dto.getTranDpAcNum())
+//                                    .tranDpBankCode(dto.getTranDpBankCode())
+//                                    .tranWd(dto.getTranWd())
+//                                    .tranWdAcNum(dto.getTranWdAcNum())
+//                                    .tranWdBankCode(dto.getTranWdBankCode())
+//                                    .tranDate(LocalDateTime.now())
+//                                    .build();
+//
+//                            transactionRepository.save(t);
+//                        },
+//                        error -> {
+//                            System.out.println("이체 실패" + error.getMessage());
+//                        }
+//                );
     }
 
     public class Test {
