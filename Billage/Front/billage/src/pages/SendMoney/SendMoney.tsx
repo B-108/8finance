@@ -34,7 +34,7 @@ function SendMoney() {
     //금액(tranAmt)
     const [amount, setAmountInfo] = useState<string>('0');
 
-    console.log(location.state);
+    // console.log(location.state)
     //내 계좌 목록
     const [accounts, setAccounts] = useState<AccountType[]>([]);
 
@@ -81,6 +81,8 @@ function SendMoney() {
         }
     }, [accounts]);
 
+    // console.log(accountInfoCode)
+    
     //함수
 
     const handleCancelClick = () => {
@@ -96,11 +98,18 @@ function SendMoney() {
     };
 
     const handleMyAccountInfoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log(event.target.value); // 디버깅 목적
+        // console.log(event.target.value); // 디버깅 목적
         setMyAccountInfo(event.target.value);
     };
     const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAmountInfo(event.target.value);
+      if(isNaN(Number(event.target.value))) {return}
+
+        if(event.target.value === "") {
+          setAmountInfo("0")
+        }
+        else {
+          setAmountInfo(event.target.value);
+        }
     };
     const handleButtonClick = (increment: number) => {
         setAmountInfo((prevAmount) => (parseInt(prevAmount) + increment).toString());
@@ -119,18 +128,22 @@ function SendMoney() {
                 <ButtonInput value={accountInfo} $active $size="88%,40px" disabled />
             </InputDiv>
             <hr />
-            <InputDiv style={{ alignItems: 'center' }}>
-                <InputTitle>내 계좌</InputTitle>
+            <InputDiv style={{alignItems:"center"}}>
+              <InputTitle>내 계좌</InputTitle>
                 <select
-                    value={myAccountInfo}
-                    onChange={handleMyAccountInfoChange}
-                    style={{ width: '95%', height: '40px', borderRadius: '10px', border: '3px solid #BDBDBD' }}
-                >
-                    {accounts.map((account) => (
-                        <option key={account.accountId} value={account.accountNum}>
-                            {account.accountNum}
-                        </option>
-                    ))}
+                value={myAccountInfo}
+                onChange={handleMyAccountInfoChange}
+                style={{
+                  width : '95%', 
+                  height: '40px', 
+                  borderRadius: '10px', 
+                  border: '3px solid #BDBDBD'}}>
+                {accounts.map((account) => (
+                    <option
+                        key={account.accountId}
+                        value={account.accountNum}>
+                        {account.accountNum}
+                    </option>))}
                 </select>
             </InputDiv>
             <hr />
@@ -139,38 +152,27 @@ function SendMoney() {
                 <InputTitle>보내는 금액</InputTitle>
                 <Input value={amount} $active $size="88%,40px" $position onChange={handleAmountChange}></Input>
                 <SmallButtonsContainer>
-                    <Button
-                        style={{ margin: '7px 0px 0px 5px' }}
-                        $smallBlackBtn
-                        $size="100%,25px"
-                        onClick={() => handleButtonClick(10000)}
-                    >
-                        +1만
-                    </Button>
-                    <Button
-                        style={{ margin: '7px 0px 0px 5px' }}
-                        $smallBlackBtn
-                        $size="100%,25px"
-                        onClick={() => handleButtonClick(50000)}
-                    >
-                        +5만
-                    </Button>
-                    <Button
-                        style={{ margin: '7px 0px 0px 5px' }}
-                        $smallBlackBtn
-                        $size="100%,25px"
-                        onClick={() => handleButtonClick(100000)}
-                    >
-                        +10만
-                    </Button>
-                    <Button
-                        style={{ margin: '7px 0px 0px 5px' }}
-                        $smallBlackBtn
-                        $size="100%,25px"
-                        onClick={() => handleButtonClick(1000000)}
-                    >
-                        +100만
-                    </Button>
+                  <Button style={{margin:"7px 0px 0px 5px"}}
+                    $smallBlackBtn 
+                    $size="18%,25px"
+                    onClick={() => handleButtonClick(10000)}
+                    >+1만
+                  </Button>
+                  <Button style={{margin:"7px 0px 0px 5px"}}
+                    $smallBlackBtn $size="18%,25px"
+                    onClick={() => handleButtonClick(50000)}
+                    >+5만
+                  </Button>
+                  <Button style={{margin:"7px 0px 0px 5px"}}
+                    $smallBlackBtn $size="18%,25px" 
+                    onClick={() => handleButtonClick(100000)}
+                    >+10만
+                  </Button>
+                  <Button style={{margin:"7px 0px 0px 5px"}}
+                    $smallBlackBtn $size="18%,25px"
+                    onClick={() => handleButtonClick(1000000)}
+                    >+100만
+                  </Button>
                 </SmallButtonsContainer>
             </InputDiv>
 
