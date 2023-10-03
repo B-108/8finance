@@ -50,11 +50,13 @@ export const Account = styled.div<{ $isClicked: boolean }>`
     `}
 `
 
-export const Test = styled.div`
+export const Test = styled.button`
   position: absolute;
   width: 90%;
   height: 200px;
   z-index: 999;
+  background-color: transparent;
+  border: 1px solid transparent;
 `
 
 export const AccountImg = styled.img`
