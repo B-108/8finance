@@ -33,14 +33,14 @@ public class Contract {
     @Column(name = "contract_debtor_bank", nullable = false, length = 20)
     private String contractDebtorBank;
 
-    @Column(name = "contract_creditor_bank", length = 20)
+    @Column(name = "contract_creditor_bank", length = 20, columnDefinition = "VARCHAR(255) DEFAULT ' '")
     private String contractCreditorBank;
 
     @ManyToOne
     @JoinColumn(name = "creditor_user_pk")
     private User creditorUser;
 
-    @Column(name = "contract_creditor_ac_num")
+    @Column(name = "contract_creditor_ac_num", columnDefinition = "VARCHAR(255) DEFAULT ' '")
     private String contractCreditorAcNum;
 
     @Column(name = "contract_amt")
