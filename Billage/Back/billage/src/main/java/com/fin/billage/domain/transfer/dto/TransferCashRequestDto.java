@@ -35,7 +35,4 @@ public class TransferCashRequestDto {
 
     // 입금 내용
     private String tranContent;
-
-    // 거래 시간
-    private LocalDateTime tranDate;
 }
