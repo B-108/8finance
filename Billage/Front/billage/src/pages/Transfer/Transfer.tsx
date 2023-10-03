@@ -185,7 +185,7 @@ function Transfer() {
                     <Button
                         style={{ margin: '7px 0px 0px 5px' }}
                         $smallBlackBtn
-                        $size="100%,25px"
+                        $size="18%,25px"
                         onClick={() => handleButtonClick(10000)}
                     >
                         +1만
@@ -193,7 +193,7 @@ function Transfer() {
                     <Button
                         style={{ margin: '7px 0px 0px 5px' }}
                         $smallBlackBtn
-                        $size="100%,25px"
+                        $size="18%,25px"
                         onClick={() => handleButtonClick(50000)}
                     >
                         +5만
@@ -201,7 +201,7 @@ function Transfer() {
                     <Button
                         style={{ margin: '7px 0px 0px 5px' }}
                         $smallBlackBtn
-                        $size="100%,25px"
+                        $size="18%,25px"
                         onClick={() => handleButtonClick(100000)}
                     >
                         +10만
@@ -209,7 +209,7 @@ function Transfer() {
                     <Button
                         style={{ margin: '7px 0px 0px 5px' }}
                         $smallBlackBtn
-                        $size="100%,25px"
+                        $size="18%,25px"
                         onClick={() => handleButtonClick(1000000)}
                     >
                         +100만
