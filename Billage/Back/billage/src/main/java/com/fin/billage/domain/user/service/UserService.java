@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -125,5 +127,29 @@ public class UserService {
                 .firebaseToken(findUser.getUserFirebaseToken())
                 .isUserInfo(true)
                 .build();
+    }
+
+    public List<UserGetListResponseDto> getUserList(String userName) {
+        List<User> userList = userRepository.findAllByUserName(userName);
+
+        if (userList.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        List<UserGetListResponseDto> userGetListResponseDtoList = new ArrayList<>();
+
+        for (User user : userList) {
+            String userCellNo = user.getUserCellNo().substring(7);
+
+            UserGetListResponseDto userGetListResponseDto = UserGetListResponseDto.builder()
+                    .userPk(user.getUserPk())
+                    .userCellNo(userCellNo)
+                    .userName(user.getUserName())
+                    .build();
+
+            userGetListResponseDtoList.add(userGetListResponseDto);
+        }
+
+        return userGetListResponseDtoList;
     }
 }
