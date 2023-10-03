@@ -4,7 +4,7 @@ import {
   useState, 
   useCallback,
   useContext } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams, useLocation } from "react-router-dom"
 
 // 이미지
 import plus from "/src/assets/plus.svg"
@@ -32,9 +32,11 @@ import { AccountProps } from "/src/type/account"
 // API
 import { postLogin } from "/src/api/auth"
 import { postAccountRegister } from "/src/api/account"
+import { postSendMoney } from "/src/api/transaciton"
 
 // 알림용 모달
 import AlertSimpleContext from "/src/context/alertSimple/AlertSimpleContext"
+import { SendMoneyType } from "/src/type/transaction"
 
 
 // 로그인, 돈이체(빌려, 갚아), 계좌등록
@@ -50,6 +52,7 @@ function PinEnter () {
   // 라우터 
   const { routeAction } = useParams<{ routeAction?: string}>()
   const navigate = useNavigate()
+  const location = useLocation()
   const moveLoading = () => {navigate(`/loading`)}
   const moveMyaccount = () => {navigate(`/myaccounts`)}
 
@@ -101,6 +104,9 @@ function PinEnter () {
       else if (routeAction === "account") {
         axiosAccountRegister()
       }
+      else if (routeAction === "sendmoney") {
+        axiosSendMoney()
+      }
     }
   };
 
@@ -147,6 +153,19 @@ function PinEnter () {
     }
     moveMyaccount()
   }
+
+    const axiosSendMoney =async (): Promise<void> => {
+       const sendData : SendMoneyType = location.state
+       console.log(sendData)
+        try{
+            await postSendMoney(sendData)
+            navigate('/main')
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+
 
 
   // SimpleAlert 창

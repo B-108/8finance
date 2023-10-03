@@ -209,7 +209,7 @@ function Main(){
                             width="20px"></Image>
                           <TextBox>
                             <Remain>남은금액</Remain>
-                            <Remain>{transAction.contractAmt - transAction.repaymentCash}</Remain>
+                            <Remain>{transAction.repaymentCash}</Remain>
                           </TextBox>
                           <SendBtn>돈 돌려주기</SendBtn>
                         </BottomSection>
@@ -255,7 +255,6 @@ function Main(){
                     <SignBox>빌린 돈</SignBox>
                     <TextUp>지인에게</TextUp>
                     <TextDown>부담없이 빌리세요!</TextDown>
-                    <DonutChart/>
                   </TopSection>
 
                   <BottomSection>

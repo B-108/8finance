@@ -81,7 +81,7 @@ function DonutChart ({Return,Money,Day}:DonutChartProps) {
   };
 
   // const seriesRadial = [Number((Return/Money * 100))];
-  const seriesRadial = [64];
+  const seriesRadial = [100 - Number((Return/Money * 100))];
   return(
     <div>
     <Chart
