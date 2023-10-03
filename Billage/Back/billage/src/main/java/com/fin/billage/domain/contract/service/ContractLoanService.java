@@ -5,6 +5,7 @@ import com.fin.billage.domain.contract.dto.ContractLoanDetailResponseDto;
 import com.fin.billage.domain.contract.dto.ContractLoanResponseDto;
 
 import com.fin.billage.domain.contract.entity.Contract;
+import com.fin.billage.domain.contract.entity.Transaction;
 import com.fin.billage.domain.contract.repository.ContractRepository;
 import com.fin.billage.domain.contract.repository.TransactionRepository;
 import com.fin.billage.domain.user.entity.User;
@@ -62,7 +63,13 @@ public class ContractLoanService {
 
         for (Contract c : contracts) {
             String tranWd = c.getDebtorUser().getUserName();
-            List<BigDecimal> tranAmtList = transactionRepository.findTranAmtByContractAndTranWd(c, tranWd);
+//            List<BigDecimal> tranAmtList = transactionRepository.findAllTranAmtByContractAndTranWd(c, tranWd);
+            List<Transaction> tranList = transactionRepository.findAllByContractAndTranWd(c, tranWd);
+            List<BigDecimal> tranAmtList = new ArrayList<>();
+
+            for (Transaction b : tranList) {
+                tranAmtList.add(b.getTranAmt());
+            }
             ContractLoanResponseDto contractLoanResponseDto = ContractLoanResponseDto.builder()
                     .contractId(c.getContractId())
                     .contractAmt(c.getContractAmt())
@@ -94,7 +101,14 @@ public class ContractLoanService {
 
         for (Contract c : contracts) {
             String tranWd = c.getDebtorUser().getUserName();
-            List<BigDecimal> tranAmtList = transactionRepository.findTranAmtByContractAndTranWd(c, tranWd);
+//            List<BigDecimal> tranAmtList = transactionRepository.findAllTranAmtByContractAndTranWd(c, tranWd);
+            List<Transaction> tranList = transactionRepository.findAllByContractAndTranWd(c, tranWd);
+            List<BigDecimal> tranAmtList = new ArrayList<>();
+
+            for (Transaction b : tranList) {
+                tranAmtList.add(b.getTranAmt());
+            }
+
             ContractLoanResponseDto contractLoanResponseDto = ContractLoanResponseDto.builder()
                     .contractId(c.getContractId())
                     .contractAmt(c.getContractAmt())
@@ -129,7 +143,9 @@ public class ContractLoanService {
         // 송금인(tran_wd)가 debeter_user인 경우의 tran_amt를 가져와서
         // calculateTransaction(List<Bigdecimal> tran_amt, 빌린금액)에 넣어주기
         String tranWd = contract.getDebtorUser().getUserName();
-        List<BigDecimal> tranAmtList = transactionRepository.findTranAmtByContractAndTranWd(contract, tranWd);
+//        List<BigDecimal> tranAmtList = transactionRepository.findAllTranAmtByContractAndTranWd(contract, tranWd);
+        List<Transaction> tranList = transactionRepository.findAllByContractAndTranWd(contract, tranWd);
+        List<BigDecimal> tranAmtList = new ArrayList<>();
 
         ContractLoanDetailResponseDto contractLoanDetailResponseDto = ContractLoanDetailResponseDto.builder()
                 .contractAmt(contract.getContractAmt())

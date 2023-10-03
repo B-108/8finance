@@ -13,5 +13,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     Transaction findByContract(Contract contract);
 
-    List<BigDecimal> findTranAmtByContractAndTranWd(Contract contract, String tranWd);
+//    List<BigDecimal> findTranAmtByContractAndTranWd(Contract contract, String tranWd);
+
+    List<BigDecimal> findAllTranAmtByContractAndTranWd(Contract c, String tranWd);
+
+    List<Transaction> findAllByContractAndTranWd(Contract c, String tranWd);
 }
