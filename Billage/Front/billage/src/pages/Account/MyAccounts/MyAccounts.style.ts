@@ -41,12 +41,12 @@ export const Account = styled.div<{ $isClicked: boolean }>`
     ${(props) =>
         props.$isClicked &&
         css`
-          border: 4px solid ${theme.color.green[0]};
+          border: 4px solid transparent;
           border-radius: ${theme.radius.S_10};
-          /* background-image: linear-gradient(#fff, #fff),
+          background-image: linear-gradient(#fff, #fff),
           ${theme.color.mix.border};
           background-origin: border-box;
-          background-clip: content-box, border-box; */
+          background-clip: content-box, border-box;
     `}
 `
 
@@ -58,7 +58,7 @@ export const Test = styled.div`
 `
 
 export const AccountImg = styled.img`
-    width: 90%;
+    width: 95%;
     height: 200px;
 `
 

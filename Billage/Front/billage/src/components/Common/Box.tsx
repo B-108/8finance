@@ -71,7 +71,7 @@ const StyledBox = styled.div<BoxProps>`
         css`
             display: flex;
             margin: 15px 0px 5px 0px;
-            padding: 4% 4% 4% 4%;
+            padding: 10px 4% 4px 4%;
             border-radius: ${theme.radius.S_10};
             box-shadow: 2px 2px 14px 0px rgba(0, 0, 0, 0.25);
         `

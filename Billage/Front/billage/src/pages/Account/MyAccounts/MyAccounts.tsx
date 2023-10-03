@@ -184,17 +184,18 @@ function MyAccounts() {
         <AccountsBox>
           {accounts && accounts.map((account,index) => (
             <Account
+              onClick={() => {openConfirm(account.accountId)}}
               key={index}
               $isClicked={account.accountMainYn} >
               <AccountNUm>
                 {account.accountBankCode === "004" ? "KB 국민은행 _ ":"IBK 기업은행 _ "}
                 {account.accountNum}
               </AccountNUm>
-              <Test
+              {/* <Test
                 onMouseDown={() => startPress(account.accountId)}
                 onMouseUp={endPress}
                 onMouseLeave={endPress}>
-              </Test>
+              </Test> */}
               <AccountImg
                 src={getRandomAccountImage(account.accountBankCode,index)}>
               </AccountImg>

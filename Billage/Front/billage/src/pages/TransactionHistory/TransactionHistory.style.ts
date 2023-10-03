@@ -15,7 +15,7 @@ export const TitleBox = styled.div`
 export const DetailBox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 98%;
+  width: 100%;
 `
 
 export const Contentbox = styled.div`
