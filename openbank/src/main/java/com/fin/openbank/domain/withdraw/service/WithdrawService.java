@@ -1,37 +1,56 @@
 package com.fin.openbank.domain.withdraw.service;
 
-import com.fin.openbank.domain.withdraw.dto.WithdrawRequestDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import com.fin.openbank.domain.transfer.dto.TransferRequestDto;
+import com.fin.openbank.domain.transfer.entity.Transaction;
+import com.fin.openbank.domain.transfer.entity.Url;
+import com.fin.openbank.domain.transfer.enums.TransactionType;
+import com.fin.openbank.domain.transfer.repository.RequestUrlRepository;
+import com.fin.openbank.domain.transfer.repository.TransactionRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 @Service
+@RequiredArgsConstructor
 public class WithdrawService {
+    private final TransactionRepository transactionRepository;
+    private final RequestUrlRepository requestUrlRepository;
 
-    private final WebClient webClient;
+    public void withdraw(TransferRequestDto requestDto, String wdBankCode, TransactionType withdrawal) {
 
-    @Value("${http://localhost:3306/kb/transfer/withdraw}") // application.properties에서 출금 API의 URL을 읽어옵니다.
-    private String withdrawApiUrl;
+        WebClient webClient = WebClient.builder()
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)  // 기본 헤더 설정
+                .build();
 
-    @Autowired
-    public WithdrawService(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl(withdrawApiUrl).build();
-    }
-
-    public boolean withdraw(WithdrawRequestDto requestDto) {
-        // 출금 요청 API 호출을 통해 필요한 정보만 전달하여 처리
-        return webClient.post()
-                .uri("/withdraw")
-                .contentType(MediaType.APPLICATION_JSON)
+        Url url = requestUrlRepository.findByRequestBankCodeAndTransactionType(wdBankCode, withdrawal);
+        // HTTP POST 요청 보내기
+        webClient.post()
+                .uri(url.getRequestUrl())
                 .body(BodyInserters.fromValue(requestDto))
                 .retrieve()
-                .toBodilessEntity()
-                .map(responseEntity -> responseEntity.getStatusCode().is2xxSuccessful())
-                .block();
+                .bodyToMono(String.class)
+                .subscribe(
+                        responseBody -> {
+                            Transaction t = Transaction.builder()
+                                    .tranDate(requestDto.getTranDate()) // 거래 일자 및 시간
+                                    .tranAmt(requestDto.getTranAmt()) // 거래 금액
+                                    .tranWdName(requestDto.getTranWdName()) // 지급인 이름
+                                    .tranWdCellNo(requestDto.getTranWdCellNo()) // 지급인 핸드폰 번호
+                                    .tranWdBankCode(requestDto.getTranWdBankCode()) // 지급인 은행 코드
+                                    .tranWdAcNum(requestDto.getTranWdAcNum()) // 지급인 계좌 번호
+                                    .tranDpName(requestDto.getTranDpName()) // 수취인 이름
+                                    .tranDpCellNo(requestDto.getTranDpCellNo()) // 수취인 핸드폰 번호
+                                    .tranDpBankCode(requestDto.getTranDpBankCode()) // 수취인 은행 코드
+                                    .tranDpAcNum(requestDto.getTranDpAcNum()) // 수취인 계좌 번호
+                                    .build();
+                            transactionRepository.save(t);
+                        },
+                        error -> {
+                            System.out.println("이체 실패" + error.getMessage());
+                        }
+                );
     }
 }
