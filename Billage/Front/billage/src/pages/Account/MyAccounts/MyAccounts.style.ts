@@ -37,7 +37,7 @@ export const Account = styled.div<{ $isClicked: boolean }>`
   margin-bottom: 10px;
   box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);
   border-radius: ${theme.radius.S_10};
-  
+
     ${(props) =>
         props.$isClicked &&
         css`
@@ -49,8 +49,17 @@ export const Account = styled.div<{ $isClicked: boolean }>`
           background-clip: content-box, border-box;
     `}
 `
+
+export const Test = styled.div`
+  position: absolute;
+  width: 90%;
+  height: 200px;
+  z-index: 999;
+`
+
 export const AccountImg = styled.img`
-    width: 93%;
+    width: 90%;
+    height: 200px;
 `
 
 export const AccountNUm = styled.div`
@@ -58,4 +67,5 @@ export const AccountNUm = styled.div`
   bottom: 0px;
   left: 10px;
 `
+
 
