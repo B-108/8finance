@@ -28,6 +28,7 @@ public class TransferController {
     @PostMapping("/deposit")
     public ResponseEntity<TransferResponseDto> deposit(@RequestBody TransferRequestDto requestDto) {
         boolean success = transferService.deposit(requestDto);
+        System.out.println("들어와라...");
         if (success) {
             return new ResponseEntity<>(createSuccessResponse(TransactionType.DEPOSIT), HttpStatus.OK);
         } else {
