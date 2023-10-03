@@ -52,10 +52,11 @@ const ProgressBarMarker = styled.div<{ progress: number }>`
   top: 50%; /* 세로 중앙 정렬을 위해 추가 */
   transform: translateX(-50%) translateY(-50%); /* 가로 세로 중앙 정렬을 위해 추가 */
 `;
-
+// position: relative;
+// display: flex;
 const ProgressText = styled.div<{ progress: number }>`
   position: absolute;
-  left: 10px;
+  left: ${(props) => `${props.progress}%`}; // 프로그레스 바 위치에 따라 동적으로 조절
   top: -40px; /* 원하는 위치에 텍스트 상자를 배치 */
   transform: translateX(-50%);
   background-color: ${theme.color.black};
