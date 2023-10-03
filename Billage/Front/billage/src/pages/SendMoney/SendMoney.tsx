@@ -2,10 +2,8 @@ import Input, { ButtonInput } from '/src/components/Common/Input';
 import React, { useState, useEffect } from 'react';
 import CenteredContainer from '/src/components/Common/CenterAlign';
 import Header from '/src/components/Header/Header';
-import plus from '/src/assets/plus.svg';
 import Button from '/src/components/Common/Button';
 import { ButtonContainer, InputDiv, InputTitle, SmallButtonsContainer } from './SendMoney.style';
-import magnifyingGlass from '/src/assets/magnifyingGlass.svg';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { getAccountList } from '/src/api/account';
@@ -50,8 +48,36 @@ function SendMoney() {
         setAccounts(response?.data)
         console.log(response?.data)
         }
-        catch(error) {
-        console.log(error)
+    };
+    //이체
+    const data: SendMoneyType = {
+        contractId: transId,
+        tranWd: transWd,
+        tranWdAcNum: myAccountInfo,
+        tranWdBankCode: myAccountInfoCode,
+        tranDp: friendInfo,
+        tranDpAcNum: accountInfo,
+        tranDpBankCode: '004',
+        tranAmt: Number(amount),
+        tranContent: '돈보내기',
+    };
+
+    //useEffect
+    useEffect(() => {
+        axiosAccountList();
+        const mainAccountParts = location.state.detail.mainAccount.split(' ');
+        setTransId(location.state.state.contractId);
+        setTransWd(location.state.state.debtoruser);
+        setFriendInfo(location.state.state.creditoruser);
+        setAccountInfo(mainAccountParts.slice(1).join(' '));
+        setAccountInfoCode(mainAccountParts[0]);
+    }, []);
+
+    useEffect(() => {
+        const mainAccount = accounts.find((account) => account.accountMainYn === true);
+        if (mainAccount) {
+            setMyAccountInfo(mainAccount.accountNum);
+            setMyAccountInfoCode(mainAccount.accountBankCode);
         }
     }
     //이체
@@ -106,7 +132,8 @@ function SendMoney() {
         setIsCancelDialogOpen(false);
     };
 
-    const moveToPinCheck = () => {
+    const moveToPinEnter = () => {
+        navigate('/pinenter/sendmoney', { state: data });
     };
 
     const handleMyAccountInfoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -143,7 +170,7 @@ function SendMoney() {
                     />
             </InputDiv>
             <hr />
-            <InputDiv style={{alignItems:"center"}}>
+            <InputDiv style={{ alignItems: 'center' }}>
                 <InputTitle>내 계좌</InputTitle>
                     <select
                     value={myAccountInfo}
@@ -159,45 +186,50 @@ function SendMoney() {
                         </option>
                     ))}
                 </select>
-
             </InputDiv>
             <hr />
-            
-            <InputDiv style={{alignItems:"center"}}>
+
+            <InputDiv style={{ alignItems: 'center' }}>
                 <InputTitle>보내는 금액</InputTitle>
-                <Input
-                  value={amount} 
-                  $active 
-                  $size="88%,40px" 
-                  $position
-                  onChange={handleAmountChange}
-                  ></Input>
+                <Input value={amount} $active $size="88%,40px" $position onChange={handleAmountChange}></Input>
                 <SmallButtonsContainer>
-                  <Button style={{margin:"7px 0px 0px 5px"}}
-                    $smallBlackBtn $size="100%,25px"
-                    onClick={() => handleButtonClick(10000)}
-                    >+1만
-                  </Button>
-                  <Button style={{margin:"7px 0px 0px 5px"}}
-                    $smallBlackBtn $size="100%,25px"
-                    onClick={() => handleButtonClick(50000)}
-                    >+5만
-                  </Button>
-                  <Button style={{margin:"7px 0px 0px 5px"}}
-                    $smallBlackBtn $size="100%,25px" 
-                    onClick={() => handleButtonClick(100000)}
-                    >+10만
-                  </Button>
-                  <Button style={{margin:"7px 0px 0px 5px"}}
-                    $smallBlackBtn $size="100%,25px"
-                    onClick={() => handleButtonClick(1000000)}
-                    >+100만
-                  </Button>
+                    <Button
+                        style={{ margin: '7px 0px 0px 5px' }}
+                        $smallBlackBtn
+                        $size="100%,25px"
+                        onClick={() => handleButtonClick(10000)}
+                    >
+                        +1만
+                    </Button>
+                    <Button
+                        style={{ margin: '7px 0px 0px 5px' }}
+                        $smallBlackBtn
+                        $size="100%,25px"
+                        onClick={() => handleButtonClick(50000)}
+                    >
+                        +5만
+                    </Button>
+                    <Button
+                        style={{ margin: '7px 0px 0px 5px' }}
+                        $smallBlackBtn
+                        $size="100%,25px"
+                        onClick={() => handleButtonClick(100000)}
+                    >
+                        +10만
+                    </Button>
+                    <Button
+                        style={{ margin: '7px 0px 0px 5px' }}
+                        $smallBlackBtn
+                        $size="100%,25px"
+                        onClick={() => handleButtonClick(1000000)}
+                    >
+                        +100만
+                    </Button>
                 </SmallButtonsContainer>
             </InputDiv>
 
             <hr />
-            <InputDiv style={{alignItems:"center"}}>
+            <InputDiv style={{ alignItems: 'center' }}>
                 <InputTitle>남은 금액</InputTitle>
                 <Input
                   value={location.state.detail.repaymentCash - Number(amount)} 
@@ -209,22 +241,14 @@ function SendMoney() {
             </InputDiv>
             <hr />
             <ButtonContainer>
-                <Button $basicGrayBtn $size="48%, 50px"
-                onClick={handleCancelClick}
-                >
+                <Button $basicGrayBtn $size="48%, 50px" onClick={handleCancelClick}>
                     작성취소
                 </Button>
-                <Button $basicGreenBtn $size="48%, 50px"
-                        onClick={moveToPinCheck}
-                >작성완료
+                <Button $basicGreenBtn $size="48%, 50px" onClick={moveToPinEnter}>
+                    작성완료
                 </Button>
             </ButtonContainer>
-            {isCancelDialogOpen && (
-                <ConfirmBox
-                    onCancel={handleConfirmCancel}
-                    onConfirm={() => navigate(-1)} // 여기에 작성을 취소하거나 다른 작업을 수행하는 함수를 넣으세요.
-                />
-            )}
+            {isCancelDialogOpen && <ConfirmBox onCancel={handleConfirmCancel} onConfirm={() => navigate(-1)} />}
         </CenteredContainer>
     );
 }
