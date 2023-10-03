@@ -68,7 +68,7 @@ pipeline {
 
 
 
-                    docker run -d -p 8014:80114 --network ubuntu_ibk --name ibk-net-amount-service docker-springboot-ibk-net-amount-service:0.0.1
+                    docker run -d -p 8014:8014 --network ubuntu_ibk --name ibk-net-amount-service docker-springboot-ibk-net-amount-service:0.0.1
 
                     '''
                 }
