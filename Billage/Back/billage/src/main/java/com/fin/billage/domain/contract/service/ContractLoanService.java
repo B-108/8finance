@@ -19,7 +19,6 @@ import java.time.temporal.ChronoUnit;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +69,10 @@ public class ContractLoanService {
             for (Transaction b : tranList) {
                 tranAmtList.add(b.getTranAmt());
             }
+
+            String creditorBankName = (c.getContractCreditorBank().equals("004")) ? "국민은행" : "기업은행";
+            String debtorBankName = (c.getContractDebtorBank().equals("004")) ? "국민은행" : "기업은행";
+
             ContractLoanResponseDto contractLoanResponseDto = ContractLoanResponseDto.builder()
                     .contractId(c.getContractId())
                     .contractAmt(c.getContractAmt())
@@ -78,6 +81,12 @@ public class ContractLoanService {
                     .debtorUser(c.getDebtorUser())
                     .repaymentCash(calculateTransaction(tranAmtList, c.getContractAmt()))
                     .remainingLoanTerm(ChronoUnit.DAYS.between(LocalDate.now(), c.getContractMaturityDate()))
+                    .creditorBankCode(c.getContractCreditorBank())
+                    .creditorBankName(creditorBankName)
+                    .creditorAcNum(c.getContractCreditorAcNum())
+                    .debtorBankCode(c.getContractDebtorBank())
+                    .debtorBankName(debtorBankName)
+                    .debtorAcNum(c.getContractDebtorAcNum())
                     .build();
 
             lendList.add(contractLoanResponseDto);
@@ -109,6 +118,9 @@ public class ContractLoanService {
                 tranAmtList.add(b.getTranAmt());
             }
 
+            String creditorBankName = (c.getContractCreditorBank().equals("004")) ? "국민은행" : "기업은행";
+            String debtorBankName = (c.getContractDebtorBank().equals("004")) ? "국민은행" : "기업은행";
+
             ContractLoanResponseDto contractLoanResponseDto = ContractLoanResponseDto.builder()
                     .contractId(c.getContractId())
                     .contractAmt(c.getContractAmt())
@@ -117,6 +129,12 @@ public class ContractLoanService {
                     .debtorUser(c.getDebtorUser())
                     .repaymentCash(calculateTransaction(tranAmtList, c.getContractAmt()))
                     .remainingLoanTerm(ChronoUnit.DAYS.between(LocalDate.now(), c.getContractMaturityDate()))
+                    .creditorBankCode(c.getContractCreditorBank())
+                    .creditorBankName(creditorBankName)
+                    .creditorAcNum(c.getContractCreditorAcNum())
+                    .debtorBankCode(c.getContractDebtorBank())
+                    .debtorBankName(debtorBankName)
+                    .debtorAcNum(c.getContractDebtorAcNum())
                     .build();
 
             borrowList.add(contractLoanResponseDto);
@@ -146,6 +164,10 @@ public class ContractLoanService {
 //        List<BigDecimal> tranAmtList = transactionRepository.findAllTranAmtByContractAndTranWd(contract, tranWd);
         List<Transaction> tranList = transactionRepository.findAllByContractAndTranWd(contract, tranWd);
         List<BigDecimal> tranAmtList = new ArrayList<>();
+
+        for (Transaction b : tranList) {
+            tranAmtList.add(b.getTranAmt());
+        }
 
         ContractLoanDetailResponseDto contractLoanDetailResponseDto = ContractLoanDetailResponseDto.builder()
                 .contractAmt(contract.getContractAmt())
