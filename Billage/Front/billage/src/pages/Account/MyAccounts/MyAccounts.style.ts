@@ -41,22 +41,20 @@ export const Account = styled.div<{ $isClicked: boolean }>`
     ${(props) =>
         props.$isClicked &&
         css`
-          border: 4px solid transparent;
+          border: 4px solid ${theme.color.green[0]};
           border-radius: ${theme.radius.S_10};
-          background-image: linear-gradient(#fff, #fff),
+          /* background-image: linear-gradient(#fff, #fff),
           ${theme.color.mix.border};
           background-origin: border-box;
-          background-clip: content-box, border-box;
+          background-clip: content-box, border-box; */
     `}
 `
 
-export const Test = styled.button`
+export const Test = styled.div`
   position: absolute;
   width: 90%;
   height: 200px;
   z-index: 999;
-  background-color: transparent;
-  border: 1px solid transparent;
 `
 
 export const AccountImg = styled.img`

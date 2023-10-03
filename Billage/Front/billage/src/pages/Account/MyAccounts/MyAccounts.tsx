@@ -119,7 +119,6 @@ function MyAccounts() {
   }
 
   const startPress = (accountId:number) => {
-    console.log("스타트 프레스")
     pressTimer.current = setTimeout(() => {
       setIsLongPressActive(true);
       openConfirm(accountId);
@@ -127,7 +126,6 @@ function MyAccounts() {
   };
 
   const endPress = () => {
-    console.log("click")
     clearTimeout(pressTimer.current);
     setIsLongPressActive(false);
   };
