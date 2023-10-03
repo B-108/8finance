@@ -51,4 +51,9 @@ public class UserController {
     public ResponseEntity<?> getUserInfo(@PathVariable String userCellNo) {
         return new ResponseEntity<>(userService.getUserInfo(userCellNo), HttpStatus.OK);
     }
+
+    @GetMapping("/{userName}/userList")
+    public ResponseEntity<?> getUserList(@PathVariable String userName) {
+        return new ResponseEntity<>(userService.getUserList(userName), HttpStatus.OK);
+    }
 }
