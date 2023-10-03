@@ -33,7 +33,7 @@ function Transfer() {
     const [autoTransferDate, setAutoTransferDate] = useState<Date | null>(null); // Date 타입으로 상태 변경
     const [amountInfo, setAmountInfo] = useState<string>('0');
     const [interest, setInterest] = useState<string>('');
-    const [totalAmount, setTotalAmount] = useState<string>('');
+    const [totalAmount, setTotalAmount] = useState<string>('0');
     const [autoTransfer, setAutoTransfer] = useState<boolean>(false); // 자동이체 체크박스 상태
 
     const handleFriendInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -217,7 +217,13 @@ function Transfer() {
 
             <TranInputDiv style={{ alignItems: 'center' }}>
                 <TranInputTitle>총 상환 금액</TranInputTitle>
-                <Input value={totalAmount} $active $size="88%,40px" onChange={handleTotalAmountChange}></Input>
+                <Input
+                    value={totalAmount}
+                    $active
+                    $size="88%,40px"
+                    onChange={handleTotalAmountChange}
+                    $position
+                ></Input>
             </TranInputDiv>
             <ButtonContainer>
                 <Button $basicGrayBtn $size="48%, 50px">

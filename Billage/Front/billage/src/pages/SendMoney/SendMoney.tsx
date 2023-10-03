@@ -11,27 +11,28 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { getAccountList } from '/src/api/account';
 import { AccountType } from '/src/type/account';
 import ConfirmBox from '/src/components/Common/YesOrNo';
+import { TransactionDetailType } from '/src/type/transaction';
+import { getTransActionDetail } from '/src/api/transaciton';
 
 function SendMoney() {
     const [friendInfo, setFriendInfo] = useState<string>('');
     const [accountInfo, setAccountInfo] = useState<string>('');
     const [myAccountInfo, setMyAccountInfo] = useState<string>('');
     const [amount, setAmountInfo] = useState<string>('0');
-    const navigate = useNavigate()
-    const location = useLocation()
+    const navigate = useNavigate();
+    const location = useLocation();
     const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false); // 다이얼로그 상태 추가
 
-    const [accounts, setAccounts] = useState<AccountType[]>([])
+    const [accounts, setAccounts] = useState<AccountType[]>([]);
     // 전체 계좌조회
     const axiosAccountList = async (): Promise<void> => {
         try {
-        const response = await getAccountList()
-        setAccounts(response?.data)
+            const response = await getAccountList();
+            setAccounts(response?.data);
+        } catch (error) {
+            console.log(error);
         }
-        catch(error) {
-        console.log(error)
-        }
-    }
+    };
     // useEffect(()=>{
     //     axiosAccountList()
     //   },[])
@@ -44,11 +45,10 @@ function SendMoney() {
         setIsCancelDialogOpen(false);
     };
 
-    const moveToPinCheck = () => {
-    };
-    
-    console.log(amount)
-    
+    const moveToPinCheck = () => {};
+
+    // console.log(amount)
+
     const handleFriendInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFriendInfo(event.target.value);
     };
@@ -67,17 +67,36 @@ function SendMoney() {
         setAmountInfo((prevAmount) => (parseInt(prevAmount) + increment).toString());
     };
 
+    //거래 상세 조회
+    const [detail, setDetail] = useState<TransactionDetailType>();
+    const axiosDetail = async (): Promise<void> => {
+        try {
+            const response = await getTransActionDetail(location.state.contractId);
+            setDetail(response?.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        axiosDetail();
+    }, []);
+
+    const state = location.state;
+    console.log(state);
+    console.log(detail);
+
     return (
         <CenteredContainer>
             <Header headerTitle="이체하기"></Header>
             <InputDiv>
                 <InputTitle>돈 받을 사람</InputTitle>
-                <ButtonInput value={friendInfo} $active $size="88%,40px" onChange={handleFriendInfoChange} />
+                <Input value={friendInfo} $active $size="88%,40px" onChange={handleFriendInfoChange} />
             </InputDiv>
             <hr />
             <InputDiv>
                 <InputTitle>상대방 계좌</InputTitle>
-                <ButtonInput value={accountInfo} $active $size="88%,40px" onChange={handleAccountInfoChange} />
+                <Input value={accountInfo} $active $size="88%,40px" onChange={handleAccountInfoChange} />
             </InputDiv>
             <hr />
             <InputDiv style={{ alignItems: 'center' }}>

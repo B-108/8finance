@@ -91,7 +91,7 @@ function IOUPage() {
                         <IOUContent>
                             <Title>차 용 증</Title>
                             <div style={{ width: '90%', height: '40vh' }}>
-                                <Amount>￦ {contract?.contractAmt} 원</Amount>
+                                <Amount>₩ {contract?.contractAmt.toLocaleString()} 원</Amount>
                                 <hr />
                                 <Content>
                                     위 금액을 채무자({contract?.debtorUser.userName})가 채권자(
