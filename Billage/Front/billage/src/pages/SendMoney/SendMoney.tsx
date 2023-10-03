@@ -38,7 +38,7 @@ function SendMoney() {
     const [amount, setAmountInfo] = useState<string>('0');
     
 
-    console.log(location.state)
+    // console.log(location.state)
     //내 계좌 목록
     const [accounts, setAccounts] = useState<AccountType[]>([])
     
@@ -48,7 +48,7 @@ function SendMoney() {
         try {
         const response = await getAccountList()
         setAccounts(response?.data)
-        console.log(response?.data)
+        // console.log(response?.data)
         }
         catch(error) {
         console.log(error)
@@ -94,7 +94,7 @@ function SendMoney() {
         }
     }, [accounts]);
 
-    console.log(accountInfoCode)
+    // console.log(accountInfoCode)
     
     //함수
 
@@ -110,11 +110,18 @@ function SendMoney() {
     };
 
     const handleMyAccountInfoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log(event.target.value); // 디버깅 목적
+        // console.log(event.target.value); // 디버깅 목적
         setMyAccountInfo(event.target.value);
     };
     const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAmountInfo(event.target.value);
+      if(isNaN(Number(event.target.value))) {return}
+
+        if(event.target.value === "") {
+          setAmountInfo("0")
+        }
+        else {
+          setAmountInfo(event.target.value);
+        }
     };
     const handleButtonClick = (increment: number) => {
         setAmountInfo((prevAmount) => (parseInt(prevAmount) + increment).toString());
@@ -144,20 +151,21 @@ function SendMoney() {
             </InputDiv>
             <hr />
             <InputDiv style={{alignItems:"center"}}>
-                <InputTitle>내 계좌</InputTitle>
-                    <select
-                    value={myAccountInfo}
-                    onChange={handleMyAccountInfoChange}
-                    style={{width : '95%', height: '40px', borderRadius: '10px', border: '3px solid #BDBDBD'}}
-                >
-                    {accounts.map((account) => (
-                        <option
-                            key={account.accountId}
-                            value={account.accountNum}
-                        >
-                            {account.accountNum}
-                        </option>
-                    ))}
+              <InputTitle>내 계좌</InputTitle>
+                <select
+                value={myAccountInfo}
+                onChange={handleMyAccountInfoChange}
+                style={{
+                  width : '95%', 
+                  height: '40px', 
+                  borderRadius: '10px', 
+                  border: '3px solid #BDBDBD'}}>
+                {accounts.map((account) => (
+                    <option
+                        key={account.accountId}
+                        value={account.accountNum}>
+                        {account.accountNum}
+                    </option>))}
                 </select>
 
             </InputDiv>
@@ -174,22 +182,23 @@ function SendMoney() {
                   ></Input>
                 <SmallButtonsContainer>
                   <Button style={{margin:"7px 0px 0px 5px"}}
-                    $smallBlackBtn $size="100%,25px"
+                    $smallBlackBtn 
+                    $size="18%,25px"
                     onClick={() => handleButtonClick(10000)}
                     >+1만
                   </Button>
                   <Button style={{margin:"7px 0px 0px 5px"}}
-                    $smallBlackBtn $size="100%,25px"
+                    $smallBlackBtn $size="18%,25px"
                     onClick={() => handleButtonClick(50000)}
                     >+5만
                   </Button>
                   <Button style={{margin:"7px 0px 0px 5px"}}
-                    $smallBlackBtn $size="100%,25px" 
+                    $smallBlackBtn $size="18%,25px" 
                     onClick={() => handleButtonClick(100000)}
                     >+10만
                   </Button>
                   <Button style={{margin:"7px 0px 0px 5px"}}
-                    $smallBlackBtn $size="100%,25px"
+                    $smallBlackBtn $size="18%,25px"
                     onClick={() => handleButtonClick(1000000)}
                     >+100만
                   </Button>

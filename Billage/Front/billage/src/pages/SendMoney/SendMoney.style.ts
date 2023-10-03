@@ -21,8 +21,8 @@ export const StyledCheckbox = styled.input`
 
 export const SmallButtonsContainer = styled.div`
     display: flex;
-    width: 90%;
     justify-content: flex-end;
+    width: 94%;
 `;
 
 export const ButtonContainer = styled.div`
