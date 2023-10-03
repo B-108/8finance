@@ -52,4 +52,8 @@ public class Transaction {
 
     @Column(name = "tran_date", nullable = false)
     private LocalDateTime tranDate;
+
+    public void updateTran(String tranWd, String tranWdAcNum, String tranWdBankCode, String tranDp, String tranDpAcNum, String tranDpBankCode) {
+
+    }
 }
