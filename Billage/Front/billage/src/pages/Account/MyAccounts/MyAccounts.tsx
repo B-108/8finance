@@ -12,7 +12,8 @@ import {
   AccountNUm,
   AccountsBox, 
   LeftSection,
-  RightSection,} from './MyAccounts.style';
+  RightSection,
+  Test,} from './MyAccounts.style';
 
 // 재사용 컴포넌트
 import CenteredContainer from '/src/components/Common/CenterAlign';
@@ -90,7 +91,7 @@ function MyAccounts() {
     }
 
     else if(bankcode === "003") {
-      return kbAccountImages[index];
+      return ibkAccountImages[index];
     }
   }
   
@@ -117,7 +118,8 @@ function MyAccounts() {
     }
   }
 
-  const startPress = (accountId) => {
+  const startPress = (accountId:number) => {
+    console.log("스타트 프레스")
     pressTimer.current = setTimeout(() => {
       setIsLongPressActive(true);
       openConfirm(accountId);
@@ -125,6 +127,7 @@ function MyAccounts() {
   };
 
   const endPress = () => {
+    console.log("click")
     clearTimeout(pressTimer.current);
     setIsLongPressActive(false);
   };
@@ -182,19 +185,20 @@ function MyAccounts() {
 
         <AccountsBox>
           {accounts && accounts.map((account,index) => (
-            <Account 
+            <Account
               key={index}
               $isClicked={account.accountMainYn} >
               <AccountNUm>
                 {account.accountBankCode === "004" ? "KB 국민은행 _ ":"IBK 기업은행 _ "}
                 {account.accountNum}
               </AccountNUm>
-
-              <AccountImg
-                src={getRandomAccountImage(account.accountBankCode,index)}
+              <Test
                 onMouseDown={() => startPress(account.accountId)}
                 onMouseUp={endPress}
                 onMouseLeave={endPress}>
+              </Test>
+              <AccountImg
+                src={getRandomAccountImage(account.accountBankCode,index)}>
               </AccountImg>
             </Account>
           ))}
