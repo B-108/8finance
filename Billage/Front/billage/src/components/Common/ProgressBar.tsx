@@ -55,7 +55,7 @@ const ProgressBarMarker = styled.div<{ progress: number }>`
 
 const ProgressText = styled.div<{ progress: number }>`
   position: absolute;
-  left: 10px;
+  left: ${(props) => `${75 + props.progress}%`}; // 프로그레스 바 위치에 따라 동적으로 조절
   top: -40px; /* 원하는 위치에 텍스트 상자를 배치 */
   transform: translateX(-50%);
   background-color: ${theme.color.black};
