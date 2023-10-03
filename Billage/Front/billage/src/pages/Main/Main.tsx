@@ -140,7 +140,7 @@ function Main(){
       setRefreshed(true);
     }
   }, []);
-
+  console.log(transList)
   // 로딩 페이지가 하나 더 있으면 좋겠다.
   if (!transList) {return "";}
 
@@ -235,9 +235,9 @@ function Main(){
                             width="20px"></Image>
                           <TextBox>
                             <Remain>남은금액</Remain>
-                            <Remain>{transAction.contractAmt - transAction.repaymentCash}</Remain>
+                            <Remain>{transAction.repaymentCash}</Remain>
                           </TextBox>
-                          <SendBtn>뭐 넣지?</SendBtn>
+                          <SendBtn>돈 달라하기</SendBtn>
                         </BottomSection>
                       </Box>
                       )
