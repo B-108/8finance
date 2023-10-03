@@ -32,4 +32,22 @@ public class ContractLoanResponseDto {
 
     // 상환일까지 남은 기간
     private Long remainingLoanTerm;
+
+    // 채권자 계좌
+    private String creditorAcNum;
+
+    // 채권자 은행 코드
+    private String creditorBankCode;
+
+    // 채권자 은행명
+    private String creditorBankName;
+
+    // 채무자 계좌
+    private String debtorAcNum;
+
+    // 채무자 은행 코드
+    private String debtorBankCode;
+
+    // 채무자 은행명
+    private String debtorBankName;
 }
