@@ -4,7 +4,7 @@ import theme from "/src/themes";
 
 export const TitleBox = styled.div`
   display: flex;
-  width: 100%;
+  width: 94%;
   height: 60px;
   justify-content: space-between;
   align-items: flex-end;

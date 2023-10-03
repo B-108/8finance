@@ -31,7 +31,6 @@ export async function postRefreshToken() {
 
 privateApi.interceptors.response.use(
   (response) => {
-    console.log('response');
     return response;
   },
 

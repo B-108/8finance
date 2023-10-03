@@ -20,6 +20,10 @@ interface ButtonProps {
     $smallGrayBtn?: boolean;
     $smallBlackBtn?: boolean;
     $registerBtn?: boolean;
+    $transActionToggle? :boolean;
+
+    // 토글상태
+    $Toggle? : boolean;
 
     // 색상 지정
     $Green?: boolean;
@@ -27,6 +31,8 @@ interface ButtonProps {
 
     // 위치 선정
     $absolute?: string;
+
+
 }
 
 const StyledButton = styled.button<ButtonProps>`
@@ -49,6 +55,7 @@ const StyledButton = styled.button<ButtonProps>`
             font-size: ${theme.fontSize.M_20};
             border-radius: ${theme.radius.L_20};
             background-color: ${theme.color.green[0]};
+            font-weight: 800;
         `}
 
     ${(props) =>
@@ -100,6 +107,27 @@ const StyledButton = styled.button<ButtonProps>`
           border: 3px solid ${theme.color.green[0]};
           background-color: ${theme.color.white};
           margin: 20px 0px 10px 0px;
+        `}
+
+    // 거래내역 toggle 버튼
+    ${(props) =>
+        props.$transActionToggle &&
+        css` 
+            color : ${theme.color.gray[100]};
+            font-size: ${theme.fontSize.S_14};
+            border-radius: ${theme.radius.M_15};
+            border: 1px solid ${theme.color.gray[100]};
+            background-color: transparent;
+        `}
+
+    // toggle 된 상태
+    ${(props) =>
+        props.$Toggle &&
+        css`
+            color: ${theme.color.white};
+            font-size: ${theme.fontSize.S_14};
+            border-radius: ${theme.radius.M_15};
+            background-color: ${theme.color.black};
         `}
 
     // 초록색 

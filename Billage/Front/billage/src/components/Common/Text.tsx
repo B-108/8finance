@@ -23,7 +23,7 @@ interface TextProps {
     $smallTitle? : boolean;
     $smallContent? : boolean;
     $smallestContent? : boolean;
-
+    $transactionContent? : boolean;
 }
 
 const StyledText = styled.div<TextProps>`
@@ -52,16 +52,6 @@ const StyledText = styled.div<TextProps>`
         `
     }
 
-    // 간단 설명란 Text
-    ${(props) =>
-        props.$description && 
-        css`
-          color: ${theme.color.gray[55]};
-          font-size: ${theme.fontSize.S_14};
-          font-weight: 800;
-        `
-    }
-
     // title : 각 요소의 제목
     ${(props) =>
         props.$title && 
@@ -79,6 +69,27 @@ const StyledText = styled.div<TextProps>`
           font-weight: 800;
         `
     }
+
+    // 거래상세내용 글씨
+    ${(props) =>
+        props.$transactionContent && 
+        css`
+          color: ${theme.color.gray[85]};
+          font-size: ${theme.fontSize.DF_16};
+        `
+    }
+
+
+    // 간단 설명란 Text
+    ${(props) =>
+        props.$description && 
+        css`
+          color: ${theme.color.gray[55]};
+          font-size: ${theme.fontSize.S_14};
+          font-weight: 800;
+        `
+    }
+
     // 작은 글씨 내용
     ${(props) =>
         props.$smallContent && 
@@ -87,6 +98,7 @@ const StyledText = styled.div<TextProps>`
           font-weight: 800;
         `
     }
+    
     // 가장 작은 글씨 내용
     ${(props) =>
         props.$smallestContent && 

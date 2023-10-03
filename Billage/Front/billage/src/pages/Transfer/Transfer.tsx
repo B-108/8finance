@@ -3,12 +3,14 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import {useNavigate} from 'react-router-dom';
 
 // 공통 컴포넌트 및 이미지
 import Input, { ButtonInput } from '/src/components/Common/Input';
 import CenteredContainer from '/src/components/Common/CenterAlign';
 import Header from '/src/components/Header/Header';
 import Button from '/src/components/Common/Button';
+import ConfirmBox from '/src/components/Common/YesOrNo';
 
 import plus from '/src/assets/plus.svg';
 import calendar from '/src/assets/calendar.svg';
@@ -35,6 +37,18 @@ function Transfer() {
     const [interest, setInterest] = useState<string>('');
     const [totalAmount, setTotalAmount] = useState<string>('0');
     const [autoTransfer, setAutoTransfer] = useState<boolean>(false); // 자동이체 체크박스 상태
+    const navigate = useNavigate()
+
+    //작성 취소 버튼 클릭시 활성
+    const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false); // 다이얼로그 상태 추가
+ 
+    const handleCancelClick = () => {
+        setIsCancelDialogOpen(true);
+    };
+
+    const handleConfirmCancel = () => {
+        setIsCancelDialogOpen(false);
+    };
 
     const handleFriendInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFriendInfo(event.target.value);
@@ -226,7 +240,7 @@ function Transfer() {
                 ></Input>
             </TranInputDiv>
             <ButtonContainer>
-                <Button $basicGrayBtn $size="48%, 50px">
+                <Button $basicGrayBtn $size="48%, 50px"onClick={handleCancelClick}>
                     작성취소
                 </Button>
                 <Button $basicGreenBtn $size="48%, 50px" onClick={axiosPostIOU}>

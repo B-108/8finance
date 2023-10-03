@@ -12,10 +12,11 @@ import ConfirmBox from '/src/components/Common/YesOrNo';
 
 //이체
 import { SendMoneyType } from '/src/type/transaction';
+import { postSendMoney } from '/src/api/transaciton';
 
 function SendMoney() {
-    const navigate = useNavigate();
-    const location = useLocation();
+    const navigate = useNavigate()
+    const location = useLocation()
     //작성 취소 버튼 클릭시 활성
     const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false); // 다이얼로그 상태 추가
     // 이체 필요 데이터
@@ -33,20 +34,19 @@ function SendMoney() {
     const [accountInfoCode, setAccountInfoCode] = useState<string>('');
     //금액(tranAmt)
     const [amount, setAmountInfo] = useState<string>('0');
+    
 
-    console.log(location.state);
+    console.log(location.state)
     //내 계좌 목록
-    const [accounts, setAccounts] = useState<AccountType[]>([]);
-
+    const [accounts, setAccounts] = useState<AccountType[]>([])
+    
     //Axios
     // 전체 계좌조회
     const axiosAccountList = async (): Promise<void> => {
         try {
-            const response = await getAccountList();
-            setAccounts(response?.data);
-            console.log(response?.data);
-        } catch (error) {
-            console.log(error);
+        const response = await getAccountList()
+        setAccounts(response?.data)
+        console.log(response?.data)
         }
     };
     //이체
@@ -79,8 +79,49 @@ function SendMoney() {
             setMyAccountInfo(mainAccount.accountNum);
             setMyAccountInfoCode(mainAccount.accountBankCode);
         }
+    }
+    //이체
+
+    const axiosSendMoney =async (): Promise<void> => {
+        const data :SendMoneyType ={
+            contractId : transId,
+            tranWd : transWd,
+            tranWdAcNum : myAccountInfo,
+            tranWdBankCode : myAccountInfoCode,
+            tranDp : friendInfo,
+            tranDpAcNum : accountInfo,
+            tranDpBankCode : accountInfoCode,
+            tranAmt : Number(amount),
+            tranContent : '돈 보내기'
+        }
+        try{
+            await postSendMoney(data)
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+
+    //useEffect
+    useEffect(()=>{
+        axiosAccountList()
+        setTransId(location.state.state.contractId)
+        setTransWd(location.state.state.debtoruser)
+        setFriendInfo(location.state.state.creditoruser)
+        setAccountInfo(location.state.detail.mainAccount)
+        setAccountInfoCode(location.state.detail.bankCode)
+      },[])
+
+    useEffect(() => {
+        const mainAccount = accounts.find(account => account.accountMainYn === true);
+        if (mainAccount) {
+            setMyAccountInfo(mainAccount.accountNum);
+            setMyAccountInfoCode(mainAccount.accountBankCode)
+        }
     }, [accounts]);
 
+    console.log(accountInfoCode)
+    
     //함수
 
     const handleCancelClick = () => {
@@ -111,23 +152,36 @@ function SendMoney() {
             <Header headerTitle="이체하기"></Header>
             <InputDiv>
                 <InputTitle>돈 받을 사람</InputTitle>
-                <ButtonInput value={friendInfo} $active $size="88%,40px" disabled />
+                <ButtonInput
+                    value={friendInfo}
+                    $active
+                    $size="88%,40px"
+                    disabled
+                    />
             </InputDiv>
             <hr />
             <InputDiv>
                 <InputTitle>상대방 계좌</InputTitle>
-                <ButtonInput value={accountInfo} $active $size="88%,40px" disabled />
+                <ButtonInput
+                    value={accountInfo}
+                    $active
+                    $size="88%,40px"
+                    disabled
+                    />
             </InputDiv>
             <hr />
             <InputDiv style={{ alignItems: 'center' }}>
                 <InputTitle>내 계좌</InputTitle>
-                <select
+                    <select
                     value={myAccountInfo}
                     onChange={handleMyAccountInfoChange}
-                    style={{ width: '95%', height: '40px', borderRadius: '10px', border: '3px solid #BDBDBD' }}
+                    style={{width : '95%', height: '40px', borderRadius: '10px', border: '3px solid #BDBDBD'}}
                 >
                     {accounts.map((account) => (
-                        <option key={account.accountId} value={account.accountNum}>
+                        <option
+                            key={account.accountId}
+                            value={account.accountNum}
+                        >
                             {account.accountNum}
                         </option>
                     ))}
@@ -178,12 +232,12 @@ function SendMoney() {
             <InputDiv style={{ alignItems: 'center' }}>
                 <InputTitle>남은 금액</InputTitle>
                 <Input
-                    value={location.state.detail.repaymentCash - Number(amount)}
-                    $active
-                    $size="88%,40px"
-                    $position
-                    disabled
-                ></Input>
+                  value={location.state.detail.repaymentCash - Number(amount)} 
+                  $active 
+                  $size="88%,40px" 
+                  $position
+                  disabled
+                  ></Input>
             </InputDiv>
             <hr />
             <ButtonContainer>
