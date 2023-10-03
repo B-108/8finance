@@ -4,8 +4,8 @@ import theme from '/src/themes';
 import Image from './Image';
 
 interface InputProps {
-    ref?: React.Ref<HTMLInputElement>; 
-    
+    ref?: React.Ref<HTMLInputElement>;
+
     children?: React.ReactNode;
     onClick?: () => void;
     value?: string | number | Date;
@@ -19,11 +19,13 @@ interface InputProps {
     // 간편 비밀번호
     $simplepassword?: boolean;
     // 간편 비밀번호 입력 활성화
-    $IsValue? : boolean;
+    $IsValue?: boolean;
     // 사진
     $buttonImage?: string;
     // 배치
-    $position? : boolean;
+    $position?: boolean;
+    // 모드
+    $inputMode?: string;
 }
 
 const StyledInput = styled.input<InputProps>`
@@ -39,20 +41,24 @@ const StyledInput = styled.input<InputProps>`
     width: ${(props) => props.$size?.split(',')[0]};
     height: ${(props) => props.$size?.split(',')[1]};
 
+    // inputMode 추가
+    // 금액인풋일때 숫자 외 입력 차단
+    inputmode: ${(props) => (props.type === 'amount' ? 'numeric' : 'text')};
+
     // 회원 관련 입력
     ${(props) =>
-      props.$active &&
-      css`
-        border: 3px solid ${theme.color.gray[70]};
-        font-size: ${theme.fontSize.DF_16};
-        border-radius: ${theme.radius.S_10};
-        padding : 0px 2.5% 0px 2.5%;
-        
-        &:focus {
-          outline: 1px solid transparent;
-          border: 3px solid ${theme.color.green[0]};
-        }
-      `}
+        props.$active &&
+        css`
+            border: 3px solid ${theme.color.gray[70]};
+            font-size: ${theme.fontSize.DF_16};
+            border-radius: ${theme.radius.S_10};
+            padding: 0px 2.5% 0px 2.5%;
+
+            &:focus {
+                outline: 1px solid transparent;
+                border: 3px solid ${theme.color.green[0]};
+            }
+        `}
 
     // 간편 비밀번호 입력
     ${(props) =>
@@ -66,18 +72,18 @@ const StyledInput = styled.input<InputProps>`
             color: transparent;
 
             &:focus {
-              outline: 1px solid ${theme.color.green[0]};
-              border: 1px solid ${theme.color.green[0]}
+                outline: 1px solid ${theme.color.green[0]};
+                border: 1px solid ${theme.color.green[0]};
             }
         `}
 
-    ${(props) => props.$IsValue &&
-      css`
-        outline: 1px solid ${theme.color.green[0]};
-        background-color: ${theme.color.green[0]};
-        border: 1px solid ${theme.color.green[0]};
-      `
-    }
+    ${(props) =>
+        props.$IsValue &&
+        css`
+            outline: 1px solid ${theme.color.green[0]};
+            background-color: ${theme.color.green[0]};
+            border: 1px solid ${theme.color.green[0]};
+        `}
 
     // 타입이 "interest"인 경우 "%" 기호 표시
     ${(props) =>
@@ -95,11 +101,10 @@ const StyledInput = styled.input<InputProps>`
         `}
     //
         ${(props) =>
-          props.$position &&
-          css`
-              text-align: right; // 오른쪽 정렬
-          `}
-  
+        props.$position &&
+        css`
+            text-align: right; // 오른쪽 정렬
+        `}
 `;
 
 // const Input = (props: InputProps) => {
