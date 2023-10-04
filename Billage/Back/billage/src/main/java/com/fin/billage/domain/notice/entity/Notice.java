@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,6 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor // 기본생성자
 @AllArgsConstructor
 @Entity
+@DynamicInsert //default를 위헤
 @Table(name = "notice")
 public class Notice {
 
@@ -30,7 +34,7 @@ public class Notice {
     @Column(name = "notice_send_date", nullable = false)
     private LocalDateTime noticeSendDate;
 
-    @Column(name = "notice_state", nullable = false, columnDefinition = "INT DEFAULT 0")
+    @Column(name = "notice_state")
     private Integer noticeState;
 
     @Column(name = "notice_userName", nullable = false, length = 20)
@@ -50,5 +54,12 @@ public class Notice {
 
     public void modifyState(){
         this.noticeState = 1;
+    }
+
+    @PrePersist
+    private void prePersist(){
+        if (noticeState == null){
+            noticeState = 0;
+        }
     }
 }
