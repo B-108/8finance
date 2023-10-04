@@ -32,4 +32,5 @@ export const ButtonContainer = styled.div`
     align-items: flex-end;
     position: absolute;
     bottom: 20px;
+    
 `;
