@@ -52,7 +52,7 @@ public class TransferService {
 
         // HTTP POST 요청 보내기
         webClient.post()
-                .uri("https://j9b108.b.ssafy.io/ibk/account/deposit")
+                .uri("http://localhost:9090/account/deposit")
                 .body(BodyInserters.fromValue(accountRequestDto))
                 .retrieve()
                 .bodyToMono(AccountResponseDto.class)
