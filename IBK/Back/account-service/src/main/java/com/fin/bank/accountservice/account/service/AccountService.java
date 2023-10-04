@@ -14,6 +14,7 @@ import reactor.core.publisher.Mono;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,7 +26,7 @@ public class AccountService {
     private final WebClient.Builder webClientBuilder;
 
     // (수정) 사용자의 고객명과 전화번호를 통해 해당 고객의 모든 계좌 목록을 조회
-    public List<AccountResponseDto>getAccountList(AccountRequestDto accountRequestDto, HttpServletRequest request) {
+    public List<AccountResponseDto> getAccountList(AccountRequestDto accountRequestDto, HttpServletRequest request) {
 
 //        for (AccountRequestDto dto : list) {
 //            String customerName = dto.getUserName();
@@ -40,6 +41,9 @@ public class AccountService {
 //                accountResponseDtoList.add(accountResponseDtos);
 //            }
 //        }
+
+        List<AccountResponseDto> result = new ArrayList<>();
+
         AccountUserRequestDto accountUserRequestDto = AccountUserRequestDto.builder()
                 .userCellNo(accountRequestDto.getUserCellNo())
                 .userName(accountRequestDto.getUserName())
@@ -60,7 +64,16 @@ public class AccountService {
                     // Here I have set it to 10 seconds.
                     .block(Duration.ofSeconds(10));
 
-            return accountRepository.findByUserPk(responseBody.getUserPk()).orElse(null);
+            List<Account> findAccount = accountRepository.findByUserPk(responseBody.getUserPk()).orElseThrow(() -> new RuntimeException("없어요.."));
+
+            for (Account account : findAccount) {
+                result.add(AccountResponseDto.builder()
+                                .accountNum(account.getAccountNumber())
+                                .bankName("기업은행")
+                                .build());
+            }
+
+            return result;
 
         } catch (Exception e) {
             return null;  // 출금 실패: 출금할 금액보다 잔액이 적음 또는 다른 오류 발생

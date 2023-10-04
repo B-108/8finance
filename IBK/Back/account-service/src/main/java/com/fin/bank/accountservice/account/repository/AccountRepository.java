@@ -13,7 +13,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     Optional<Account> findByAccountNumber(String accountNumber);
 
-    Optional<List<AccountResponseDto>> findByUserPk(Long userPk);
+    Optional<List<Account>> findByUserPk(Long userPk);
 
 //    Optional<Account> findByUser_UserNameAndUser_UserCellNoAndAccountNumber(String tranDpName, String tranDpCellNo, String tranDpAcNum);
 
