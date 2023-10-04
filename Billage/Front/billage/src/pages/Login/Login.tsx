@@ -159,7 +159,7 @@ function Login(){
             <span> | </span>
             <span>간편 비밀번호 찾기</span>
         </div>
-    <Button onClick={sendNotification}>알림</Button>
+    {/* <Button onClick={sendNotification}>알림</Button> */}
     </CenteredContainer>
   )
 }
