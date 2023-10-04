@@ -32,6 +32,20 @@ function TransactionHistory () {
       axiosHistory();
   }, []);
 
+// 날짜 및 시간을 원하는 형식으로 포맷팅하는 함수
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // 월을 두 자리로 표시
+  const day = String(date.getDate()).padStart(2, '0'); // 일을 두 자리로 표시
+  const hours = String(date.getHours()).padStart(2, '0'); // 시간을 두 자리로 표시
+  const minutes = String(date.getMinutes()).padStart(2, '0'); // 분을 두 자리로 표시
+  const seconds = String(date.getSeconds()).padStart(2, '0'); // 초를 두 자리로 표시
+
+  // "년-월-일 시간:분:초" 형식으로 반환
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
 
   return (
     <CenteredContainer>
@@ -61,7 +75,7 @@ function TransactionHistory () {
 
           <Contentbox>
             <Content>거래시간</Content>
-            <Content>{item.tranDate}</Content>
+            <Content>{formatDate(item.tranDate)}</Content>
           </Contentbox>  
           
           <Contentbox>
