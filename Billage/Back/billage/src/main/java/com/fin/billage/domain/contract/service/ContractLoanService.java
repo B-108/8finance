@@ -54,15 +54,8 @@ public class ContractLoanService {
 
         remainingAmount = totalRepaymentAmount.subtract(sum);
 
-        // 빌린 금액에서 현재 합계를 뺀 나머지 금액 계산
-        if (remainingAmount.compareTo(BigDecimal.ZERO) < 0) {
-            remainingAmount = BigDecimal.ZERO;
-        }
-
-
         return remainingAmount;
     }
-
 
     // 빌려준 거래 목록 리스트
     public List<ContractLoanResponseDto> searchLendList(HttpServletRequest request) {
@@ -116,6 +109,7 @@ public class ContractLoanService {
                     .debtorBankCode(c.getContractDebtorBank())
                     .debtorBankName(debtorBankName)
                     .debtorAcNum(c.getContractDebtorAcNum())
+                    .interestRate(c.getContractInterestRate())
                     .build();
 
             lendList.add(contractLoanResponseDto);
@@ -176,6 +170,7 @@ public class ContractLoanService {
                     .debtorBankCode(c.getContractDebtorBank())
                     .debtorBankName(debtorBankName)
                     .debtorAcNum(c.getContractDebtorAcNum())
+                    .interestRate(c.getContractInterestRate())
                     .build();
 
             borrowList.add(contractLoanResponseDto);
