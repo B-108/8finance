@@ -7,11 +7,15 @@ import com.fin.billage.domain.contract.entity.Contract;
 import com.fin.billage.domain.contract.entity.Transaction;
 import com.fin.billage.domain.contract.repository.ContractRepository;
 import com.fin.billage.domain.contract.repository.TransactionRepository;
+import com.fin.billage.domain.notice.entity.Notice;
+import com.fin.billage.domain.notice.repository.NoticeRepository;
 import com.fin.billage.domain.user.entity.User;
 import com.fin.billage.domain.user.repository.UserRepository;
 import com.fin.billage.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 
@@ -29,6 +33,7 @@ public class ContractLoanService {
     private final ContractRepository contractRepository;
     private final UserRepository userRepository;
     private final TransactionRepository transactionRepository;
+    private final NoticeRepository noticeRepository;
     private final JwtUtil jwtUtil;
 
     // 거래내역 계산
@@ -66,8 +71,6 @@ public class ContractLoanService {
 //        Contract contract = contractRepository.findByContractId(user);
         // 송금인(tran_wd)가 debeter_user인 경우의 tran_amt를 가져와서
         // calculateTransaction(List<Bigdecimal> tran_amt, 빌린금액)에 넣어주기
-
-
         List<Contract> contracts = contractRepository.findAllByCreditorUser(user);
         List<ContractLoanResponseDto> lendList = new ArrayList<>();
 
@@ -95,13 +98,30 @@ public class ContractLoanService {
                 debtorBankName = "기업은행";
             }
 
+            BigDecimal repaymentCash = calculateTransaction(tranAmtList, c.getContractAmt(), c.getContractInterestRate());
+            if (repaymentCash.compareTo(BigDecimal.ZERO) <= 0) {
+                c.updateContractCompleteState();
+                contractRepository.save(c);
+
+                // 차용증 이체 노티에 등록
+                Notice n = Notice.builder()
+                        .contractId(c.getContractId())
+                        .user(c.getCreditorUser())
+                        .noticeUserName(c.getDebtorUser().getUserName())
+                        .noticeSendDate(LocalDateTime.now())
+                        .noticeType(5)
+                        .build();
+
+                noticeRepository.save(n);
+            }
+
             ContractLoanResponseDto contractLoanResponseDto = ContractLoanResponseDto.builder()
                     .contractId(c.getContractId())
                     .contractAmt(c.getContractAmt())
                     .contractState(c.getContractState())
                     .creditorUser(c.getCreditorUser())
                     .debtorUser(c.getDebtorUser())
-                    .repaymentCash(calculateTransaction(tranAmtList, c.getContractAmt(), c.getContractInterestRate()))
+                    .repaymentCash(repaymentCash)
                     .remainingLoanTerm(ChronoUnit.DAYS.between(LocalDate.now(), c.getContractMaturityDate()))
                     .creditorBankCode(c.getContractCreditorBank())
                     .creditorBankName(creditorBankName)
@@ -156,13 +176,30 @@ public class ContractLoanService {
                 debtorBankName = "기업은행";
             }
 
+            BigDecimal repaymentCash = calculateTransaction(tranAmtList, c.getContractAmt(), c.getContractInterestRate());
+            if (repaymentCash.compareTo(BigDecimal.ZERO) <= 0) {
+                c.updateContractCompleteState();
+                contractRepository.save(c);
+
+                // 차용증 이체 노티에 등록
+                Notice n = Notice.builder()
+                        .contractId(c.getContractId())
+                        .user(c.getCreditorUser())
+                        .noticeUserName(c.getDebtorUser().getUserName())
+                        .noticeSendDate(LocalDateTime.now())
+                        .noticeType(5)
+                        .build();
+
+                noticeRepository.save(n);
+            }
+
             ContractLoanResponseDto contractLoanResponseDto = ContractLoanResponseDto.builder()
                     .contractId(c.getContractId())
                     .contractAmt(c.getContractAmt())
                     .contractState(c.getContractState())
                     .creditorUser(c.getCreditorUser())
                     .debtorUser(c.getDebtorUser())
-                    .repaymentCash(calculateTransaction(tranAmtList, c.getContractAmt(), c.getContractInterestRate()))
+                    .repaymentCash(repaymentCash)
                     .remainingLoanTerm(ChronoUnit.DAYS.between(LocalDate.now(), c.getContractMaturityDate()))
                     .creditorBankCode(c.getContractCreditorBank())
                     .creditorBankName(creditorBankName)
