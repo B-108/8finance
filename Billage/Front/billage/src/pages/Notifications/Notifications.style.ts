@@ -5,6 +5,17 @@ export const NotiContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 94%;
+  height: 1000px;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 0.5em;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0);
+  }
+
 `
 
 export const NotiBox = styled.div`
