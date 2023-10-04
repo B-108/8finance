@@ -58,8 +58,11 @@ function Footer(){
 
   return (
     <FooterContainer>
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'space-around', marginTop: 'auto' }}>
-        <div >
+      <div style={{
+        width: '100%', 
+        display: 'flex', 
+        justifyContent: 'space-around'}}>
+        <div>
           <Image 
             src={home} 
             alt="home" 
@@ -75,8 +78,11 @@ function Footer(){
             onClick={moveAccounts}></Image>
           <Text>계좌</Text>
         </div>
-        <div>
-          <Image src={hamburger} alt="hamburger" width="32px"></Image>
+        <div> 
+          <Image 
+            src={hamburger} 
+            alt="hamburger" 
+            width="26px"></Image>
           <Text>설정</Text>
         </div>
       </div>
