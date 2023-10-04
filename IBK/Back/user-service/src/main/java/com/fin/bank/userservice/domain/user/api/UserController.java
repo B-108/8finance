@@ -1,26 +1,23 @@
 package com.fin.bank.userservice.domain.user.api;
 
+import com.fin.bank.userservice.domain.user.dto.UserGetRequestDto;
+import com.fin.bank.userservice.domain.user.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
-    @GetMapping("/name")
-    public ResponseEntity<?> getUerName(HttpServletRequest request) {
-        System.out.println("request : " + request);
-        System.out.println("request.toSring : " + request.toString() );
-        System.out.println("request.getHeader : " + request.getHeader("Authorization"));
-        System.out.println("request.getRequestURI : " + request.getRequestURI());
-        System.out.println(request.getHeader("userPk"));
-        System.out.println(request.getHeader("accountNo"));
+    private final UserService userService;
 
-        return new ResponseEntity("123", HttpStatus.OK);
+    @PostMapping("/no")
+    public ResponseEntity<?> getUserPk(@RequestBody UserGetRequestDto userGetRequestDto, HttpServletRequest request) {
+        return new ResponseEntity<>(userService.getUserPk(userGetRequestDto, request), HttpStatus.OK);
     }
 }
