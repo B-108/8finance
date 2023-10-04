@@ -5,6 +5,7 @@ import com.fin.bank.accountservice.account.dto.*;
 import com.fin.bank.accountservice.account.entity.Account;
 import com.fin.bank.accountservice.account.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -19,28 +20,16 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class AccountService {
 
     private final AccountRepository accountRepository;
     private final WebClient.Builder webClientBuilder;
 
-    // (수정) 사용자의 고객명과 전화번호를 통해 해당 고객의 모든 계좌 목록을 조회
-    public List<AccountResponseDto> getAccountList(AccountRequestDto accountRequestDto, HttpServletRequest request) {
+    @Value("${web-client.ser-service}")
+    private String userUrl;
 
-//        for (AccountRequestDto dto : list) {
-//            String customerName = dto.getUserName();
-//            String phoneNumber = dto.getUserCellNo();
-//            List<Account> newList = accountRepository.findAllByUser_UserNameAndUser_UserCellNo(customerName, phoneNumber);
-//            for (Account a : newList) {
-//                AccountResponseDto accountResponseDtos = AccountResponseDto.builder()
-//                        .accountNum(a.getAccountNumber())
-//                        .bankName("기업은행")
-//                        .build();
-//
-//                accountResponseDtoList.add(accountResponseDtos);
-//            }
-//        }
+    @Transactional
+    public List<AccountResponseDto> getAccountList(AccountRequestDto accountRequestDto, HttpServletRequest request) {
 
         List<AccountResponseDto> result = new ArrayList<>();
 
@@ -52,16 +41,13 @@ public class AccountService {
         try {
             AccountUserResponseDto responseBody = webClientBuilder
                     .defaultHeader("Authorization", request.getHeader("Authorization"))
+                    .baseUrl(userUrl)
                     .build().post()
-                    .uri("http://user-service/user/no")
+                    .uri("/no")
                     .body(BodyInserters.fromValue(accountUserRequestDto))
                     .retrieve()
                     .bodyToMono(AccountUserResponseDto.class)
                     .switchIfEmpty(Mono.error(new RuntimeException("해당 계좌는 없는 계좌입니다.")))
-                    // block() method makes the call synchronous
-                    // You can add timeout value as per your requirement.
-                    // If no response is received within the specified timeout duration, an exception is thrown.
-                    // Here I have set it to 10 seconds.
                     .block(Duration.ofSeconds(10));
 
             List<Account> findAccount = accountRepository.findByUserPk(responseBody.getUserPk()).orElseThrow(() -> new RuntimeException("없어요.."));
@@ -80,10 +66,12 @@ public class AccountService {
         }
     }
 
+    @Transactional
     public Account getAccount(AccountGetRequestDto accountGetRequestDto) {
         return accountRepository.findByAccountNumber(accountGetRequestDto.getTranDpAcNum()).orElseThrow(() -> new RuntimeException("이런.."));
     }
 
+    @Transactional
     public AccountDepositResponseDto depositAccount(AccountDepositRequestDto accountDepositRequestDto, HttpServletRequest request) {
 
         // 토큰과 요청이 일치하는지 검증하는 코드 추가 필요
@@ -102,6 +90,7 @@ public class AccountService {
                 .build();
     }
 
+    @Transactional
     public AccountWithdrawResponseDto withdrawAccount(AccountWithdrawRequestDto accountWithdrawRequestDto, HttpServletRequest request) {
 
         Account withdrawAccount = accountRepository.findByAccountNumber(accountWithdrawRequestDto.getTranWdAcNum()).orElseThrow(() -> new RuntimeException("이런.."));
