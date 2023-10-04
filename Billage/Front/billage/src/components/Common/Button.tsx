@@ -47,6 +47,7 @@ const StyledButton = styled.button<ButtonProps>`
     height: ${(props) => props.$size?.split(',')[1]};
     line-height: ${(props) => props.$size?.split(',')[1]};
     position: ${(props) => props.$absolute};
+    font-family: 'LINESeedKR-Rg';
 
     // 초록색 큰/중간 사이즈 버튼
     ${(props) =>
@@ -55,15 +56,14 @@ const StyledButton = styled.button<ButtonProps>`
             font-size: ${theme.fontSize.M_20};
             border-radius: ${theme.radius.L_20};
             background-color: ${theme.color.green[0]};
-            font-weight: 800;
         `}
 
     ${(props) =>
         props.$basicGrayBtn &&
-        css`
+        css` 
             font-size: ${theme.fontSize.M_20};
             border-radius: ${theme.radius.L_20};
-            background-color: ${theme.color.gray[40]};
+            background-color: ${theme.color.gray[70]};
         `}
 
     // 초록색 작은 사이즈 버튼 (모달용/전송용)
