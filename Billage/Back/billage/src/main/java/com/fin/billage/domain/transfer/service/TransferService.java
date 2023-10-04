@@ -48,14 +48,11 @@ public class TransferService {
         String userName = user.getUserName();
         String userCellNo = user.getUserCellNo();
 
-
-
         WebClient webClient = WebClient.builder()
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)  // 기본 헤더 설정
                 .build();
 
         List<AccountResponseDto> accountResponses = new ArrayList<>();
-
 
         // Reactor에서 제공하는 비동기 시퀀스
         Flux.fromIterable(bankCodes)
@@ -205,12 +202,11 @@ public class TransferService {
                 );
     }
 
-    // 스케줄링 활성화
-    @Scheduled(cron = "0 57 0 * * ?") // 매일 새벽 12시 56분에 실행
-    public void myScheduledTask() {
-        // 실행하려는 로직을 여기에 작성
-        System.out.println("매일 새벽 12시 57분에 실행됩니다.");
-    }
+//    // 스케줄링
+//    @Scheduled(cron = "0 0 0 * * ?") // 매일 오전 12시에 실행
+//    public void () {
+//
+//    }
 
 //    public void test() {
 //        WebClient webClient = WebClient.builder()
