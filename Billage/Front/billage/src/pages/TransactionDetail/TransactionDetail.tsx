@@ -87,7 +87,7 @@ function TADetail() {
 
             <Text 
               $size="94%,45px"
-              $description>상대방과 거래 시 작성한 상세 내용관 돈이 오고간 내역을 확인 할 수 있어요!</Text>
+              $description>상대방과 거래 시 작성한 상세 내용과 돈이 오고간 내역을 확인 할 수 있어요!</Text>
           </TitleContainer>
 
           <FlexDiv 
