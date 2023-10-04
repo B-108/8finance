@@ -72,6 +72,7 @@ public class AccountService {
             return result;
 
         } catch (Exception e) {
+            e.printStackTrace();
             return null;  // 출금 실패: 출금할 금액보다 잔액이 적음 또는 다른 오류 발생
         }
     }
