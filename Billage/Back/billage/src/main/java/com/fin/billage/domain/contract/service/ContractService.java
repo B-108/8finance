@@ -3,6 +3,8 @@ package com.fin.billage.domain.contract.service;
 import com.fin.billage.domain.contract.dto.*;
 import com.fin.billage.domain.contract.entity.Contract;
 import com.fin.billage.domain.contract.repository.ContractRepository;
+import com.fin.billage.domain.notice.entity.Notice;
+import com.fin.billage.domain.notice.repository.NoticeRepository;
 import com.fin.billage.domain.transfer.api.TransferController;
 import com.fin.billage.domain.transfer.dto.TransferCashRequestDto;
 import com.fin.billage.domain.user.entity.User;
@@ -22,6 +24,7 @@ public class ContractService {
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
     private final TransferController transferController;
+    private final NoticeRepository noticeRepository;
 
     // 차용증 등록
     public Contract addContract(ContractRequestDto dto, HttpServletRequest request) {
@@ -60,6 +63,17 @@ public class ContractService {
 
         contractRepository.save(contract);
 
+        // 차용증 요청 채권자 노티 DB에 등록
+        Notice n = Notice.builder()
+                .contractId(contract.getContractId())
+                .user(creditorUser)
+                .noticeUserName(debtorUser.getUserName())
+                .noticeSendDate(LocalDateTime.now())
+                .noticeState(1)
+                .build();
+
+        noticeRepository.save(n);
+
         return contract;
     }
 
@@ -87,8 +101,31 @@ public class ContractService {
             contract.updateContractState(true);
             // 자동이체 로직 가져와서 호출해서 쓰기
             transferController.transferCash(dto, request);
+
+            // 차용증 수락 노티에 등록
+            Notice n = Notice.builder()
+                    .contractId(contract.getContractId())
+                    .user(contract.getDebtorUser())
+                    .noticeUserName(contract.getCreditorUser().getUserName())
+                    .noticeSendDate(LocalDateTime.now())
+                    .noticeState(2)
+                    .build();
+
+            noticeRepository.save(n);
+
             } else if (!yN) {
             contract.updateContractState(false);
+
+            // 차용증 거절 노티에 등록
+            Notice n = Notice.builder()
+                    .contractId(contract.getContractId())
+                    .user(contract.getDebtorUser())
+                    .noticeUserName(contract.getCreditorUser().getUserName())
+                    .noticeSendDate(LocalDateTime.now())
+                    .noticeState(3)
+                    .build();
+
+            noticeRepository.save(n);
         }
         contractRepository.save(contract);
         return contract;
