@@ -4,7 +4,6 @@ import com.fin.openbank.domain.transfer.dto.TransferRequestDto;
 import com.fin.openbank.domain.transfer.entity.Url;
 import com.fin.openbank.domain.transfer.enums.TransactionType;
 import com.fin.openbank.domain.transfer.repository.RequestUrlRepository;
-import com.fin.openbank.domain.transfer.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -15,7 +14,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Service
 @RequiredArgsConstructor
 public class WithdrawService {
-    private final TransactionRepository transactionRepository;
     private final RequestUrlRepository requestUrlRepository;
 
     public boolean withdraw(TransferRequestDto requestDto, String wdBankCode, TransactionType withdrawal) {
