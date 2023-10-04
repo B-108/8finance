@@ -147,7 +147,7 @@ function SendMoney() {
 
             <InputDiv style={{ alignItems: 'center' }}>
                 <InputTitle>보내는 금액</InputTitle>
-                <Input value={amount} $active $size="88%,40px" $position onChange={handleAmountChange}></Input>
+                <Input value={Number(amount).toLocaleString()} $active $size="88%,40px" $position onChange={handleAmountChange}></Input>
                 <SmallButtonsContainer>
                   <Button style={{margin:"7px 0px 0px 5px"}}
                     $smallBlackBtn 
@@ -177,7 +177,7 @@ function SendMoney() {
             <InputDiv style={{ alignItems: 'center' }}>
                 <InputTitle>남은 금액</InputTitle>
                 <Input
-                    value={sendData.repaymentCash - Number(amount)}
+                    value={(sendData.repaymentCash - Number(amount)).toLocaleString()}
                     $active
                     $size="88%,40px"
                     $position

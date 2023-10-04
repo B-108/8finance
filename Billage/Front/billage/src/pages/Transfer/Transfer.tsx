@@ -27,7 +27,7 @@ import { UserType } from '/src/type/user';
 import { getAccountList } from '/src/api/account';
 import { UserState } from '/src/recoil/user';
 import { useRecoilState } from 'recoil';
-import { getUserList } from '/src/api/user';
+import { getUser } from '/src/api/user';
 
 function Transfer() {
     const [friendInfo, setFriendInfo] = useState<string>('');
