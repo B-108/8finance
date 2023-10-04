@@ -32,25 +32,33 @@ public class ContractLoanService {
     private final JwtUtil jwtUtil;
 
     // 거래내역 계산
-    public BigDecimal calculateTransaction(List<BigDecimal> transaction, BigDecimal amount, float interestRatePercentage) {
+    public BigDecimal calculateTransaction(List<BigDecimal> transaction, BigDecimal amount, Float interestRatePercentage) {
         BigDecimal sum = BigDecimal.ZERO;
 
         for (BigDecimal t : transaction) {
             sum = sum.add(t); // 현재 합계에 t를 더함
         }
 
-        // float 값을 BigDecimal로 변환
-        BigDecimal interestRate = new BigDecimal(Float.toString(interestRatePercentage)).divide(BigDecimal.valueOf(100));
+        BigDecimal interestRate = BigDecimal.ZERO; // 기본값 0으로 설정
+        BigDecimal remainingAmount = BigDecimal.ZERO;
+        BigDecimal totalRepaymentAmount = BigDecimal.ZERO;
 
-        // 원금에 이자를 더한 총 상환 금액을 계산
-        BigDecimal totalRepaymentAmount = amount.add(amount.multiply(interestRate));
+        if (interestRatePercentage != null && interestRatePercentage != 0) {
+            // interestRatePercentage가 null이 아니고 0이 아닌 경우에만 계산
+            interestRate = new BigDecimal(Float.toString(interestRatePercentage)).divide(BigDecimal.valueOf(100));
+            // 원금에 이자를 더한 총 상환 금액을 계산
+            totalRepaymentAmount = amount.add(amount.multiply(interestRate));
+        } else {
+            totalRepaymentAmount = amount;
+        }
+
+        remainingAmount = totalRepaymentAmount.subtract(sum);
 
         // 빌린 금액에서 현재 합계를 뺀 나머지 금액 계산
-        BigDecimal remainingAmount = totalRepaymentAmount.subtract(sum);
 
         return remainingAmount;
     }
-
+    
 
     // 빌려준 거래 목록 리스트
     public List<ContractLoanResponseDto> searchLendList(HttpServletRequest request) {

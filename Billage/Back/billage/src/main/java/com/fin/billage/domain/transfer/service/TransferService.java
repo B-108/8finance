@@ -131,7 +131,7 @@ public class TransferService {
                 .noticeUserName(contract.getDebtorUser().getUserName())
                 .noticeSendDate(LocalDateTime.now())
                 .noticeAmount(dto.getTranAmt())
-                .noticeState(4)
+                .noticeType(4)
                 .build();
 
         noticeRepository.save(n);

@@ -59,7 +59,6 @@ public class ContractService {
                 .contractAmt(dto.getContractAmt())
                 .contractInterestRate(dto.getContractInterestRate())
                 .contractDueAmt(dto.getContractDueAmt())
-                .contractState(0)
                 .contractCreateDate(LocalDateTime.now())
                 .build();
 
@@ -71,7 +70,7 @@ public class ContractService {
                 .user(creditorUser)
                 .noticeUserName(debtorUser.getUserName())
                 .noticeSendDate(LocalDateTime.now())
-                .noticeState(1)
+                .noticeType(1)
                 .build();
 
         noticeRepository.save(n);
@@ -110,7 +109,7 @@ public class ContractService {
                     .user(contract.getDebtorUser())
                     .noticeUserName(contract.getCreditorUser().getUserName())
                     .noticeSendDate(LocalDateTime.now())
-                    .noticeState(2)
+                    .noticeType(2)
                     .build();
 
             noticeRepository.save(n);
@@ -124,7 +123,7 @@ public class ContractService {
                     .user(contract.getDebtorUser())
                     .noticeUserName(contract.getCreditorUser().getUserName())
                     .noticeSendDate(LocalDateTime.now())
-                    .noticeState(3)
+                    .noticeType(3)
                     .build();
 
             noticeRepository.save(n);
