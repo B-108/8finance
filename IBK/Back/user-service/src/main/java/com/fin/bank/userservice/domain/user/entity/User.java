@@ -69,12 +69,4 @@ public class User {
         this.userAgreeYn = userAgreeYn;
         this.userAgreeDate = userAgreeDate;
     }
-
-    public void setPassword(String newPassword) {
-        this.userSimplePass = newPassword;
-    }
-    public void modifyAgreeYn(char yn) {
-        this.userAgreeYn = yn;
-        this.userAgreeDate = LocalDateTime.now();
-    }
 }
