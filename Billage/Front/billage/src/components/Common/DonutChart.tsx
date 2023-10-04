@@ -83,15 +83,7 @@ function DonutChart ({Return,Money,Interest}:DonutChartProps) {
   // const seriesRadial = [Number((Return/Money * 100))];
   // const seriesRadial = [100 - Number((Return/Money * 100))];
   const totalPrice = Money + (Money * Interest) /100
-  const percentage = 100 - (Return / totalPrice) * 100; // 백분율 계산
-  console.log(Return)
-  console.log(Interest)
-  console.log(totalPrice)
-  console.log('--------')
-  // console.log((Return / totalPrice) * 100)
-  // console.log(percentage)
-  const formattedPercentage = `${percentage.toFixed(0)}%`; // 소수점 두 자리까지 표시
-  
+  const percentage = 100 - (Return / totalPrice) * 100; // 백분율 계산 
   const seriesRadial = [Number(percentage.toFixed(0))];
 
   return(

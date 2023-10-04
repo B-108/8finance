@@ -92,6 +92,7 @@ function SendMoney() {
     };
 
     const moveToPinEnter = () => {
+        console.log(data)
         navigate('/pinenter/sendmoney', { state: data });
     };
 

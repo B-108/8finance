@@ -16,12 +16,7 @@ interface TransactionItemProps {
   function TransactionItem({ item, toggle }: TransactionItemProps) {
     const contractState = item.contractState
     const totalprice = (item.interestRate * item.contractAmt)/ 100 + item.contractAmt
-    const interest = item.interestRate
-    // console.log('이자', interest)
-    // console.log('총금액',totalprice)
-    // console.log('남은금액',item.repaymentCash)
-    console.log(100 - (item.repaymentCash/totalprice)* 100)
-    console.log('===========')
+    
     return(
       contractState === 1 ?(
       <TransActionBox>
