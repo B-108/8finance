@@ -20,6 +20,12 @@ export interface Transaction{
     contractState: number;
     repaymentCash: number;
     remainingLoanTerm: number;
+    creditorAcNum :string;
+    creditorBankCode :string;
+    creditorBankName :string;
+    debtorAcNum :string;
+    debtorBankCode :string;
+    debtorBankName :string;
   }
 
   export interface TransactionDetailType{

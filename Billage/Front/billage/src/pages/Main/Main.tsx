@@ -62,7 +62,10 @@ function Main(){
   const moveTransfer = () => {navigate(`/transfer`)}
   const moveTransactionList = () => {navigate(`/transactionlist`)}
   const moveNotifications = () => {navigate(`/notifications`)}
-
+  const moveToSendMoney = (data: TransactionType) => {
+    console.log(data)
+    navigate(`/sendmoney`, { state: {data} });
+  };
 
   const axiosAllTransActionList = async () => {
     try {
@@ -147,7 +150,7 @@ function Main(){
                             <Remain>남은금액</Remain>
                             <Remain>{transAction.repaymentCash}</Remain>
                           </TextBox>
-                          <SendBtn>돈 돌려주기</SendBtn>
+                          <SendBtn onClick={() => moveToSendMoney(transAction)}>돈 돌려주기</SendBtn>
                         </BottomSection>
                       </Box>
                       ) : (

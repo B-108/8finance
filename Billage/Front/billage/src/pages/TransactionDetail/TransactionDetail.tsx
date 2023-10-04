@@ -44,12 +44,15 @@ function TADetail() {
         axiosDetail();
     }, []);
 
+    //변수 설정
     const navigate = useNavigate();
     const location = useLocation();
-
     const state = location.state
-    console.log(state)
-    console.log(detail)
+    const data = state.data
+    const totalRepaymentCash =
+        Number(detail?.contractAmt) + (Number(detail?.contractAmt) * Number(detail?.contractInterestRate)) / 100;
+    
+    //함수
     const moveTransactionHistory = (contractId: number) => {
         navigate(`/transaction/history/${contractId}`, {state: contractId});
     };
@@ -57,11 +60,8 @@ function TADetail() {
         navigate(`/transaction/detail/${contractId}/iou`, { state: { contractId } });
     };
      const moveToSendMoney = () => {
-        navigate(`/sendmoney`, { state: { detail, state} });
+        navigate(`/sendmoney`, { state: {data} });
     };
-
-    const totalRepaymentCash =
-        Number(detail?.contractAmt) + (Number(detail?.contractAmt) * Number(detail?.contractInterestRate)) / 100;
 
     return (
         <CenteredContainer>
