@@ -45,7 +45,7 @@ public class AccountService {
 
         try {
             AccountUserResponseDto responseBody = webClientBuilder
-                    .defaultHeader("Authorization", request.getHeader("Authorization"))
+//                    .defaultHeader("Authorization", request.getHeader("Authorization"))
                     .build().post()
                     .uri("http://user-service/user/no")
                     .body(BodyInserters.fromValue(accountUserRequestDto))
