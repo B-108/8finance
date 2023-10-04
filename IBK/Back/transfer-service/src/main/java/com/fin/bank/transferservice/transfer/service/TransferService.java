@@ -43,9 +43,11 @@ public class TransferService {
                 .tranDpAcNum(transferRequestDto.getTranDpAcNum())
                 .tranDpCellNo(transferRequestDto.getTranDpCellNo())
                 .tranDpName(transferRequestDto.getTranDpName())
-                // 금액
+                .tranAmt(transferRequestDto.getTranAmt())
                 .build();
 
+
+        System.out.println("그래도 씨발 이건 가능이지");
         int a = 1;
 
         // HTTP POST 요청 보내기
