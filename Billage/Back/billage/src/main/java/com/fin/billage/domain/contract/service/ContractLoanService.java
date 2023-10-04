@@ -1,6 +1,5 @@
 package com.fin.billage.domain.contract.service;
 
-import com.fin.billage.domain.account.entity.Account;
 import com.fin.billage.domain.contract.dto.ContractLoanDetailResponseDto;
 import com.fin.billage.domain.contract.dto.ContractLoanResponseDto;
 
@@ -33,18 +32,25 @@ public class ContractLoanService {
     private final JwtUtil jwtUtil;
 
     // 거래내역 계산
-    public BigDecimal calculateTransaction(List<BigDecimal> transaction, BigDecimal amount) {
+    public BigDecimal calculateTransaction(List<BigDecimal> transaction, BigDecimal amount, float interestRatePercentage) {
         BigDecimal sum = BigDecimal.ZERO;
 
         for (BigDecimal t : transaction) {
             sum = sum.add(t); // 현재 합계에 t를 더함
         }
 
-        // amount(빌린금액) - sum
-        sum = amount.subtract(sum);
+        // float 값을 BigDecimal로 변환
+        BigDecimal interestRate = new BigDecimal(Float.toString(interestRatePercentage)).divide(BigDecimal.valueOf(100));
 
-        return sum;
+        // 원금에 이자를 더한 총 상환 금액을 계산
+        BigDecimal totalRepaymentAmount = amount.add(amount.multiply(interestRate));
+
+        // 빌린 금액에서 현재 합계를 뺀 나머지 금액 계산
+        BigDecimal remainingAmount = totalRepaymentAmount.subtract(sum);
+
+        return remainingAmount;
     }
+
 
     // 빌려준 거래 목록 리스트
     public List<ContractLoanResponseDto> searchLendList(HttpServletRequest request) {
@@ -90,7 +96,7 @@ public class ContractLoanService {
                     .contractState(c.getContractState())
                     .creditorUser(c.getCreditorUser())
                     .debtorUser(c.getDebtorUser())
-                    .repaymentCash(calculateTransaction(tranAmtList, c.getContractAmt()))
+                    .repaymentCash(calculateTransaction(tranAmtList, c.getContractAmt(), c.getContractInterestRate()))
                     .remainingLoanTerm(ChronoUnit.DAYS.between(LocalDate.now(), c.getContractMaturityDate()))
                     .creditorBankCode(c.getContractCreditorBank())
                     .creditorBankName(creditorBankName)
@@ -150,7 +156,7 @@ public class ContractLoanService {
                     .contractState(c.getContractState())
                     .creditorUser(c.getCreditorUser())
                     .debtorUser(c.getDebtorUser())
-                    .repaymentCash(calculateTransaction(tranAmtList, c.getContractAmt()))
+                    .repaymentCash(calculateTransaction(tranAmtList, c.getContractAmt(), c.getContractInterestRate()))
                     .remainingLoanTerm(ChronoUnit.DAYS.between(LocalDate.now(), c.getContractMaturityDate()))
                     .creditorBankCode(c.getContractCreditorBank())
                     .creditorBankName(creditorBankName)
@@ -197,7 +203,7 @@ public class ContractLoanService {
                 .contractStartDate(contract.getContractStartDate())
                 .contractMaturityDate(contract.getContractMaturityDate())
                 .contractInterestRate(contract.getContractInterestRate())
-                .repaymentCash(calculateTransaction(tranAmtList, contract.getContractAmt()))
+                .repaymentCash(calculateTransaction(tranAmtList, contract.getContractAmt(), contract.getContractInterestRate()))
                 .bankCode(contract.getContractCreditorBank())
                 .mainAccount(creditorBank + " " + creditorAcNum)
                 .build();
