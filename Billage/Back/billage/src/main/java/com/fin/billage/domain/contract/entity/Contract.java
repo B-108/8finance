@@ -93,6 +93,11 @@ public class Contract {
         if(YN==false) this.contractState = 4;
     }
 
+    public void updateContractCompleteState() {
+            this.contractState = 9;
+            this.contractExpireDate = LocalDateTime.now();
+    }
+
     public void modifyContractCreditorAcNum(String bankCode, String accountNum) {
         this.contractCreditorBank = bankCode;
         this.contractCreditorAcNum = accountNum;
