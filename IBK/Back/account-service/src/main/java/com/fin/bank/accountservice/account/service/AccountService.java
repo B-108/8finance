@@ -47,7 +47,7 @@ public class AccountService {
             AccountUserResponseDto responseBody = webClientBuilder
 //                    .defaultHeader("Authorization", request.getHeader("Authorization"))
                     .build().post()
-                    .uri("http://user-service/user/no")
+                    .uri("http://gateway-service/user/no")
                     .body(BodyInserters.fromValue(accountUserRequestDto))
                     .retrieve()
                     .bodyToMono(AccountUserResponseDto.class)
