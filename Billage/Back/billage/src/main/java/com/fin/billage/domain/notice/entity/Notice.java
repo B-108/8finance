@@ -39,7 +39,7 @@ public class Notice {
     @Column(name = "notice_keyword", length = 20)
     private String noticeKeyword;
 
-    @Column(name = "notice_type", nullable = false)
+    @Column(name = "notice_type")
     private Integer noticeType;
 
     @Column(name = "notice_amount", precision = 10, scale = 2)
