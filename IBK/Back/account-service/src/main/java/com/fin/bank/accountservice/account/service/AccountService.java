@@ -1,16 +1,14 @@
 package com.fin.bank.accountservice.account.service;
 
 
-import com.fin.bank.accountservice.account.dto.AccountGetResponseDto;
-import com.fin.bank.accountservice.account.dto.AccountRequestDto;
-import com.fin.bank.accountservice.account.dto.AccountResponseDto;
-import com.fin.bank.accountservice.account.dto.AccountGetRequestDto;
+import com.fin.bank.accountservice.account.dto.*;
 import com.fin.bank.accountservice.account.entity.Account;
 import com.fin.bank.accountservice.account.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,5 +42,23 @@ public class AccountService {
 
     public Account getAccount(AccountGetRequestDto accountGetRequestDto) {
         return accountRepository.findByAccountNumber(accountGetRequestDto.getTranDpAcNum()).orElseThrow(() -> new RuntimeException("이런.."));
+    }
+
+    public AccountDepositResponseDto depositAccount(AccountDepositRequestDto accountDepositRequestDto, HttpServletRequest request) {
+
+        // 토큰과 요청이 일치하는지 검증하는 코드 추가 필요
+
+        Account depositAccount = accountRepository.findByAccountNumber(accountDepositRequestDto.getTranDpAcNum()).orElseThrow(() -> new RuntimeException("이런.."));
+
+        if (depositAccount.getAccountStatus() == 2) {
+            return null; // 입금 실패: 계좌가 잠겨 있음
+        }
+        // 입금 가능하면 계좌 잔액을 증가시키고 저장
+        depositAccount.setAccountAddBalanceAmt(depositAccount.getAccountBalanceAmt().add(accountDepositRequestDto.getTranAmt()));
+        accountRepository.save(depositAccount);
+
+        return AccountDepositResponseDto.builder()
+                .accountId(depositAccount.getAccountId())
+                .build();
     }
 }

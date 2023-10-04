@@ -1,6 +1,7 @@
 package com.fin.bank.accountservice.account.api;
 
 
+import com.fin.bank.accountservice.account.dto.AccountDepositRequestDto;
 import com.fin.bank.accountservice.account.dto.AccountRequestDto;
 import com.fin.bank.accountservice.account.dto.AccountResponseDto;
 import com.fin.bank.accountservice.account.dto.AccountGetRequestDto;
@@ -10,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Slf4j
@@ -40,6 +43,11 @@ public class AccountController {
     @PostMapping("")
     public ResponseEntity<?> getAccount(@RequestBody AccountGetRequestDto accountGetRequestDto) {
         return new ResponseEntity<>(accountService.getAccount(accountGetRequestDto), HttpStatus.OK);
+    }
+
+    @PostMapping("/deposit")
+    public ResponseEntity<?> depositAccount(@RequestBody AccountDepositRequestDto accountDepositRequestDto, HttpServletRequest request) {
+        return new ResponseEntity<>(accountService.depositAccount(accountDepositRequestDto, request), HttpStatus.OK);
     }
 
 }
