@@ -3,8 +3,6 @@ package com.fin.billage.domain.transfer.dto;
 import lombok.Builder;
 import lombok.Getter;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 
 @Getter
 @Builder
