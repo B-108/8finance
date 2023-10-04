@@ -28,17 +28,21 @@ spring:
           predicates:
             - Path=/user/**
           filters:
-#            - AuthorizationHeaderFilter
+            - AuthorizationHeaderFilter
 
         - id: account-service
           uri: lb://ACCOUNT-SERVICE
           predicates:
             - Path=/account/**
+          filters:
+            - AuthorizationHeaderFilter
 
         - id: transfer-service
           uri: lb://TRANSFER-SERVICE
           predicates:
             - Path=/transfer/**
+          filters:
+            - AuthorizationHeaderFilter
 
 
 jwt:
