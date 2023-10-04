@@ -68,7 +68,6 @@ function Transfer() {
     };
     const selectedBankCode = myAccountInfoCode;
     const bankName = findBankNameByCode(selectedBankCode);
-    console.log(bankName);
 
     // 유저 목록
     const [users, setUsers] = useState<UserType[]>([]);
@@ -90,7 +89,6 @@ function Transfer() {
     };
     const handleMyAccountInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setMyAccountInfo(event.target.value);
-        console.log(event.target.value);
     };
     const handleTotalAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTotalAmount(event.target.value);
@@ -125,9 +123,13 @@ function Transfer() {
     }, [interest, amountInfo]);
 
     const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // 입력값에서 숫자만 추출
-        const inputValue = event.target.value.replace(/[^0-9]/g, ''); // 숫자 외의 문자는 제거
+      if(event.target.value === "") {
+        setAmountInfo("0")
+      }
+      else {
+        const inputValue = event.target.value.replace(/[^0-9]/g, ''); 
         setAmountInfo(inputValue);
+      }
     };
 
     const handleButtonClick = (increment: number) => {
@@ -140,7 +142,6 @@ function Transfer() {
         try {
             const response = await getAccountList();
             setAccounts(response?.data);
-            console.log(response?.data);
         } catch (error) {
             console.log(error);
         }
@@ -148,16 +149,15 @@ function Transfer() {
     // 유저 조회
     const axiosUserList = async (): Promise<void> => {
         try {
+            if(!friendInfo){return}
             const response = await getUserList(friendInfo);
             setUsers(response?.data);
-            console.log(response?.data);
         } catch (error) {
             console.log(error);
         }
     };
 
     const myAccountInfoCombined = `${bankName} ${myAccountInfo}`;
-    console.log(myAccountInfoCombined);
 
     // 차용증 생성
     const recoilPostIOU = async () => {
@@ -171,7 +171,6 @@ function Transfer() {
             contractInterestRate: interest,
             contractDueAmt: totalAmount,
         };
-        console.log(iouData);
 
         const iouCheckData = {
             contractAmtCheck: amountInfo,
@@ -181,7 +180,6 @@ function Transfer() {
             debtorUserNameCheck: name,
             contractStartDateCheck: new Date().toISOString().split('T')[0],
         };
-        console.log(iouCheckData);
 
         try {
             // Recoil 상태 업데이트
@@ -201,12 +199,9 @@ function Transfer() {
     }, []);
 
     useEffect(() => {
-        console.log(myAccountInfo);
-        console.log(accounts);
         // setMyAccountInfo(accounts.accountNum);
         if (accounts.length > 0) {
             const selectedAcount = accounts.find((account) => account.accountMainYn === true);
-            console.log(selectedAcount);
             if (selectedAcount) {
                 setMyAccountInfo(selectedAcount.accountNum);
                 setMyAccountInfoCode(selectedAcount.accountBankCode);
@@ -236,44 +231,48 @@ function Transfer() {
             <TranInputDiv>
                 <TranInputTitle>지인 선택</TranInputTitle>
                 <InputDiv style={{ marginBottom: '1rem' }}>
-                    <Input value={friendInfo} $size="86%,40px" $active onChange={handleFriendInfoChange} />
+                    <Input value={friendInfo} $size="88%,40px" $active onChange={handleFriendInfoChange} />
                     <ButtonBox>
                         <Image src={magnifyingGlass} alt="magnifyingGlass" onClick={axiosUserList}></Image>
                     </ButtonBox>
                 </InputDiv>
-                <select
-                    value={friendInfo}
-                    onChange={handleFriendInfoChange}
-                    style={{ width: '95%', height: '40px', borderRadius: '10px', border: '3px solid #BDBDBD' }}
-                >
-                    {users.map((user) => (
-                        <option key={user.userPk} value={userInfo}>
-                            {userInfo}
-                        </option>
-                    ))}
-                </select>
+                <InputDiv style={{ marginBottom: '0.5rem' }}>
+                  <select
+                      value={friendInfo}
+                      onChange={handleFriendInfoChange}
+                      style={{ 
+                        width: '94%', 
+                        height: '45px', 
+                        borderRadius: '10px', 
+                        border: '3px solid #BDBDBD', 
+                        fontSize: "16px"}}>
+                      {users.map((user) => (
+                          <option key={user.userPk} value={userInfo}>
+                              {userInfo}
+                          </option>))}
+                  </select>
+                </InputDiv>
             </TranInputDiv>
 
             <TranInputDiv>
                 <TranInputTitle>돈 받을 계좌</TranInputTitle>
-                {/* <ButtonInput
-                    value={myAccountInfo}
-                    $active
-                    $size="88%,40px"
-                    onChange={handleMyAccountInfoChange}
-                    $buttonImage={plus}
-                ></ButtonInput> */}
-                <select
-                    value={myAccountInfo}
-                    onChange={handleMyAccountInfoChange}
-                    style={{ width: '95%', height: '40px', borderRadius: '10px', border: '3px solid #BDBDBD' }}
-                >
-                    {accounts.map((account) => (
-                        <option key={account.accountId} value={account.accountNum}>
-                            {account.accountNum}
-                        </option>
-                    ))}
-                </select>
+                <InputDiv>
+                  <select
+                      value={myAccountInfo}
+                      onChange={handleMyAccountInfoChange}
+                      style={{ 
+                        width: '94%', 
+                        height: '45px', 
+                        borderRadius: '10px', 
+                        border: '3px solid #BDBDBD',
+                        fontSize: "16px" }}>
+                      {accounts.map((account) => (
+                          <option key={account.accountId} value={account.accountNum}>
+                              {account.accountNum}
+                          </option>
+                      ))}
+                  </select>
+                </InputDiv>
             </TranInputDiv>
             <TranInputDiv>
                 <TranInputTitle>돈 갚을 날짜</TranInputTitle>
@@ -287,10 +286,7 @@ function Transfer() {
                             value={transferDate ? transferDate.toISOString() : ''}
                             $active
                             $size="88%,40px"
-                            $buttonImage={calendar}
-                        />
-                    }
-                />
+                            $buttonImage={calendar}/>}/>
             </TranInputDiv>
 
             {/* <TranInputDiv>

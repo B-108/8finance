@@ -100,8 +100,6 @@ function SendMoney() {
         setMyAccountInfo(event.target.value);
     };
     const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      if(isNaN(Number(event.target.value))) {return}
-
         if(event.target.value === "") {
           setAmountInfo("0")
         }
