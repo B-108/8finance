@@ -16,6 +16,7 @@ import com.fin.billage.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -204,33 +205,32 @@ public class TransferService {
                 );
     }
 
-    public class Test {
-        String a = "test";
-
-        public String getA() {
-            return a;
-        }
+    // 스케줄링 활성화
+    @Scheduled(cron = "0 57 0 * * ?") // 매일 새벽 12시 56분에 실행
+    public void myScheduledTask() {
+        // 실행하려는 로직을 여기에 작성
+        System.out.println("매일 새벽 12시 57분에 실행됩니다.");
     }
 
-    public void test() {
-        WebClient webClient = WebClient.builder()
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)  // 기본 헤더 설정
-                .build();
-
-        // HTTP POST 요청 보내기
-        webClient.post()
-                .uri("http://localhost:8088/")
-                .body(BodyInserters.fromValue(new Test()))
-                .retrieve()
-                .bodyToMono(String.class)
-                .subscribe(
-                        responseBody -> {
-                            System.out.println("업데이트 성공: " + responseBody);
-                        },
-                        error -> {
-                            System.out.println("업데이트 실패: " + error.getMessage());
-                        }
-                );
-    }
+//    public void test() {
+//        WebClient webClient = WebClient.builder()
+//                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)  // 기본 헤더 설정
+//                .build();
+//
+//        // HTTP POST 요청 보내기
+//        webClient.post()
+//                .uri("http://localhost:8088/")
+//                .body(BodyInserters.fromValue(new Test()))
+//                .retrieve()
+//                .bodyToMono(String.class)
+//                .subscribe(
+//                        responseBody -> {
+//                            System.out.println("업데이트 성공: " + responseBody);
+//                        },
+//                        error -> {
+//                            System.out.println("업데이트 실패: " + error.getMessage());
+//                        }
+//                );
+//    }
 }
 

@@ -19,11 +19,6 @@ public class TransferController {
 
     private final TransferService transferService;
 
-    @GetMapping
-    public void test() {
-        transferService.test();
-    }
-
     // 계좌 불러오기 (마이데이터로 요청)
     @PostMapping("/getBank")
     public ResponseEntity<List<AccountResponseDto>> searchBank(@RequestBody List<String> list, HttpServletRequest request) {

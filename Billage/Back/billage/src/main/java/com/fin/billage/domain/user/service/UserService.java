@@ -139,11 +139,9 @@ public class UserService {
         List<UserGetListResponseDto> userGetListResponseDtoList = new ArrayList<>();
 
         for (User user : userList) {
-            String userCellNo = user.getUserCellNo().substring(7);
-
             UserGetListResponseDto userGetListResponseDto = UserGetListResponseDto.builder()
                     .userPk(user.getUserPk())
-                    .userCellNo(userCellNo)
+                    .userCellNo(user.getUserCellNo())
                     .userName(user.getUserName())
                     .build();
 
