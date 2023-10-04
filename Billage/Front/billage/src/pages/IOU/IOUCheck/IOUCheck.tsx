@@ -35,31 +35,70 @@ import { ButtonContainer } from './IOUCheck.style';
 
 //recoil
 import { useRecoilState } from 'recoil';
-import { IOUState } from '/src/recoil/iou';
+import { IOUCheckState, IOUState } from '/src/recoil/iou';
+import { PhoneState } from '/src/recoil/auth';
+import { IOUProps } from '/src/type/iou';
+import { postIOU } from '/src/api/iou';
 
 function IOUCheck() {
     const [isChecked, setIsChecked] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null!);
+    const currentDate = new Date().toISOString().split('T')[0];
+
+    const [phone, setPhone] = useRecoilState<string>(PhoneState);
 
     // Recoil 상태에서 데이터 읽어오기
+    const [iouCheck] = useRecoilState(IOUCheckState);
+    const {
+        contractAmtCheck, // 빌린 금액
+        contractMaturityDateCheck, // 돈 갚을 날짜
+        contractInterestRateCheck, // 이자율
+        creditorUserNameCheck, // 채권자 이름
+        debtorUserNameCheck, // 채무자 이름
+        contractStartDateCheck, // 빌리는 날짜
+    } = iouCheck;
+
+    console.log(iouCheck);
+
     const [contract] = useRecoilState(IOUState);
     const {
         creditorUser,
         contractDebtorAcNum,
         contractMaturityDate,
+        contractAutoTranYn,
+        contractAutoDate,
         contractAmt,
         contractInterestRate,
         contractDueAmt,
-        contractAutoDate,
-        contractAutoTranYn,
     } = contract;
 
-    console.log(contract)
+    // 차용증 생성
+    const axiosPostIOU = async () => {
+        const iouData: IOUProps = {
+            creditorUser: creditorUser, // 채권자 사용자 ID
+            contractDebtorAcNum: contractDebtorAcNum,
+            contractMaturityDate: contractMaturityDate,
+            contractAutoTranYn: contractAutoTranYn,
+            contractAutoDate: contractAutoDate,
+            contractAmt: contractAmt,
+            contractInterestRate: contractInterestRate,
+            contractDueAmt: contractDueAmt,
+        };
+        console.log(iouData);
+
+        // 차용증 생성 요청API.
+        try {
+            // Recoil 상태 업데이트
+            await postIOU(iouData);
+            console.log('차용증이 생성되었습니다.');
+        } catch (error) {
+            console.error('차용증 생성에 실패했습니다.', error);
+        }
+    };
 
     return (
         <CenteredContainer>
-            <Header 
-              headerTitle="거래하기"></Header>
+            <Header headerTitle="거래하기"></Header>
             <IOUContainer ref={contentRef}>
                 <WatermarkContainer>
                     <WatermarkImage src={logo} alt="logo" width="150px"></WatermarkImage>
@@ -71,32 +110,30 @@ function IOUCheck() {
                         <Amount>￦ {contractAmt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} (원)</Amount>
                         <hr />
                         <Content>
-                            위 금액을 채무자ooo가 채권자(
-                            ooo로부터 0000.00.00일 틀림없이
-                            빌렸습니다.
+                            위 금액을 채무자({debtorUserNameCheck})가 채권자({creditorUserNameCheck}) 로부터{' '}
+                            {contractStartDateCheck}일 틀림없이 빌렸습니다.
                         </Content>
                         <Content>
-                            채무자ooo는 위 금액을 연 이자00%
-                            %로 하여 0000.00.00일까지 채권자(
-                            000에게 갚겠습니다.
+                            채무자({debtorUserNameCheck})는 위 금액을 이자 {contractInterestRateCheck}%로 하여{' '}
+                            {contractMaturityDate}일까지 채권자({creditorUserNameCheck}) 에게 갚겠습니다.
                         </Content>
                     </div>
-                    <Dates>날짜: 0000 00 00일</Dates>
+                    <Dates>{currentDate}</Dates>
                     <hr />
 
                     <UserBox>
                         <UserType>채권자</UserType>
                         <UserInfo>
-                            <UserName>이름 : 최싸피</UserName>
-                            <UserPhone>전화번호 : 010-0000-0000</UserPhone>
+                            <UserName>이름 : {creditorUserNameCheck}</UserName>
+                            <UserPhone>전화번호 : </UserPhone>
                         </UserInfo>
                     </UserBox>
 
                     <UserBox>
                         <UserType>채무자</UserType>
                         <UserInfo>
-                            <UserName>이름 : 김싸피</UserName>
-                            <UserPhone>전화번호 : 010-0000-0000</UserPhone>
+                            <UserName>이름 : {debtorUserNameCheck}</UserName>
+                            <UserPhone>전화번호 : {phone}</UserPhone>
                         </UserInfo>
                     </UserBox>
                 </IOUContent>
@@ -109,22 +146,15 @@ function IOUCheck() {
             </IOUContainer>
 
             <AgreementDiv>
-              <Checkbox 
-                type="checkbox" 
-                checked={isChecked} 
-                onChange={() => setIsChecked(!isChecked)} />
-                위 정보가 정확한지 확인 했어요 (필수)
+                <Checkbox type="checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)} />위 정보가
+                정확한지 확인 했어요 (필수)
             </AgreementDiv>
 
             <ButtonContainer>
-                <Button 
-                  $basicGrayBtn 
-                  $size="48%,45px">
+                <Button $basicGrayBtn $size="48%,45px">
                     요청취소
                 </Button>
-                <Button 
-                  $basicGreenBtn 
-                  $size="48%,45px">
+                <Button $basicGreenBtn $size="48%,45px" onClick={axiosPostIOU}>
                     요청하기
                 </Button>
             </ButtonContainer>

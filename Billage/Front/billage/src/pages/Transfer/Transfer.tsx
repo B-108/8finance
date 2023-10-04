@@ -24,12 +24,19 @@ import { AccountType } from '/src/type/account';
 import { UserType } from '/src/type/user';
 import { getAccountList } from '/src/api/account';
 import { getUserList } from '/src/api/user';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { BankListState } from '/src/recoil/account';
-import { useIOUState } from '/src/recoil/iou';
+import { useIOUCheckState, useIOUState } from '/src/recoil/iou';
+import { NameState } from '/src/recoil/auth';
 
 function Transfer() {
+    //recoil
     const [IOU, setIOU] = useIOUState();
+    const [IOUCheck, setIOUCheck] = useIOUCheckState();
+
+    // 내 이름
+    const [name, setName] = useRecoilState<string>(NameState);
+
     const [friendInfo, setFriendInfo] = useState<string>('');
     const [transferDate, setTransferDate] = useState<Date | null>(null); // Date 타입으로 상태 변경
     const [autoTransferDate, setAutoTransferDate] = useState<Date | null>(null); // Date 타입으로 상태 변경
@@ -50,6 +57,7 @@ function Transfer() {
     const [accounts, setAccounts] = useState<AccountType[]>([]);
     const [myAccountInfo, setMyAccountInfo] = useState<string>('');
     const [myAccountInfoCode, setMyAccountInfoCode] = useState<string>('');
+    const [myAccountInfoCombined, setMyAccountInfoCombined] = useState<string>('');
 
     // Recoil에서 정의한 BankListState 상태를 가져옵니다.
     const bankList = useRecoilValue(BankListState);
@@ -64,7 +72,9 @@ function Transfer() {
 
     // 유저 목록
     const [users, setUsers] = useState<UserType[]>([]);
+    // 유저이름(폰번호 뒷자리)
     const [userInfo, setUserInfo] = useState<string>('');
+    // 빌리는 상대pk
     const [friendPk, setFriendPk] = useState<number>(0);
 
     const handleCancelClick = () => {
@@ -145,29 +155,39 @@ function Transfer() {
         }
     };
 
-    const myAccountInfoCombined = `${bankName} ${myAccountInfo}`;
     // 차용증 생성
-    const axiosPostIOU = async () => {
+    const recoilPostIOU = async () => {
         const iouData: IOUProps = {
             creditorUser: friendPk, // 채권자 사용자 ID
             contractDebtorAcNum: myAccountInfoCombined,
-            contractMaturityDate: transferDate ? transferDate.toISOString() : '', // Date 객체를 문자열로 변환
+            contractMaturityDate: transferDate ? transferDate.toISOString().split('T')[0] : '', // Date 객체를 문자열로 변환
             contractAutoTranYn: false,
-            contractAutoDate: new Date().toISOString(), // Date 객체를 문자열로 변환
+            contractAutoDate: new Date().toISOString().split('T')[0], // Date 객체를 문자열로 변환
             contractAmt: amountInfo,
             contractInterestRate: interest,
             contractDueAmt: totalAmount,
         };
         console.log(iouData);
 
-        // 차용증 생성 요청API.
+        const iouCheckData = {
+            contractAmtCheck: amountInfo,
+            contractMaturityDateCheck: transferDate ? transferDate.toISOString().split('T')[0] : '',
+            contractInterestRateCheck: interest,
+            creditorUserNameCheck: friendInfo,
+            debtorUserNameCheck: name,
+            contractStartDateCheck: new Date().toISOString().split('T')[0],
+        };
+        console.log(iouCheckData);
+
         try {
             // Recoil 상태 업데이트
             await setIOU(iouData);
+            await setIOUCheck(iouCheckData);
+
             navigate('/ioucheck');
             console.log('차용증이 임시 생성되었습니다.');
         } catch (error) {
-            console.error('차용증 생성에 실패했습니다.', error);
+            console.error('차용증 임시 생성에 실패했습니다.', error);
         }
     };
 
@@ -190,7 +210,9 @@ function Transfer() {
         if (users.length > 0) {
             const selectedUser = users.find((user) => user.userName === friendInfo);
             if (selectedUser) {
-                setUserInfo(`${selectedUser.userName} (${selectedUser.userCellNo})`);
+                const userCellNo = selectedUser.userCellNo;
+                const lastFourDigits = userCellNo.slice(-4);
+                setUserInfo(`${selectedUser.userName} (${lastFourDigits})`);
                 setFriendPk(selectedUser.userPk);
             }
         }
@@ -358,7 +380,7 @@ function Transfer() {
                 <Button $basicGrayBtn $size="48%, 50px" onClick={handleCancelClick}>
                     작성취소
                 </Button>
-                <Button $basicGreenBtn $size="48%, 50px" onClick={axiosPostIOU}>
+                <Button $basicGreenBtn $size="48%, 50px" onClick={recoilPostIOU}>
                     작성완료
                 </Button>
             </ButtonContainer>

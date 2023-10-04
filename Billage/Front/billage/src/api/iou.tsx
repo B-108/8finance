@@ -9,7 +9,7 @@ export const postIOU = async (info: IOUProps) => {
         await privateApi.post('/api/contract', info);
         console.log('차용증 생성', info);
     } catch (error) {
-        console.log(info);
+        // console.log(info);
         console.log('postIOU 실패', error);
     }
 };
@@ -18,8 +18,6 @@ export const postIOU = async (info: IOUProps) => {
 export const getIOU = async (contractId: number) => {
     try {
         const response = await privateApi.get(`/api/contract/${contractId}`);
-        //테스트용
-        // const response = await privateApi.get('/api/contract/2');
         console.log(response.data);
         console.log('차용증 조회 성공 ');
         return response;
