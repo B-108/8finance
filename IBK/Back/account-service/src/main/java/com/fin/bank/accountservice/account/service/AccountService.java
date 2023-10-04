@@ -32,12 +32,16 @@ public class AccountService {
 
     public List<AccountResponseDto> getAccountList(AccountRequestDto accountRequestDto, HttpServletRequest request) {
 
+        System.out.println("여기까지 왔고");
+
         List<AccountResponseDto> result = new ArrayList<>();
 
         AccountUserRequestDto accountUserRequestDto = AccountUserRequestDto.builder()
                 .userCellNo(accountRequestDto.getUserCellNo())
                 .userName(accountRequestDto.getUserName())
                 .build();
+
+        System.out.println("들어간다잉~");
 
         try {
             AccountUserResponseDto responseBody = webClientBuilder
@@ -51,7 +55,13 @@ public class AccountService {
                     .switchIfEmpty(Mono.error(new RuntimeException("해당 계좌는 없는 계좌입니다.")))
                     .block(Duration.ofSeconds(10));
 
+            System.out.println("유저 pk를 가져옴");
+
+            System.out.println(responseBody.getUserPk());
+
             List<Account> findAccount = accountRepository.findByUserPk(responseBody.getUserPk()).orElseThrow(() -> new RuntimeException("없어요.."));
+
+            System.out.println("결과가 없나?");
 
             for (Account account : findAccount) {
                 result.add(AccountResponseDto.builder()
