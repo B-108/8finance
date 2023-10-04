@@ -1,14 +1,9 @@
 package com.fin.bank.kb.domain.transfer.api;
 
 import com.fin.bank.kb.domain.transfer.dto.TransferRequestDto;
-import com.fin.bank.kb.domain.transfer.dto.TransferResponseDto;
-import com.fin.bank.kb.domain.transfer.enums.TransactionType;
 import com.fin.bank.kb.domain.transfer.service.TransferService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -29,7 +24,7 @@ public class TransferController {
     @PostMapping("/deposit")
     public boolean deposit(@RequestBody TransferRequestDto requestDto) {
         boolean success = transferService.deposit(requestDto);
-        System.out.println("deposit획인");
+        System.out.println("deposit확인");
         if (success) {
             return true;
         } else {
@@ -47,25 +42,5 @@ public class TransferController {
         } else {
             return false;
         }
-    }
-    
-    @GetMapping("/test")
-    public void test(){
-        System.out.println("test확인");
-    }
-    
-
-    // 성공 응답 생성 메서드
-    private TransferResponseDto createSuccessResponse(TransactionType transactionType) {
-        return TransferResponseDto.builder()
-                .message(transactionType.getValue() + " successful")
-                .build();
-    }
-
-    // 에러 응답 생성 메서드
-    private TransferResponseDto createErrorResponse() {
-        return TransferResponseDto.builder()
-                .message("Transaction failed. Check customer information, account number, and balance.")
-                .build();
     }
 }

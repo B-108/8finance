@@ -40,7 +40,16 @@ public class TransferService {
             return false; // 입금 실패: 계좌가 잠겨 있음
         }
         // 입금 가능하면 계좌 잔액을 증가시키고 저장
-        account.setAccountAddBalanceAmt(account.getAccountBalanceAmt().add(requestDto.getAmount()));
+
+        BigDecimal a = account.getAccountBalanceAmt();
+        System.out.println("더하기 전 현재 잔액: " + a);
+
+        BigDecimal b = requestDto.getAmount();
+        System.out.println("더할 금액: " + b);
+
+        account.setAccountAddBalanceAmt(b);
+        System.out.println("더한 후 현재 잔액(저장 후): " + account.getAccountBalanceAmt());
+
         accountRepository.save(account);
 
         // 입금 이력을 생성 및 저장
@@ -83,7 +92,17 @@ public class TransferService {
         BigDecimal currentBalance = account.getAccountBalanceAmt();
         if (currentBalance != null && requestDto.getAmount() != null && currentBalance.compareTo(requestDto.getAmount()) >= 0) {
             // 출금 가능하면 계좌 잔액을 감소시키고 저장
-            account.setAccountSubtractBalanceAmt(account.getAccountBalanceAmt().subtract(requestDto.getAmount()));
+//            System.out.println("뺄 금액: " + requestDto.getAmount());
+
+            BigDecimal a = account.getAccountBalanceAmt();
+            System.out.println("빼기 전 현재 잔액: " + a);
+
+            BigDecimal b = requestDto.getAmount();
+            System.out.println("뺄 금액: " + b);
+
+            account.setAccountSubtractBalanceAmt(b);
+            System.out.println("뺀 후 현재 잔액(저장 후): " + account.getAccountBalanceAmt());
+
             accountRepository.save(account);
 
             // 출금 이력을 생성 및 저장
