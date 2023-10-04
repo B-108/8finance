@@ -70,7 +70,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => {
     <ProgressBarContainer>
       <ProgressBarWrapper progress={progress}>
         <ProgressBarFill />
-        <ProgressText>{progress}{'%'}</ProgressText>
+        <ProgressText>{progress.toFixed(0)}{'%'}</ProgressText>
       </ProgressBarWrapper>
       <ProgressBarMarker progress={0} />
       <ProgressBarMarker progress={25} />

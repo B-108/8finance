@@ -4,10 +4,10 @@ import Chart from "react-apexcharts";
 interface DonutChartProps {
   Return: number;
   Money: number;
-  Day: number;
+  Interest: number;
 }
 
-function DonutChart ({Return,Money}:DonutChartProps) {
+function DonutChart ({Return,Money,Interest}:DonutChartProps) {
 
 
   const optionsRadial = {
@@ -82,10 +82,9 @@ function DonutChart ({Return,Money}:DonutChartProps) {
 
   // const seriesRadial = [Number((Return/Money * 100))];
   // const seriesRadial = [100 - Number((Return/Money * 100))];
-  const percentage = 100 - Number((Return / Money) * 100); // 백분율 계산
-  const formattedPercentage = `${percentage.toFixed(2)}%`; // 소수점 두 자리까지 표시
-  
-  const seriesRadial = [percentage];
+  const totalPrice = Money + (Money * Interest) /100
+  const percentage = 100 - (Return / totalPrice) * 100; // 백분율 계산 
+  const seriesRadial = [Number(percentage.toFixed(0))];
 
   return(
     <div>

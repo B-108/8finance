@@ -56,7 +56,7 @@ import { useRecoilState } from "recoil"
 function Main(){
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
   const [transList, setTransList] = useState<TransactionType[]>([])
-
+  console.log(transList)
   // 라우터
   const navigate = useNavigate()
   const moveTransfer = () => {navigate(`/transfer`)}
@@ -138,7 +138,7 @@ function Main(){
                           <DonutChart 
                             Return={transAction.repaymentCash}
                             Money={transAction.contractAmt}
-                            Day={transAction.remainingLoanTerm}/>
+                            Interest={transAction.interestRate}/>
                         </TopSection>
 
                         <BottomSection>
@@ -164,7 +164,7 @@ function Main(){
                           <DonutChart
                             Return={transAction.repaymentCash}
                             Money={transAction.contractAmt}
-                            Day={transAction.remainingLoanTerm}/>
+                            Interest={transAction.interestRate}/>
                         </TopSection>
 
                         <BottomSection>
