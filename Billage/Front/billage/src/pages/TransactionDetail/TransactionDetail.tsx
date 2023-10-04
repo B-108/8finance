@@ -146,7 +146,7 @@ function TADetail() {
               </div>
               <Text
                 $transactionContent>
-                {detail?.contractAmt}원</Text>
+                {detail?.contractAmt.toLocaleString()}원</Text>
           </FlexDiv>
           <FlexDiv $margin="1.5% 0%">
               <div style={{ 
@@ -185,7 +185,7 @@ function TADetail() {
               </div>
               <Text
                 $transactionContent>
-                {totalRepaymentCash}원</Text>
+                {totalRepaymentCash.toLocaleString()}원</Text>
           </FlexDiv>
 
 
@@ -210,7 +210,7 @@ function TADetail() {
                   <Text 
                     style={{marginBottom:"7px"}}
                     $smallContent>남은금액</Text>
-                  <Text>{Number(detail?.repaymentCash)}</Text>
+                  <Text>{Number(detail?.repaymentCash).toLocaleString()}</Text>
               </div>
           </FlexDiv>
 

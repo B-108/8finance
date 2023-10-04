@@ -57,21 +57,17 @@ function TransactionHistory () {
               $SizeUp
               $Green>{item.tranWd} ={">"} {item.tranDp}</Content>
           </Contentbox>
-            
+          <br />
+
           <Contentbox>
             <Content>거래시간</Content>
             <Content>{item.tranDate}</Content>
           </Contentbox>  
-
-          <Contentbox>
-            <Content>거래내용</Content>
-            <Content>{item.tranContent}</Content>
-          </Contentbox>
-
+          
           <Contentbox>
             <Content>이체금액</Content>
             <Content
-              $Green>{item.tranAmt}</Content>
+              $Green>{item.tranAmt.toLocaleString()}원</Content>
           </Contentbox>
 
           <Contentbox>

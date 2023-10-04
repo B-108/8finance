@@ -148,7 +148,7 @@ function Main(){
                             width="20px"></Image>
                           <TextBox>
                             <Remain>남은금액</Remain>
-                            <Remain>{transAction.repaymentCash}</Remain>
+                            <Remain>{transAction.repaymentCash.toLocaleString()}</Remain>
                           </TextBox>
                           <SendBtn onClick={() => moveToSendMoney(transAction)}>돈 돌려주기</SendBtn>
                         </BottomSection>
@@ -174,7 +174,7 @@ function Main(){
                             width="20px"></Image>
                           <TextBox>
                             <Remain>남은금액</Remain>
-                            <Remain>{transAction.repaymentCash}</Remain>
+                            <Remain>{transAction.repaymentCash.toLocaleString()}</Remain>
                           </TextBox>
                           <SendBtn>돈 달라하기</SendBtn>
                         </BottomSection>
