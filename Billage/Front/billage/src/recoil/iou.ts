@@ -1,8 +1,8 @@
 import { atom } from 'recoil';
 
 // Recoil 상태 정의
-export const contractState = atom({
-    key: 'contractState',
+export const ContractState = atom({
+    key: 'ContractState',
     default: {
         creditorUser: {
             userName: '',
