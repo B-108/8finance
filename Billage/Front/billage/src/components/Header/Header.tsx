@@ -47,9 +47,6 @@ function Header ({headerTitle} : HeaderProps) {
         <Title
           $noDisplay = {noDisplayImg}>{headerTitle}</Title>
       </LeftSection>
-      <Button
-        $smallGreenBtn
-        onClick={logout}>임시로그아웃</Button>
       <Image 
         src={alramBell} 
         alt="alramBell"
