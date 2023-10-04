@@ -1,10 +1,15 @@
+import { useNavigate } from 'react-router-dom'
+import styled from "styled-components"
 import React from 'react'
+
+
+// 재사용 컴포넌트
+import Image from './Image'
+
+// 이미지
 import home from '/src/assets/homeButton.svg'
 import account from '/src/assets/creditCard.svg'
-import hamburger from '/src/assets/hamburger.svg'
-import Image from './Image'
-import styled from "styled-components"
-import { useNavigate } from 'react-router-dom'
+import Logout from '/src/assets/logout.svg'
 
 interface TextProps {
     children?: React.ReactNode;
@@ -53,37 +58,62 @@ const FooterContainer = styled.div`
 function Footer(){
   // 라우터
   const navigate = useNavigate()
+  const moveLogin = () => {navigate(`/`)}
   const moveMain = () => {navigate(`/main`)}
   const moveAccounts = () => {navigate(`/myaccounts`)}
+  
+
+  const logout = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    moveLogin()
+  }
 
   return (
     <FooterContainer>
       <div style={{
         width: '100%', 
         display: 'flex', 
+        height:"55px",
         justifyContent: 'space-around'}}>
-        <div>
+        <div style={{
+          display:"flex",
+          width:"70px",
+          flexDirection:"column",
+          justifyContent:"space-between",
+          alignItems:"center"}}
+          onClick={logout}> 
+          <Image 
+            src={Logout} 
+            alt="Logout" 
+            width="30px"></Image>
+          <Text>로그아웃</Text>
+        </div>
+        <div style={{
+          display:"flex",
+          width:"70px",
+          flexDirection:"column",
+          justifyContent:"space-between",
+          alignItems:"center"}}
+          onClick={moveMain}>
           <Image 
             src={home} 
             alt="home" 
-            width="30px"
-            onClick={moveMain}></Image>
+            width="30px"></Image>
           <Text>홈</Text>
         </div>
-        <div>
+        <div style={{
+          display:"flex",
+          width:"70px",
+          flexDirection:"column",
+          justifyContent:"space-between",
+          alignItems:"center"}}
+          onClick={moveAccounts}>
           <Image 
             src={account} 
             alt="account" 
-            width="30px"
-            onClick={moveAccounts}></Image>
+            width="30px"></Image>
           <Text>계좌</Text>
-        </div>
-        <div> 
-          <Image 
-            src={hamburger} 
-            alt="hamburger" 
-            width="26px"></Image>
-          <Text>설정</Text>
         </div>
       </div>
     </FooterContainer>
