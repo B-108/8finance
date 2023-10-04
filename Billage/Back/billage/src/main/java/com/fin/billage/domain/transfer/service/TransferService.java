@@ -99,92 +99,18 @@ public class TransferService {
     // 이체 (오픈뱅킹에 요청)
     // 일단 무조건 이체 되게 바꿔놈
     public void transferCash(TransferCashRequestDto dto, HttpServletRequest request) {
-        String actCode = "002";
-        String bankCode = dto.getTranWdBankCode();
-
-//        Url url = requestUrlRepository.findByRequestBankCodeAndRequestActCode(bankCode, actCode);
-
-        Long user_pk = jwtUtil.extractUserPkFromToken(request);
-        User user = userRepository.findById(user_pk).orElse(null);
-        String userName = user.getUserName();
-        String userCellNo = user.getUserCellNo();
+//        String actCode = "002";
+//        String bankCode = dto.getTranWdBankCode();
+//
+////        Url url = requestUrlRepository.findByRequestBankCodeAndRequestActCode(bankCode, actCode);
+//
+//        Long user_pk = jwtUtil.extractUserPkFromToken(request);
+//        User user = userRepository.findById(user_pk).orElse(null);
+//        String userName = user.getUserName();
+//        String userCellNo = user.getUserCellNo();
         Contract contract = contractRepository.findByContractId(dto.getContractId());
-
-        Transaction t = Transaction.builder()
-                                    .tranAmt(dto.getTranAmt())
-                                    .contract(contract)
-                                    .tranDp(dto.getTranDp())
-                                    .tranDpAcNum(dto.getTranDpAcNum())
-                                    .tranDpBankCode(dto.getTranDpBankCode())
-                                    .tranWd(dto.getTranWd())
-                                    .tranWdAcNum(dto.getTranWdAcNum())
-                                    .tranWdBankCode(dto.getTranWdBankCode())
-                                    .tranDate(LocalDateTime.now())
-                                    .build();
-
-        transactionRepository.save(t);
-
-        // 차용증 이체 노티에 등록
-        Notice n = Notice.builder()
-                .contractId(contract.getContractId())
-                .user(contract.getCreditorUser())
-                .noticeUserName(contract.getDebtorUser().getUserName())
-                .noticeSendDate(LocalDateTime.now())
-                .noticeAmount(dto.getTranAmt())
-                .noticeType(4)
-                .build();
-
-        noticeRepository.save(n);
-
-
-//        String tranWdCellNo = "";            // 지급인 핸드폰 번호
-//        String tranDpCellNo = "";            // 수취인 핸드폰 번호
 //
-//        // 수취인이 채무자일 때
-//        if(dto.getTranDp().equals(contract.getDebtorUser().getUserName())) {
-//            tranDpCellNo = contract.getDebtorUser().getUserCellNo();
-//        }
-//        // 수취인이 채권자일 때
-//        if(dto.getTranDp().equals(contract.getCreditorUser().getUserName())) {
-//            tranDpCellNo = contract.getCreditorUser().getUserCellNo();
-//        }
-//        // 지급인이 채무자일 때
-//        if(contract.getDebtorUser().getUserName().equals(dto.getTranWd())) {
-//            tranWdCellNo = contract.getDebtorUser().getUserCellNo();
-//        }
-//        // 지급인이 채권자일 때
-//        if(contract.getCreditorUser().getUserName().equals(dto.getTranWd())) {
-//            tranWdCellNo = contract.getCreditorUser().getUserCellNo();
-//        }
-//
-//        TransferCashOpenBankingRequestDto transferCashOpenBankingRequestDto = TransferCashOpenBankingRequestDto.builder()
-//                .tranDate(LocalDateTime.now())
-//                .tranAmt(dto.getTranAmt())
-//                .tranDpName(dto.getTranDp())
-//                .tranDpBankCode(dto.getTranDpBankCode())
-//                .tranDpAcNum(dto.getTranDpAcNum())
-//                .tranDpCellNo(tranDpCellNo)
-//                .tranWdName(dto.getTranWd())
-//                .tranWdBankCode(dto.getTranWdBankCode())
-//                .tranWdAcNum(dto.getTranWdAcNum())
-//                .tranWdCellNo(tranWdCellNo)
-//                .build();
-//
-//        WebClient webClient = WebClient.builder()
-//                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)  // 기본 헤더 설정
-//                .build();
-////
-////        Transaction transaction = transactionRepository.findByContract(contract);
-//
-//        // HTTP POST 요청 보내기
-//        webClient.post()
-//                .uri("http://localhost:8081/transactions/transfer")
-//                .body(BodyInserters.fromValue(transferCashOpenBankingRequestDto))
-//                .retrieve()
-//                .bodyToMono(String.class)
-//                .subscribe(
-//                        responseBody -> {
-//                            Transaction t = Transaction.builder()
+//        Transaction t = Transaction.builder()
 //                                    .tranAmt(dto.getTranAmt())
 //                                    .contract(contract)
 //                                    .tranDp(dto.getTranDp())
@@ -196,12 +122,86 @@ public class TransferService {
 //                                    .tranDate(LocalDateTime.now())
 //                                    .build();
 //
-//                            transactionRepository.save(t);
-//                        },
-//                        error -> {
-//                            System.out.println("이체 실패" + error.getMessage());
-//                        }
-//                );
+//        transactionRepository.save(t);
+//
+//        // 차용증 이체 노티에 등록
+//        Notice n = Notice.builder()
+//                .contractId(contract.getContractId())
+//                .user(contract.getCreditorUser())
+//                .noticeUserName(contract.getDebtorUser().getUserName())
+//                .noticeSendDate(LocalDateTime.now())
+//                .noticeAmount(dto.getTranAmt())
+//                .noticeType(4)
+//                .build();
+//
+//        noticeRepository.save(n);
+
+
+        String tranWdCellNo = "";            // 지급인 핸드폰 번호
+        String tranDpCellNo = "";            // 수취인 핸드폰 번호
+
+        // 수취인이 채무자일 때
+        if(dto.getTranDp().equals(contract.getDebtorUser().getUserName())) {
+            tranDpCellNo = contract.getDebtorUser().getUserCellNo();
+        }
+        // 수취인이 채권자일 때
+        if(dto.getTranDp().equals(contract.getCreditorUser().getUserName())) {
+            tranDpCellNo = contract.getCreditorUser().getUserCellNo();
+        }
+        // 지급인이 채무자일 때
+        if(contract.getDebtorUser().getUserName().equals(dto.getTranWd())) {
+            tranWdCellNo = contract.getDebtorUser().getUserCellNo();
+        }
+        // 지급인이 채권자일 때
+        if(contract.getCreditorUser().getUserName().equals(dto.getTranWd())) {
+            tranWdCellNo = contract.getCreditorUser().getUserCellNo();
+        }
+
+        TransferCashOpenBankingRequestDto transferCashOpenBankingRequestDto = TransferCashOpenBankingRequestDto.builder()
+                .tranDate(LocalDateTime.now())
+                .tranAmt(dto.getTranAmt())
+                .tranDpName(dto.getTranDp())
+                .tranDpBankCode(dto.getTranDpBankCode())
+                .tranDpAcNum(dto.getTranDpAcNum())
+                .tranDpCellNo(tranDpCellNo)
+                .tranWdName(dto.getTranWd())
+                .tranWdBankCode(dto.getTranWdBankCode())
+                .tranWdAcNum(dto.getTranWdAcNum())
+                .tranWdCellNo(tranWdCellNo)
+                .build();
+
+        WebClient webClient = WebClient.builder()
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)  // 기본 헤더 설정
+                .build();
+//
+//        Transaction transaction = transactionRepository.findByContract(contract);
+
+        // HTTP POST 요청 보내기
+        webClient.post()
+                .uri("https://j9b108.p.ssafy.io/openbank/transactions/transfer")
+                .body(BodyInserters.fromValue(transferCashOpenBankingRequestDto))
+                .retrieve()
+                .bodyToMono(String.class)
+                .subscribe(
+                        responseBody -> {
+                            Transaction t = Transaction.builder()
+                                    .tranAmt(dto.getTranAmt())
+                                    .contract(contract)
+                                    .tranDp(dto.getTranDp())
+                                    .tranDpAcNum(dto.getTranDpAcNum())
+                                    .tranDpBankCode(dto.getTranDpBankCode())
+                                    .tranWd(dto.getTranWd())
+                                    .tranWdAcNum(dto.getTranWdAcNum())
+                                    .tranWdBankCode(dto.getTranWdBankCode())
+                                    .tranDate(LocalDateTime.now())
+                                    .build();
+
+                            transactionRepository.save(t);
+                        },
+                        error -> {
+                            System.out.println("이체 실패" + error.getMessage());
+                        }
+                );
     }
 
     public class Test {
