@@ -31,6 +31,20 @@ function TransactionHistory () {
   useEffect(() => {
       axiosHistory();
   }, []);
+console.log(history)
+// 날짜 및 시간을 원하는 형식으로 포맷팅하는 함수
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // 월을 두 자리로 표시
+  const day = String(date.getDate()).padStart(2, '0'); // 일을 두 자리로 표시
+  const hours = String(date.getHours()).padStart(2, '0'); // 시간을 두 자리로 표시
+  const minutes = String(date.getMinutes()).padStart(2, '0'); // 분을 두 자리로 표시
+  const seconds = String(date.getSeconds()).padStart(2, '0'); // 초를 두 자리로 표시
+
+  // "년-월-일 시간:분:초" 형식으로 반환
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
 
 
   return (
@@ -57,31 +71,35 @@ function TransactionHistory () {
               $SizeUp
               $Green>{item.tranWd} ={">"} {item.tranDp}</Content>
           </Contentbox>
-            
+          <br />
+
           <Contentbox>
             <Content>거래시간</Content>
-            <Content>{item.tranDate}</Content>
+            <Content>{formatDate(item.tranDate)}</Content>
           </Contentbox>  
-
-          <Contentbox>
-            <Content>거래내용</Content>
-            <Content>{item.tranContent}</Content>
-          </Contentbox>
-
+          
           <Contentbox>
             <Content>이체금액</Content>
             <Content
-              $Green>{item.tranAmt}</Content>
+              $Green>{item.tranAmt.toLocaleString()}원</Content>
           </Contentbox>
 
           <Contentbox>
             <Content>입금계좌</Content>
-            <Content>{"("}{item.tranDpBankCode}{")"}{item.tranDpAcNum}</Content>
+            <Content>{"("}
+            {item.tranDpBankCode === '003' ? '기업'
+            : item.tranDpBankCode ===  '004' ? '국민'
+            : '농협'}
+            {")"}{item.tranDpAcNum}</Content>
           </Contentbox>
 
           <Contentbox>
             <Content>출금계좌</Content>
-            <Content>{"("}{item.tranWdBankCode}{")"}{item.tranWdAcNum}</Content>
+            <Content>{"("}
+            {item.tranWdBankCode === '003' ? '기업'
+            :  item.tranWdBankCode === '004' ? '국민'
+            : '농협'}
+            {")"}{item.tranWdAcNum}</Content>
           </Contentbox>
         </DetailBox>
       </Box>

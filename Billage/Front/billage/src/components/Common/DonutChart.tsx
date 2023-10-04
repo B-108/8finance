@@ -7,7 +7,7 @@ interface DonutChartProps {
   Day: number;
 }
 
-function DonutChart ({Return,Money,Day}:DonutChartProps) {
+function DonutChart ({Return,Money}:DonutChartProps) {
 
 
   const optionsRadial = {
@@ -81,9 +81,15 @@ function DonutChart ({Return,Money,Day}:DonutChartProps) {
   };
 
   // const seriesRadial = [Number((Return/Money * 100))];
-  const seriesRadial = [100 - Number((Return/Money * 100))];
+  // const seriesRadial = [100 - Number((Return/Money * 100))];
+  const percentage = 100 - Number((Return / Money) * 100); // 백분율 계산
+  const formattedPercentage = `${percentage.toFixed(2)}%`; // 소수점 두 자리까지 표시
+  
+  const seriesRadial = [percentage];
+
   return(
     <div>
+      <span style={{position : 'absolute', marginLeft : '33%', marginTop: '88px', zIndex:'1', fontSize : '20px'}}>%</span>
     <Chart
       options={optionsRadial}
       series={seriesRadial}

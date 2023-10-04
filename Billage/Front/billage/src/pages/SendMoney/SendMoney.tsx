@@ -16,6 +16,8 @@ import { SendMoneyType } from '/src/type/transaction';
 function SendMoney() {
     const navigate = useNavigate();
     const location = useLocation();
+    const sendData = location.state.data
+    console.log(sendData)
     //작성 취소 버튼 클릭시 활성
     const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false); // 다이얼로그 상태 추가
     // 이체 필요 데이터
@@ -57,7 +59,7 @@ function SendMoney() {
         tranWdBankCode: myAccountInfoCode,
         tranDp: friendInfo,
         tranDpAcNum: accountInfo,
-        tranDpBankCode: '004',
+        tranDpBankCode: accountInfoCode,
         tranAmt: Number(amount),
         tranContent: '돈보내기',
     };
@@ -65,12 +67,11 @@ function SendMoney() {
     //useEffect
     useEffect(() => {
         axiosAccountList();
-        const mainAccountParts = location.state.detail.mainAccount.split(' ');
-        setTransId(location.state.state.contractId);
-        setTransWd(location.state.state.debtoruser);
-        setFriendInfo(location.state.state.creditoruser);
-        setAccountInfo(mainAccountParts.slice(1).join(' '));
-        setAccountInfoCode(mainAccountParts[0]);
+        setTransId(sendData.contractId);
+        setTransWd(sendData.debtorUser.userName);
+        setFriendInfo(sendData.creditorUser.userName);
+        setAccountInfo(sendData.creditorAcNum);
+        setAccountInfoCode(sendData.creditorBankCode);
     }, []);
 
     useEffect(() => {
@@ -81,10 +82,7 @@ function SendMoney() {
         }
     }, [accounts]);
 
-    // console.log(accountInfoCode)
-    
     //함수
-
     const handleCancelClick = () => {
         setIsCancelDialogOpen(true);
     };
@@ -98,7 +96,6 @@ function SendMoney() {
     };
 
     const handleMyAccountInfoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        // console.log(event.target.value); // 디버깅 목적
         setMyAccountInfo(event.target.value);
     };
     const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -150,7 +147,7 @@ function SendMoney() {
 
             <InputDiv style={{ alignItems: 'center' }}>
                 <InputTitle>보내는 금액</InputTitle>
-                <Input value={amount} $active $size="88%,40px" $position onChange={handleAmountChange}></Input>
+                <Input value={Number(amount).toLocaleString()} $active $size="88%,40px" $position onChange={handleAmountChange}></Input>
                 <SmallButtonsContainer>
                   <Button style={{margin:"7px 0px 0px 5px"}}
                     $smallBlackBtn 
@@ -180,7 +177,7 @@ function SendMoney() {
             <InputDiv style={{ alignItems: 'center' }}>
                 <InputTitle>남은 금액</InputTitle>
                 <Input
-                    value={location.state.detail.repaymentCash - Number(amount)}
+                    value={(sendData.repaymentCash - Number(amount)).toLocaleString()}
                     $active
                     $size="88%,40px"
                     $position
