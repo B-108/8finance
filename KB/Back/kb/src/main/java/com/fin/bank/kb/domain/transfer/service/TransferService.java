@@ -33,6 +33,7 @@ public class TransferService {
                 requestDto.getTranDpAcNum()).orElseThrow(()-> new RuntimeException("계좌없음"));
 
         if (isAccountBlocked(account)) {
+            System.out.println("입금 실패: 계좌가 잠겨 있음");
             return false; // 입금 실패: 계좌가 잠겨 있음
         }
         // 입금 가능하면 계좌 잔액을 증가시키고 저장
@@ -54,6 +55,7 @@ public class TransferService {
                 requestDto.getTranDpBankCode(),
                 requestDto.getTranDpAcNum()
         );
+        System.out.println("입금 성공");
         return true; // 입금 성공
     }
 
@@ -61,13 +63,14 @@ public class TransferService {
     public boolean withdraw(TransferRequestDto requestDto) {
         // 사용자 정보를 사용하여 계좌 조회(유효성 검증)
         Optional<Account> optionalAccount = accountRepository.findByUser_UserNameAndUser_UserCellNoAndAccountNumber(
-                requestDto.getTranDpName(),
-                requestDto.getTranDpCellNo(),
-                requestDto.getTranDpAcNum());
+                requestDto.getTranWdName(),
+                requestDto.getTranWdCellNo(),
+                requestDto.getTranWdAcNum());
 
         if (optionalAccount.isPresent()) {
             Account account = optionalAccount.get();
             if (isAccountBlocked(account)) {
+                System.out.println("출금 실패: 계좌가 잠겨 있음");
                 return false; // 출금 실패: 계좌가 잠겨 있음
             }
             BigDecimal currentBalance = account.getAccountBalanceAmt();
@@ -91,9 +94,11 @@ public class TransferService {
                         requestDto.getTranDpBankCode(),
                         requestDto.getTranDpAcNum()
                 );
+                System.out.println("출금 성공");
                 return true; // 출금 성공
             }
         }
+        System.out.println("출금 실패: 출금할 금액보다 잔액이 적음");
         return false; // 출금 실패: 출금할 금액보다 잔액이 적음
     }
 

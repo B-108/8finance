@@ -27,25 +27,25 @@ public class TransferController {
 
     // 고객의 입금 요청 API
     @PostMapping("/deposit")
-    public ResponseEntity<TransferResponseDto> deposit(@RequestBody TransferRequestDto requestDto) {
+    public boolean deposit(@RequestBody TransferRequestDto requestDto) {
         boolean success = transferService.deposit(requestDto);
-        System.out.println("들어와라...");
+        System.out.println("deposit획인");
         if (success) {
-            return new ResponseEntity<>(createSuccessResponse(TransactionType.DEPOSIT), HttpStatus.OK);
+            return true;
         } else {
-            return new ResponseEntity<>(createErrorResponse(), HttpStatus.BAD_REQUEST);
+            return false;
         }
     }
 
     // 고객의 출금 요청 API
     @PostMapping("/withdraw")
-    public ResponseEntity<TransferResponseDto> withdraw(@RequestBody TransferRequestDto requestDto) {
+    public boolean withdraw(@RequestBody TransferRequestDto requestDto) {
         boolean success = transferService.withdraw(requestDto);
         System.out.println("withdraw확인");
         if (success) {
-            return new ResponseEntity<>(createSuccessResponse(TransactionType.WITHDRAWAL), HttpStatus.OK);
+            return true;
         } else {
-            return new ResponseEntity<>(createErrorResponse(), HttpStatus.BAD_REQUEST);
+            return false;
         }
     }
     
