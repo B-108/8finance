@@ -141,19 +141,19 @@ public class TransferService {
         String tranDpCellNo = "";            // 수취인 핸드폰 번호
 
         // 수취인이 채무자일 때
-        if(dto.getTranDp().equals(contract.getDebtorUser().getUserName())) {
+        if(contract.getDebtorUser() != null && dto.getTranDp().equals(contract.getDebtorUser().getUserName())) {
             tranDpCellNo = contract.getDebtorUser().getUserCellNo();
         }
         // 수취인이 채권자일 때
-        if(dto.getTranDp().equals(contract.getCreditorUser().getUserName())) {
+        if(contract.getCreditorUser()!= null && dto.getTranDp().equals(contract.getCreditorUser().getUserName())) {
             tranDpCellNo = contract.getCreditorUser().getUserCellNo();
         }
         // 지급인이 채무자일 때
-        if(contract.getDebtorUser().getUserName().equals(dto.getTranWd())) {
+        if(contract.getDebtorUser() != null && contract.getDebtorUser().getUserName().equals(dto.getTranWd())) {
             tranWdCellNo = contract.getDebtorUser().getUserCellNo();
         }
         // 지급인이 채권자일 때
-        if(contract.getCreditorUser().getUserName().equals(dto.getTranWd())) {
+        if(contract.getCreditorUser() != null && contract.getCreditorUser().getUserName().equals(dto.getTranWd())) {
             tranWdCellNo = contract.getCreditorUser().getUserCellNo();
         }
 
