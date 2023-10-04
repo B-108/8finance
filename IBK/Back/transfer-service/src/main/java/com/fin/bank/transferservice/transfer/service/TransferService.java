@@ -32,6 +32,8 @@ public class TransferService {
     // 입금 서비스 메서드
     public boolean deposit(TransferRequestDto transferRequestDto, HttpServletRequest request) {
 
+        System.out.println("씨발 여기는 온거냐?");
+
         WebClient webClient = WebClient.builder()
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)  // 기본 헤더 설정
                 .defaultHeader("Authorization", request.getHeader("Authorization"))
@@ -44,6 +46,8 @@ public class TransferService {
                 // 금액
                 .build();
 
+        int a = 1;
+
         // HTTP POST 요청 보내기
         webClient.post()
                 .uri("https://j9b108.b.ssafy.io/ibk/account/deposit")
@@ -53,6 +57,7 @@ public class TransferService {
                 .switchIfEmpty(Mono.error(new RuntimeException("해당 계좌는 없는 계좌입니다.")))
                 .subscribe(
                         reponseBody -> {
+                            System.out.println("이 방법이 있었노");
                             saveTransaction(
                                     reponseBody.getAccountId(),
                                     transferRequestDto.getAmount(),
@@ -72,6 +77,8 @@ public class TransferService {
                             System.out.println("이체 실패" + error.getMessage());
                         }
                 );
+
+        System.out.println("씨발 뭐 찍어볼게 없네");
 
         return true; // 입금 성공
     }
