@@ -34,7 +34,7 @@ import { AccountProps, EachBankAccountType } from '/src/type/account';
 import { useRecoilState } from 'recoil';
 import { 
   AccountsSelectedState, 
-  EachBankAccountState } from '/src/recoil/account';
+  EachBankAccountState } from '/src/recoil/account';``
 
 // 알림 모달창
 import ConfirmContext from '/src/context/confirm/ConfirmContext';
@@ -91,6 +91,10 @@ function LoadAccounts() {
   useEffect(()=>{
     setIsAccountClicked(Array(eachBankAccount.length).fill(false))
   },[eachBankAccount])
+
+  useEffect(()=>{
+    setAccountsSelected([])
+  },[])
 
   return (
     <>

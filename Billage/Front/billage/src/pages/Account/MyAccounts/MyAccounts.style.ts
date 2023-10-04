@@ -47,7 +47,7 @@ export const Account = styled.div<{ $isClicked: boolean }>`
   align-items: flex-start;
   justify-content: center;
   width: 96%;
-  height: 300px;
+  height: 220px;
   margin-bottom: 10px;
   box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);
   border-radius: ${theme.radius.S_10};

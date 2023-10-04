@@ -21,7 +21,9 @@ import Input, {
 import logo from 'src/assets/logo.png'
 
 // 리코일
-import { PhoneState } from "/src/recoil/auth";
+import { 
+  NameState, 
+  PhoneState } from "/src/recoil/auth";
 import { useRecoilState } from "recoil";
 import { token } from "firebase";
 
@@ -34,6 +36,7 @@ import AlertSimpleContext from "/src/context/alertSimple/AlertSimpleContext";
 // 타입스크립트
 
 function Login(){
+  const [name, setName] = useRecoilState<string>(NameState);
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
   const [isEnd, setIsEnd] = useState(false);
 
@@ -51,11 +54,14 @@ function Login(){
     }
 
     const response = await axiosPhoneCheck()
+
     if( !response ) { 
       onAlertSimpleClick("회원이 아닙니다. 핸드폰번호를 확인해주세요.")
       return 
     }
-    else { navigate('/pinenter/login') }
+    else {
+      setName(response) 
+      navigate('/pinenter/login') }
   }
 
   const moveMain = () => {
@@ -102,7 +108,7 @@ function Login(){
   const axiosPhoneCheck = async (): Promise<object|undefined>  => {
     try {
       const response = await getPhoneCheck(phone)
-      return response
+      return response?.data.userName
     }
     catch(error) {
       console.log(error)
