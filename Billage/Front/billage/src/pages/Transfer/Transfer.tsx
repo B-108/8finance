@@ -57,7 +57,6 @@ function Transfer() {
     const [accounts, setAccounts] = useState<AccountType[]>([]);
     const [myAccountInfo, setMyAccountInfo] = useState<string>('');
     const [myAccountInfoCode, setMyAccountInfoCode] = useState<string>('');
-    const [myAccountInfoCombined, setMyAccountInfoCombined] = useState<string>('');
 
     // Recoil에서 정의한 BankListState 상태를 가져옵니다.
     const bankList = useRecoilValue(BankListState);
@@ -69,6 +68,7 @@ function Transfer() {
     };
     const selectedBankCode = myAccountInfoCode;
     const bankName = findBankNameByCode(selectedBankCode);
+    console.log(bankName);
 
     // 유저 목록
     const [users, setUsers] = useState<UserType[]>([]);
@@ -90,6 +90,7 @@ function Transfer() {
     };
     const handleMyAccountInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setMyAccountInfo(event.target.value);
+        console.log(event.target.value);
     };
     const handleTotalAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTotalAmount(event.target.value);
@@ -155,6 +156,9 @@ function Transfer() {
         }
     };
 
+    const myAccountInfoCombined = `${bankName} ${myAccountInfo}`;
+    console.log(myAccountInfoCombined);
+
     // 차용증 생성
     const recoilPostIOU = async () => {
         const iouData: IOUProps = {
@@ -162,7 +166,7 @@ function Transfer() {
             contractDebtorAcNum: myAccountInfoCombined,
             contractMaturityDate: transferDate ? transferDate.toISOString().split('T')[0] : '', // Date 객체를 문자열로 변환
             contractAutoTranYn: false,
-            contractAutoDate: new Date().toISOString().split('T')[0], // Date 객체를 문자열로 변환
+            contractAutoDate: '',
             contractAmt: amountInfo,
             contractInterestRate: interest,
             contractDueAmt: totalAmount,
@@ -197,8 +201,12 @@ function Transfer() {
     }, []);
 
     useEffect(() => {
+        console.log(myAccountInfo);
+        console.log(accounts);
+        // setMyAccountInfo(accounts.accountNum);
         if (accounts.length > 0) {
-            const selectedAcount = accounts.find((account) => account.accountNum === myAccountInfo);
+            const selectedAcount = accounts.find((account) => account.accountMainYn === true);
+            console.log(selectedAcount);
             if (selectedAcount) {
                 setMyAccountInfo(selectedAcount.accountNum);
                 setMyAccountInfoCode(selectedAcount.accountBankCode);
@@ -257,7 +265,7 @@ function Transfer() {
                 ></ButtonInput> */}
                 <select
                     value={myAccountInfo}
-                    onChange={(event) => setMyAccountInfo(event.target.value)}
+                    onChange={handleMyAccountInfoChange}
                     style={{ width: '95%', height: '40px', borderRadius: '10px', border: '3px solid #BDBDBD' }}
                 >
                     {accounts.map((account) => (

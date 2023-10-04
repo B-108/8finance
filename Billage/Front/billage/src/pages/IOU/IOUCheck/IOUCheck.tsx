@@ -58,7 +58,7 @@ function IOUCheck() {
         contractStartDateCheck, // 빌리는 날짜
     } = iouCheck;
 
-    console.log(iouCheck);
+    // console.log(iouCheck);
 
     const [contract] = useRecoilState(IOUState);
     const {
@@ -71,6 +71,7 @@ function IOUCheck() {
         contractInterestRate,
         contractDueAmt,
     } = contract;
+    // console.log('차용증', contract);
 
     // 차용증 생성
     const axiosPostIOU = async () => {
@@ -84,7 +85,7 @@ function IOUCheck() {
             contractInterestRate: contractInterestRate,
             contractDueAmt: contractDueAmt,
         };
-        console.log(iouData);
+        console.log('차용증', iouData);
 
         // 차용증 생성 요청API.
         try {
