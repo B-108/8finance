@@ -82,12 +82,12 @@ function TADetail() {
                   alt="악수"></Image>
                 <Text
                   style={{marginLeft:"10px"}}
-                  $smallTitle>{state.toggle ? state.creditoruser : state.debtoruser}님과의 거래!</Text>
+                  $smallTitle>{state.toggle ? data.creditorUser.userName : data.debtorUser.userName}님과의 거래!</Text>
             </div>
 
             <Text 
               $size="94%,45px"
-              $description>상대방과 거래 시 작성한 상세 내용관 돈이 오고간 내역을 확인 할 수 있어요!</Text>
+              $description>상대방과 거래 시 작성한 상세 내용과 돈이 오고간 내역을 확인 할 수 있어요!</Text>
           </TitleContainer>
 
           <FlexDiv 
@@ -247,18 +247,3 @@ function TADetail() {
 }
 
 export default TADetail
-
-            {/* 삭제 ㄴㄴㄴㄴㄴㄴㄴ */}
-            {/* {
-            borrowlist.map((list, index) =>(
-                <FlexDiv 
-                  key={index}
-                  $margin="3% 0%">
-                    <div style={{display: 'flex'}}>
-                        <Image src={image[index]} alt={list}></Image>
-                        <Text>{list}</Text>
-                    </div>
-                    <Text>{borrowdetail[index]}</Text>
-                </FlexDiv>
-            )
-            )} */}

@@ -26,7 +26,6 @@ const ProgressBarWrapper = styled.div<{ progress: number }>`
 
 
 const ProgressBarFill = styled.div`
-  background-color: ${theme.color.green[0]};
 
   &::before {
     content: url(${Money});
@@ -49,15 +48,13 @@ const ProgressBarMarker = styled.div<{ progress: number }>`
   position: absolute;
   transform: translateX(-50%);
   left: ${(props) => props.progress}%;
-  top: 50%; /* 세로 중앙 정렬을 위해 추가 */
+  top: 50%; 
   transform: translateX(-50%) translateY(-50%); /* 가로 세로 중앙 정렬을 위해 추가 */
 `;
-// position: relative;
-// display: flex;
-const ProgressText = styled.div<{ progress: number }>`
+const ProgressText = styled.div`
   position: absolute;
-  left: ${(props) => `${props.progress}%`}; // 프로그레스 바 위치에 따라 동적으로 조절
-  top: -40px; /* 원하는 위치에 텍스트 상자를 배치 */
+  left: 100%; 
+  top: -40px;
   transform: translateX(-50%);
   background-color: ${theme.color.black};
   color : ${theme.color.white};
@@ -73,7 +70,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => {
     <ProgressBarContainer>
       <ProgressBarWrapper progress={progress}>
         <ProgressBarFill />
-        <ProgressText progress={progress}>{progress}</ProgressText>
+        <ProgressText>{progress}{'%'}</ProgressText>
       </ProgressBarWrapper>
       <ProgressBarMarker progress={0} />
       <ProgressBarMarker progress={25} />
