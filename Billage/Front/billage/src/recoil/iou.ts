@@ -18,12 +18,22 @@ export const ContractState = atom({
     },
 });
 
+// IOUCheck페이지에서 생성요청 보낼 차용증
 export const IOUState = atom({
     key: 'IOUState',
+    default: {},
+});
+
+// IOUCheck페이지에서 임시로 보여줄 차용증
+export const IOUCheckState = atom({
+    key: 'IOUCheckState',
     default: {},
 });
 
 // 컴포넌트에서 Recoil 상태를 사용하기 위한 훅
 export function useIOUState() {
     return useRecoilState(IOUState);
+}
+export function useIOUCheckState() {
+    return useRecoilState(IOUCheckState);
 }
