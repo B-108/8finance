@@ -5,6 +5,7 @@ import com.fin.bank.transferservice.transfer.entity.Transfer;
 import com.fin.bank.transferservice.transfer.enums.TransactionType;
 import com.fin.bank.transferservice.transfer.repository.TransferRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -24,6 +25,9 @@ public class TransferService {
     private final TransferRepository transferRepository;
     private final WebClient.Builder webClientBuilder;
 
+    @Value ("${web-client.account-service}")
+    private String accountUrl;
+
     // 입금 서비스 메서드
     public boolean deposit(TransferRequestDto transferRequestDto, HttpServletRequest request) {
 
@@ -36,8 +40,9 @@ public class TransferService {
 
         webClientBuilder
                 .defaultHeader("Authorization", request.getHeader("Authorization"))
+                .baseUrl(accountUrl)
                 .build().post()
-                .uri("http://account-service/account/deposit")
+                .uri("/deposit")
                 .body(BodyInserters.fromValue(transferDepositRequestDto))
                 .retrieve()
                 .bodyToMono(TransferDepositResponseDto.class)
@@ -80,8 +85,9 @@ public class TransferService {
         try {
             TransferDepositResponseDto responseBody = webClientBuilder
                     .defaultHeader("Authorization", request.getHeader("Authorization"))
+                    .baseUrl(accountUrl)
                     .build().post()
-                    .uri("http://account-service/account/withdraw")
+                    .uri("/withdraw")
                     .body(BodyInserters.fromValue(transferWithdrawRequestDto))
                     .retrieve()
                     .bodyToMono(TransferDepositResponseDto.class)
@@ -114,11 +120,6 @@ public class TransferService {
             return false;  // 출금 실패: 출금할 금액보다 잔액이 적음 또는 다른 오류 발생
         }
     }
-
-    // 계좌 번호를 통해 계좌 정보 조회
-//    public Account getAccountByAccountNumber(String accountNumber) {
-//        return accountRepository.findByAccountNumber(accountNumber);
-//    }
 
     @Transactional
     public void saveTransaction(

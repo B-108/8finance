@@ -4,14 +4,12 @@ import com.fin.bank.transferservice.transfer.dto.TransferGetListRequestDto;
 import com.fin.bank.transferservice.transfer.dto.TransferRequestDto;
 import com.fin.bank.transferservice.transfer.service.TransferService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/transfer")

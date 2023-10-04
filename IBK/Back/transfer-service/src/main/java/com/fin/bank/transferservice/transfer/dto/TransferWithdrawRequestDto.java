@@ -13,7 +13,6 @@ public class TransferWithdrawRequestDto {
     private BigDecimal tranAmt; // 거래 금액
 
     @Builder
-
     public TransferWithdrawRequestDto(String tranWdName, String tranWdCellNo, String tranWdAcNum, BigDecimal tranAmt) {
         this.tranWdName = tranWdName;
         this.tranWdCellNo = tranWdCellNo;
