@@ -24,14 +24,17 @@ public class TransferService {
 
     // 입금 서비스 메서드
     public boolean deposit(TransferRequestDto requestDto) {
-        System.out.println(requestDto.getTranDpName() + " " + requestDto.getTranDpCellNo() + " " + requestDto.getTranDpAcNum());
+        System.out.println("수취(입금)인 정보> " +
+                "[수취인명] " + requestDto.getTranDpName() +
+                ", [수취인 휴대폰 번호] " + requestDto.getTranDpCellNo() +
+                ", [수취인 입금 계좌번호] " + requestDto.getTranDpAcNum());
 
         // 사용자 정보를 사용하여 계좌 조회(유효성 검증)
         Account account = accountRepository.findByUser_UserNameAndUser_UserCellNoAndAccountNumber(
                 requestDto.getTranDpName(),
                 requestDto.getTranDpCellNo(),
-                requestDto.getTranDpAcNum()).orElseThrow(()-> new RuntimeException("계좌없음"));
-
+                requestDto.getTranDpAcNum()).orElseThrow(()-> new RuntimeException("입금 계좌없음"));
+        System.out.println("입금 계좌 있음");
         if (isAccountBlocked(account)) {
             System.out.println("입금 실패: 계좌가 잠겨 있음");
             return false; // 입금 실패: 계좌가 잠겨 있음
@@ -61,42 +64,45 @@ public class TransferService {
 
     // 출금 서비스 메서드
     public boolean withdraw(TransferRequestDto requestDto) {
+        System.out.println("지급(출금)인 정보> " +
+                "[지급인명] " + requestDto.getTranWdName() +
+                ", [지급인 휴대폰 번호] " + requestDto.getTranWdCellNo() +
+                ", [지급인 출금 계좌번호] " + requestDto.getTranWdAcNum());
+
         // 사용자 정보를 사용하여 계좌 조회(유효성 검증)
-        Optional<Account> optionalAccount = accountRepository.findByUser_UserNameAndUser_UserCellNoAndAccountNumber(
+        Account account = accountRepository.findByUser_UserNameAndUser_UserCellNoAndAccountNumber(
                 requestDto.getTranWdName(),
                 requestDto.getTranWdCellNo(),
-                requestDto.getTranWdAcNum());
+                requestDto.getTranWdAcNum()).orElseThrow(()-> new RuntimeException("출금 계좌없음"));
+        System.out.println("출금 계좌 있음");
+        if (isAccountBlocked(account)) {
+            System.out.println("입금 실패: 계좌가 잠겨 있음");
+            return false; // 입금 실패: 계좌가 잠겨 있음
+        }
 
-        if (optionalAccount.isPresent()) {
-            Account account = optionalAccount.get();
-            if (isAccountBlocked(account)) {
-                System.out.println("출금 실패: 계좌가 잠겨 있음");
-                return false; // 출금 실패: 계좌가 잠겨 있음
-            }
-            BigDecimal currentBalance = account.getAccountBalanceAmt();
-            if (currentBalance != null && requestDto.getAmount() != null && currentBalance.compareTo(requestDto.getAmount()) >= 0) {
-                // 출금 가능하면 계좌 잔액을 감소시키고 저장
-                account.setAccountSubtractBalanceAmt(account.getAccountBalanceAmt().subtract(requestDto.getAmount()));
-                accountRepository.save(account);
+        BigDecimal currentBalance = account.getAccountBalanceAmt();
+        if (currentBalance != null && requestDto.getAmount() != null && currentBalance.compareTo(requestDto.getAmount()) >= 0) {
+            // 출금 가능하면 계좌 잔액을 감소시키고 저장
+            account.setAccountSubtractBalanceAmt(account.getAccountBalanceAmt().subtract(requestDto.getAmount()));
+            accountRepository.save(account);
 
-                // 출금 이력을 생성 및 저장
-                saveTransaction(
-                        account,
-                        requestDto.getAmount(),
-                        TransactionType.WITHDRAWAL,
-                        requestDto.getTranDate(),
-                        requestDto.getTranWdName(),
-                        requestDto.getTranWdCellNo(),
-                        requestDto.getTranWdBankCode(),
-                        requestDto.getTranWdAcNum(),
-                        requestDto.getTranDpName(),
-                        requestDto.getTranDpCellNo(),
-                        requestDto.getTranDpBankCode(),
-                        requestDto.getTranDpAcNum()
-                );
-                System.out.println("출금 성공");
-                return true; // 출금 성공
-            }
+            // 출금 이력을 생성 및 저장
+            saveTransaction(
+                    account,
+                    requestDto.getAmount(),
+                    TransactionType.WITHDRAWAL,
+                    requestDto.getTranDate(),
+                    requestDto.getTranWdName(),
+                    requestDto.getTranWdCellNo(),
+                    requestDto.getTranWdBankCode(),
+                    requestDto.getTranWdAcNum(),
+                    requestDto.getTranDpName(),
+                    requestDto.getTranDpCellNo(),
+                    requestDto.getTranDpBankCode(),
+                    requestDto.getTranDpAcNum()
+            );
+            System.out.println("출금 성공");
+            return true; // 출금 성공
         }
         System.out.println("출금 실패: 출금할 금액보다 잔액이 적음");
         return false; // 출금 실패: 출금할 금액보다 잔액이 적음
