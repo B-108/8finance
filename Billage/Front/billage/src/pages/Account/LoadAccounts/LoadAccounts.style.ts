@@ -46,5 +46,7 @@ export const AccountNumber = styled.div`
 export const BtnContainter = styled.div`
   display: flex;
   justify-content: space-between;
+  position: absolute;
+  bottom: 20px;
   width: 94%;
 `

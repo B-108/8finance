@@ -20,11 +20,25 @@ export const RightSection = styled.div`
   `
 
 export const AccountsBox = styled.div`
-    width: 96%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
+    width: 96%;
+    height: 800px;
+    overflow-y: auto;
+
+    scrollbar-width: thin; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+    &::-webkit-scrollbar {
+        width: 0em;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: transparent;
+    }
 `;
 
 export const Account = styled.div<{ $isClicked: boolean }>`
@@ -33,7 +47,7 @@ export const Account = styled.div<{ $isClicked: boolean }>`
   align-items: flex-start;
   justify-content: center;
   width: 96%;
-  height: 225px;
+  height: 300px;
   margin-bottom: 10px;
   box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);
   border-radius: ${theme.radius.S_10};
@@ -58,8 +72,9 @@ export const Test = styled.div`
 `
 
 export const AccountImg = styled.img`
-    width: 95%;
-    height: 200px;
+  width: 95%;
+  height: 200px;
+  margin-bottom: 20px;
 `
 
 export const AccountNUm = styled.div`
