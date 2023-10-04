@@ -41,7 +41,7 @@ export const Noti = styled.div`
   margin-bottom: 3px;
 `
 
-export const Date = styled.div`
+export const DateBox = styled.div`
   color: ${theme.color.gray[40]};
   font-size: ${theme.fontSize.XXS_10};
 `
