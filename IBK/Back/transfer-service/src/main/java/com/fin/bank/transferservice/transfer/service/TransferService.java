@@ -46,7 +46,7 @@ public class TransferService {
                         reponseBody -> {
                             saveTransaction(
                                     reponseBody.getAccountId(),
-                                    transferRequestDto.getAmount(),
+                                    transferRequestDto.getTranAmt(),
                                     TransactionType.DEPOSIT,
                                     transferRequestDto.getTranDate(),
                                     transferRequestDto.getTranWdName(),
@@ -94,7 +94,7 @@ public class TransferService {
 
             saveTransaction(
                     responseBody.getAccountId(),
-                    transferRequestDto.getAmount(),
+                    transferRequestDto.getTranAmt(),
                     TransactionType.WITHDRAWAL,
                     transferRequestDto.getTranDate(),
                     transferRequestDto.getTranWdName(),

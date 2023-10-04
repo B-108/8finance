@@ -1,7 +1,6 @@
 package com.fin.bank.transferservice.transfer.dto;
 
 import com.fin.bank.transferservice.transfer.enums.TransactionType;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,8 +22,4 @@ public class TransferRequestDto {
     private String tranDpBankCode; // 수취인 은행 코드
     private String tranDpAcNum; // 수취인 계좌 번호
     private String tranContent; // 거래 내용
-
-    public BigDecimal getAmount() {
-        return this.tranAmt;
-    }
 }

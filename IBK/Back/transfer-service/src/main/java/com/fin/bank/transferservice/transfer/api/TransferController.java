@@ -2,8 +2,6 @@ package com.fin.bank.transferservice.transfer.api;
 
 import com.fin.bank.transferservice.transfer.dto.TransferGetListRequestDto;
 import com.fin.bank.transferservice.transfer.dto.TransferRequestDto;
-import com.fin.bank.transferservice.transfer.dto.TransferResponseDto;
-import com.fin.bank.transferservice.transfer.enums.TransactionType;
 import com.fin.bank.transferservice.transfer.service.TransferService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,39 +27,14 @@ public class TransferController {
 
     // 고객의 입금 요청 API
     @PostMapping("/deposit")
-    public ResponseEntity<TransferResponseDto> deposit(@RequestBody TransferRequestDto requestDto, HttpServletRequest request) {
-        boolean success = transferService.deposit(requestDto, request);
-        System.out.println("들어와라...");
-        if (success) {
-            return new ResponseEntity<>(createSuccessResponse(TransactionType.DEPOSIT), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(createErrorResponse(), HttpStatus.BAD_REQUEST);
-        }
+    public boolean deposit(@RequestBody TransferRequestDto requestDto, HttpServletRequest request) {
+        return transferService.deposit(requestDto, request);
     }
 
     // 고객의 출금 요청 API
     @PostMapping("/withdraw")
-    public ResponseEntity<TransferResponseDto> withdraw(@RequestBody TransferRequestDto requestDto, HttpServletRequest request) {
-        boolean success = transferService.withdraw(requestDto, request);
-        if (success) {
-            return new ResponseEntity<>(createSuccessResponse(TransactionType.WITHDRAWAL), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(createErrorResponse(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    // 성공 응답 생성 메서드
-    private TransferResponseDto createSuccessResponse(TransactionType transactionType) {
-        return TransferResponseDto.builder()
-                .message(transactionType.getValue() + " successful")
-                .build();
-    }
-
-    // 에러 응답 생성 메서드
-    private TransferResponseDto createErrorResponse() {
-        return TransferResponseDto.builder()
-                .message("Transaction failed. Check customer information, account number, and balance.")
-                .build();
+    public boolean withdraw(@RequestBody TransferRequestDto requestDto, HttpServletRequest request) {
+        return transferService.withdraw(requestDto, request);
     }
 
     @PostMapping("/list")
