@@ -33,14 +33,34 @@ import logo from '/src/assets/logo.png';
 import { useLocation } from 'react-router-dom';
 import { ButtonContainer } from './IOUCheck.style';
 
+//recoil
+import { useRecoilState } from 'recoil';
+import { IOUState } from '/src/recoil/iou';
+
 function IOUCheck() {
     const [isChecked, setIsChecked] = useState(false);
+    const contentRef = useRef<HTMLDivElement>(null!);
+
+    // Recoil 상태에서 데이터 읽어오기
+    const [contract] = useRecoilState(IOUState);
+    const {
+        creditorUser,
+        contractDebtorAcNum,
+        contractMaturityDate,
+        contractAmt,
+        contractInterestRate,
+        contractDueAmt,
+        contractAutoDate,
+        contractAutoTranYn,
+    } = contract;
+
+    console.log(contract)
 
     return (
         <CenteredContainer>
             <Header 
               headerTitle="거래하기"></Header>
-            <IOUContainer>
+            <IOUContainer ref={contentRef}>
                 <WatermarkContainer>
                     <WatermarkImage src={logo} alt="logo" width="150px"></WatermarkImage>
                 </WatermarkContainer>
@@ -48,7 +68,7 @@ function IOUCheck() {
                 <IOUContent>
                     <Title>차 용 증</Title>
                     <div style={{ width: '100%', height: '225px' }}>
-                        <Amount>￦ 0000000 (원)</Amount>
+                        <Amount>￦ {contractAmt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} (원)</Amount>
                         <hr />
                         <Content>
                             위 금액을 채무자ooo가 채권자(

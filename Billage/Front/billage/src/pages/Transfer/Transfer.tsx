@@ -1,18 +1,16 @@
-// Transfer.tsx
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 // 공통 컴포넌트 및 이미지
-import Input, { ButtonInput } from '/src/components/Common/Input';
+import Input, { ButtonBox, ButtonInput, InputDiv } from '/src/components/Common/Input';
 import CenteredContainer from '/src/components/Common/CenterAlign';
 import Header from '/src/components/Header/Header';
 import Button from '/src/components/Common/Button';
+import Image from '/src/components/Common/Image';
 import ConfirmBox from '/src/components/Common/YesOrNo';
 
-import plus from '/src/assets/plus.svg';
 import calendar from '/src/assets/calendar.svg';
 import magnifyingGlass from '/src/assets/magnifyingGlass.svg';
 
@@ -25,20 +23,20 @@ import { postIOU } from '/src/api/iou';
 import { AccountType } from '/src/type/account';
 import { UserType } from '/src/type/user';
 import { getAccountList } from '/src/api/account';
-import { UserState } from '/src/recoil/user';
-import { useRecoilState } from 'recoil';
-import { getUser } from '/src/api/user';
+import { getUserList } from '/src/api/user';
+import { useRecoilValue } from 'recoil';
+import { BankListState } from '/src/recoil/account';
+import { useIOUState } from '/src/recoil/iou';
 
 function Transfer() {
+    const [IOU, setIOU] = useIOUState();
     const [friendInfo, setFriendInfo] = useState<string>('');
-    const [myAccountInfo, setMyAccountInfo] = useState<string>('');
-    const [myAccountInfoCode, setMyAccountInfoCode] = useState<string>('');
     const [transferDate, setTransferDate] = useState<Date | null>(null); // Date 타입으로 상태 변경
     const [autoTransferDate, setAutoTransferDate] = useState<Date | null>(null); // Date 타입으로 상태 변경
     const [amountInfo, setAmountInfo] = useState<string>('0');
     const [interest, setInterest] = useState<string>('0');
     const [totalAmount, setTotalAmount] = useState<string>('0');
-
+    const yourRef = useRef(null);
     // 자동이체 체크박스 상태
     // const [autoTransfer, setAutoTransfer] = useState<boolean>(false);
 
@@ -48,11 +46,26 @@ function Transfer() {
     //작성 취소 버튼 클릭시 활성
     const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false); // 다이얼로그 상태 추가
 
-    //내 계좌 목록
+    // 내 계좌 목록
     const [accounts, setAccounts] = useState<AccountType[]>([]);
+    const [myAccountInfo, setMyAccountInfo] = useState<string>('');
+    const [myAccountInfoCode, setMyAccountInfoCode] = useState<string>('');
+
+    // Recoil에서 정의한 BankListState 상태를 가져옵니다.
+    const bankList = useRecoilValue(BankListState);
+
+    // 은행 코드에 해당하는 은행 이름을 찾는 함수
+    const findBankNameByCode = (bankCode) => {
+        const bank = bankList.find((bank) => bank?.code?.includes(bankCode));
+        return bank ? bank.bankName : '';
+    };
+    const selectedBankCode = myAccountInfoCode;
+    const bankName = findBankNameByCode(selectedBankCode);
 
     // 유저 목록
     const [users, setUsers] = useState<UserType[]>([]);
+    const [userInfo, setUserInfo] = useState<string>('');
+    const [friendPk, setFriendPk] = useState<number>(0);
 
     const handleCancelClick = () => {
         setIsCancelDialogOpen(true);
@@ -71,8 +84,6 @@ function Transfer() {
     const handleTotalAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTotalAmount(event.target.value);
     };
-
-    // Date 타입 상태 변경 함수
     const handleTransferDateChange = (date: Date | null) => {
         setTransferDate(date);
     };
@@ -84,23 +95,18 @@ function Transfer() {
     //     setAutoTransfer(!autoTransfer); // 체크박스 상태 반전
     // };
     const handleInterestChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // 입력값에서 숫자만 추출
-        const inputValue = event.target.value.replace(/[^0-9.]/g, ''); // 숫자와 소수점만 허용
+        const inputValue = event.target.value.replace(/[^0-9.]/g, '');
         setInterest(inputValue);
     };
     const calculateTotalAmount = () => {
-        // 이자율과 빌릴 금액을 숫자로 변환
+        // 이자율과 빌릴 금액 숫자로 변환
         const interestRate = parseFloat(interest);
         const loanAmount = parseInt(amountInfo.replace(/,/g, ''));
-
         // 이자 계산
         const interestAmount = (interestRate / 100) * loanAmount;
-
         // 총 상환 금액 계산 (빌릴 금액 + 이자)
         const totalAmount = loanAmount + interestAmount;
-
-        // 숫자 포맷팅 및 업데이트
-        setTotalAmount(totalAmount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+        setTotalAmount(totalAmount.toFixed(0));
     };
 
     useEffect(() => {
@@ -128,10 +134,10 @@ function Transfer() {
             console.log(error);
         }
     };
-    // 전체 유저조회
+    // 유저 조회
     const axiosUserList = async (): Promise<void> => {
         try {
-            const response = await getUserList();
+            const response = await getUserList(friendInfo);
             setUsers(response?.data);
             console.log(response?.data);
         } catch (error) {
@@ -139,23 +145,27 @@ function Transfer() {
         }
     };
 
+    const myAccountInfoCombined = `${bankName} ${myAccountInfo}`;
     // 차용증 생성
     const axiosPostIOU = async () => {
         const iouData: IOUProps = {
-            creditorUser: 2, // 채권자 사용자 ID
-            contractDebtorAcNum: myAccountInfo,
+            creditorUser: friendPk, // 채권자 사용자 ID
+            contractDebtorAcNum: myAccountInfoCombined,
             contractMaturityDate: transferDate ? transferDate.toISOString() : '', // Date 객체를 문자열로 변환
             contractAutoTranYn: false,
-            contractAutoDate: autoTransferDate ? autoTransferDate.toISOString() : '', // Date 객체를 문자열로 변환
+            contractAutoDate: new Date().toISOString(), // Date 객체를 문자열로 변환
             contractAmt: amountInfo,
             contractInterestRate: interest,
             contractDueAmt: totalAmount,
         };
+        console.log(iouData);
 
         // 차용증 생성 요청API.
         try {
-            await postIOU(iouData);
-            console.log('차용증이 성공적으로 생성되었습니다.');
+            // Recoil 상태 업데이트
+            await setIOU(iouData);
+            navigate('/ioucheck');
+            console.log('차용증이 임시 생성되었습니다.');
         } catch (error) {
             console.error('차용증 생성에 실패했습니다.', error);
         }
@@ -167,8 +177,27 @@ function Transfer() {
     }, []);
 
     useEffect(() => {
-        axiosUserList();
-    }, []);
+        if (accounts.length > 0) {
+            const selectedAcount = accounts.find((account) => account.accountNum === myAccountInfo);
+            if (selectedAcount) {
+                setMyAccountInfo(selectedAcount.accountNum);
+                setMyAccountInfoCode(selectedAcount.accountBankCode);
+            }
+        }
+    }, [accounts, myAccountInfo]);
+
+    useEffect(() => {
+        if (users.length > 0) {
+            const selectedUser = users.find((user) => user.userName === friendInfo);
+            if (selectedUser) {
+                setUserInfo(`${selectedUser.userName} (${selectedUser.userCellNo})`);
+                setFriendPk(selectedUser.userPk);
+            }
+        }
+    }, [users, friendInfo]);
+    // useEffect(() => {
+    //     axiosUserList();
+    // }, []);
 
     return (
         <CenteredContainer>
@@ -176,21 +205,20 @@ function Transfer() {
 
             <TranInputDiv>
                 <TranInputTitle>지인 선택</TranInputTitle>
-                {/* <ButtonInput
-                    value={friendInfo}
-                    $active
-                    $size="88%,40px"
-                    onChange={handleFriendInfoChange}
-                    $buttonImage={magnifyingGlass}
-                /> */}
+                <InputDiv style={{ marginBottom: '1rem' }}>
+                    <Input value={friendInfo} $size="86%,40px" $active onChange={handleFriendInfoChange} />
+                    <ButtonBox>
+                        <Image src={magnifyingGlass} alt="magnifyingGlass" onClick={axiosUserList}></Image>
+                    </ButtonBox>
+                </InputDiv>
                 <select
                     value={friendInfo}
                     onChange={handleFriendInfoChange}
                     style={{ width: '95%', height: '40px', borderRadius: '10px', border: '3px solid #BDBDBD' }}
                 >
                     {users.map((user) => (
-                        <option key={user.userPk} value={user.userName}>
-                            {user.userName}
+                        <option key={user.userPk} value={userInfo}>
+                            {userInfo}
                         </option>
                     ))}
                 </select>
@@ -207,7 +235,7 @@ function Transfer() {
                 ></ButtonInput> */}
                 <select
                     value={myAccountInfo}
-                    onChange={handleMyAccountInfoChange}
+                    onChange={(event) => setMyAccountInfo(event.target.value)}
                     style={{ width: '95%', height: '40px', borderRadius: '10px', border: '3px solid #BDBDBD' }}
                 >
                     {accounts.map((account) => (
@@ -225,6 +253,7 @@ function Transfer() {
                     dateFormat="yyyy-MM-dd"
                     customInput={
                         <ButtonInput
+                            ref={yourRef}
                             value={transferDate ? transferDate.toISOString() : ''}
                             $active
                             $size="88%,40px"
