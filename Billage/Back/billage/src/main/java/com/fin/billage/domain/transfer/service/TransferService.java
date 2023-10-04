@@ -162,7 +162,7 @@ public class TransferService {
 //                .tranAmt(dto.getTranAmt())
 //                .tranDpName(dto.getTranDp())
 //                .tranDpBankCode(dto.getTranDpBankCode())
-//                .tranDpAcNum(dto.getTranWdAcNum())
+//                .tranDpAcNum(dto.getTranDpAcNum())
 //                .tranDpCellNo(tranDpCellNo)
 //                .tranWdName(dto.getTranWd())
 //                .tranWdBankCode(dto.getTranWdBankCode())
