@@ -9,6 +9,7 @@ export const postIOU = async (info: IOUProps) => {
         await privateApi.post('/api/contract', info);
         console.log('차용증 생성', info);
     } catch (error) {
+        console.log(info);
         console.log('postIOU 실패', error);
     }
 };

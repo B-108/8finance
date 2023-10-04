@@ -157,18 +157,17 @@ export const ButtonBox = styled.div`
     width: 52%;
 `;
 
-export const ButtonInput = (props: InputProps) => {
+export const ButtonInput = React.forwardRef((props: InputProps, ref) => {
     return (
         <InputDiv>
-            <StyledInput {...props}></StyledInput>
+            <StyledInput {...props} ref={props.ref}></StyledInput>
             <ButtonBox>
                 {/* 이미지 버튼 추가해야 됨 */}
                 {props.$buttonImage && <Image src={props.$buttonImage} alt="Button Image" width="25px" />}
             </ButtonBox>
         </InputDiv>
     );
-};
-
+});
 
 
 // export const ButtonInput = forwardRef<HTMLInputElement, InputProps>((props, ref) => {

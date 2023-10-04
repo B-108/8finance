@@ -1,5 +1,5 @@
 export interface UserType {
     userPk: number;
-    userCellNO: string;
+    userCellNo: string;
     userName: string;
 }
