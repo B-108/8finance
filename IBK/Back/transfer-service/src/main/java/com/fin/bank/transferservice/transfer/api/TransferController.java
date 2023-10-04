@@ -40,15 +40,15 @@ public class TransferController {
     }
 
     // 고객의 출금 요청 API
-//    @PostMapping("/withdraw")
-//    public ResponseEntity<TransferResponseDto> withdraw(@RequestBody TransferRequestDto requestDto) {
-//        boolean success = transferService.withdraw(requestDto);
-//        if (success) {
-//            return new ResponseEntity<>(createSuccessResponse(TransactionType.WITHDRAWAL), HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(createErrorResponse(), HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    @PostMapping("/withdraw")
+    public ResponseEntity<TransferResponseDto> withdraw(@RequestBody TransferRequestDto requestDto, HttpServletRequest request) {
+        boolean success = transferService.withdraw(requestDto, request);
+        if (success) {
+            return new ResponseEntity<>(createSuccessResponse(TransactionType.WITHDRAWAL), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(createErrorResponse(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
     // 성공 응답 생성 메서드
     private TransferResponseDto createSuccessResponse(TransactionType transactionType) {

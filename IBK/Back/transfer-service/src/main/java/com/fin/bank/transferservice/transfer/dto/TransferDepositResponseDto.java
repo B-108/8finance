@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AccountResponseDto {
+public class TransferDepositResponseDto {
 
     private Long accountId;
 }
