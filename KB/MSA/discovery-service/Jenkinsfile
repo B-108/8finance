@@ -66,8 +66,8 @@ pipeline {
                     sh '''
                     echo 'Deploy'
 
-                    docker stop kb-discovery-service
-                    docker rm kb-discovery-service
+                    docker stop kb-discover-service
+                    docker rm kb-discover-service
 
                     docker run -d -p 8764:8764 --network ubuntu_kb --name kb-discover-service docker-springboot-kb-discover-service:0.0.1
 
