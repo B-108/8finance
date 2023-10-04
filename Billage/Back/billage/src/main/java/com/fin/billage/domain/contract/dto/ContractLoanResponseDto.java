@@ -50,4 +50,7 @@ public class ContractLoanResponseDto {
 
     // 채무자 은행명
     private String debtorBankName;
+
+    // 이자율
+    private Float interestRate;
 }
