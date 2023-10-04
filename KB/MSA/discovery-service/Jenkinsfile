@@ -46,7 +46,7 @@ pipeline {
                 dir('KB/MSA/discovery-service'){
                     sh '''
                     echo 'Dockerimage build'
-                    docker build -t docker-springboot-kb-discovery-service:0.0.1 .
+                    docker build -t docker-springboot-kb-discover-service:0.0.1 .
                     '''
                 }
             }
@@ -69,7 +69,7 @@ pipeline {
                     docker stop kb-discovery-service
                     docker rm kb-discovery-service
 
-                    docker run -d -p 8764:8764 --network ubuntu_kb --name kb-discovery-service docker-springboot-kb-discovery-service:0.0.1
+                    docker run -d -p 8764:8764 --network ubuntu_kb --name kb-discover-service docker-springboot-kb-discover-service:0.0.1
 
                     '''
                 }
