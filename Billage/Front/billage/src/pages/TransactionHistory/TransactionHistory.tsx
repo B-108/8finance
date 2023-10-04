@@ -31,7 +31,7 @@ function TransactionHistory () {
   useEffect(() => {
       axiosHistory();
   }, []);
-
+console.log(history)
 // 날짜 및 시간을 원하는 형식으로 포맷팅하는 함수
 function formatDate(dateString: string) {
   const date = new Date(dateString);
@@ -86,12 +86,20 @@ function formatDate(dateString: string) {
 
           <Contentbox>
             <Content>입금계좌</Content>
-            <Content>{"("}{item.tranDpBankCode}{")"}{item.tranDpAcNum}</Content>
+            <Content>{"("}
+            {item.tranDpBankCode === '003' ? '기업'
+            : item.tranDpBankCode ===  '004' ? '국민'
+            : '농협'}
+            {")"}{item.tranDpAcNum}</Content>
           </Contentbox>
 
           <Contentbox>
             <Content>출금계좌</Content>
-            <Content>{"("}{item.tranWdBankCode}{")"}{item.tranWdAcNum}</Content>
+            <Content>{"("}
+            {item.tranWdBankCode === '003' ? '기업'
+            :  item.tranWdBankCode === '004' ? '국민'
+            : '농협'}
+            {")"}{item.tranWdAcNum}</Content>
           </Contentbox>
         </DetailBox>
       </Box>
