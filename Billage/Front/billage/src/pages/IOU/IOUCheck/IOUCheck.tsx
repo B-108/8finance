@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 
 // 공용 컴포넌트
@@ -8,7 +8,7 @@ import Button from '/src/components/Common/Button';
 
 // 스타일 컴포넌트
 import {
-  AgreementDiv,
+    AgreementDiv,
     Amount,
     Checkbox,
     Content,
@@ -30,7 +30,7 @@ import {
 import logo from '/src/assets/logo.png';
 
 //navigate
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ButtonContainer } from './IOUCheck.style';
 
 //recoil
@@ -39,6 +39,9 @@ import { IOUCheckState, IOUState } from '/src/recoil/iou';
 import { PhoneState } from '/src/recoil/auth';
 import { IOUProps } from '/src/type/iou';
 import { postIOU } from '/src/api/iou';
+import AlertSimpleContext from '/src/context/alertSimple/AlertSimpleContext';
+import ConfirmBox from '/src/components/Common/YesOrNo';
+import ConfirmContext from '/src/context/confirm/ConfirmContext';
 
 function IOUCheck() {
     const [isChecked, setIsChecked] = useState(false);
@@ -46,6 +49,45 @@ function IOUCheck() {
     const currentDate = new Date().toISOString().split('T')[0];
 
     const [phone, setPhone] = useRecoilState<string>(PhoneState);
+
+    // ConFirm 모달 창
+    const { confirm: confirmComp } = useContext(ConfirmContext);
+
+    const onConfirmClick = async (text: string) => {
+        const result = await confirmComp(text);
+        console.log('custom', result);
+        return result;
+    };
+
+    const openConfirm = async () => {
+        const nextAction = await onConfirmClick('요청을 취소하시겠습니까?');
+        if (nextAction) {
+            navigate(-1);
+        }
+        return;
+    };
+    //작성 취소 버튼 클릭시 활성
+    const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false); // 다이얼로그 상태 추가
+
+    const handleCancelClick = () => {
+        setIsCancelDialogOpen(true);
+    };
+    const handleConfirmCancel = () => {
+        setIsCancelDialogOpen(false);
+    };
+
+    const navigate = useNavigate();
+    const moveMain = async () => {
+        if (!isChecked) {
+            onAlertSimpleClick('필수 동의 항목을 확인하세요!');
+            return;
+        }
+        onAlertSimpleClick('차용증 생성을 요청했습니다.');
+        const Certain = await axiosPostIOU();
+        if (Certain && isChecked) {
+            navigate(`/`);
+        }
+    };
 
     // Recoil 상태에서 데이터 읽어오기
     const [iouCheck] = useRecoilState(IOUCheckState);
@@ -89,12 +131,20 @@ function IOUCheck() {
 
         // 차용증 생성 요청API.
         try {
-            // Recoil 상태 업데이트
-            await postIOU(iouData);
-            console.log('차용증이 생성되었습니다.');
+            const response = await postIOU(iouData);
+            if (response === 200) {
+                onAlertSimpleClick('차용증을 생성했습니다.');
+                return true;
+            }
         } catch (error) {
-            console.error('차용증 생성에 실패했습니다.', error);
+            onAlertSimpleClick('차용증 생성에 실패했습니다.');
+            console.log(error);
         }
+    };
+    const { alert: alertSimpleComp } = useContext(AlertSimpleContext);
+
+    const onAlertSimpleClick = async (text: string) => {
+        const result = await alertSimpleComp(text);
     };
 
     return (
@@ -152,10 +202,16 @@ function IOUCheck() {
             </AgreementDiv>
 
             <ButtonContainer>
-                <Button $basicGrayBtn $size="48%,45px">
+                <Button
+                    $basicGrayBtn
+                    $size="48%,45px"
+                    onClick={() => {
+                        openConfirm();
+                    }}
+                >
                     요청취소
                 </Button>
-                <Button $basicGreenBtn $size="48%,45px" onClick={axiosPostIOU}>
+                <Button $basicGreenBtn $size="48%,45px" onClick={moveMain}>
                     요청하기
                 </Button>
             </ButtonContainer>
