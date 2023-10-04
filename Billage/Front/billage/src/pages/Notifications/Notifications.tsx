@@ -7,6 +7,7 @@ import Image from '/src/components/Common/Image';
 
 // 스타일 컴포넌트
 import { 
+  Box,
   Check,
   ContentBox, 
   DateBox, 
@@ -32,14 +33,31 @@ import {
 // 리코일
 import { useRecoilState } from 'recoil';
 import { NotificationState } from '/src/recoil/noti';
+import { useNavigate } from 'react-router-dom';
 
 function Notifications() {
     const [notifications, setNotifications] = useRecoilState(NotificationState)
 
-    const TimeDisplay = (noticeSendDate) => {
-      const currentTime = new Date();
+    // 라우터
+    const navigate = useNavigate()
+    const moveIOU = (contractId:number) => {
+      navigate(`/transaction/detail/${contractId}/iou`)
+    }
+    const moveTransactionDetail = (contractId:number) => {
+      navigate(`/transaction/detail/${contractId}`)
+    }
+    const moveTransactionHistory = (contractId:number) => {
+      navigate(`/transaction/history/${contractId}`)
+    }
+    const moveTransactionlist = () => {
+      navigate(`/transactionlist`)
+    }
+
+    const TimeDisplay = (noticeSendDate:string) => {
       const targetTime = new Date(noticeSendDate);
-      
+      targetTime.setHours(targetTime.getHours() + 9); // 9시간을 더합니다.
+
+      const currentTime = new Date();
       const timeDifference = currentTime - targetTime;
       const minute = 60 * 1000;
       const hour = minute * 60;
@@ -71,8 +89,8 @@ function Notifications() {
     const axiosNotifiCation = async (): Promise<void> => {
       try {
         const response =  await getNotifiCation()
-        console.log(response?.data)
-        setNotifications(response?.data)
+        console.log("axios",response?.data)
+        setNotifications(response?.data.reverse())
       }
       catch(error) {
         console.log(error)
@@ -90,7 +108,6 @@ function Notifications() {
       }
     }
 
-
     useEffect(()=>{
       axiosNotifiCation()
     },[])
@@ -101,65 +118,87 @@ function Notifications() {
                 headerTitle="알림"></Header>
             <NotiContainer>
               {notifications.map((noti,index) => (
-                <NotiBox
-                  onClick={() => axiosNotiCheck(noti.noticeId)}
+                <Box
+                  onClick={() => {
+                    moveTransactionlist()
+                    axiosNotiCheck(noti.noticeId)}}
                   key={index}>
                   {noti.noticeType === 1 ? (
-                    <LeftSection>
+                    <NotiBox>
+                      <LeftSection>
+                        <Image
+                          src={total}
+                          alt="alarmBell"
+                          width='24px'></Image>
+                        <Check $IsClick={noti.noticeState}/>
+                        <ContentBox>
+                          <Noti>"{noti.noticeUserName}"님에게 {noti.noticeAmount}원을 빌려달라는 요청이 왔어요.</Noti>
+                          <DateBox>{TimeDisplay(noti.noticeSendDate)}</DateBox>
+                        </ContentBox>
+                      </LeftSection>
                       <Image
-                        src={total}
-                        alt="alarmBell"
-                        width='24px'></Image>
-                      <Check $IsClick={noti.noticeState}/>
-                      <ContentBox>
-                        <Noti>"{noti.noticeUserName}"님에게 {noti.noticeAmount}원을 빌려달라는 요청이 왔어요.</Noti>
-                        <DateBox>{TimeDisplay(noti.noticeSendDate)}</DateBox>
-                      </ContentBox>
-                    </LeftSection>
+                        src={rightarrow_bank}
+                        alt="rightArrow"
+                        width='10px'></Image>
+                    </NotiBox>
                   ) : (
                   noti.noticeType === 2 ? (
-                    <LeftSection>
+                    <NotiBox>
+                      <LeftSection>
+                        <Image
+                          src={agree}
+                          alt="alarmBell"
+                          width='24px'></Image>
+                        <Check $IsClick={noti.noticeState}/>
+                        <ContentBox>
+                          <Noti>"{noti.noticeUserName}"님이 {noti.noticeAmount}원을 빌려줬어요!</Noti>
+                          <DateBox>{TimeDisplay(noti.noticeSendDate)}</DateBox>
+                        </ContentBox>
+                      </LeftSection>
                       <Image
-                        src={agree}
-                        alt="alarmBell"
-                        width='24px'></Image>
-                      <Check $IsClick={noti.noticeState}/>
-                      <ContentBox>
-                        <Noti>"{noti.noticeUserName}"님이 {noti.noticeAmount}원을 빌려줬어요!</Noti>
-                        <DateBox>{TimeDisplay(noti.noticeSendDate)}</DateBox>
-                      </ContentBox>
-                    </LeftSection>
+                        src={rightarrow_bank}
+                        alt="rightArrow"
+                        width='10px'></Image>
+                    </NotiBox>
                   ) : (
                   noti.noticeType === 3 ? (
-                    <LeftSection>
+                    <NotiBox>
+                      <LeftSection>
+                        <Image
+                          src={disagree}
+                          alt="alarmBell"
+                          width='24px'></Image>
+                        <Check $IsClick={noti.noticeState}/>
+                        <ContentBox>
+                          <Noti>"{noti.noticeUserName}"님이 돈빌려주는 것을 거절했어요.</Noti>
+                          <DateBox>{TimeDisplay(noti.noticeSendDate)}</DateBox>
+                        </ContentBox>
+                      </LeftSection>
                       <Image
-                        src={disagree}
-                        alt="alarmBell"
-                        width='24px'></Image>
-                      <Check $IsClick={noti.noticeState}/>
-                      <ContentBox>
-                        <Noti>"{noti.noticeUserName}"님이 돈빌려주는 것을 거절했어요.</Noti>
-                        <DateBox>{TimeDisplay(noti.noticeSendDate)}</DateBox>
-                      </ContentBox>
-                    </LeftSection>
+                          src={rightarrow_bank}
+                          alt="rightArrow"
+                          width='10px'></Image>
+                    </NotiBox>
                   ) : (
-                    <LeftSection>
+                    <NotiBox>
+                      <LeftSection>
+                        <Image
+                          src={won}
+                          alt="alarmBell"
+                          width='24px'></Image>
+                        <Check $IsClick={noti.noticeState}/>
+                        <ContentBox>
+                          <Noti>"{noti.noticeUserName}"님이 {noti.noticeAmount}원을 갚았어요!</Noti>
+                          <DateBox>{TimeDisplay(noti.noticeSendDate)}</DateBox>
+                        </ContentBox>
+                      </LeftSection>
                       <Image
-                        src={won}
-                        alt="alarmBell"
-                        width='24px'></Image>
-                      <Check $IsClick={noti.noticeState}/>
-                      <ContentBox>
-                        <Noti>"{noti.noticeUserName}"님이 {noti.noticeAmount}원을 갚았어요!</Noti>
-                        <DateBox>{TimeDisplay(noti.noticeSendDate)}</DateBox>
-                      </ContentBox>
-                    </LeftSection>
+                          src={rightarrow_bank}
+                          alt="rightArrow"
+                          width='10px'></Image>
+                    </NotiBox>
                       )))}
-                  <Image
-                    src={rightarrow_bank}
-                    alt="rightArrow"
-                    width='10px'></Image>
-                </NotiBox>
+                </Box>
               ))}
             </NotiContainer>
         </CenteredContainer>

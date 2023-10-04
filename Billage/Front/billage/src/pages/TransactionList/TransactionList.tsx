@@ -56,10 +56,12 @@ function TransactionList() {
     const handleLentClick = () => {
       setToggle(false);
     };
+    
     const moveToDetail = (contractId: number, creditoruser: string, debtoruser: string) => {
         navigate(`/transaction/detail/${contractId}`,
-         { state: { contractId, toggle, creditoruser, debtoruser } });
+        { state: { contractId, toggle, creditoruser, debtoruser } });
     }
+
     return(
       <CenteredContainer>
         <Header headerTitle="거래목록"/>
