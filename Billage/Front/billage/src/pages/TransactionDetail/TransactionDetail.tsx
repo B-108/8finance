@@ -59,9 +59,12 @@ function TADetail() {
     const moveToIOU = (contractId: number) => {
         navigate(`/transaction/detail/${contractId}/iou`, { state: { contractId } });
     };
-     const moveToSendMoney = () => {
+    const moveToSendMoney = () => {
         navigate(`/sendmoney`, { state: {data} });
     };
+    const moveToAgree = () => {
+        navigate('/iouagree', {state: {data}})
+    }
 
     return (
         <CenteredContainer>
@@ -213,15 +216,26 @@ function TADetail() {
                   <Text>{Number(detail?.repaymentCash).toLocaleString()}</Text>
               </div>
           </FlexDiv>
-
           <Button
               style = {{marginBottom:"20px"}}
               $basicGreenBtn
               $size="94%,40px"
               onClick={() => {
-                  if (state.toggle) {
-                      moveToSendMoney()}}}
-              >{state.toggle ? '돈 보내기' : '돈 달라하기'}
+                if (state.toggle && data.contractState === 1) {
+                  moveToSendMoney();
+                }  else if (!state.toggle && data.contractState === 0) {
+                  moveToAgree();
+                } 
+              }}
+              disabled={state.toggle && (data.contractState === 0 || data.contractState === 9)}
+ 
+              >{state.toggle && data.contractState === 1 
+                ? '돈 보내기' 
+                : state.toggle && (data.contractState === 0  || data.contractState === 9)  
+                ? '돈 보내기'
+                : !state.toggle && data.contractState === 0
+                ? '수락하러 가기'
+                : '돈 달라하기'}
           </Button>
 
           <div style={{

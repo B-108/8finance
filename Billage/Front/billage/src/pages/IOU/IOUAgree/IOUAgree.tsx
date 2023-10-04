@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-
+import { useNavigate, useLocation } from 'react-router-dom';
 // 공용 컴포넌트
 import CenteredContainer from '/src/components/Common/CenterAlign';
 import Header from '/src/components/Header/Header';
@@ -33,18 +33,24 @@ import Text from '/src/components/Common/Text';
 
 // 타입스크립트
 import { AccountType } from '/src/type/account';
+import { AgreeIOUProps } from '/src/type/iou';
 
 // API
 import { getAccountList } from '/src/api/account';
+import { agreeIOU } from '/src/api/iou';
 
 function IOUAgree() {
     const [myAccountInfo, setMyAccountInfo] = useState<string>('');
     const [accounts, setAccounts] = useState<AccountType[]>([]);
     const [myAccountInfoCode, setMyAccountInfoCode] = useState<string>('');
+    const navigate = useNavigate()
+    const location = useLocation()
+    const useData = location.state.data
+    const [agree, setAgree] = useState<string>('true')
 
+    console.log(location.state)
     const handleMyAccountInfoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
       setMyAccountInfo(event.target.value);
-
     };
 
     // 전체 계좌조회
@@ -69,6 +75,33 @@ function IOUAgree() {
           setMyAccountInfoCode(mainAccount.accountBankCode);
       }
     }, [accounts]);
+    console.log(useData)
+    const info: AgreeIOUProps = {
+        contractId: useData.contractId,
+        tranWd: useData.creditorUser.userName,
+        tranWdAcNum: myAccountInfo,
+        tranWdBankCode: myAccountInfoCode,
+        tranDp: useData.debtorUser.userName,
+        tranDpAcNum: useData.debtorAcNum,
+        tranDpBankCode: useData.debtorBankCode,
+        tranAmt: useData.contractAmt,
+        tranContent: '거래시작',
+    };
+    console.log(info)
+    const axiosAgreeIOU =async (): Promise<void> => {
+          try{
+              await agreeIOU(agree, info)
+              navigate('/main')
+          }
+          catch(error){
+              console.log(error)
+          }
+      }
+    
+    const AgreeIOU = () => {
+        console.log(info)     
+        axiosAgreeIOU()
+    }
 
     return (
         <CenteredContainer>
@@ -152,7 +185,9 @@ function IOUAgree() {
                 </Button>
                 <Button 
                   $basicGreenBtn 
-                  $size="48%,45px">
+                  $size="48%,45px"
+                  onClick={AgreeIOU}
+                  >
                     돈 빌려주기
                 </Button>
             </ButtonContainer>
