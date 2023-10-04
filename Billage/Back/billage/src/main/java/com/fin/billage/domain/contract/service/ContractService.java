@@ -51,6 +51,8 @@ public class ContractService {
                 .debtorUser(debtorUser)
                 .contractDebtorBank(contractDebtorAcNum)
                 .contractDebtorAcNum(contractDebtorAcNumBank[1])
+                .contractCreditorAcNum("")
+                .contractCreditorBank("")
                 .contractMaturityDate(dto.getContractMaturityDate())
                 .contractAutoTranYn(dto.getContractAutoTranYn())
                 .contractAutoTranDate(dto.getContractAutoDate())
