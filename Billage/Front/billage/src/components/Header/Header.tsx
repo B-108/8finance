@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Container, LeftSection, Title } from "./Header.style"
+import { Container, LeftSection, RightSection, Title } from "./Header.style"
 import Image from "../Common/Image"
 import alramBell from "src/assets/alramBell.svg"
 import backIcon from "src/assets/backIcon.svg"
@@ -14,7 +14,6 @@ function Header ({headerTitle} : HeaderProps) {
   const [noDisplayImg, setNoDisplayImg] = useState(false)
 
   const navigate = useNavigate()
-  const moveLogin = () => {navigate(`/`)}
   const moveNotifications = () => {navigate(`/notifications`)}
   const handleGoBack = () => {navigate(-1);};
 
@@ -22,12 +21,6 @@ function Header ({headerTitle} : HeaderProps) {
     if (headerTitle === "Billage") {
       setNoDisplayImg(true)
     }
-  }
-
-  const logout = () => {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    moveLogin()
   }
 
   useEffect(() => {
@@ -47,11 +40,13 @@ function Header ({headerTitle} : HeaderProps) {
         <Title
           $noDisplay = {noDisplayImg}>{headerTitle}</Title>
       </LeftSection>
-      <Image 
-        src={alramBell} 
-        alt="alramBell"
-        width="20px"
-        onClick={moveNotifications}></Image>
+      <RightSection>
+        <Image 
+          src={alramBell} 
+          alt="alramBell"
+          width="22px"
+          onClick={moveNotifications}></Image>
+      </RightSection>
     </Container>
   )
 }

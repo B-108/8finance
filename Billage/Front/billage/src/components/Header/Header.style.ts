@@ -6,7 +6,7 @@ export const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 94%;
-  height: 80px;
+  height: 65px;
   padding-bottom: 15px;
 `
 
@@ -18,8 +18,14 @@ export const LeftSection = styled.div`
   height: 80px;
   line-height: 80px;
   width: 50%;
-
 `;
+
+export const RightSection = styled.div`
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 50%;
+`
 
 export const Title = styled.div<{ $noDisplay:boolean }>`
   display: flex;
@@ -27,7 +33,7 @@ export const Title = styled.div<{ $noDisplay:boolean }>`
   height: 80px;
   line-height: 84px;
   font-weight: 800;
+  font-family: 'LINESeedKR-Bd';
   font-size: ${theme.fontSize.M_20};
   padding: ${(props) => props.$noDisplay ? "0px" : "0px 0px 0px 7px"};
-
 `

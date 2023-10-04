@@ -8,6 +8,11 @@ import theme from './themes/index.ts';
 
 const GlobalFontStyle = createGlobalStyle`
   @font-face {
+    font-family: 'LINESeedKR-Rg';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Rg.woff2') format('woff2');
+    font-style: normal;
+  }
+  @font-face {
     font-family: 'LINESeedKR-Bd';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
     font-style: normal;

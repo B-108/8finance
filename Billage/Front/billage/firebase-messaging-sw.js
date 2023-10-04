@@ -3,9 +3,15 @@ self.addEventListener("install", function (e) {
     self.skipWaiting();
   });
   
-  self.addEventListener("activate", function (e) {
-    console.log("fcm sw activate..", e);
-  });
+self.addEventListener("activate", function (e) {
+  console.log("fcm sw activate..", e);
+});
+
+// fetch event
+self.addEventListener("fetch", e => {
+  // console.log("[Service Worker] fetched resource " + e.request.url);
+  // console.log(e)
+});
 
 //push 알람 받음
   self.addEventListener("push", function (e) {
