@@ -15,8 +15,8 @@ public class GatewayServiceApplication {
 		SpringApplication.run(GatewayServiceApplication.class, args);
 	}
 
-//	@Bean
-//	public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity security) {
-//		return security.csrf().disable().build();
-//	}
+	@Bean
+	public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity security) {
+		return security.csrf().disable().build();
+	}
 }
