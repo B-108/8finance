@@ -123,16 +123,16 @@ public class TransferService {
 //        transactionRepository.save(t);
 //
         // 차용증 이체 노티에 등록
-        Notice n = Notice.builder()
-                .contractId(contract.getContractId())
-                .user(contract.getCreditorUser())
-                .noticeUserName(contract.getDebtorUser().getUserName())
-                .noticeSendDate(LocalDateTime.now())
-                .noticeAmount(dto.getTranAmt())
-                .noticeType(4)
-                .build();
-
-        noticeRepository.save(n);
+//        Notice n = Notice.builder()
+//                .contractId(contract.getContractId())
+//                .user(contract.getCreditorUser())
+//                .noticeUserName(contract.getDebtorUser().getUserName())
+//                .noticeSendDate(LocalDateTime.now())
+//                .noticeAmount(dto.getTranAmt())
+//                .noticeType(4)
+//                .build();
+//
+//        noticeRepository.save(n);
 
 
         String tranWdCellNo = "";            // 지급인 핸드폰 번호
