@@ -40,6 +40,9 @@ dependencies {
 
 	// JSON 데이터를 Java 객체로 변환하거나 Java 객체를 JSON으로 직렬화하기 위해 사용
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.5'
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+
 }
 
 dependencyManagement {

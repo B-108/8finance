@@ -28,6 +28,7 @@ import java.util.Optional;
 public class TransferService {
 
     private final TransferRepository transferRepository;
+    private final WebClient.Builder webClientBuilder;
 
     // 입금 서비스 메서드
     public boolean deposit(TransferRequestDto transferRequestDto, HttpServletRequest request) {
@@ -50,8 +51,7 @@ public class TransferService {
         System.out.println("그래도 씨발 이건 가능이지");
         int a = 1;
 
-        // HTTP POST 요청 보내기
-        webClient.post()
+        webClientBuilder.build().post()
                 .uri("http://account-service/account/deposit")
                 .body(BodyInserters.fromValue(accountRequestDto))
                 .retrieve()
@@ -79,6 +79,36 @@ public class TransferService {
                             System.out.println("이체 실패" + error.getMessage());
                         }
                 );
+
+//        // HTTP POST 요청 보내기
+//        webClient.post()
+//                .uri("http://account-service/account/deposit")
+//                .body(BodyInserters.fromValue(accountRequestDto))
+//                .retrieve()
+//                .bodyToMono(AccountResponseDto.class)
+//                .switchIfEmpty(Mono.error(new RuntimeException("해당 계좌는 없는 계좌입니다.")))
+//                .subscribe(
+//                        reponseBody -> {
+//                            System.out.println("이 방법이 있었노");
+//                            saveTransaction(
+//                                    reponseBody.getAccountId(),
+//                                    transferRequestDto.getAmount(),
+//                                    TransactionType.DEPOSIT,
+//                                    transferRequestDto.getTranDate(),
+//                                    transferRequestDto.getTranWdName(),
+//                                    transferRequestDto.getTranWdCellNo(),
+//                                    transferRequestDto.getTranWdBankCode(),
+//                                    transferRequestDto.getTranWdAcNum(),
+//                                    transferRequestDto.getTranDpName(),
+//                                    transferRequestDto.getTranDpCellNo(),
+//                                    transferRequestDto.getTranDpBankCode(),
+//                                    transferRequestDto.getTranDpAcNum()
+//                            );
+//                        },
+//                        error -> {
+//                            System.out.println("이체 실패" + error.getMessage());
+//                        }
+//                );
 
         System.out.println("씨발 뭐 찍어볼게 없네");
 
