@@ -43,6 +43,7 @@ import '@splidejs/react-splide/css';
 
 // 타입스크립트
 import { TransactionType } from "/src/type/transaction"
+import { NotificationType } from "/src/type/noti"
 
 // API
 import { 
@@ -52,11 +53,14 @@ import {
 // 리코일
 import { PhoneState } from "/src/recoil/auth"
 import { useRecoilState } from "recoil"
+import { getNotifiCation } from "/src/api/noti"
+
 
 function Main(){
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
   const [transList, setTransList] = useState<TransactionType[]>([])
-  console.log(transList)
+  const [noti, setNoti] = useState<NotificationType>()
+
   // 라우터
   const navigate = useNavigate()
   const moveTransfer = () => {navigate(`/transfer`)}
@@ -77,7 +81,18 @@ function Main(){
     catch(error){
       console.log(error)
     }
-  } 
+  }
+
+  // 알람목록조회
+  const axiosNotifiCation = async (): Promise<void> => {
+    try {
+      const response =  await getNotifiCation()
+      setNoti(response?.data.reverse())
+    }
+    catch(error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
     axiosAllTransActionList()
