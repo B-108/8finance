@@ -46,6 +46,8 @@ public class AccountService {
 
     public AccountDepositResponseDto depositAccount(AccountDepositRequestDto accountDepositRequestDto, HttpServletRequest request) {
 
+        System.out.println("여기는 온건다 씨발아");
+
         // 토큰과 요청이 일치하는지 검증하는 코드 추가 필요
 
         Account depositAccount = accountRepository.findByAccountNumber(accountDepositRequestDto.getTranDpAcNum()).orElseThrow(() -> new RuntimeException("이런.."));
@@ -53,9 +55,13 @@ public class AccountService {
         if (depositAccount.getAccountStatus() == 2) {
             return null; // 입금 실패: 계좌가 잠겨 있음
         }
+
+        System.out.println("계좌도 다 있고 이제 저장만 하면 된다");
         // 입금 가능하면 계좌 잔액을 증가시키고 저장
         depositAccount.setAccountAddBalanceAmt(depositAccount.getAccountBalanceAmt().add(accountDepositRequestDto.getTranAmt()));
         accountRepository.save(depositAccount);
+
+        System.out.println("씨발 나도 cns 가고 싶다고 씨발아");
 
         return AccountDepositResponseDto.builder()
                 .accountId(depositAccount.getAccountId())
