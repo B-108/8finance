@@ -16,6 +16,9 @@ public class UserService {
 
     public UserGetResponseDto getUserPk(UserGetRequestDto userGetRequestDto, HttpServletRequest request) {
         User findUSer = userRepository.findByUserCellNoAndUserName(userGetRequestDto.getUserCellNo(), userGetRequestDto.getUserName()).orElseThrow(() -> new RuntimeException("없습니다"));
+
+        System.out.println(findUSer.getUserPk());
+
         return UserGetResponseDto.builder()
                 .userPk(findUSer.getUserPk())
                 .build();
