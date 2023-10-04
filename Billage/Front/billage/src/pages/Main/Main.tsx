@@ -164,7 +164,7 @@ function Main(){
                           <DonutChart
                             Return={transAction.repaymentCash}
                             Money={transAction.contractAmt}
-                            Day={transAction.remainingLoanTerm}/>
+                            Interest={transAction.interestRate}/>
                         </TopSection>
 
                         <BottomSection>

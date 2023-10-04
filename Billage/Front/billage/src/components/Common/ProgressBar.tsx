@@ -66,6 +66,7 @@ const ProgressText = styled.div`
 
 
 const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => {
+  console.log('progress', progress)
   return (
     <ProgressBarContainer>
       <ProgressBarWrapper progress={progress}>

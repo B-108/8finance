@@ -16,7 +16,11 @@ interface TransactionItemProps {
   function TransactionItem({ item, toggle }: TransactionItemProps) {
     const contractState = item.contractState
     const totalprice = (item.interestRate * item.contractAmt)/ 100 + item.contractAmt
-    console.log(totalprice)
+    const interest = item.interestRate
+    // console.log('이자', interest)
+    // console.log('총금액',totalprice)
+    // console.log('남은금액',item.repaymentCash)
+    console.log(100 - (item.repaymentCash/totalprice)* 100)
     console.log('===========')
     return(
       contractState === 1 ?(
@@ -41,7 +45,7 @@ interface TransactionItemProps {
           <div style={{
               marginLeft:"5%"}}>
             <ProgressBar
-              progress={100 - (item.repaymentCash/totalprice)* 100}/>
+              progress={100 - ((item.repaymentCash/totalprice)* 100)}/>
           </div>
         </div>
         
@@ -98,7 +102,7 @@ interface TransactionItemProps {
             <div style={{
                 marginLeft:"5%"}}>
               <ProgressBar
-                progress={((item.contractAmt - item.repaymentCash)/item.contractAmt)*100}/>
+                progress={100 - ((item.repaymentCash/totalprice)* 100)}/>
             </div>
           </div>
           
