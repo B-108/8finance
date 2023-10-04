@@ -9,7 +9,7 @@ export const NotiContainer = styled.div`
   overflow-y: scroll;
 
   &::-webkit-scrollbar {
-    width: 0.5em;
+    width: 0em;
   }
 
   &::-webkit-scrollbar-thumb {

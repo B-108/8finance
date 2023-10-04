@@ -155,8 +155,8 @@ function PinEnter () {
   }
 
     const axiosSendMoney =async (): Promise<void> => {
-       const sendData : SendMoneyType = location.state
-       console.log(sendData)
+      const sendData : SendMoneyType = location.state
+      console.log(sendData)
         try{
             await postSendMoney(sendData)
             navigate('/main')
