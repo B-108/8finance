@@ -119,9 +119,9 @@ public class TransferService {
     // 계좌가 잠겨 있는지 확인하는 내부 메서드
     // 계좌 상태
     // 1: 활성, 2: 비활성, ...
-    private boolean isAccountBlocked(AccountResponseDto account) {
-        return account.getAccountStatus() == 2; // 계좌 상태 2가 비활성화
-    }
+//    private boolean isAccountBlocked(AccountResponseDto account) {
+//        return account.getAccountStatus() == 2; // 계좌 상태 2가 비활성화
+//    }
 
     // 계좌 번호를 통해 계좌 정보 조회
 //    public Account getAccountByAccountNumber(String accountNumber) {
