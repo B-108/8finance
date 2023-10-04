@@ -60,6 +60,7 @@ function TransactionList() {
         navigate(`/transaction/detail/${contractId}`,
          { state: { contractId, toggle, data} });
     }
+
     return(
       <CenteredContainer>
         <Header headerTitle="거래목록"/>

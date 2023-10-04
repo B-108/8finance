@@ -51,7 +51,7 @@ const router = createBrowserRouter([
                 errorElement: <ErrorComponent />,
             },
             {
-                path: '/pinenter/:routeAction',
+                path: '/pinenter/:routeAction?',
                 element: <PinEnter />,
                 errorElement: <ErrorComponent />,
             },
