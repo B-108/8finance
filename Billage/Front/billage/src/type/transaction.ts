@@ -26,6 +26,7 @@ export interface Transaction{
     debtorAcNum :string;
     debtorBankCode :string;
     debtorBankName :string;
+    interestRate : number;
   }
 
   export interface TransactionDetailType{
