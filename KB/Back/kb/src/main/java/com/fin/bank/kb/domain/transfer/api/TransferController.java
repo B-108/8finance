@@ -4,6 +4,7 @@ import com.fin.bank.kb.domain.transfer.dto.TransferRequestDto;
 import com.fin.bank.kb.domain.transfer.dto.TransferResponseDto;
 import com.fin.bank.kb.domain.transfer.enums.TransactionType;
 import com.fin.bank.kb.domain.transfer.service.TransferService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/transfer")
+@RequestMapping("/kb/transfer")
 public class TransferController {
 
     private final TransferService transferService;
@@ -40,12 +41,19 @@ public class TransferController {
     @PostMapping("/withdraw")
     public ResponseEntity<TransferResponseDto> withdraw(@RequestBody TransferRequestDto requestDto) {
         boolean success = transferService.withdraw(requestDto);
+        System.out.println("withdraw확인");
         if (success) {
             return new ResponseEntity<>(createSuccessResponse(TransactionType.WITHDRAWAL), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(createErrorResponse(), HttpStatus.BAD_REQUEST);
         }
     }
+    
+    @GetMapping("/test")
+    public void test(){
+        System.out.println("test확인");
+    }
+    
 
     // 성공 응답 생성 메서드
     private TransferResponseDto createSuccessResponse(TransactionType transactionType) {
