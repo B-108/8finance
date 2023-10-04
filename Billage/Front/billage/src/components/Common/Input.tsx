@@ -26,6 +26,8 @@ interface InputProps {
     $position?: boolean;
     // 모드
     $inputMode?: string;
+    // 체크박스
+    $checkBox?: boolean;
 }
 
 const StyledInput = styled.input<InputProps>`
@@ -104,6 +106,13 @@ const StyledInput = styled.input<InputProps>`
         props.$position &&
         css`
             text-align: right; // 오른쪽 정렬
+        `}
+
+        // 
+        ${(props) =>
+        props.$checkBox &&
+        css`
+        disabled;
         `}
 `;
 
