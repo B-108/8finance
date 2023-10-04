@@ -126,6 +126,7 @@ public class UserService {
         return UserGetInfoResponseDto.builder()
                 .firebaseToken(findUser.getUserFirebaseToken())
                 .isUserInfo(true)
+                .userName(findUser.getUserName())
                 .build();
     }
 
