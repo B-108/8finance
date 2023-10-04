@@ -1,0 +1,85 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Springboot build') {
+            steps {
+                dir('openbank'){
+                    sh '''
+                    pwd
+                    echo 'springboot build'
+
+                    #!/bin/bash
+
+                    # Source and destination directories
+                    SRC_DIR="/var/jenkins_home/backend-config/openbank"
+                    DEST_DIR="/var/jenkins_home/workspace/openbank_back/openbank/src/main/resources"
+
+                    # File to copy
+                    FILE="application.yml"
+
+                    # Check if destination directory exists, if not create it
+                    if [ ! -d "$DEST_DIR" ]; then
+                        mkdir -p "$DEST_DIR"
+                    fi
+
+                    # Copy the file
+                    cp "$SRC_DIR/$FILE" "$DEST_DIR/$FILE"
+
+                    chmod +x gradlew
+                    ./gradlew clean build
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Dockerimage build') {
+            steps {
+                dir('openbank'){
+                    sh '''
+                    echo 'Dockerimage build'
+                    docker build -t docker-springboot-openbank-back:0.0.1 .
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                dir('openbank'){
+                    sh '''
+                    echo 'Deploy'
+
+
+                    docker run -d -p 8088:8080 --name openbank-back docker-springboot-openbank-back:0.0.1
+
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+    }
+}
