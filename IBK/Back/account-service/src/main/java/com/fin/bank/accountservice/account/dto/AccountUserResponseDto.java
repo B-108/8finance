@@ -2,10 +2,11 @@ package com.fin.bank.accountservice.account.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
-public class AccountRequestDto {
-    private String userName;
-    private String userCellNo;
+public class AccountUserResponseDto {
+    private Long userPk;
 }

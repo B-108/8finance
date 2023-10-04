@@ -69,10 +69,10 @@ public class Account {
     // User 엔티티와 다대일 관계
     // 하나의 고객에 여러 계좌가 올 수 있음
     @Column(name = "user_pk", nullable = false)
-    private Long user;
+    private Long userPk;
 
     @Builder
-    public Account(Long accountId, String accountNumber, BigDecimal accountBalanceAmt, String accountBankCode, Character accountType, String accountAlias, Integer accountStatus, LocalDateTime accountCreateDate, LocalDateTime accountDeleteDate, LocalDateTime accountDormantDate, LocalDateTime accountModifyDate, Integer accountPassword, Long user) {
+    public Account(Long accountId, String accountNumber, BigDecimal accountBalanceAmt, String accountBankCode, Character accountType, String accountAlias, Integer accountStatus, LocalDateTime accountCreateDate, LocalDateTime accountDeleteDate, LocalDateTime accountDormantDate, LocalDateTime accountModifyDate, Integer accountPassword, Long userPk) {
         this.accountId = accountId;
         this.accountNumber = accountNumber;
         this.accountBalanceAmt = accountBalanceAmt;
@@ -85,7 +85,7 @@ public class Account {
         this.accountDormantDate = accountDormantDate;
         this.accountModifyDate = accountModifyDate;
         this.accountPassword = accountPassword;
-        this.user = user;
+        this.userPk = userPk;
     }
 
     // 잔액 감소 메서드

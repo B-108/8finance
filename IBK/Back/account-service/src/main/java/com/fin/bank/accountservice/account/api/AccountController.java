@@ -1,10 +1,7 @@
 package com.fin.bank.accountservice.account.api;
 
 
-import com.fin.bank.accountservice.account.dto.AccountDepositRequestDto;
-import com.fin.bank.accountservice.account.dto.AccountRequestDto;
-import com.fin.bank.accountservice.account.dto.AccountResponseDto;
-import com.fin.bank.accountservice.account.dto.AccountGetRequestDto;
+import com.fin.bank.accountservice.account.dto.*;
 import com.fin.bank.accountservice.account.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -31,13 +27,8 @@ public class AccountController {
 
     // (수정) 고객의 계좌 목록 조회 요청 API
     @PostMapping("/accountList") // 고객의 계좌 목록을 조회하는 엔드포인트 설정
-    public ResponseEntity<List<AccountResponseDto>> getAccountList(@RequestBody List<AccountRequestDto> list ) {
-        List<AccountResponseDto> accountList = accountService.getAccountList(list);
-
-        for (AccountResponseDto a : accountList) {
-            System.out.println(a.getAccountNum() + " " + a.getBankName());
-        }
-        return new ResponseEntity<>(accountList, HttpStatus.OK);
+    public ResponseEntity<?> getAccountList(@RequestBody AccountRequestDto accountRequestDto, HttpServletRequest request) {
+        return new ResponseEntity<>(accountService.getAccountList(accountRequestDto, request), HttpStatus.OK);
     }
 
     @PostMapping("")
@@ -50,4 +41,8 @@ public class AccountController {
         return new ResponseEntity<>(accountService.depositAccount(accountDepositRequestDto, request), HttpStatus.OK);
     }
 
+    @PostMapping("/withdraw")
+    public ResponseEntity<?> withdrawAccount(@RequestBody AccountWithdrawRequestDto accountWithdrawRequestDto, HttpServletRequest request) {
+        return new ResponseEntity<>(accountService.withdrawAccount(accountWithdrawRequestDto, request), HttpStatus.OK);
+    }
 }
