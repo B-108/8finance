@@ -65,16 +65,20 @@ function Notifications() {
       
         if (timeDifference < minute) {
           return ('1분 전');
-        } else if (timeDifference < hour) {
+        } 
+        else if (timeDifference < hour) {
           const diffMinutes = Math.floor(timeDifference / minute);
           return(`${diffMinutes}분 전`);
-        } else if (timeDifference < day) {
+        } 
+        else if (timeDifference < day) {
           const diffHours = Math.floor(timeDifference / hour);
           return(`${diffHours}시간 전`);
-        } else if (timeDifference < day * 7) {
+        } 
+        else if (timeDifference < day * 7) {
           const diffDays = Math.floor(timeDifference / day);
           return(`${diffDays}일 전`);
-        } else {
+        } 
+        else {
           const year = targetTime.getFullYear();
           const month = targetTime.getMonth() + 1;
           const day = targetTime.getDate();
