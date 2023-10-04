@@ -19,16 +19,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class AccountService {
 
     private final AccountRepository accountRepository;
     private final WebClient.Builder webClientBuilder;
 
-    @Value("${web-client.ser-service}")
+    @Value("${web-client.user-service}")
     private String userUrl;
 
-    @Transactional
+
     public List<AccountResponseDto> getAccountList(AccountRequestDto accountRequestDto, HttpServletRequest request) {
 
         List<AccountResponseDto> result = new ArrayList<>();
@@ -66,12 +67,12 @@ public class AccountService {
         }
     }
 
-    @Transactional
+
     public Account getAccount(AccountGetRequestDto accountGetRequestDto) {
         return accountRepository.findByAccountNumber(accountGetRequestDto.getTranDpAcNum()).orElseThrow(() -> new RuntimeException("이런.."));
     }
 
-    @Transactional
+
     public AccountDepositResponseDto depositAccount(AccountDepositRequestDto accountDepositRequestDto, HttpServletRequest request) {
 
         // 토큰과 요청이 일치하는지 검증하는 코드 추가 필요
@@ -90,7 +91,7 @@ public class AccountService {
                 .build();
     }
 
-    @Transactional
+
     public AccountWithdrawResponseDto withdrawAccount(AccountWithdrawRequestDto accountWithdrawRequestDto, HttpServletRequest request) {
 
         Account withdrawAccount = accountRepository.findByAccountNumber(accountWithdrawRequestDto.getTranWdAcNum()).orElseThrow(() -> new RuntimeException("이런.."));
