@@ -66,7 +66,7 @@ interface TransactionItemProps {
                   $smallestContent>
                   {toggle ? '빌린금액' : '빌려준 금액'}</Text>
               <Text $smallContent>
-                  {item.contractAmt}</Text> 
+                  {item.contractAmt.toLocaleString()}</Text> 
             </div>
             <div style={{
               padding:"8px 0px",
@@ -75,7 +75,7 @@ interface TransactionItemProps {
               <Text $smallContent>
                   남은금액</Text>
               <Text>
-                  {item.repaymentCash}</Text>
+                  {item.repaymentCash.toLocaleString()}</Text>
             </div>
         </div>
       </div>
