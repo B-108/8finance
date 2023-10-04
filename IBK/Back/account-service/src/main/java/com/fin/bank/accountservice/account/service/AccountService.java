@@ -23,19 +23,19 @@ public class AccountService {
     public List<AccountResponseDto>getAccountList(List<AccountRequestDto> list) {
         List<AccountResponseDto> accountResponseDtoList = new ArrayList<>();
 
-        for (AccountRequestDto dto : list) {
-            String customerName = dto.getUserName();
-            String phoneNumber = dto.getUserCellNo();
-            List<Account> newList = accountRepository.findAllByUser_UserNameAndUser_UserCellNo(customerName, phoneNumber);
-            for (Account a : newList) {
-                AccountResponseDto accountResponseDtos = AccountResponseDto.builder()
-                        .accountNum(a.getAccountNumber())
-                        .bankName("기업은행")
-                        .build();
-
-                accountResponseDtoList.add(accountResponseDtos);
-            }
-        }
+//        for (AccountRequestDto dto : list) {
+//            String customerName = dto.getUserName();
+//            String phoneNumber = dto.getUserCellNo();
+//            List<Account> newList = accountRepository.findAllByUser_UserNameAndUser_UserCellNo(customerName, phoneNumber);
+//            for (Account a : newList) {
+//                AccountResponseDto accountResponseDtos = AccountResponseDto.builder()
+//                        .accountNum(a.getAccountNumber())
+//                        .bankName("기업은행")
+//                        .build();
+//
+//                accountResponseDtoList.add(accountResponseDtos);
+//            }
+//        }
 
         return accountResponseDtoList;
     }
