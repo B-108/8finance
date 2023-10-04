@@ -100,7 +100,7 @@ function SendMoney() {
         setMyAccountInfo(event.target.value);
     };
     const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if(event.target.value === "") {
+        if(event.target.value === " ") {
           setAmountInfo("0")
         }
         else {

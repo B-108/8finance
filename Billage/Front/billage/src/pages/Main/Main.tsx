@@ -87,7 +87,9 @@ function Main(){
   const axiosNotifiCation = async (): Promise<void> => {
     try {
       const response =  await getNotifiCation()
-      setNoti(response?.data.reverse())
+      const reversedData = response?.data.reverse()
+      const filteredData = reversedData.filter((item,index) => item.noticeState === 0);
+      setNoti(filteredData);
     }
     catch(error) {
       console.log(error)
@@ -95,6 +97,7 @@ function Main(){
   }
 
   useEffect(() => {
+    axiosNotifiCation()
     axiosAllTransActionList()
   }, [])
 
