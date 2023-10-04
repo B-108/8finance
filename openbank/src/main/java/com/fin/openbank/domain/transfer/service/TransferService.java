@@ -31,7 +31,7 @@ public class TransferService {
             // 출금 요청이 성공한 경우에만 수취은행에게 입금 요청
             String DpBankCode = transferRequestDto.getTranDpBankCode();
             boolean depositSuccess = depositService.deposit(transferRequestDto, DpBankCode, DPtransactionType);
-            System.out.println("여기까진 오나..?");
+            System.out.println("지급은행 출금 완료 후 수취은행 입금 요청");
             if (depositSuccess) {
                 // 입금 요청도 성공한 경우에만 Transaction 엔티티를 생성하고 저장
                 Transaction transaction = Transaction.builder()
@@ -48,14 +48,14 @@ public class TransferService {
                         .build();
 
                 transactionRepository.save(transaction);
-
+                System.out.println("지급은행 출금 완료 후 수취은행 입금 완료");
                 return true;
             } else {
-                // 입금 요청이 실패한 경우에 대한 처리
+                System.out.println("수취은행 입금 실패");
                 return false;
             }
         } else {
-            // 출금 요청이 실패한 경우에 대한 처리
+            System.out.println("지급은행 출금 실패");
             return false;
         }
     }

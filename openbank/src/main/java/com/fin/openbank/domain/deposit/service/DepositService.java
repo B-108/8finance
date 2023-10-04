@@ -33,7 +33,7 @@ public class DepositService {
                 .retrieve()
                 .bodyToMono(Boolean.class) // 결과를 Boolean으로 변환
                 .block(); // 비동기 호출을 동기적으로 기다림
-
+        System.out.println("success 상태" + success);
         if (success != null && success) {
             System.out.println("입금 요청 성공");
             // 출금 요청이 성공한 경우에만 Transaction 엔티티를 생성하고 저장

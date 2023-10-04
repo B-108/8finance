@@ -1,10 +1,8 @@
 package com.fin.openbank.domain.transfer.api;
 
-import com.fin.openbank.domain.deposit.service.DepositService;
 import com.fin.openbank.domain.transfer.dto.TransferRequestDto;
 import com.fin.openbank.domain.transfer.dto.TransferResponseDto;
 import com.fin.openbank.domain.transfer.service.TransferService;
-import com.fin.openbank.domain.withdraw.service.WithdrawService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 public class TransferController {
 
     private final TransferService transactionService;
-    private final WithdrawService withdrawService;
-    private final DepositService depositService;
 
     // 이체 요청 API
     // 이 API는 빌리지 Web-Client로 호출하는 것임. 이때 Client가 은행이다.
@@ -30,14 +26,17 @@ public class TransferController {
         // TransactionService를 통해 이체 요청을 처리하고 결과를 얻습니다.
         boolean success = transactionService.processTransferRequest(requestDto);
         if (success) {
+            System.out.println("OpenBankingCenter 이체 성공");
             return new ResponseEntity<>(createSuccessResponse(), HttpStatus.OK);
         } else {
+            System.out.println("OpenBankingCenter 이체 실패");
             // 이체가 실패했을 경우 400 Bad Request 상태와 에러 응답을 반환합니다.
             return new ResponseEntity<>(createErrorResponse(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    // 성공 응답 생성 메서드
+
+   // 성공 응답 생성 메서드
     private TransferResponseDto createSuccessResponse() {
         return TransferResponseDto.builder()
                 .message("Transfer successful")
@@ -50,18 +49,4 @@ public class TransferController {
                 .message("Transfer failed. Check customer information, account number, and balance.")
                 .build();
     }
-
-//    // withdrawService 호출하는 post 매핑 테스트
-//    @PostMapping("/test")
-//    public void Test(@RequestBody TransferRequestDto requestDto){
-//        System.out.println("서비스 전까지는 들어옴!");
-//        withdrawService.withdraw(requestDto, payeeBankCode);
-//    }
-    
-//    // withdrawService 호출하는 get 매핑 테스트
-//    @GetMapping("/test")
-//    public void test() {
-//        System.out.println("test");
-//        withdrawService.test();
-//    }
 }
