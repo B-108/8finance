@@ -8,3 +8,15 @@ export interface IOUProps {
     contractInterestRate: string;
     contractDueAmt: string;
 }
+
+export interface AgreeIOUProps {
+    contractId: number;
+    tranWd: string;
+    tranWdAcNum: string;
+    tranWdBankCode: string;
+    tranDp: string;
+    tranDpAcNum: string;
+    tranDpBankCode: string;
+    tranAmt: number;
+    tranContent: string;
+}
