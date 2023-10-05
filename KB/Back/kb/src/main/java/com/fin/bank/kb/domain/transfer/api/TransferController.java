@@ -29,6 +29,11 @@ public class TransferController {
     // 고객의 출금 요청 API
     @PostMapping("/withdraw")
     public boolean withdraw(@RequestBody TransferRequestDto requestDto) {
+
+        System.out.println("toString() : " + requestDto.toString());
+        System.out.println(requestDto.getTranWdBankCode());
+        System.out.println(requestDto);
+
         boolean success = transferService.withdraw(requestDto);
         if (success) {
             System.out.println("withdraw 성공");
