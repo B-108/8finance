@@ -66,7 +66,8 @@ pipeline {
                     sh '''
                     echo 'Deploy'
 
-
+                    docker stop kb-gateway-service
+                    docker rm kb-gateway-service
 
                     docker run -d -p 9001:9001 --network ubuntu_kb --name kb-gateway-service docker-springboot-kb-gateway-service:0.0.1
 
