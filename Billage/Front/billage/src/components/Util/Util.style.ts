@@ -14,6 +14,7 @@ export const DialogContainer = styled.div`
   overflow: hidden;
   background-color: rgb(0, 0, 0, 0.3);
   backdrop-filter: blur(2px);
+  font-family: 'LINESeedKR-Bd';
   
   z-index: 9999;
   

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -29,6 +29,9 @@ import { BankListState } from '/src/recoil/account';
 import { useIOUCheckState, useIOUState } from '/src/recoil/iou';
 import { NameState } from '/src/recoil/auth';
 
+// 모달용 알림창
+import ConfirmContext from '/src/context/confirm/ConfirmContext';
+
 function Transfer() {
     //recoil
     const [IOU, setIOU] = useIOUState();
@@ -47,8 +50,10 @@ function Transfer() {
     // 자동이체 체크박스 상태
     // const [autoTransfer, setAutoTransfer] = useState<boolean>(false);
 
+    // 라우터
     const navigate = useNavigate();
     const location = useLocation();
+    const handleGoBack = () => {navigate(-1);};
 
     //작성 취소 버튼 클릭시 활성
     const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false); // 다이얼로그 상태 추가
@@ -77,12 +82,13 @@ function Transfer() {
     const [friendPk, setFriendPk] = useState<number>(0);
 
     const handleCancelClick = () => {
-        setIsCancelDialogOpen(true);
+        openConfirm()
+        // setIsCancelDialogOpen(true);
     };
 
-    const handleConfirmCancel = () => {
-        setIsCancelDialogOpen(false);
-    };
+    // const handleConfirmCancel = () => {
+    //     setIsCancelDialogOpen(false);
+    // };
 
     const handleFriendInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFriendInfo(event.target.value);
@@ -219,9 +225,24 @@ function Transfer() {
             }
         }
     }, [users, friendInfo]);
-    // useEffect(() => {
-    //     axiosUserList();
-    // }, []);
+
+
+    // ConFirm 모달 창
+    const { confirm: confirmComp } = useContext(ConfirmContext);
+
+    const onConfirmClick = async (text: string) => {
+      const result = await confirmComp(text);
+      console.log("custom", result);
+      return result;
+    };
+
+    const openConfirm = async () => {
+      const nextAction = await onConfirmClick("작성을 취소하시겠습니까?");
+      if (nextAction) {
+        handleGoBack()
+      }
+      return;
+    };
 
     return (
         <CenteredContainer>
@@ -387,7 +408,7 @@ function Transfer() {
                     작성완료
                 </Button>
             </ButtonContainer>
-            {isCancelDialogOpen && <ConfirmBox onCancel={handleConfirmCancel} onConfirm={() => navigate(-1)} />}
+            {/* {isCancelDialogOpen && <ConfirmBox onCancel={handleConfirmCancel} onConfirm={() => navigate(-1)} />} */}
         </CenteredContainer>
     );
 }
