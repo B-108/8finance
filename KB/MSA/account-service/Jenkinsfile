@@ -68,7 +68,7 @@ pipeline {
 
 
 
-                    docker run -d -p 9001:9001 --network ubuntu_kb --name kb-account-service docker-springboot-kb-account-service:0.0.1
+                    docker run -d -p 7013:7013 --network ubuntu_kb --name kb-account-service docker-springboot-kb-account-service:0.0.1
 
                     '''
                 }
