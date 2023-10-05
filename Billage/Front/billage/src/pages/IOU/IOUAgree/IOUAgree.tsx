@@ -37,7 +37,7 @@ import { AgreeIOUProps } from '/src/type/iou';
 
 // API
 import { getAccountList } from '/src/api/account';
-import { agreeIOU } from '/src/api/iou';
+import { agreeIOU, EnrollWd } from '/src/api/iou';
 
 function IOUAgree() {
     const [myAccountInfo, setMyAccountInfo] = useState<string>('');
@@ -48,7 +48,6 @@ function IOUAgree() {
     const useData = location.state.data
     const [agree, setAgree] = useState<string>('true')
 
-    console.log(location.state)
     const handleMyAccountInfoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
       setMyAccountInfo(event.target.value);
     };
@@ -65,17 +64,17 @@ function IOUAgree() {
     };
 
     useEffect(() => {
-      axiosAccountList();
+        axiosAccountList();
     }, []);
 
     useEffect(() => {
-      const mainAccount = accounts.find((account) => account.accountMainYn === true);
-      if (mainAccount) {
-          setMyAccountInfo(mainAccount.accountNum);
-          setMyAccountInfoCode(mainAccount.accountBankCode);
-      }
+        const mainAccount = accounts.find((account) => account.accountMainYn === true);
+        if (mainAccount) {
+            setMyAccountInfo(mainAccount.accountNum);
+            setMyAccountInfoCode(mainAccount.accountBankCode);
+        }
     }, [accounts]);
-    console.log(useData)
+    
     const info: AgreeIOUProps = {
         contractId: useData.contractId,
         tranWd: useData.creditorUser.userName,
@@ -87,20 +86,37 @@ function IOUAgree() {
         tranAmt: useData.contractAmt,
         tranContent: '거래시작',
     };
+    let BankName = '';
+    if (myAccountInfoCode === '004') {
+      BankName = '국민은행';
+    } else if (myAccountInfoCode === '003') {
+      BankName = '기업은행';
+    }
+    const contractCreditorAcNum : string = `${BankName} ${myAccountInfo}`
+    console.log(contractCreditorAcNum)
     console.log(info)
     const axiosAgreeIOU =async (): Promise<void> => {
           try{
               await agreeIOU(agree, info)
-              navigate('/main')
           }
           catch(error){
               console.log(error)
           }
       }
-    
+    const axiosEnrollWd =async (): Promise<void> => {
+        try{
+            await EnrollWd(useData.contractId, contractCreditorAcNum)
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
     const AgreeIOU = () => {
         console.log(info)     
         axiosAgreeIOU()
+        axiosEnrollWd()
+        navigate('/main')
+
     }
 
     return (
@@ -115,11 +131,11 @@ function IOUAgree() {
                 <IOUContent>
                     <Title>차 용 증</Title>
                     <div style={{ width: '100%', height: '225px' }}>
-                        <Amount>￦ 0000000 (원)</Amount>
+                        <Amount>￦ {useData.contractAmt} (원)</Amount>
                         <hr />
                         <Content>
-                            위 금액을 채무자ooo가 채권자
-                            ooo로부터 0000.00.00일 틀림없이
+                            위 금액을 채무자 {useData.debtorUser.userName}(이)가 채권자 {useData.creditorUser.userName}(으)로부터
+                            0000.00.00일 틀림없이
                             빌렸습니다.
                         </Content>
                         <Content>
