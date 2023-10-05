@@ -80,6 +80,7 @@ function SignUp(){
   };
 
   const messageRequest = () => {
+    onAlertSimpleClick("인증번호를 요청했습니다.")
     axiosMessage()
   }
 

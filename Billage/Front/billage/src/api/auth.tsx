@@ -5,9 +5,16 @@ import { LoginProps, MessageCertProps, MessageProps, SignUpProps } from '../type
 
 // 회원가입
 export const postSignUp = async (info: SignUpProps) => {
+  const data: LoginProps = {
+    userCellNo: info.userCellNo,
+    userSimplePass: info.userSimplePass,
+  }
   try{
     const response = await publicApi.post("/api/user/signup", info);
-    console.log(response.data);
+    if (response && response.status === 200) {
+      console.log("회원가입 성공 후 로그인 요청")
+      postLogin(data)
+    }
     return response.data;
   }
   catch (error) {
