@@ -156,7 +156,6 @@ function PinEnter () {
 
     const axiosSendMoney =async (): Promise<void> => {
       const sendData : SendMoneyType = location.state
-      console.log(sendData)
         try{
             await postSendMoney(sendData)
             navigate('/main')
@@ -177,7 +176,7 @@ function PinEnter () {
   
   const onAlertSimpleClick = async (text: string) => {
     const result = await alertSimpleComp(text);
-    console.log("custom", result);
+    // console.log("custom", result);
     HandleIsEnd();
   };
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 // 재사용 컴포넌트
 import Header from '/src/components/Header/Header';
@@ -93,7 +93,7 @@ function Notifications() {
     const axiosNotifiCation = async (): Promise<void> => {
       try {
         const response =  await getNotifiCation()
-        console.log("axios",response?.data)
+        // console.log("axios",response?.data)
         setNotifications(response?.data.reverse())
       }
       catch(error) {
