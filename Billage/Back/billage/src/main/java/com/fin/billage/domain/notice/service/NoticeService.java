@@ -34,6 +34,7 @@ public class NoticeService {
                     .noticeAmount(n.getNoticeAmount())
                     .noticeKeyword(n.getNoticeKeyword())
                     .noticeState(n.getNoticeState())
+                    .noticeUserName(n.getNoticeUserName())
                     .noticeType(n.getNoticeType())
                     .noticeSendDate(n.getNoticeSendDate())
                     .contractId(n.getContractId())
