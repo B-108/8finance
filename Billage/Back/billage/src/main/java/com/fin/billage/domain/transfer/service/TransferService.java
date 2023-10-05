@@ -199,9 +199,25 @@ public class TransferService {
                         },
                         error -> {
                             System.out.println("이체 실패: " + error.getMessage());
+                            try {
+                                // 예외를 던져서 컨트롤러에서 처리하도록 합니다.
+                                handleTransferError(error);
+                            } catch (Exception e) {
+                                // 컨트롤러에서 처리할 수 있도록 예외를 던지도록 수정했습니다.
+                                throw new RuntimeException("이체 실패: " + e.getMessage());
+                            }
                         }
                 );
     }
+
+    private void handleTransferError(Throwable error) throws Exception {
+        // 에러 처리 로직을 추가하거나 필요한 작업을 수행할 수 있습니다.
+        // 예를 들어, 로깅이나 다른 예외 처리 작업 등을 수행할 수 있습니다.
+
+        // 예외를 더 높은 레벨로 다시 던집니다.
+        throw new Exception("이체 실패: " + error.getMessage());
+    }
+
 
 //    // 스케줄링
 //    @Scheduled(cron = "0 0 0 * * ?") // 매일 오전 12시에 실행
