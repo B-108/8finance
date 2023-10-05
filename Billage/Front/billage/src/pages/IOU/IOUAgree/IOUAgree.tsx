@@ -1,6 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useRecoilState } from 'recoil'; // Recoil에서 상태값을 읽어오기 위해 추가
+import { ContractState } from 'src/recoil/iou';
+
 // 공용 컴포넌트
 import CenteredContainer from '/src/components/Common/CenterAlign';
 import Header from '/src/components/Header/Header';
@@ -15,7 +18,6 @@ import {
     IOUContainer,
     IOUContent,
     InputDiv,
-    InputTitle,
     Title,
     UserBox,
     UserInfo,
@@ -38,7 +40,6 @@ import { AgreeIOUProps } from '/src/type/iou';
 // API
 import { getAccountList } from '/src/api/account';
 import { agreeIOU, EnrollWd } from '/src/api/iou';
-import { promises } from 'readline';
 
 function IOUAgree() {
     const [myAccountInfo, setMyAccountInfo] = useState<string>('');
@@ -48,7 +49,7 @@ function IOUAgree() {
     const location = useLocation()
     const useData = location.state.data
     const [agree, setAgree] = useState<string>('true')
-    console.log(useData)
+    const [contract, setContract] = useRecoilState(ContractState);
     const handleMyAccountInfoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
       setMyAccountInfo(event.target.value);
     };
@@ -94,8 +95,7 @@ function IOUAgree() {
       BankName = '기업은행';
     }
     const contractCreditorAcNum : string = `${BankName} ${myAccountInfo}`
-    console.log(contractCreditorAcNum)
-    console.log(info)
+
     const axiosAgreeIOU =async (): Promise<void> => {
           try{
               await agreeIOU(agree, info)
@@ -143,16 +143,18 @@ function IOUAgree() {
                 <IOUContent>
                     <Title>차 용 증</Title>
                     <div style={{ width: '100%', height: '225px' }}>
-                        <Amount>￦ {useData.contractAmt} (원)</Amount>
+                        <Amount>
+                            ￦ {useData.contractAmt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} (원)
+                            </Amount>
                         <hr />
                         <Content>
                             위 금액을 채무자 {useData.debtorUser.userName}(이)가 채권자 {useData.creditorUser.userName}(으)로부터
-                            0000.00.00일 틀림없이
+                            {contract.contractStartDate}일 틀림없이
                             빌렸습니다.
                         </Content>
                         <Content>
                             채무자 {useData.debtorUser.userName}(은)는 위 금액을 연 이자{useData.interestRate}
-                            %로 하여 0000.00.00일까지 채권자 {useData.creditorUser.userName}에게 갚겠습니다.
+                            %로 하여 {contract.contractMaturityDate}일까지 채권자 {useData.creditorUser.userName}에게 갚겠습니다.
                         </Content>
                     </div>
                     <Dates>날짜: {year}년 {month}월 {date}일</Dates>

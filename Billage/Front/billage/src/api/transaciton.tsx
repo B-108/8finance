@@ -54,13 +54,8 @@ export const getTransActionHistory = async (contractId : number) => {
 //이체하기
 export const postSendMoney = async (data: SendMoneyType) => {
   try{  
-        console.log("===============")
-        console.dir(data)        
-        console.log("===============")
-        console.log("여기는 Axios,data",data)
         const response = await privateApi.post("/api/transfer", data)
-        console.log("여기도 Axios,response ",response)
-        console.log('이체 완료')
+        console.log("이체 완료 ",response)
     }
     catch(error){
         console.log('postSendMoney 실패', error)

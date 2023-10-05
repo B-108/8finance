@@ -47,7 +47,6 @@ function IOUCheck() {
     const [isChecked, setIsChecked] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null!);
     const currentDate = new Date().toISOString().split('T')[0];
-
     const [phone, setPhone] = useRecoilState<string>(PhoneState);
 
     // ConFirm 모달 창

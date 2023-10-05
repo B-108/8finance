@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useRecoilState, useRecoilValue } from 'recoil'; // Recoil에서 상태값을 읽어오기 위해 추가
+import { useRecoilState} from 'recoil';
 import { ContractState } from 'src/recoil/iou';
 
 // 공용 컴포넌트
@@ -41,7 +41,6 @@ function IOUPage() {
     // Recoil 상태에서 데이터 읽어오기
     const [contract, setContract] = useRecoilState(ContractState);
     const contentRef = useRef<HTMLDivElement>(null!);
-
     const currentDate = new Date().toISOString().split('T')[0];
 
     const location = useLocation();
@@ -111,16 +110,16 @@ function IOUPage() {
                     <UserBox>
                         <UserType>채권자</UserType>
                         <UserInfo>
-                            <UserName>이름 : 최싸피</UserName>
-                            <UserPhone>전화번호 : 010-0000-0000</UserPhone>
+                            <UserName>이름 : {contract?.creditorUser.userName}</UserName>
+                            <UserPhone>전화번호 : {contract?.creditorUser.userCellNo}</UserPhone>
                         </UserInfo>
                     </UserBox>
 
                     <UserBox>
                         <UserType>채무자</UserType>
                         <UserInfo>
-                            <UserName>이름 : 김싸피</UserName>
-                            <UserPhone>전화번호 : 010-0000-0000</UserPhone>
+                            <UserName>이름 : {contract?.debtorUser.userName}</UserName>
+                            <UserPhone>전화번호 : {contract?.debtorUser.userCellNo}</UserPhone>
                         </UserInfo>
                     </UserBox>
                 </IOUContent>
