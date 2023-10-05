@@ -36,7 +36,7 @@ public class TransferController {
             return ResponseEntity.ok("이체 성공"); // 성공 메시지 반환
         } catch (Exception e) {
             // 에러가 발생한 경우
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이체 실패: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
 //            transferService.transferCash(dto, request);
 //            return ResponseEntity.ok().build();
