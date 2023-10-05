@@ -70,6 +70,20 @@ function Main(){
     navigate(`/sendmoney`, { state: {data} });
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  };
+
+  const formatNumberWithCommas = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
   const axiosAllTransActionList = async () => {
     try {
       const Borrow = await getBorrowList()
@@ -101,7 +115,6 @@ function Main(){
   }, [])
 
   return(
-    <>
       <CenteredContainer>
         <Header
           headerTitle="Billage"
@@ -109,7 +122,7 @@ function Main(){
         
         <Text
           $title
-          $size="94%,50px">확인 하지 않은 알림!</Text>
+          $size="94%,44px">확인 하지 않은 알림!</Text>
         
         {noti?.length > 0? (
           <Box
@@ -122,8 +135,8 @@ function Main(){
                   <Image
                     src={alarmBell2}
                     alt="alarmClock"
-                    width="7%"></Image>
-                  <AlarmDate>2023.09.08</AlarmDate>
+                    width="20px"></Image>
+                  <AlarmDate>{formatDate(noti[0].noticeSendDate)}</AlarmDate>
                 </AlarmHeader>
                 <AlarmContent>"{noti[0].noticeUserName}"님에게 돈을 빌려달라는 요청이 왔어요.</AlarmContent>
               </div>
@@ -134,10 +147,10 @@ function Main(){
                   <Image
                     src={alarmBell2}
                     alt="alarmClock"
-                    width="7%"></Image>
-                  <AlarmDate>2023.09.08</AlarmDate>
+                    width="20px"></Image>
+                  <AlarmDate>{formatDate(noti[0].noticeSendDate)}</AlarmDate>
                 </AlarmHeader>
-                <AlarmContent>"{noti[0].noticeUserName}"님이 {noti[0].noticeAmount}원을 빌려줬어요!</AlarmContent>
+                <AlarmContent>"{noti[0].noticeUserName}"님이 돈을 빌려줬어요!</AlarmContent>
               </div>
             ) : (
             noti[0].noticeType === 3 ? (
@@ -146,8 +159,8 @@ function Main(){
                   <Image
                     src={alarmBell2}
                     alt="alarmClock"
-                    width="7%"></Image>
-                  <AlarmDate>2023.09.08</AlarmDate>
+                    width="20px"></Image>
+                  <AlarmDate>{formatDate(noti[0].noticeSendDate)}</AlarmDate>
                 </AlarmHeader>
                 <AlarmContent>"{noti[0].noticeUserName}"님이 돈빌려주는 것을 거절했어요.</AlarmContent>
               </div>
@@ -157,10 +170,10 @@ function Main(){
                   <Image
                     src={alarmBell2}
                     alt="alarmClock"
-                    width="7%"></Image>
-                  <AlarmDate>2023.09.08</AlarmDate>
+                    width="20px"></Image>
+                  <AlarmDate>{formatDate(noti[0].noticeSendDate)}</AlarmDate>
                 </AlarmHeader>
-                <AlarmContent>"{noti[0].noticeUserName}"님이 {noti[0].noticeAmount}원을 갚았어요!</AlarmContent>
+                <AlarmContent>"{noti[0].noticeUserName}"님이 {formatNumberWithCommas(noti[0].noticeAmount)}원을 갚았어요!</AlarmContent>
               </div>
             )
             ))}
@@ -174,7 +187,7 @@ function Main(){
             <Image
               src={alarmBell2}
               alt="alarmClock"
-              width="7%"
+              width="20px"
             ></Image>
             <AlarmDate>{currentDate}</AlarmDate>
           </AlarmHeader>
@@ -184,7 +197,7 @@ function Main(){
 
         <Text
           $title
-          $size="94%,50px">나의거래</Text>
+          $size="94%,44px">나의거래</Text>
 
         <div style={{width:"100%"}}>
           <Splide
@@ -193,7 +206,7 @@ function Main(){
               rewind: true,
               arrows : false,
               gap   : '5%',
-              padding: '12%',}}
+              padding: '13%',}}
               aria-label="My Favorite Images"> 
             {transList.length > 0 ? (
               <>
@@ -203,7 +216,7 @@ function Main(){
                     {transAction.debtorUser.userCellNo === phone ? (
                       <Box
                         $mainTransaction
-                        $size="100%,270px">
+                        $size="100%,260px">
                         <TopSection>
                           <SignBox>빌린 돈</SignBox>
                           <TextUp>'{transAction.creditorUser.userName}'</TextUp>
@@ -229,7 +242,7 @@ function Main(){
                       ) : (
                       <Box
                         $mainTransaction
-                        $size="100%,270px">
+                        $size="100%,260px">
                         <TopSection>
                           <SignBox>빌려준 돈</SignBox>
                           <TextUp>'{transAction.debtorUser.userName}'</TextUp>
@@ -262,7 +275,7 @@ function Main(){
               <SplideSlide>
                 <Box
                   $mainTransaction
-                  $size="100%,270px">
+                  $size="100%,260px">
                   <TopSection>
                     <SignBox>빌린 돈</SignBox>
                     <TextUp>지인에게</TextUp>
@@ -324,9 +337,8 @@ function Main(){
           </Box>
 
         </TransactionBox>
+        <Footer/>
       </CenteredContainer>
-      <Footer/>
-    </>
   )
 }
 

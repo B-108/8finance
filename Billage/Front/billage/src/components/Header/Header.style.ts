@@ -7,7 +7,7 @@ export const Container = styled.div`
   align-items: center;
   width: 94%;
   height: 65px;
-  padding-bottom: 15px;
+  padding-bottom: 5px;
 `
 
 export const LeftSection = styled.div`

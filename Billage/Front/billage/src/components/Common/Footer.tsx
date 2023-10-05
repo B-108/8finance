@@ -51,7 +51,7 @@ const FooterContainer = styled.div`
     width: 400px;
   }
   @media only screen and (max-width: 400px) {
-    width: 99%;
+    width: 100%;
   }
 `;
 

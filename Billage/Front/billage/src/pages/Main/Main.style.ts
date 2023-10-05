@@ -3,12 +3,12 @@ import theme from "/src/themes";
 
 export const AlarmHeader = styled.div`
   display: flex;
-  /* border: 1px solid pink; */
+  /* border: 1px solid red; */
 `
 
 export const AlarmDate = styled.div`
   font-size: 15px;
-  margin: 5px 0px 5px 10px ;
+  margin: 5px 0px 5px 8px ;
   /* border: 1px solid blue; */
 `
 
@@ -99,8 +99,7 @@ export const TransactionBox = styled.div`
   display: flex;
   justify-content: space-around;
   width: 98%;
-  height: 70px;
-  display: flex;
+  height: 90px;
 `
 
 export const ContentBox = styled.div`

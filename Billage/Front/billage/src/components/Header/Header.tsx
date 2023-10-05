@@ -45,8 +45,10 @@ function Header ({headerTitle} : HeaderProps) {
   const axiosNotifiCation = async (): Promise<void> => {
     try {
       const response =  await getNotifiCation()
-      const filteredData = response?.data.filter((item,index) => item.noticeState === 0);
-      setNoti(filteredData);
+      if (response){
+        const filteredData = response?.data.filter((item,index) => item.noticeState === 0);
+        setNoti(filteredData);
+      }
     }
     catch(error) {
       console.log(error)

@@ -30,7 +30,7 @@ const StyledBox = styled.div<BoxProps>`
         props.$alarmBox && 
         css`
           display: flex;
-          padding: 3%;
+          padding: 5px 3% 5px 3%;
           margin: 0px 0px 20px 0px;
           flex-direction: column;
           border-radius: ${theme.radius.S_10};
@@ -58,7 +58,7 @@ const StyledBox = styled.div<BoxProps>`
         props.$transaction && 
         css`
             display: flex;
-            margin: 7% 0px 0px 0px;
+            margin: 15px 0px 0px 0px;
             padding: 3% 0% 3% 2%;
             border-radius: ${theme.radius.DF_8};
             box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.25);

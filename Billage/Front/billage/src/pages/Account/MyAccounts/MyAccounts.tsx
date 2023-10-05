@@ -152,7 +152,6 @@ function MyAccounts() {
   },[])
 
   return (
-    <>
       <CenteredContainer>
         <Header 
           headerTitle="내 계좌"></Header>
@@ -203,9 +202,8 @@ function MyAccounts() {
           ))}
         </AccountsBox>
 
+        <Footer/>
       </CenteredContainer>
-      <Footer/>
-    </>
   );
 }
 

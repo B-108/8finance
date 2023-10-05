@@ -18,7 +18,7 @@ export const Container = styled.div<InputContainer>`
     align-items: center;
     background-color: white;
     justify-content: ${(props) => props.$center ? "center" : ""};
-    height: 93vh; /* 화면 높이의 100% */
+    height: 710px; /* 화면 높이의 100% */
     overflow-y: scroll;
     
     &::-webkit-scrollbar {
@@ -33,7 +33,7 @@ export const Container = styled.div<InputContainer>`
     width: 400px;
     }
     @media only screen and (max-width: 400px) {
-    width: 99%;
+    width: 100%;
     }
 `;
 
