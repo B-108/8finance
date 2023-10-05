@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 
 // 공용 컴포넌트
@@ -30,7 +30,6 @@ import {
 import logo from '/src/assets/logo.png';
 
 //navigate
-import { useLocation } from 'react-router-dom';
 import { ButtonContainer } from './IOUCheck.style';
 
 //recoil
@@ -44,7 +43,6 @@ function IOUCheck() {
     const [isChecked, setIsChecked] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null!);
     const currentDate = new Date().toISOString().split('T')[0];
-
     const [phone, setPhone] = useRecoilState<string>(PhoneState);
 
     // Recoil 상태에서 데이터 읽어오기

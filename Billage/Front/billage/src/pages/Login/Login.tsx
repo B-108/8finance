@@ -80,29 +80,29 @@ function Login(){
     setPhone(event.target.value.split(' ').join(''));
   };
 
-  const sendNotification = () => {
-    console.log('알림버튼')
-    console.log(token)
-    if ('serviceWorker' in navigator && 'PushManager' in window) {
-      navigator.serviceWorker.ready.then((registration) => {
-        const title = '알림입니다~';
-        const options = {
-          actions: [
-            {
-              action: '첫번째 액션',
-              title: '첫번째 제목',
-            },
-            {
-              action: '두번째 액션',
-              title: '두번째 제목',
-            },
-          ],
-        };
+  // const sendNotification = () => {
+  //   console.log('알림버튼')
+  //   console.log(token)
+  //   if ('serviceWorker' in navigator && 'PushManager' in window) {
+  //     navigator.serviceWorker.ready.then((registration) => {
+  //       const title = '알림입니다~';
+  //       const options = {
+  //         actions: [
+  //           {
+  //             action: '첫번째 액션',
+  //             title: '첫번째 제목',
+  //           },
+  //           {
+  //             action: '두번째 액션',
+  //             title: '두번째 제목',
+  //           },
+  //         ],
+  //       };
 
-        registration.showNotification(title, options);
-      });
-    }
-  };
+  //       registration.showNotification(title, options);
+  //     });
+  //   }
+  // };
 
   // 회원 인증 요청
   const axiosPhoneCheck = async (): Promise<object|undefined>  => {
@@ -165,7 +165,6 @@ function Login(){
             <span> | </span>
             <span>간편 비밀번호 찾기</span>
         </div>
-    {/* <Button onClick={sendNotification}>알림</Button> */}
     </CenteredContainer>
   )
 }

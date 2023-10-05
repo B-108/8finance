@@ -9,8 +9,6 @@ import CenteredContainer from '/src/components/Common/CenterAlign';
 import Header from '/src/components/Header/Header';
 import Button from '/src/components/Common/Button';
 import Image from '/src/components/Common/Image';
-import ConfirmBox from '/src/components/Common/YesOrNo';
-
 import calendar from '/src/assets/calendar.svg';
 import magnifyingGlass from '/src/assets/magnifyingGlass.svg';
 
@@ -19,7 +17,6 @@ import { ButtonContainer, SmallButtonsContainer, TranInputDiv, TranInputTitle } 
 
 // 타입스크립트
 import { IOUProps } from '/src/type/iou';
-import { postIOU } from '/src/api/iou';
 import { AccountType } from '/src/type/account';
 import { UserType } from '/src/type/user';
 import { getAccountList } from '/src/api/account';
@@ -102,13 +99,7 @@ function Transfer() {
     const handleTransferDateChange = (date: Date | null) => {
         setTransferDate(date);
     };
-    // const handleAutoTransferDateChange = (date: Date | null) => {
-    //     setAutoTransferDate(date);
-    // };
 
-    // const handleAutoTransferChange = () => {
-    //     setAutoTransfer(!autoTransfer); // 체크박스 상태 반전
-    // };
     const handleInterestChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = event.target.value.replace(/[^0-9.]/g, '');
         setInterest(inputValue);
@@ -232,7 +223,7 @@ function Transfer() {
 
     const onConfirmClick = async (text: string) => {
       const result = await confirmComp(text);
-      console.log("custom", result);
+    //   console.log("custom", result);
       return result;
     };
 

@@ -1,8 +1,7 @@
 import { 
   useEffect, 
   useState, 
-  useContext,
-  useCallback } from "react"
+  } from "react"
 import { useNavigate } from "react-router-dom"
 
 // 재사용 컴포넌트
@@ -68,7 +67,6 @@ function Main(){
   const moveTransactionList = () => {navigate(`/transactionlist`)}
   const moveNotifications = () => {navigate(`/notifications`)}
   const moveToSendMoney = (data: TransactionType) => {
-    console.log(data)
     navigate(`/sendmoney`, { state: {data} });
   };
 
@@ -90,7 +88,6 @@ function Main(){
       const response =  await getNotifiCation()
       const reversedData = response?.data.reverse()
       const filteredData = reversedData.filter((item,index) => item.noticeState === 0);
-      console.log(noti)
       setNoti(filteredData);
     }
     catch(error) {
