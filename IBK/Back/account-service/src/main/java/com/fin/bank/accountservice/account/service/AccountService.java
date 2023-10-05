@@ -5,7 +5,6 @@ import com.fin.bank.accountservice.account.dto.*;
 import com.fin.bank.accountservice.account.entity.Account;
 import com.fin.bank.accountservice.account.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -26,13 +25,7 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final WebClient.Builder webClientBuilder;
 
-    @Value("${web-client.user-service}")
-    private String userUrl;
-
-
     public List<AccountResponseDto> getAccountList(AccountRequestDto accountRequestDto, HttpServletRequest request) {
-
-        System.out.println("여기까지 왔고");
 
         List<AccountResponseDto> result = new ArrayList<>();
 
@@ -41,26 +34,18 @@ public class AccountService {
                 .userName(accountRequestDto.getUserName())
                 .build();
 
-        System.out.println("들어간다잉~");
-
         try {
             AccountUserResponseDto responseBody = webClientBuilder
-//                    .defaultHeader("Authorization", request.getHeader("Authorization"))
+                    .defaultHeader("Authorization", request.getHeader("Authorization"))
                     .build().post()
-                    .uri("http://gateway-service/user/no")
+                    .uri("/user/no")
                     .body(BodyInserters.fromValue(accountUserRequestDto))
                     .retrieve()
                     .bodyToMono(AccountUserResponseDto.class)
                     .switchIfEmpty(Mono.error(new RuntimeException("해당 계좌는 없는 계좌입니다.")))
                     .block(Duration.ofSeconds(10));
 
-            System.out.println("유저 pk를 가져옴");
-
-            System.out.println(responseBody.getUserPk());
-
             List<Account> findAccount = accountRepository.findByUserPk(responseBody.getUserPk()).orElseThrow(() -> new RuntimeException("없어요.."));
-
-            System.out.println("결과가 없나?");
 
             for (Account account : findAccount) {
                 result.add(AccountResponseDto.builder()
@@ -93,15 +78,9 @@ public class AccountService {
         }
 
         // 입금 가능하면 계좌 잔액을 증가시키고 저장
-//        depositAccount.setAccountAddBalanceAmt(depositAccount.getAccountBalanceAmt().add(accountDepositRequestDto.getTranAmt()));
-        BigDecimal a = depositAccount.getAccountBalanceAmt();
-        System.out.println("입금 전 현재 잔액: " + a);
+        depositAccount.getAccountBalanceAmt();
 
-        BigDecimal b = accountDepositRequestDto.getTranAmt();
-        System.out.println("입금 금액: " + b);
-
-        depositAccount.setAccountAddBalanceAmt(b);
-        System.out.println("입금 후 현재 잔액: " + depositAccount.getAccountBalanceAmt());
+        depositAccount.setAccountAddBalanceAmt(accountDepositRequestDto.getTranAmt());
 
         accountRepository.save(depositAccount);
 
@@ -122,16 +101,9 @@ public class AccountService {
         BigDecimal currentBalance = withdrawAccount.getAccountBalanceAmt();
         if (currentBalance != null && accountWithdrawRequestDto.getTranAmt() != null && currentBalance.compareTo(accountWithdrawRequestDto.getTranAmt()) >= 0) {
             // 출금 가능하면 계좌 잔액을 감소시키고 저장
-//            withdrawAccount.setAccountSubtractBalanceAmt(withdrawAccount.getAccountBalanceAmt().subtract(accountWithdrawRequestDto.getTranAmt()));
+            withdrawAccount.getAccountBalanceAmt();
 
-            BigDecimal a = withdrawAccount.getAccountBalanceAmt();
-            System.out.println("출금 전 현재 잔액: " + a);
-
-            BigDecimal b = accountWithdrawRequestDto.getTranAmt();
-            System.out.println("출금 금액: " + b);
-
-            withdrawAccount.setAccountSubtractBalanceAmt(b);
-            System.out.println("출금 후 현재 잔액: " + withdrawAccount.getAccountBalanceAmt());
+            withdrawAccount.setAccountSubtractBalanceAmt(accountWithdrawRequestDto.getTranAmt());
 
             accountRepository.save(withdrawAccount);
 

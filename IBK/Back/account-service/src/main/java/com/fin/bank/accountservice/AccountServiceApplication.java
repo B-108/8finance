@@ -21,6 +21,7 @@ public class AccountServiceApplication {
 	@LoadBalanced
 	public WebClient.Builder loadBalancedWebClientBuilder() {
 		return WebClient.builder()
-				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+				.baseUrl("http://gateway-service");
 	}
 }
