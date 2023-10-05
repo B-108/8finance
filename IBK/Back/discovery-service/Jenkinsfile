@@ -12,7 +12,7 @@ pipeline {
                     #!/bin/bash
 
                     # Source and destination directories
-                    SRC_DIR="var/jenkins_home/backend-config/ibk/discovery-service"
+                    SRC_DIR="/var/jenkins_home/backend-config/ibk/discovery-service"
                     DEST_DIR="/var/jenkins_home/workspace/ibk_discover_service/IBK/Back/discovery-service/src/main/resources"
 
                     # File to copy
