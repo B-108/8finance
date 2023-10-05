@@ -15,6 +15,7 @@ import com.fin.billage.domain.user.repository.UserRepository;
 import com.fin.billage.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -171,7 +172,7 @@ public class TransferService {
         WebClient webClient = WebClient.builder()
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)  // 기본 헤더 설정
                 .build();
-//
+
 //        Transaction transaction = transactionRepository.findByContract(contract);
 
         // HTTP POST 요청 보내기
