@@ -95,20 +95,24 @@ public class SmsService {
 
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+        System.out.println("여기3");
 
         //restTemplate를 통해 외부 api와 통신
         SmsResponseDto smsResponseDto = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/" + serviceId + "/messages"), httpBody, SmsResponseDto.class);
+        System.out.println("여기1");
 
         String phoneNumber = messageDto.getTo();
         Optional<Sms> existingSms = smsRepository.findByPhoneNumber(phoneNumber);
+        System.out.println("여기2");
 
         if (existingSms.isPresent()) {
             smsRepository.delete(existingSms.get());
         }
 
+
         Sms sms = Sms.builder()
-                        .code(smsConfirmNum)
                         .phoneNumber(messageDto.getTo())
+                        .code(smsConfirmNum)
                         .build();
 
         smsRepository.save(sms);
