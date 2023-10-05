@@ -110,7 +110,7 @@ function Transfer() {
     //     setAutoTransfer(!autoTransfer); // 체크박스 상태 반전
     // };
     const handleInterestChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const inputValue = event.target.value.replace(/[^0-9.]/g, '');
+        const inputValue = event.target.value.replace(/[^0-9]/g, '');
         setInterest(inputValue);
     };
     const calculateTotalAmount = () => {
@@ -148,7 +148,13 @@ function Transfer() {
         try {
             const response = await getAccountList();
             setAccounts(response?.data);
-        } catch (error) {
+            if (response?.data.length > 0) {
+              const selectedAcount = response?.data.find((account,index) => account.accountMainYn === true);
+              if (selectedAcount) {
+                  setMyAccountInfo(selectedAcount.accountNum);
+                  setMyAccountInfoCode(selectedAcount.accountBankCode);}}
+        } 
+        catch (error) {
             console.log(error);
         }
     };
@@ -201,17 +207,7 @@ function Transfer() {
 
     //useEffect
     useEffect(() => {
-        axiosAccountList();
-    }, []);
-
-    useEffect(() => {
-        if (accounts.length > 0) {
-            const selectedAcount = accounts.find((account) => account.accountMainYn === true);
-            if (selectedAcount) {
-                setMyAccountInfo(selectedAcount.accountNum);
-                setMyAccountInfoCode(selectedAcount.accountBankCode);
-            }
-        }
+        axiosAccountList()
     }, []);
 
     useEffect(() => {
