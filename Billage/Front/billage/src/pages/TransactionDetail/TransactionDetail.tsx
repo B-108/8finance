@@ -49,9 +49,9 @@ function TADetail() {
     const location = useLocation();
     const state = location.state
     const data = state.data
-    const totalRepaymentCash =
-        Number(detail?.contractAmt) + (Number(detail?.contractAmt) * Number(detail?.contractInterestRate)) / 100;
+    const totalRepaymentCash = Number(detail?.contractAmt) + (Number(detail?.contractAmt) * Number(detail?.contractInterestRate)) / 100;
     console.log(state)
+
     //함수
     const moveTransactionHistory = (contractId: number) => {
         navigate(`/transaction/history/${contractId}`, {state: contractId});
