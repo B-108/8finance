@@ -6,8 +6,9 @@ import { IOUProps, AgreeIOUProps } from '../type/iou';
 // 차용증 생성
 export const postIOU = async (info: IOUProps) => {
     try {
-        await privateApi.post('/api/contract', info);
-        console.log('차용증 생성', info);
+        const response = await privateApi.post('/api/contract', info);
+        console.log('차용증 생성', response.status);
+        return response.status;
     } catch (error) {
         // console.log(info);
         console.log('postIOU 실패', error);
