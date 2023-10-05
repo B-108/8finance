@@ -7,11 +7,13 @@ export const AlarmHeader = styled.div`
 `
 
 export const AlarmDate = styled.div`
+  font-size: 15px;
   margin: 5px 0px 5px 10px ;
   /* border: 1px solid blue; */
 `
 
 export const AlarmContent = styled.div`
+  font-size: 18px;
   /* border: 1px solid blue; */
 `
 
