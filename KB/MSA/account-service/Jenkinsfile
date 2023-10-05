@@ -62,11 +62,12 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                dir('KB/MSA/gateway-service'){
+                dir('KB/MSA/account-service'){
                     sh '''
                     echo 'Deploy'
 
-
+                    docker stop kb-account-service
+                    docker rm kb-account-service
 
                     docker run -d -p 7013:7013 --network ubuntu_kb --name kb-account-service docker-springboot-kb-account-service:0.0.1
 
