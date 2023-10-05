@@ -4,7 +4,7 @@ import CenteredContainer from "/src/components/Common/CenterAlign"
 import Text from "/src/components/Common/Text"
 import Header from "/src/components/Header/Header"
 import { useState, useEffect } from 'react';
-import { useLocation, useParams } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 //API
 import { getTransActionHistory } from "/src/api/transaciton"
@@ -31,7 +31,6 @@ function TransactionHistory () {
   useEffect(() => {
       axiosHistory();
   }, []);
-console.log(history)
 // 날짜 및 시간을 원하는 형식으로 포맷팅하는 함수
 function formatDate(dateString: string) {
   const date = new Date(dateString);
