@@ -1,10 +1,27 @@
 import { useEffect, useState } from "react"
-import { Container, LeftSection, RightSection, Title } from "./Header.style"
+import { useNavigate } from "react-router-dom"
+
+// 스타일 컴포넌트
+import { 
+  Container, 
+  LeftSection, 
+  NotiCount, 
+  RightSection, 
+  Title } from "./Header.style"
+
+// 재사용 컴포넌트
 import Image from "../Common/Image"
+import Button from "../Common/Button"
+
+// 이미지
 import alramBell from "src/assets/alramBell.svg"
 import backIcon from "src/assets/backIcon.svg"
-import { useNavigate } from "react-router-dom"
-import Button from "../Common/Button"
+
+// API
+import { getNotifiCation } from "/src/api/noti"
+
+// 타입스크립트
+import { NotificationType } from "/src/type/noti"
 
 interface HeaderProps {
   headerTitle: string;
@@ -12,6 +29,7 @@ interface HeaderProps {
 
 function Header ({headerTitle} : HeaderProps) {
   const [noDisplayImg, setNoDisplayImg] = useState(false)
+  const [noti, setNoti] = useState<NotificationType[]>([])
 
   const navigate = useNavigate()
   const moveNotifications = () => {navigate(`/notifications`)}
@@ -23,8 +41,24 @@ function Header ({headerTitle} : HeaderProps) {
     }
   }
 
+  // 알람목록조회
+  const axiosNotifiCation = async (): Promise<void> => {
+    try {
+      const response =  await getNotifiCation()
+      console.log(response)
+      const filteredData = response?.data.filter((item,index) => item.noticeState === 0);
+      console.log("찍히니??",filteredData)
+      console.log("찍히니??",filteredData.length)
+      setNoti(filteredData);
+    }
+    catch(error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     chooseImgDisplay()
+    axiosNotifiCation()
   },[])
 
   return(
@@ -44,8 +78,9 @@ function Header ({headerTitle} : HeaderProps) {
         <Image 
           src={alramBell} 
           alt="alramBell"
-          width="22px"
+          width="23px"
           onClick={moveNotifications}></Image>
+        <NotiCount $IsClick={noti.length}/>
       </RightSection>
     </Container>
   )

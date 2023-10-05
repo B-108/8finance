@@ -59,8 +59,9 @@ import { getNotifiCation } from "/src/api/noti"
 function Main(){
   const [phone, setPhone] = useRecoilState<string>(PhoneState);
   const [transList, setTransList] = useState<TransactionType[]>([])
-  const [noti, setNoti] = useState<NotificationType>()
-
+  const [noti, setNoti] = useState<NotificationType[]>([])
+  const currentDate = new Date().toISOString().slice(0, 10);
+  
   // 라우터
   const navigate = useNavigate()
   const moveTransfer = () => {navigate(`/transfer`)}
@@ -89,6 +90,7 @@ function Main(){
       const response =  await getNotifiCation()
       const reversedData = response?.data.reverse()
       const filteredData = reversedData.filter((item,index) => item.noticeState === 0);
+      console.log(noti)
       setNoti(filteredData);
     }
     catch(error) {
@@ -111,21 +113,77 @@ function Main(){
         <Text
           $title
           $size="94%,50px">확인 하지 않은 알림!</Text>
-
-        <Box
+        
+        {noti?.length > 0? (
+          <Box
+            onClick={moveNotifications}
+            $alarmBox
+            $size="88%,75px">
+            {noti[0].noticeType === 1 ? (
+              <div>
+                <AlarmHeader>
+                  <Image
+                    src={alarmBell2}
+                    alt="alarmClock"
+                    width="7%"></Image>
+                  <AlarmDate>2023.09.08</AlarmDate>
+                </AlarmHeader>
+                <AlarmContent>"{noti[0].noticeUserName}"님에게 돈을 빌려달라는 요청이 왔어요.</AlarmContent>
+              </div>
+            ) : (
+            noti[0].noticeType === 2 ? (
+              <div>
+                <AlarmHeader>
+                  <Image
+                    src={alarmBell2}
+                    alt="alarmClock"
+                    width="7%"></Image>
+                  <AlarmDate>2023.09.08</AlarmDate>
+                </AlarmHeader>
+                <AlarmContent>"{noti[0].noticeUserName}"님이 {noti[0].noticeAmount}원을 빌려줬어요!</AlarmContent>
+              </div>
+            ) : (
+            noti[0].noticeType === 3 ? (
+              <div>
+                <AlarmHeader>
+                  <Image
+                    src={alarmBell2}
+                    alt="alarmClock"
+                    width="7%"></Image>
+                  <AlarmDate>2023.09.08</AlarmDate>
+                </AlarmHeader>
+                <AlarmContent>"{noti[0].noticeUserName}"님이 돈빌려주는 것을 거절했어요.</AlarmContent>
+              </div>
+            ) : (
+              <div>
+                <AlarmHeader>
+                  <Image
+                    src={alarmBell2}
+                    alt="alarmClock"
+                    width="7%"></Image>
+                  <AlarmDate>2023.09.08</AlarmDate>
+                </AlarmHeader>
+                <AlarmContent>"{noti[0].noticeUserName}"님이 {noti[0].noticeAmount}원을 갚았어요!</AlarmContent>
+              </div>
+            )
+            ))}
+        </Box>
+        ) : (
+          <Box
           onClick={moveNotifications}
           $alarmBox
-          $size="88%,80px">
+          $size="88%,75px">
           <AlarmHeader>
             <Image
               src={alarmBell2}
               alt="alarmClock"
               width="7%"
             ></Image>
-            <AlarmDate>2023.09.08</AlarmDate>
+            <AlarmDate>{currentDate}</AlarmDate>
           </AlarmHeader>
-          <AlarmContent>최싸피님에게 300,000원을 빌려달는 요청이 왔어요!</AlarmContent>
+          <AlarmContent>현재 확인 하지 않은 알림이 없습니다.</AlarmContent>
         </Box>
+        )}
 
         <Text
           $title

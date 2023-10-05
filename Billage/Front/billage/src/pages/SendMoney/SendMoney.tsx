@@ -92,7 +92,7 @@ function SendMoney() {
     };
 
     const moveToPinEnter = () => {
-        console.log(data)
+        console.log("너야너야너얀???",data)
         navigate('/pinenter/sendmoney', { state: data });
     };
 
