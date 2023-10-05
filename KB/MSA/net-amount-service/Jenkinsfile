@@ -66,7 +66,8 @@ pipeline {
                     sh '''
                     echo 'Deploy'
 
-
+                    docker stop kb-net-amount-service
+                    docker rm kb-net-amount-service
 
                     docker run -d -p 7014:7014 --network ubuntu_kb --name kb-net-amount-service docker-springboot-kb-net-amount-service:0.0.1
 
