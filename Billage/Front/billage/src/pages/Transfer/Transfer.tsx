@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -29,6 +29,9 @@ import { BankListState } from '/src/recoil/account';
 import { useIOUCheckState, useIOUState } from '/src/recoil/iou';
 import { NameState } from '/src/recoil/auth';
 
+// 모달용 알림창
+import ConfirmContext from '/src/context/confirm/ConfirmContext';
+
 function Transfer() {
     //recoil
     const [IOU, setIOU] = useIOUState();
@@ -47,8 +50,10 @@ function Transfer() {
     // 자동이체 체크박스 상태
     // const [autoTransfer, setAutoTransfer] = useState<boolean>(false);
 
+    // 라우터
     const navigate = useNavigate();
     const location = useLocation();
+    const handleGoBack = () => {navigate(-1);};
 
     //작성 취소 버튼 클릭시 활성
     const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false); // 다이얼로그 상태 추가
@@ -68,7 +73,6 @@ function Transfer() {
     };
     const selectedBankCode = myAccountInfoCode;
     const bankName = findBankNameByCode(selectedBankCode);
-    console.log(bankName);
 
     // 유저 목록
     const [users, setUsers] = useState<UserType[]>([]);
@@ -78,19 +82,19 @@ function Transfer() {
     const [friendPk, setFriendPk] = useState<number>(0);
 
     const handleCancelClick = () => {
-        setIsCancelDialogOpen(true);
+        openConfirm()
+        // setIsCancelDialogOpen(true);
     };
 
-    const handleConfirmCancel = () => {
-        setIsCancelDialogOpen(false);
-    };
+    // const handleConfirmCancel = () => {
+    //     setIsCancelDialogOpen(false);
+    // };
 
     const handleFriendInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFriendInfo(event.target.value);
     };
     const handleMyAccountInfoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setMyAccountInfo(event.target.value);
-        console.log(event.target.value);
     };
     const handleTotalAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTotalAmount(event.target.value);
@@ -125,9 +129,13 @@ function Transfer() {
     }, [interest, amountInfo]);
 
     const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // 입력값에서 숫자만 추출
-        const inputValue = event.target.value.replace(/[^0-9]/g, ''); // 숫자 외의 문자는 제거
+      if(event.target.value === "") {
+        setAmountInfo("0")
+      }
+      else {
+        const inputValue = event.target.value.replace(/[^0-9]/g, ''); 
         setAmountInfo(inputValue);
+      }
     };
 
     const handleButtonClick = (increment: number) => {
@@ -140,7 +148,6 @@ function Transfer() {
         try {
             const response = await getAccountList();
             setAccounts(response?.data);
-            console.log(response?.data);
         } catch (error) {
             console.log(error);
         }
@@ -148,16 +155,15 @@ function Transfer() {
     // 유저 조회
     const axiosUserList = async (): Promise<void> => {
         try {
+            if(!friendInfo){return}
             const response = await getUserList(friendInfo);
             setUsers(response?.data);
-            console.log(response?.data);
         } catch (error) {
             console.log(error);
         }
     };
 
     const myAccountInfoCombined = `${bankName} ${myAccountInfo}`;
-    console.log(myAccountInfoCombined);
 
     // 차용증 생성
     const recoilPostIOU = async () => {
@@ -171,7 +177,6 @@ function Transfer() {
             contractInterestRate: interest,
             contractDueAmt: totalAmount,
         };
-        console.log(iouData);
 
         const iouCheckData = {
             contractAmtCheck: amountInfo,
@@ -181,7 +186,6 @@ function Transfer() {
             debtorUserNameCheck: name,
             contractStartDateCheck: new Date().toISOString().split('T')[0],
         };
-        console.log(iouCheckData);
 
         try {
             // Recoil 상태 업데이트
@@ -201,18 +205,14 @@ function Transfer() {
     }, []);
 
     useEffect(() => {
-        console.log(myAccountInfo);
-        console.log(accounts);
-        // setMyAccountInfo(accounts.accountNum);
         if (accounts.length > 0) {
             const selectedAcount = accounts.find((account) => account.accountMainYn === true);
-            console.log(selectedAcount);
             if (selectedAcount) {
                 setMyAccountInfo(selectedAcount.accountNum);
                 setMyAccountInfoCode(selectedAcount.accountBankCode);
             }
         }
-    }, [accounts, myAccountInfo]);
+    }, []);
 
     useEffect(() => {
         if (users.length > 0) {
@@ -225,9 +225,24 @@ function Transfer() {
             }
         }
     }, [users, friendInfo]);
-    // useEffect(() => {
-    //     axiosUserList();
-    // }, []);
+
+
+    // ConFirm 모달 창
+    const { confirm: confirmComp } = useContext(ConfirmContext);
+
+    const onConfirmClick = async (text: string) => {
+      const result = await confirmComp(text);
+      console.log("custom", result);
+      return result;
+    };
+
+    const openConfirm = async () => {
+      const nextAction = await onConfirmClick("작성을 취소하시겠습니까?");
+      if (nextAction) {
+        handleGoBack()
+      }
+      return;
+    };
 
     return (
         <CenteredContainer>
@@ -236,44 +251,48 @@ function Transfer() {
             <TranInputDiv>
                 <TranInputTitle>지인 선택</TranInputTitle>
                 <InputDiv style={{ marginBottom: '1rem' }}>
-                    <Input value={friendInfo} $size="86%,40px" $active onChange={handleFriendInfoChange} />
+                    <Input value={friendInfo} $size="88%,40px" $active onChange={handleFriendInfoChange} />
                     <ButtonBox>
                         <Image src={magnifyingGlass} alt="magnifyingGlass" onClick={axiosUserList}></Image>
                     </ButtonBox>
                 </InputDiv>
-                <select
-                    value={friendInfo}
-                    onChange={handleFriendInfoChange}
-                    style={{ width: '95%', height: '40px', borderRadius: '10px', border: '3px solid #BDBDBD' }}
-                >
-                    {users.map((user) => (
-                        <option key={user.userPk} value={userInfo}>
-                            {userInfo}
-                        </option>
-                    ))}
-                </select>
+                <InputDiv style={{ marginBottom: '0.5rem' }}>
+                  <select
+                      value={friendInfo}
+                      onChange={handleFriendInfoChange}
+                      style={{ 
+                        width: '94%', 
+                        height: '45px', 
+                        borderRadius: '10px', 
+                        border: '3px solid #BDBDBD', 
+                        fontSize: "16px"}}>
+                      {users.map((user) => (
+                          <option key={user.userPk} value={userInfo}>
+                              {userInfo}
+                          </option>))}
+                  </select>
+                </InputDiv>
             </TranInputDiv>
 
             <TranInputDiv>
                 <TranInputTitle>돈 받을 계좌</TranInputTitle>
-                {/* <ButtonInput
-                    value={myAccountInfo}
-                    $active
-                    $size="88%,40px"
-                    onChange={handleMyAccountInfoChange}
-                    $buttonImage={plus}
-                ></ButtonInput> */}
-                <select
-                    value={myAccountInfo}
-                    onChange={handleMyAccountInfoChange}
-                    style={{ width: '95%', height: '40px', borderRadius: '10px', border: '3px solid #BDBDBD' }}
-                >
-                    {accounts.map((account) => (
-                        <option key={account.accountId} value={account.accountNum}>
-                            {account.accountNum}
-                        </option>
-                    ))}
-                </select>
+                <InputDiv>
+                  <select
+                      value={myAccountInfo}
+                      onChange={handleMyAccountInfoChange}
+                      style={{ 
+                        width: '94%', 
+                        height: '45px', 
+                        borderRadius: '10px', 
+                        border: '3px solid #BDBDBD',
+                        fontSize: "16px" }}>
+                      {accounts.map((account) => (
+                          <option key={account.accountId} value={account.accountNum}>
+                              {account.accountNum}
+                          </option>
+                      ))}
+                  </select>
+                </InputDiv>
             </TranInputDiv>
             <TranInputDiv>
                 <TranInputTitle>돈 갚을 날짜</TranInputTitle>
@@ -287,10 +306,7 @@ function Transfer() {
                             value={transferDate ? transferDate.toISOString() : ''}
                             $active
                             $size="88%,40px"
-                            $buttonImage={calendar}
-                        />
-                    }
-                />
+                            $buttonImage={calendar}/>}/>
             </TranInputDiv>
 
             {/* <TranInputDiv>
@@ -392,7 +408,7 @@ function Transfer() {
                     작성완료
                 </Button>
             </ButtonContainer>
-            {isCancelDialogOpen && <ConfirmBox onCancel={handleConfirmCancel} onConfirm={() => navigate(-1)} />}
+            {/* {isCancelDialogOpen && <ConfirmBox onCancel={handleConfirmCancel} onConfirm={() => navigate(-1)} />} */}
         </CenteredContainer>
     );
 }

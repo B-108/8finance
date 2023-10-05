@@ -45,7 +45,7 @@ function PinCheck () {
 
   // 라우터 
   const navigate = useNavigate()
-  const moveMain = () => {navigate(`/main`)}
+  const moveLoading = () => {navigate(`/loading`)}
   const movePinRegister = () => {navigate(`/pinregister`)}
 
   const handlePinCheckChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -88,7 +88,7 @@ function PinCheck () {
     if (pinCheck.length >= 8 && event.target.value) {
       if (pinRegister.split(" ").join("") === pinNumber){
         axiosSignUp(pinNumber)
-        moveMain()
+        moveLoading()
       }
 
       else if (pinRegister.split(" ").join("") !== pinNumber){

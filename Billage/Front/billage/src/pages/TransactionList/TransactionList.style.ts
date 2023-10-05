@@ -12,7 +12,6 @@ export const ButtonBox = styled.div`
   display: flex;
   justify-content: space-between;
   width: 47%;
-
 `
 
 export const TransActionContainer = styled.div`

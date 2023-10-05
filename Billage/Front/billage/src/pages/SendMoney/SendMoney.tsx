@@ -92,7 +92,7 @@ function SendMoney() {
     };
 
     const moveToPinEnter = () => {
-        console.log(data)
+        console.log("너야너야너얀???",data)
         navigate('/pinenter/sendmoney', { state: data });
     };
 
@@ -100,9 +100,7 @@ function SendMoney() {
         setMyAccountInfo(event.target.value);
     };
     const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      if(isNaN(Number(event.target.value))) {return}
-
-        if(event.target.value === "") {
+        if(event.target.value === " ") {
           setAmountInfo("0")
         }
         else {
