@@ -36,10 +36,11 @@ public class SecurityConfig {
                 .formLogin().disable()
                 .httpBasic().disable()
                 .authorizeRequests()
+                .antMatchers("/**").permitAll()
 //                .antMatchers("/auth/**").permitAll()
-                .antMatchers("/user/login", "/user/signup").permitAll()
+//                .antMatchers("/user/login", "/user/signup").permitAll()
 //                .antMatchers("/user/signup").permitAll()
-                .antMatchers("/**").authenticated()
+//                .antMatchers("/**").authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
