@@ -16,7 +16,7 @@ interface TransactionItemProps {
   function TransactionItem({ item, toggle }: TransactionItemProps) {
     const contractState = item.contractState
     const totalprice = (item.interestRate * item.contractAmt)/ 100 + item.contractAmt
-    console.log(toggle,"이놈이 누구인교",item)
+    // console.log(toggle,"이놈이 누구인교",item)
     return(
       contractState === 1 ? (
       <TransActionBox>

@@ -17,7 +17,7 @@ function SendMoney() {
     const navigate = useNavigate();
     const location = useLocation();
     const sendData = location.state.data
-    console.log(sendData)
+    // console.log(sendData)
     //작성 취소 버튼 클릭시 활성
     const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false); // 다이얼로그 상태 추가
     // 이체 필요 데이터
@@ -46,7 +46,7 @@ function SendMoney() {
         try {
             const response = await getAccountList();
             setAccounts(response?.data);
-            console.log(response?.data);
+            // console.log(response?.data);
         } catch (error) {
             console.log(error);
         }
@@ -63,7 +63,6 @@ function SendMoney() {
         tranAmt: Number(amount),
         tranContent: '돈보내기',
     };
-
     //useEffect
     useEffect(() => {
         axiosAccountList();
@@ -71,6 +70,7 @@ function SendMoney() {
         setTransWd(sendData.debtorUser.userName);
         setFriendInfo(sendData.creditorUser.userName);
         setAccountInfo(sendData.creditorAcNum);
+        console.log("하하하하하하하하하하하하하하",sendData)
         setAccountInfoCode(sendData.creditorBankCode);
     }, []);
 
@@ -81,7 +81,9 @@ function SendMoney() {
             setMyAccountInfoCode(mainAccount.accountBankCode);
         }
     }, [accounts]);
-
+    // console.log(accounts)
+    // console.log(myAccountInfo)
+    // console.log(myAccountInfoCode)
     //함수
     const handleCancelClick = () => {
         setIsCancelDialogOpen(true);
@@ -92,7 +94,6 @@ function SendMoney() {
     };
 
     const moveToPinEnter = () => {
-        console.log("너야너야너얀???",data)
         navigate('/pinenter/sendmoney', { state: data });
     };
 
