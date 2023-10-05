@@ -155,7 +155,7 @@ function Notifications() {
                           width='24px'></Image>
                         <Check $IsClick={noti.noticeState}/>
                         <ContentBox>
-                          <Noti>"{noti.noticeUserName}"님이 {noti.noticeAmount}원을 빌려줬어요!</Noti>
+                          <Noti>"{noti.noticeUserName}"님이 돈을 빌려줬어요!</Noti>
                           <DateBox>{TimeDisplay(noti.noticeSendDate)}</DateBox>
                         </ContentBox>
                       </LeftSection>
