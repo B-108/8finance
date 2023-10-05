@@ -18,8 +18,6 @@ public class UserController {
 
     @PostMapping("/no")
     public ResponseEntity<?> getUserPk(@RequestBody UserGetRequestDto userGetRequestDto, HttpServletRequest request) {
-        System.out.println("컨트롤러 감지");
-
         return new ResponseEntity<>(userService.getUserPk(userGetRequestDto, request), HttpStatus.OK);
     }
 }
