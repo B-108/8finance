@@ -38,6 +38,7 @@ import { AgreeIOUProps } from '/src/type/iou';
 // API
 import { getAccountList } from '/src/api/account';
 import { agreeIOU, EnrollWd } from '/src/api/iou';
+import { promises } from 'readline';
 
 function IOUAgree() {
     const [myAccountInfo, setMyAccountInfo] = useState<string>('');
@@ -47,7 +48,7 @@ function IOUAgree() {
     const location = useLocation()
     const useData = location.state.data
     const [agree, setAgree] = useState<string>('true')
-
+    console.log(useData)
     const handleMyAccountInfoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
       setMyAccountInfo(event.target.value);
     };
@@ -105,19 +106,30 @@ function IOUAgree() {
       }
     const axiosEnrollWd =async (): Promise<void> => {
         try{
+            console.log('채권자 계좌등록 중')
             await EnrollWd(useData.contractId, contractCreditorAcNum)
         }
         catch(error){
             console.log(error)
         }
     }
-    const AgreeIOU = () => {
-        console.log(info)     
-        axiosAgreeIOU()
-        axiosEnrollWd()
-        navigate('/main')
+    const AgreeIOU = async ():Promise<void> => {
+        try{
+            console.log(info)     
+            await axiosEnrollWd()
+            await axiosAgreeIOU()
+            await navigate('/main')
+        }
+        catch(error){
+            console.log()
+        }
+  
 
     }
+    const day = new Date()
+    const year = day.getFullYear(); // 년도 추출
+    const month = day.getMonth() + 1; // 월 추출 (월은 0부터 시작하므로 +1 해줍니다)
+    const date = day.getDate(); // 일 추출
 
     return (
         <CenteredContainer>
@@ -139,27 +151,26 @@ function IOUAgree() {
                             빌렸습니다.
                         </Content>
                         <Content>
-                            채무자ooo는 위 금액을 연 이자00%
-                            %로 하여 0000.00.00일까지 채권자
-                            000에게 갚겠습니다.
+                            채무자 {useData.debtorUser.userName}(은)는 위 금액을 연 이자{useData.interestRate}
+                            %로 하여 0000.00.00일까지 채권자 {useData.creditorUser.userName}에게 갚겠습니다.
                         </Content>
                     </div>
-                    <Dates>날짜: 0000 00 00일</Dates>
+                    <Dates>날짜: {year}년 {month}월 {date}일</Dates>
                     <hr />
 
                     <UserBox>
                         <UserType>채권자</UserType>
                         <UserInfo>
-                            <UserName>이름 : 최싸피</UserName>
-                            <UserPhone>전화번호 : 010-0000-0000</UserPhone>
+                            <UserName>이름 : {useData.creditorUser.userName}</UserName>
+                            <UserPhone>전화번호 : {useData.creditorUser.userCellNo}</UserPhone>
                         </UserInfo>
                     </UserBox>
 
                     <UserBox>
                         <UserType>채무자</UserType>
                         <UserInfo>
-                            <UserName>이름 : 김싸피</UserName>
-                            <UserPhone>전화번호 : 010-0000-0000</UserPhone>
+                            <UserName>이름 : {useData.debtorUser.userName}</UserName>
+                            <UserPhone>전화번호 : {useData.debtorUser.userCellNo}</UserPhone>
                         </UserInfo>
                     </UserBox>
                 </IOUContent>

@@ -38,12 +38,16 @@ export const agreeIOU = async (agreeYN: string, info: AgreeIOUProps) => {
 };
 
 //채권자 계좌 등록
-export const EnrollWd =async (contractId : number, contractCebtorAcNum : string) => {
+export const EnrollWd =async (contractId : number, contractCreditorAcNum : string) => {
     try{
-        const response = await privateApi.patch(`/api/contract`, {contractId, contractCebtorAcNum})
+        console.log('번호 : ', contractId)
+        console.log('은행계좌 : ', contractCreditorAcNum)
+        const response = await privateApi.patch(`/api/contract`, {contractId, contractCreditorAcNum})
         console.log('채권자 계좌 등록 완료');
         return response;
     } catch(error){
+        console.log('번호 : ', contractId)
+        console.log('은행계좌 : ', contractCreditorAcNum)
         console.log('채권자 계좌 등록 실패', error)
     }
 }

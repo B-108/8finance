@@ -70,6 +70,7 @@ function SendMoney() {
         setTransWd(sendData.debtorUser.userName);
         setFriendInfo(sendData.creditorUser.userName);
         setAccountInfo(sendData.creditorAcNum);
+        console.log("하하하하하하하하하하하하하하",sendData)
         setAccountInfoCode(sendData.creditorBankCode);
     }, []);
 
@@ -80,9 +81,9 @@ function SendMoney() {
             setMyAccountInfoCode(mainAccount.accountBankCode);
         }
     }, [accounts]);
-    console.log(accounts)
-    console.log(myAccountInfo)
-    console.log(myAccountInfoCode)
+    // console.log(accounts)
+    // console.log(myAccountInfo)
+    // console.log(myAccountInfoCode)
     //함수
     const handleCancelClick = () => {
         setIsCancelDialogOpen(true);
@@ -93,7 +94,6 @@ function SendMoney() {
     };
 
     const moveToPinEnter = () => {
-        console.log("너야너야너얀???",data)
         navigate('/pinenter/sendmoney', { state: data });
     };
 
