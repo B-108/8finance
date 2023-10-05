@@ -35,20 +35,22 @@ public class TransferService {
                 requestDto.getTranDpCellNo(),
                 requestDto.getTranDpAcNum()).orElseThrow(()-> new RuntimeException("입금 계좌없음"));
         System.out.println("입금 계좌 있음");
+        
         if (isAccountBlocked(account)) {
             System.out.println("입금 실패: 계좌가 잠겨 있음");
             return false; // 입금 실패: 계좌가 잠겨 있음
         }
+        
         // 입금 가능하면 계좌 잔액을 증가시키고 저장
 
         BigDecimal a = account.getAccountBalanceAmt();
-        System.out.println("더하기 전 현재 잔액: " + a);
+        System.out.println("입금 전 현재 잔액: " + a);
 
         BigDecimal b = requestDto.getAmount();
-        System.out.println("더할 금액: " + b);
+        System.out.println("입금 금액: " + b);
 
         account.setAccountAddBalanceAmt(b);
-        System.out.println("더한 후 현재 잔액(저장 후): " + account.getAccountBalanceAmt());
+        System.out.println("입금 후 현재 잔액: " + account.getAccountBalanceAmt());
 
         accountRepository.save(account);
 
@@ -84,24 +86,25 @@ public class TransferService {
                 requestDto.getTranWdCellNo(),
                 requestDto.getTranWdAcNum()).orElseThrow(()-> new RuntimeException("출금 계좌없음"));
         System.out.println("출금 계좌 있음");
+        
         if (isAccountBlocked(account)) {
-            System.out.println("입금 실패: 계좌가 잠겨 있음");
-            return false; // 입금 실패: 계좌가 잠겨 있음
+            System.out.println("출금 실패: 계좌가 잠겨 있음");
+            return false; // 출금 실패: 계좌가 잠겨 있음
         }
 
         BigDecimal currentBalance = account.getAccountBalanceAmt();
         if (currentBalance != null && requestDto.getAmount() != null && currentBalance.compareTo(requestDto.getAmount()) >= 0) {
-            // 출금 가능하면 계좌 잔액을 감소시키고 저장
-//            System.out.println("뺄 금액: " + requestDto.getAmount());
 
+            // 출금 가능하면 계좌 잔액을 증가시키고 저장
+            
             BigDecimal a = account.getAccountBalanceAmt();
-            System.out.println("빼기 전 현재 잔액: " + a);
+            System.out.println("출금 전 현재 잔액: " + a);
 
             BigDecimal b = requestDto.getAmount();
-            System.out.println("뺄 금액: " + b);
+            System.out.println("출금 금액: " + b);
 
             account.setAccountSubtractBalanceAmt(b);
-            System.out.println("뺀 후 현재 잔액(저장 후): " + account.getAccountBalanceAmt());
+            System.out.println("출금 후 현재 잔액: " + account.getAccountBalanceAmt());
 
             accountRepository.save(account);
 
