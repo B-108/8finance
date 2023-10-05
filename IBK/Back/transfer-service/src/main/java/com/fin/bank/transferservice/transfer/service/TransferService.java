@@ -5,6 +5,7 @@ import com.fin.bank.transferservice.transfer.entity.Transfer;
 import com.fin.bank.transferservice.transfer.enums.TransactionType;
 import com.fin.bank.transferservice.transfer.repository.TransferRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TransferService {
@@ -65,7 +67,7 @@ public class TransferService {
                             );
                         },
                         error -> {
-                            System.out.println("이체 실패" + error.getMessage());
+                            log.error("이체 실패", error.getMessage());
                         }
                 );
 
@@ -116,7 +118,7 @@ public class TransferService {
             return true;  // 출금 성공
 
         } catch (Exception e) {
-            System.out.println("이체 실패" + e.getMessage());
+            log.error(e.getMessage());
             return false;  // 출금 실패: 출금할 금액보다 잔액이 적음 또는 다른 오류 발생
         }
     }
