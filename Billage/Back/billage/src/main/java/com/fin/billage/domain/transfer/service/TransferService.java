@@ -16,6 +16,7 @@ import com.fin.billage.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -95,7 +96,6 @@ public class TransferService {
     }
 
     // 이체 (오픈뱅킹에 요청)
-    // 일단 무조건 이체 되게 바꿔놈
     public void transferCash(TransferCashRequestDto dto, HttpServletRequest request) {
 //        String actCode = "002";
 //        String bankCode = dto.getTranWdBankCode();
@@ -197,7 +197,7 @@ public class TransferService {
                             transactionRepository.save(t);
                         },
                         error -> {
-                            System.out.println("이체 실패" + error.getMessage());
+                            System.out.println("이체 실패: " + error.getMessage());
                         }
                 );
     }
