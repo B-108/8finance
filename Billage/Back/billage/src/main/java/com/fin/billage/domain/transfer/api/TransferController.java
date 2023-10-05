@@ -27,9 +27,14 @@ public class TransferController {
     }
 
     // 이체
-    @PostMapping
-    public ResponseEntity<Void> transferCash(@RequestBody TransferCashRequestDto dto, HttpServletRequest request) {
-        transferService.transferCash(dto, request);
-        return ResponseEntity.ok().build();
+    @PostMapping("/transfer")
+    public ResponseEntity<String> transferCash(@RequestBody TransferCashRequestDto dto, HttpServletRequest request) {
+        try {
+            transferService.transferCash(dto, request);
+            return ResponseEntity.ok().build();
+        } catch (Exception ex) { // 모든 예외를 캐치할 수 있도록 Exception으로 변경
+            return ResponseEntity.badRequest().body("이체 실패: " + ex.getMessage());
+        }
     }
+
 }
