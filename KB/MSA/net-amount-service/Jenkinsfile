@@ -1,0 +1,86 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Springboot build') {
+            steps {
+                dir('KB/MSA/net-amount-service'){
+                    sh '''
+                    pwd
+                    echo 'springboot build'
+
+                    #!/bin/bash
+
+                    # Source and destination directories
+                    SRC_DIR="/var/jenkins_home/backend-config/kb-msa/net-amount-service"
+                    DEST_DIR="/var/jenkins_home/workspace/kb_msa_net_amount_service/KB/MSA/net-amount-service/src/main/resources"
+
+                    # File to copy
+                    FILE="application.yml"
+
+                    # Check if destination directory exists, if not create it
+                    if [ ! -d "$DEST_DIR" ]; then
+                        mkdir -p "$DEST_DIR"
+                    fi
+
+                    # Copy the file
+                    cp "$SRC_DIR/$FILE" "$DEST_DIR/$FILE"
+
+                    chmod +x gradlew
+                    ./gradlew clean build
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Dockerimage build') {
+            steps {
+                dir('KB/MSA/net-amount-service'){
+                    sh '''
+                    echo 'Dockerimage build'
+                    docker build -t docker-springboot-kb-net-amount-service:0.0.1 .
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                dir('KB/MSA/net-amount-service'){
+                    sh '''
+                    echo 'Deploy'
+
+
+
+                    docker run -d -p 7014:7014 --network ubuntu_kb --name kb-net-amount-service docker-springboot-kb-net-amount-service:0.0.1
+
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+    }
+}
