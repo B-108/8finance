@@ -87,7 +87,8 @@ function Footer(){
             src={Logout} 
             alt="Logout" 
             width="30px"></Image>
-          <Text>로그아웃</Text>
+          <Text
+            style={{fontSize:"14px"}}>로그아웃</Text>
         </div>
         <div style={{
           display:"flex",
@@ -100,7 +101,8 @@ function Footer(){
             src={home} 
             alt="home" 
             width="30px"></Image>
-          <Text>홈</Text>
+          <Text
+            style={{fontSize:"14px"}}>홈</Text>
         </div>
         <div style={{
           display:"flex",
@@ -113,7 +115,8 @@ function Footer(){
             src={account} 
             alt="account" 
             width="30px"></Image>
-          <Text>계좌</Text>
+          <Text
+            style={{fontSize:"14px"}}>계좌</Text>
         </div>
       </div>
     </FooterContainer>

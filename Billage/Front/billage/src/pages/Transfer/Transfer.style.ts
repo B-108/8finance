@@ -26,11 +26,10 @@ export const SmallButtonsContainer = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
+    position: relative;
     width: 94%;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    position: absolute;
-    bottom: 20px;
-    
+    bottom: 0px;
 `;

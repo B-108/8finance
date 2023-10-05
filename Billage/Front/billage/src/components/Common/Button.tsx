@@ -52,7 +52,7 @@ const StyledButton = styled.button<ButtonProps>`
     // 초록색 큰/중간 사이즈 버튼
     ${(props) =>
         props.$basicGreenBtn &&
-        css`
+        css` 
             font-size: ${theme.fontSize.M_20};
             border-radius: ${theme.radius.L_20};
             background-color: ${theme.color.green[0]};
@@ -88,6 +88,7 @@ const StyledButton = styled.button<ButtonProps>`
     ${(props) =>
         props.$smallBlackBtn &&
         css`
+            height: 22px;
             font-size: ${theme.fontSize.S_14};
             border-radius: ${theme.radius.M_15};
             background-color: ${theme.color.black};

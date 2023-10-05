@@ -240,7 +240,11 @@ function Transfer() {
             <TranInputDiv>
                 <TranInputTitle>지인 선택</TranInputTitle>
                 <InputDiv style={{ marginBottom: '1rem' }}>
-                    <Input value={friendInfo} $size="88%,40px" $active onChange={handleFriendInfoChange} />
+                    <Input 
+                      value={friendInfo} 
+                      $size="88%,40px" 
+                      $active  
+                      onChange={handleFriendInfoChange} />
                     <ButtonBox>
                         <Image src={magnifyingGlass} alt="magnifyingGlass" onClick={axiosUserList}></Image>
                     </ButtonBox>
@@ -249,7 +253,8 @@ function Transfer() {
                   <select
                       value={friendInfo}
                       onChange={handleFriendInfoChange}
-                      style={{ 
+                      style={{
+                        padding:"0px 1% 0px 1%",
                         width: '94%', 
                         height: '45px', 
                         borderRadius: '10px', 
@@ -269,7 +274,8 @@ function Transfer() {
                   <select
                       value={myAccountInfo}
                       onChange={handleMyAccountInfoChange}
-                      style={{ 
+                      style={{
+                        padding:"0px 1% 0px 1%",
                         width: '94%', 
                         height: '45px', 
                         borderRadius: '10px', 
@@ -332,7 +338,9 @@ function Transfer() {
                 ></Input>
                 <SmallButtonsContainer>
                     <Button
-                        style={{ margin: '7px 0px 0px 5px' }}
+                        style={{
+                          
+                          margin: '7px 0px 0px 5px' }}
                         $smallBlackBtn
                         $size="18%,25px"
                         onClick={() => handleButtonClick(10000)}
@@ -390,10 +398,14 @@ function Transfer() {
                 ></Input>
             </TranInputDiv>
             <ButtonContainer>
-                <Button $basicGrayBtn $size="48%, 50px" onClick={handleCancelClick}>
+                <Button 
+                    style={{lineHeight : "50px"}}
+                    $basicGrayBtn $size="48%, 45px" onClick={handleCancelClick}>
                     작성취소
                 </Button>
-                <Button $basicGreenBtn $size="48%, 50px" onClick={recoilPostIOU}>
+                <Button 
+                    style={{lineHeight : "50px"}}
+                    $basicGreenBtn $size="48%, 45px" onClick={recoilPostIOU}>
                     작성완료
                 </Button>
             </ButtonContainer>
