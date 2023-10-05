@@ -27,7 +27,7 @@ public class TransferController {
     }
 
     // 이체
-    @PostMapping("/transfer")
+    @PostMapping
     public ResponseEntity<String> transferCash(@RequestBody TransferCashRequestDto dto, HttpServletRequest request) {
         try {
             transferService.transferCash(dto, request);
