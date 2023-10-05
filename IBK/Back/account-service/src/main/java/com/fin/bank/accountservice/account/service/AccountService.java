@@ -93,7 +93,16 @@ public class AccountService {
         }
 
         // 입금 가능하면 계좌 잔액을 증가시키고 저장
-        depositAccount.setAccountAddBalanceAmt(depositAccount.getAccountBalanceAmt().add(accountDepositRequestDto.getTranAmt()));
+//        depositAccount.setAccountAddBalanceAmt(depositAccount.getAccountBalanceAmt().add(accountDepositRequestDto.getTranAmt()));
+        BigDecimal a = depositAccount.getAccountBalanceAmt();
+        System.out.println("입금 전 현재 잔액: " + a);
+
+        BigDecimal b = accountDepositRequestDto.getTranAmt();
+        System.out.println("입금 금액: " + b);
+
+        depositAccount.setAccountAddBalanceAmt(b);
+        System.out.println("입금 후 현재 잔액: " + depositAccount.getAccountBalanceAmt());
+
         accountRepository.save(depositAccount);
 
         return AccountDepositResponseDto.builder()
@@ -113,7 +122,17 @@ public class AccountService {
         BigDecimal currentBalance = withdrawAccount.getAccountBalanceAmt();
         if (currentBalance != null && accountWithdrawRequestDto.getTranAmt() != null && currentBalance.compareTo(accountWithdrawRequestDto.getTranAmt()) >= 0) {
             // 출금 가능하면 계좌 잔액을 감소시키고 저장
-            withdrawAccount.setAccountSubtractBalanceAmt(withdrawAccount.getAccountBalanceAmt().subtract(accountWithdrawRequestDto.getTranAmt()));
+//            withdrawAccount.setAccountSubtractBalanceAmt(withdrawAccount.getAccountBalanceAmt().subtract(accountWithdrawRequestDto.getTranAmt()));
+
+            BigDecimal a = withdrawAccount.getAccountBalanceAmt();
+            System.out.println("출금 전 현재 잔액: " + a);
+
+            BigDecimal b = accountWithdrawRequestDto.getTranAmt();
+            System.out.println("출금 금액: " + b);
+
+            withdrawAccount.setAccountSubtractBalanceAmt(b);
+            System.out.println("출금 후 현재 잔액: " + withdrawAccount.getAccountBalanceAmt());
+
             accountRepository.save(withdrawAccount);
 
             return AccountWithdrawResponseDto.builder()
