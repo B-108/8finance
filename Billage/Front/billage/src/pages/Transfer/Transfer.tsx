@@ -199,7 +199,6 @@ function Transfer() {
     }, []);
 
     useEffect(() => {
-        // setMyAccountInfo(accounts.accountNum);
         if (accounts.length > 0) {
             const selectedAcount = accounts.find((account) => account.accountMainYn === true);
             if (selectedAcount) {
@@ -207,7 +206,7 @@ function Transfer() {
                 setMyAccountInfoCode(selectedAcount.accountBankCode);
             }
         }
-    }, [accounts, myAccountInfo]);
+    }, []);
 
     useEffect(() => {
         if (users.length > 0) {
