@@ -29,17 +29,17 @@ public class TransferController {
     // 이체
     @PostMapping
     public ResponseEntity<String> transferCash(@RequestBody TransferCashRequestDto dto, HttpServletRequest request) {
-        try {
-            // 서비스 호출
-            transferService.transferCash(dto, request);
-            // 성공적인 응답 반환
-            return ResponseEntity.ok("이체 성공"); // 성공 메시지 반환
-        } catch (Exception e) {
-            // 에러가 발생한 경우
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+//        try {
+//            // 서비스 호출
 //            transferService.transferCash(dto, request);
-//            return ResponseEntity.ok().build();
+//            // 성공적인 응답 반환
+//            return ResponseEntity.ok("이체 성공"); // 성공 메시지 반환
+//        } catch (Exception e) {
+//            // 에러가 발생한 경우
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+//        }
+            transferService.transferCash(dto, request);
+            return ResponseEntity.ok().build();
     }
 
 }
