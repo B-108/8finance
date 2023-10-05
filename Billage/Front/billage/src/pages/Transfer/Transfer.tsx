@@ -23,7 +23,7 @@ import { getAccountList } from '/src/api/account';
 import { getUserList } from '/src/api/user';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { BankListState } from '/src/recoil/account';
-import { useIOUCheckState, useIOUState } from '/src/recoil/iou';
+import { creditorUserPhoneState, useIOUCheckState, useIOUState } from '/src/recoil/iou';
 import { NameState } from '/src/recoil/auth';
 
 // 모달용 알림창
@@ -36,6 +36,7 @@ function Transfer() {
 
     // 내 이름
     const [name, setName] = useRecoilState<string>(NameState);
+    const [creditorPhone, setCreditorPhone] = useRecoilState<string>(creditorUserPhoneState);
 
     const [friendInfo, setFriendInfo] = useState<string>('');
     const [transferDate, setTransferDate] = useState<Date | null>(null); // Date 타입으로 상태 변경
@@ -206,6 +207,7 @@ function Transfer() {
             const selectedUser = users.find((user) => user.userName === friendInfo);
             if (selectedUser) {
                 const userCellNo = selectedUser.userCellNo;
+                setCreditorPhone(userCellNo)
                 const lastFourDigits = userCellNo.slice(-4);
                 setUserInfo(`${selectedUser.userName} (${lastFourDigits})`);
                 setFriendPk(selectedUser.userPk);

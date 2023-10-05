@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useEffect, useRef, useState, useContext, useCallback } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 
 // 공용 컴포넌트
@@ -35,18 +35,21 @@ import { ButtonContainer } from './IOUCheck.style';
 
 //recoil
 import { useRecoilState } from 'recoil';
-import { IOUCheckState, IOUState } from '/src/recoil/iou';
+import { IOUCheckState, IOUState, creditorUserPhoneState } from '/src/recoil/iou';
 import { PhoneState } from '/src/recoil/auth';
 import { IOUProps } from '/src/type/iou';
 import { postIOU } from '/src/api/iou';
 import AlertSimpleContext from '/src/context/alertSimple/AlertSimpleContext';
 import ConfirmBox from '/src/components/Common/YesOrNo';
 import ConfirmContext from '/src/context/confirm/ConfirmContext';
+import AlertContext from '/src/context/alert/AlertContext';
 
 function IOUCheck() {
     const [isChecked, setIsChecked] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null!);
     const currentDate = new Date().toISOString().split('T')[0];
+    const [creditorPhone, setCreditorPhone] = useRecoilState<string>(creditorUserPhoneState);
+
     const [phone, setPhone] = useRecoilState<string>(PhoneState);
 
     // ConFirm 모달 창
@@ -81,9 +84,9 @@ function IOUCheck() {
             onAlertSimpleClick('필수 동의 항목을 확인하세요!');
             return;
         }
-        onAlertSimpleClick('차용증 생성을 요청했습니다.');
         const Certain = await axiosPostIOU();
         if (Certain && isChecked) {
+            onAlertClick("요청을 완료했어요")
             navigate(`/`);
         }
     };
@@ -140,10 +143,27 @@ function IOUCheck() {
             console.log(error);
         }
     };
+    
     const { alert: alertSimpleComp } = useContext(AlertSimpleContext);
 
     const onAlertSimpleClick = async (text: string) => {
         const result = await alertSimpleComp(text);
+    };
+
+
+    // Alert 창
+    const [isEnd, setIsEnd] = useState(false);
+
+    const HandleIsEnd = useCallback(() => {
+      setIsEnd(!isEnd);
+    }, [isEnd]);
+
+    const { alert: alertComp } = useContext(AlertContext);
+    
+    const onAlertClick = async (text: string) => {
+      const result = await alertComp(text);
+      console.log("custom", result);
+      HandleIsEnd();
     };
 
     return (
@@ -175,7 +195,7 @@ function IOUCheck() {
                         <UserType>채권자</UserType>
                         <UserInfo>
                             <UserName>이름 : {creditorUserNameCheck}</UserName>
-                            <UserPhone>전화번호 : </UserPhone>
+                            <UserPhone>전화번호 : {creditorPhone}</UserPhone>
                         </UserInfo>
                     </UserBox>
 

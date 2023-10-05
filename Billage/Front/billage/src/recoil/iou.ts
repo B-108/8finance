@@ -37,3 +37,10 @@ export function useIOUState() {
 export function useIOUCheckState() {
     return useRecoilState(IOUCheckState);
 }
+
+// 채권자 전화번호
+
+export const creditorUserPhoneState = atom({
+  key: 'creditorUserPhoneState',
+  default: "",
+})
