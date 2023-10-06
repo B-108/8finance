@@ -1,0 +1,87 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Springboot build') {
+            steps {
+                dir('IBK/Back/net-amount-service'){
+                    sh '''
+                    pwd
+                    echo 'springboot build'
+
+                    #!/bin/bash
+
+                    # Source and destination directories
+                    SRC_DIR="/var/jenkins_home/backend-config/ibk/net-amount-service"
+                    DEST_DIR="/var/jenkins_home/workspace/ibk_net_amount_service/IBK/Back/net-amount-service/src/main/resources"
+
+                    # File to copy
+                    FILE="application.yml"
+
+                    # Check if destination directory exists, if not create it
+                    if [ ! -d "$DEST_DIR" ]; then
+                        mkdir -p "$DEST_DIR"
+                    fi
+
+                    # Copy the file
+                    cp "$SRC_DIR/$FILE" "$DEST_DIR/$FILE"
+
+                    chmod +x gradlew
+                    ./gradlew clean build
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Dockerimage build') {
+            steps {
+                dir('IBK/Back/net-amount-service'){
+                    sh '''
+                    echo 'Dockerimage build'
+                    docker build -t docker-springboot-ibk-net-amount-service:0.0.1 .
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                dir('IBK/Back/net-amount-service'){
+                    sh '''
+                    echo 'Deploy'
+
+                    docker stop ibk-net-amount-service
+                    docker rm ibk-net-amount-service
+
+                    docker run -d -p 8014:8014 --network ubuntu_ibk --name ibk-net-amount-service docker-springboot-ibk-net-amount-service:0.0.1
+
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+    }
+}
