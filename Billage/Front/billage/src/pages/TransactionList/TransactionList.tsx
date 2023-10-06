@@ -87,7 +87,7 @@ function TransactionList() {
             <div 
               key={index} 
               style={{
-              width : '94%'}} 
+              width : '95%'}} 
               onClick={() =>
               moveToDetail(item.contractId, item)}>
               <TransactionItem key={index} item={item} toggle={toggle} />

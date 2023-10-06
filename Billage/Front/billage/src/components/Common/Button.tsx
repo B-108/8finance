@@ -116,7 +116,7 @@ const StyledButton = styled.button<ButtonProps>`
         css` 
             color : ${theme.color.gray[100]};
             font-size: ${theme.fontSize.S_14};
-            border-radius: ${theme.radius.M_15};
+            border-radius: ${theme.radius.S_10};
             border: 1px solid ${theme.color.gray[100]};
             background-color: transparent;
         `}
@@ -127,7 +127,7 @@ const StyledButton = styled.button<ButtonProps>`
         css`
             color: ${theme.color.white};
             font-size: ${theme.fontSize.S_14};
-            border-radius: ${theme.radius.M_15};
+            border-radius: ${theme.radius.S_10};
             background-color: ${theme.color.black};
         `}
 

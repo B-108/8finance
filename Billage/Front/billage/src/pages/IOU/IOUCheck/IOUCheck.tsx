@@ -86,7 +86,7 @@ function IOUCheck() {
         }
         const Certain = await axiosPostIOU();
         if (Certain && isChecked) {
-            onAlertClick("요청을 완료했어요")
+            onAlertClick("요청을 완료했어요.")
             navigate(`/`);
         }
     };
@@ -222,15 +222,20 @@ function IOUCheck() {
 
             <ButtonContainer>
                 <Button
+                    style={{lineHeight : "50px"}}
                     $basicGrayBtn
                     $size="48%,45px"
                     onClick={() => {
                         openConfirm();
-                    }}
-                >
+                    }}>
                     요청취소
                 </Button>
-                <Button $basicGreenBtn $size="48%,45px" onClick={moveMain}>
+
+                <Button
+                  style={{lineHeight : "50px"}}
+                  $basicGreenBtn 
+                  $size="48%,45px" 
+                  onClick={moveMain}>
                     요청하기
                 </Button>
             </ButtonContainer>

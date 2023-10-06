@@ -202,7 +202,7 @@ function MyAccounts() {
           ))}
         </AccountsBox>
 
-        <Footer/>
+      <Footer/>
       </CenteredContainer>
   );
 }

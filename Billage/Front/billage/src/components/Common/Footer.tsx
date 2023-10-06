@@ -10,6 +10,7 @@ import Image from './Image'
 import home from '/src/assets/homeButton.svg'
 import account from '/src/assets/creditCard.svg'
 import Logout from '/src/assets/logout.svg'
+import theme from '/src/themes'
 
 interface TextProps {
     children?: React.ReactNode;
@@ -45,6 +46,8 @@ const FooterContainer = styled.div`
   align-items: end; 
   margin-top: auto;
   background-color: white;
+  font-family: 'LINESeedKR-Bd';
+  color: ${theme.color.gray[85]};
   box-shadow: 0px -5px 5px rgba(0, 0, 0, 0.1); // 그림자 스타일 추가
 
   @media only screen and (max-width: 5000px) {
