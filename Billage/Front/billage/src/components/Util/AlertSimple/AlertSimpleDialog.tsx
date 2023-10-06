@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import AlertSimpleContext from '/src/context/alertSimple/AlertSimpleContext';
 import AlertSimple from './AlertSimple';
+import CenteredContainer from '../../Common/CenterAlign';
 
 type AlertState = {
   message: string;
@@ -29,10 +30,12 @@ const AlertSimpleDialog = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
+    <CenteredContainer>
     <AlertSimpleContext.Provider value={{ alert }}>
       {children}
       {state && <AlertSimple message={state.message} onClose={state.onClose} visible={visible} />}
     </AlertSimpleContext.Provider>
+    </CenteredContainer>
   );
 };
 

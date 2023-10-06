@@ -115,7 +115,6 @@ function AccountEnroll() {
   };
 
   return (
-    <>
       <CenteredContainer>
         <Header headerTitle="계좌 등록"></Header>
         <Text
@@ -164,9 +163,8 @@ function AccountEnroll() {
           계좌 불러오기
         </Button>
 
+        <Footer/>
       </CenteredContainer>
-      <Footer/>
-    </>
   );
 }
 

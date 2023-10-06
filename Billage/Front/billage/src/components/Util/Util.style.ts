@@ -125,7 +125,7 @@ const slideOut = keyframes`
 
 export const SimpleDialogContainer = styled.div<{ $visible: boolean }>`
   position: absolute;
-  bottom: 11vh;
+  bottom: 3vh;
   display: flex;
   justify-content: center;
   align-items: center;
