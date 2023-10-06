@@ -221,7 +221,6 @@ function Transfer() {
 
     const onConfirmClick = async (text: string) => {
       const result = await confirmComp(text);
-    //   console.log("custom", result);
       return result;
     };
 

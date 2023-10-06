@@ -81,7 +81,7 @@ function LoadAccounts() {
   };
 
   const openConfirm = async () => {
-    const nextAction = await onConfirmClick(`총${accountsSelected.length}개의 계좌를 등록하시나요?`);
+    const nextAction = await onConfirmClick(`${accountsSelected.length}개의 계좌를 등록하십니까?`);
     if (nextAction) {
       navigate('/pinenter/account') 
     }

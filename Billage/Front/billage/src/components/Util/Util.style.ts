@@ -33,7 +33,7 @@ export const DialogContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 265px;
+    width: 280px;
     height: 100px;
     padding: 20px;
     background-color: white;
@@ -48,7 +48,7 @@ export const DialogContainer = styled.div`
       text-align: center;
       font-size: ${theme.fontSize.L_24};
       margin-bottom: 17px;
-      /* border: 1px solid red; */
+      width: 280px;
 
     }
 

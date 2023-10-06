@@ -1,5 +1,5 @@
 import Input, { ButtonInput } from '/src/components/Common/Input';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import CenteredContainer from '/src/components/Common/CenterAlign';
 import Header from '/src/components/Header/Header';
 import Button from '/src/components/Common/Button';
@@ -12,14 +12,17 @@ import ConfirmBox from '/src/components/Common/YesOrNo';
 
 //이체
 import { SendMoneyType } from '/src/type/transaction';
+import ConfirmContext from '/src/context/confirm/ConfirmContext';
 
 function SendMoney() {
     const navigate = useNavigate();
     const location = useLocation();
     const sendData = location.state.data
+    const handleGoBack = () => {navigate(-1);};
+    
     // console.log(sendData)
     //작성 취소 버튼 클릭시 활성
-    const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false); // 다이얼로그 상태 추가
+    // const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false); // 다이얼로그 상태 추가
     // 이체 필요 데이터
     //거래ID
     const [transId, setTransId] = useState<number>(0);
@@ -83,12 +86,12 @@ function SendMoney() {
 
     //함수
     const handleCancelClick = () => {
-        setIsCancelDialogOpen(true);
+      openConfirm()
     };
 
-    const handleConfirmCancel = () => {
-        setIsCancelDialogOpen(false);
-    };
+    // const handleConfirmCancel = () => {
+    //     setIsCancelDialogOpen(false);
+    // };
 
     const moveToPinEnter = () => {
         navigate('/pinenter/sendmoney', { state: data });
@@ -108,6 +111,22 @@ function SendMoney() {
     const handleButtonClick = (increment: number) => {
         setAmountInfo((prevAmount) => (parseInt(prevAmount) + increment).toString());
     };
+
+      // ConFirm 모달 창
+      const { confirm: confirmComp } = useContext(ConfirmContext);
+
+      const onConfirmClick = async (text: string) => {
+        const result = await confirmComp(text);
+        return result;
+      };
+  
+      const openConfirm = async () => {
+        const nextAction = await onConfirmClick("작성을 취소하시겠습니까?");
+        if (nextAction) {
+          handleGoBack()
+        }
+        return;
+      };
 
     return (
         <CenteredContainer>
@@ -190,7 +209,7 @@ function SendMoney() {
                     작성완료
                 </Button>
             </ButtonContainer>
-            {isCancelDialogOpen && <ConfirmBox onCancel={handleConfirmCancel} onConfirm={() => navigate(-1)} />}
+            {/* {isCancelDialogOpen && <ConfirmBox onCancel={handleConfirmCancel} onConfirm={() => navigate(-1)} />} */}
         </CenteredContainer>
     );
 }
