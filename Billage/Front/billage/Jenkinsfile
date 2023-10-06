@@ -1,0 +1,74 @@
+pipeline {
+    agent any
+
+    tools{
+        nodejs 'nodejs-20.6.1'
+    }
+
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                dir('Billage/Front/billage'){
+                    sh '''
+                    pwd
+                    echo 'prepare'
+                    echo 'npm install'
+                    npm install
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+
+        stage('Docker image build') {
+            steps {
+                dir('Billage/Front/billage'){
+                    sh '''
+                    echo 'Docker image build'
+                    docker build -t docker-react-billage .
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                dir('Billage/Front/billage'){
+                    sh '''
+                    echo 'Deploy' 
+
+                    docker stop billage-front
+                    docker rm billage-front
+                   
+
+                    docker run -d -p 5173:5173 --name billage-front docker-react-billage
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+    }
+}
