@@ -1,0 +1,70 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Springboot build') {
+            steps {
+                dir('KB/Back/kb'){
+                    sh '''
+                    pwd
+                    echo 'springboot build'
+                    cp -r /var/jenkins_home/backend-config/kb/ /var/jenkins_home/workspace/kb_back/KB/Back/kb/src/main/resources/
+                    chmod +x gradlew
+                    ./gradlew clean build
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Dockerimage build') {
+            steps {
+                dir('KB/Back/kb'){
+                    sh '''
+                    echo 'Dockerimage build'
+                    docker build -t docker-springboot-kb:0.0.1 .
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                dir('KB/Back/kb'){
+                    sh '''
+                    echo 'Deploy'
+
+                    docker stop kb-back
+                    docker rm kb-back
+
+                    docker run -d -p 8763:8080 --name kb-back docker-springboot-kb:0.0.1
+
+                    '''
+                }
+            }
+            post {
+                success {
+                    sh 'echo "Successfully "'
+                }
+                failure {
+                    sh 'echo "Fail"'
+                }
+            }
+        }
+    }
+}
