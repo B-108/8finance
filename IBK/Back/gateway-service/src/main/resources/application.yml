@@ -1,0 +1,52 @@
+server:
+  port: 9000
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          lower-case-service-id: true
+          enabled: true
+      routes:
+        - id: user-service-auth
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/auth/**
+
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user/**
+          filters:
+            - AuthorizationHeaderFilter
+
+        - id: account-service
+          uri: lb://ACCOUNT-SERVICE
+          predicates:
+            - Path=/account/**
+          filters:
+            - AuthorizationHeaderFilter
+
+        - id: transfer-service
+          uri: lb://TRANSFER-SERVICE
+          predicates:
+            - Path=/transfer/**
+          filters:
+            - AuthorizationHeaderFilter
+
+
+jwt:
+  #  secret key는 256비트 이상으로 만들것
+  secret: beggVJDH3fB6MDstc1mPE3cRWuqdngkwjmHeSrjbJCe1Zbg4382HppmexqrXlqgG
+  access-expired-seconds : 3600 # 60 * 60 : 1시간
+  refresh-expired-seconds : 86400 # 60 * 60 * 24 : 하루
