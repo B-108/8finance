@@ -100,6 +100,7 @@ export const TransactionBox = styled.div`
   justify-content: space-around;
   width: 98%;
   height: 90px;
+  padding-top: 5%;
 `
 
 export const ContentBox = styled.div`

@@ -31,10 +31,10 @@ const AlertSimpleDialog = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <CenteredContainer>
-    <AlertSimpleContext.Provider value={{ alert }}>
-      {children}
-      {state && <AlertSimple message={state.message} onClose={state.onClose} visible={visible} />}
-    </AlertSimpleContext.Provider>
+      <AlertSimpleContext.Provider value={{ alert }}>
+        {children}
+        {state && <AlertSimple message={state.message} onClose={state.onClose} visible={visible} />}
+      </AlertSimpleContext.Provider>
     </CenteredContainer>
   );
 };

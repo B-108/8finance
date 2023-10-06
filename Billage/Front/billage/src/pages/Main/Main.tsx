@@ -122,13 +122,13 @@ function Main(){
         
         <Text
           $title
-          $size="94%,44px">확인 하지 않은 알림!</Text>
+          $size="94%,8%">확인 하지 않은 알림!</Text>
         
         {noti?.length > 0? (
           <Box
             onClick={moveNotifications}
             $alarmBox
-            $size="88%,75px">
+            $size="88%,13%">
             {noti[0].noticeType === 1 ? (
               <div>
                 <AlarmHeader>
@@ -197,7 +197,7 @@ function Main(){
 
         <Text
           $title
-          $size="94%,44px">나의거래</Text>
+          $size="94%,8%">나의거래</Text>
 
         <div style={{width:"100%"}}>
           <Splide
@@ -216,7 +216,7 @@ function Main(){
                     {transAction.debtorUser.userCellNo === phone ? (
                       <Box
                         $mainTransaction
-                        $size="100%,260px">
+                        $size="100%,270px">
                         <TopSection>
                           <SignBox>빌린 돈</SignBox>
                           <TextUp>'{transAction.creditorUser.userName}'</TextUp>
@@ -242,7 +242,7 @@ function Main(){
                       ) : (
                       <Box
                         $mainTransaction
-                        $size="100%,260px">
+                        $size="100%,270px">
                         <TopSection>
                           <SignBox>빌려준 돈</SignBox>
                           <TextUp>'{transAction.debtorUser.userName}'</TextUp>
@@ -275,7 +275,7 @@ function Main(){
               <SplideSlide>
                 <Box
                   $mainTransaction
-                  $size="100%,260px">
+                  $size="100%,270px">
                   <TopSection>
                     <SignBox>빌린 돈</SignBox>
                     <TextUp>지인에게</TextUp>
