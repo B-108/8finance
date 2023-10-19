@@ -9,9 +9,13 @@
  알림으로 편하게 관리해주는 신개념 1:1 대출 중개 서비스<br>
   삼성 청년 SW 아카데미</b><br><br>
   2023.07.04 ~ 2022.08.18
-  <br><br>
-  
+  <br>
+  <a href="https://youtu.be/DxseVqu3nDE"> 
+    <img src="Image/youtube1.png" width="100px"><br>
+    UCC 보러가기
+  </a>
 </div>
+
 
 # 👨‍👩‍👧‍👦 멤버
 <div align="middle">
